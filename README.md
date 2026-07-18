@@ -52,7 +52,7 @@ npx skills add loganthorneloe/skills
 
 ### Install a specific skill from this repository
 ```bash
-npx skills add loganthorneloe/skills --skill template-skill
+npx skills add loganthorneloe/skills --skill commit-and-push
 ```
 
 ### List skills available in this repository before adding
