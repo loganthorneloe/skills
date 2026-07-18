@@ -1,39 +1,49 @@
 ---
 name: git-workflow-conventional
-description: Guides agents through standard Git operations, conventional commit naming, branch prefix patterns, and running pre-commit test verifications.
+description: Guides agents through standard Git operations, conventional commits, and pre-commit verification specifically tailored for Python/Pytest and TypeScript/Node workspaces.
 ---
 
 # Git Workflow & Conventional Commits Skill
 
-This skill defines the Git workflow and commit conventions expected when contributing features, fixes, or documentation updates to this workspace's projects.
+This skill governs version control workflows across your development repositories. It enforces conventional commits and local test-based verification before any commits are made.
 
 ## When to Use
-- Actively running Git operations (branching, staging, committing, pushing).
-- Creating PRs or preparing code for review.
-- Prior to finalizing any feature or task that requires a commit.
+- Actively committing, branching, or pushing in any repository in `~/src`.
+- Staging changes or preparing a pull request.
 
-## Guidelines & Rules
+## Workspace Conventions
 
-### 1. Branch Naming Conventions
-Always create a descriptive branch for your changes using the appropriate prefix:
-- **Features**: `feature/<short-description>` (e.g., `feature/automated-releases`)
-- **Bug Fixes**: `fix/<short-description>` (e.g., `fix/commit-package-lock`)
-- **Documentation**: `docs/<short-description>` (e.g., `docs/add-contributing-md`)
-- **Maintenance/Refactoring**: `chore/<short-description>` or `refactor/<short-description>`
+### 1. Branch Structure
+Always create a branch using the following patterns:
+- **Features**: `feature/<short-desc>` (e.g., `feature/automated-releases`)
+- **Fixes**: `fix/<short-desc>` (e.g., `fix/commit-package-lock`)
+- **Docs**: `docs/<short-desc>` (e.g., `docs/add-contributing-md`)
+- **Chore/Maintenance**: `chore/<short-desc>` (e.g., `chore/bump-version`)
 
-### 2. Conventional Commit Messages
-Structure all commit messages using conventional prefixes:
-- `feat: <description>` — A new feature
-- `fix: <description>` — A bug fix
-- `docs: <description>` — Documentation-only changes
-- `chore: <description>` — Maintenance tasks, dependencies, version bumps
-- `test: <description>` — Adding or correcting tests
-- `refactor: <description>` — Code changes that neither fix a bug nor add a feature
+### 2. Conventional Commit Formatting
+All commit messages must use semantic prefixes. Keep titles under 72 characters, imperative, and lowercase:
+- `feat: add ...` (new features, e.g., `feat: add GitHub Action for automated releases`)
+- `fix: resolve ...` (bug fixes, e.g., `fix: commit package-lock.json and remove from .gitignore`)
+- `docs: update ...` (documentation changes, e.g., `docs: refine contributing guide for clarity`)
+- `chore: update ...` (dependencies, configuration, e.g., `chore: bump version to 1.0.2`)
+- `test: add ...` (unit/integration tests)
+- `refactor: clean ...` (code restructuring)
 
-*Keep messages concise, in the imperative tense, and under 72 characters.*
+### 3. Pre-Commit Verification (Python & TypeScript)
+Before staging and committing code, the agent MUST run the appropriate testing suite:
 
-### 3. Pre-Commit Verification
-Before staging and committing your code, you must verify correctness:
-- Run the project's test suite (e.g., `pytest`, `npm test`) if available.
-- Resolve any linter or compiler warnings.
-- Never commit or push code that breaks the existing build or test suites unless explicitly requested.
+#### For Python Projects (`daily-email`, `hickory-telegram`, `resume`):
+1. **Activate Virtual Environment**: Ensure `.venv` is active (`source .venv/bin/activate`).
+2. **Run Tests**: Execute `python -m pytest -v` (or the specific test file being modified).
+3. **Verify Integration**: If working on `daily-email` or `hickory-telegram`, run the non-mutating integration tests in dry-run mode to verify pipeline integrity:
+   ```bash
+   python tests/integration_test.py --dry-run
+   ```
+4. **LaTeX Compiling**: If modifying the resume project, run `python render_resume.py` to ensure the XeLaTeX compiler generates a valid, single-page PDF.
+
+#### For TypeScript/Node Projects (`gemini-cli-readwise-reader`, etc.):
+1. **Install Check**: Ensure `package-lock.json` is staged if packages changed.
+2. **Run Tests**: Run `npm test` or `bun test` if configured.
+3. **Linter Check**: Run the build compiler (`npm run build` or `tsc`) to ensure no compilation errors.
+
+Never stage, commit, or push code with failing test suites.
