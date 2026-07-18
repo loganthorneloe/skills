@@ -9,15 +9,16 @@ Each subdirectory in this repository represents a distinct skill that can be loa
 This is a multi-skill repository organized as follows:
 
 ```text
-skills/
+skills/ (repository root)
 ├── README.md                 # Repository overview and guidelines
 ├── .gitignore                # Git ignore rules for node/python/etc.
-└── [skill-name]/             # Individual custom skill folder
-    ├── SKILL.md              # Main instructions & metadata (required)
-    ├── scripts/              # Helper scripts (TypeScript or Python)
-    ├── references/           # Local markdown files containing reference docs
-    ├── examples/             # Reference implementations and examples
-    └── resources/            # External templates or static assets
+└── skills/                   # Folder housing all skills (for Vercel CLI)
+    └── [skill-name]/         # Individual custom skill folder
+        ├── SKILL.md          # Main instructions & metadata (required)
+        ├── scripts/          # Helper scripts (TypeScript or Python)
+        ├── references/       # Local markdown files containing reference docs
+        ├── examples/         # Reference implementations and examples
+        └── resources/        # External templates or static assets
 ```
 
 ## Skill Specification (`SKILL.md`)
@@ -42,11 +43,22 @@ To maintain a high-quality codebase, we follow these strict rules for helper scr
 
 ## Installing and Activating Skills
 
-To use these skills in your local Antigravity environment, symlink or copy the individual skill folders to your custom skills directory:
+This repository is compatible with Vercel's `skills` package manager CLI. You or others can install the skills from this repository directly using `npx skills`:
 
+### Install all skills from this repository
 ```bash
-# Example: Symlink the 'git-helper' skill into your Antigravity config
-ln -s /path/to/skills/git-helper ~/.gemini/config/skills/git-helper
+npx skills add loganthorneloe/skills
 ```
 
-Once linked, the skill can be loaded by referencing its `name` defined in the frontmatter.
+### Install a specific skill from this repository
+```bash
+npx skills add loganthorneloe/skills --skill template-skill
+```
+
+### List skills available in this repository before adding
+```bash
+npx skills add loganthorneloe/skills --list
+```
+
+
+Once installed, the skill will be automatically loaded by your AI agent.
