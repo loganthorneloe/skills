@@ -60,5 +60,17 @@ npx skills add loganthorneloe/skills --skill commit-and-push
 npx skills add loganthorneloe/skills --list
 ```
 
+### Quick Start Setup
+After adding skills from this repository, run the setup skill or command:
+```bash
+npx skills add loganthorneloe/skills --skill setup-loganthorneloe-skills
+```
+Or in your Antigravity session, simply type:
+```text
+/setup-loganthorneloe-skills
+```
+This automatically installs the custom real-time context statusline, configures `~/.gemini/antigravity-cli/settings.json`, and verifies your environment in one step.
+
 
 Once installed, the skill will be automatically loaded by your AI agent.
+
