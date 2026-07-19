@@ -33,7 +33,7 @@ def main():
     # Make statusline.py executable
     os.chmod(target_statusline, 0o755)
 
-    # 2. Update settings.json
+    # 2. Update settings.json with user preferences
     settings = {}
     if os.path.exists(settings_file):
         try:
@@ -42,15 +42,56 @@ def main():
         except Exception as e:
             print(f"⚠️ Could not parse existing settings.json ({e}), initializing new settings dictionary.")
 
+    # Apply preferences
+    settings["model"] = "Gemini 3.5 Flash (High)"
+    settings["scheduledTasksEnabled"] = True
+    
+    # Ensure standard allowed commands
+    permissions = settings.get("permissions", {})
+    allow_list = set(permissions.get("allow", []))
+    default_allowed = [
+        "command(ls)",
+        "command(git status)",
+        "command(git diff)",
+        "command(pwd)",
+        "command(cat)",
+        "command(cp)"
+    ]
+    allow_list.update(default_allowed)
+    permissions["allow"] = sorted(list(allow_list))
+    settings["permissions"] = permissions
+
     settings["statusLine"] = {
         "command": target_statusline,
         "enabled": True
     }
 
+    settings["enableTerminalSandbox"] = False
+
+    # Trusted workspaces
+    trusted = set(settings.get("trustedWorkspaces", []))
+    trusted.update(["/Users/loganthorneloe/src", "/Users/loganthorneloe/src/daily-email"])
+    settings["trustedWorkspaces"] = sorted(list(trusted))
+
     with open(settings_file, "w") as f:
         json.dump(settings, f, indent=2)
 
-    print(f"⚙️ Configured statusLine in {settings_file}")
+    print(f"⚙️ Configured settings.json in {settings_file}")
+
+    # 3. Setup Custom Instructions / Global Rules
+    rules_dir = os.path.join(gemini_dir, "rules")
+    os.makedirs(rules_dir, exist_ok=True)
+    global_rules_file = os.path.join(rules_dir, "global_rules.md")
+    default_rules = """# Global Custom Instructions & Preferences
+
+- Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness ALWAYS.
+- Always prefer TypeScript or Python for code writing.
+- Write outlines and drafts to markdown files rather than printing in chat unless requested.
+- Maintain accurate file links and documentation references.
+"""
+    with open(global_rules_file, "w") as f:
+        f.write(default_rules)
+    print(f"📝 Configured global custom instructions in {global_rules_file}")
 
     # 3. Test verification
     print("🧪 Verifying statusline script execution...")
