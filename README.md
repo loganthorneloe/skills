@@ -1,49 +1,33 @@
-# Development Skills for Antigravity
+# Development Skills for AI Coding Agents
 
-A collection of public, custom AI skills designed for development workflows using the Google Antigravity platform.
+A collection of public, custom AI skills designed for development workflows across modern AI agent harnesses (Antigravity, Claude Code, Cursor, Codex, OpenCode).
 
-Each subdirectory in this repository represents a distinct skill that can be loaded into Antigravity to extend its capabilities with specialized instructions, context, scripts, and references.
+Each subdirectory in `skills/` represents a distinct skill that can be loaded into any supported AI harness via Vercel's `npx skills` CLI.
+
+## Available Skills
+
+| Skill | Description |
+| --- | --- |
+| [`auto-loop`](skills/auto-loop/SKILL.md) | Autonomous continuous development loop (plan, implement, test, debug, verify) until 100% complete. |
+| [`commit-and-push`](skills/commit-and-push/SKILL.md) | Inspects and updates affected READMEs, stages, commits, and pushes changes with conventional commit messages. |
+| [`cost`](skills/cost/SKILL.md) | Calculates session token usage and estimated cost ($) across AI harnesses. |
 
 ## Repository Structure
-
-This is a multi-skill repository organized as follows:
 
 ```text
 skills/ (repository root)
 ├── README.md                 # Repository overview and guidelines
-├── .gitignore                # Git ignore rules for node/python/etc.
+├── AGENTS.md                 # Agent guidelines for this repository
+├── .gitignore                # Git ignore rules
 └── skills/                   # Folder housing all skills (for Vercel CLI)
     └── [skill-name]/         # Individual custom skill folder
         ├── SKILL.md          # Main instructions & metadata (required)
-        ├── scripts/          # Helper scripts (TypeScript or Python)
-        ├── references/       # Local markdown files containing reference docs
-        ├── examples/         # Reference implementations and examples
-        └── resources/        # External templates or static assets
+        └── scripts/          # Helper scripts (TypeScript or Python)
 ```
-
-## Skill Specification (`SKILL.md`)
-
-Every skill folder must contain a `SKILL.md` file at its root with the following YAML frontmatter:
-
-```yaml
----
-name: skill-name-kebab-case
-description: A short, clear description of what this skill does and when it should be used.
----
-
-# Instructions for the Skill
-
-Detailed guidelines, rules, and procedures for the AI agent to follow when this skill is active.
-```
-
-### Guidelines for Scripts
-To maintain a high-quality codebase, we follow these strict rules for helper scripts within the `scripts/` directory:
-- **Languages**: Use **TypeScript** or **Python** only. Do not write scripts in plain JavaScript.
-- **Documentation**: Keep helper script code clean, modular, and self-documenting.
 
 ## Installing and Activating Skills
 
-This repository is compatible with Vercel's `skills` package manager CLI. You or others can install the skills from this repository directly using `npx skills`:
+This repository is compatible with Vercel's `skills` CLI. Install skills directly into any agent harness:
 
 ### Install all skills from this repository
 ```bash
@@ -55,22 +39,9 @@ npx skills add loganthorneloe/skills
 npx skills add loganthorneloe/skills --skill commit-and-push
 ```
 
-### List skills available in this repository before adding
+### List skills available in this repository
 ```bash
 npx skills add loganthorneloe/skills --list
 ```
 
-### Quick Start Setup
-After adding skills from this repository, run the setup skill or command:
-```bash
-npx skills add loganthorneloe/skills --skill setup-loganthorneloe-skills
-```
-Or in your Antigravity session, simply type:
-```text
-/setup-loganthorneloe-skills
-```
-This automatically installs the custom real-time context statusline, configures `~/.gemini/antigravity-cli/settings.json`, and verifies your environment in one step.
-
-
-Once installed, the skill will be automatically loaded by your AI agent.
-
+Once installed, the skills will be automatically loaded by your AI agent.

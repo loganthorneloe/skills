@@ -74,6 +74,6 @@ Follow this cycle until all task requirements are satisfied:
 
 To ensure the loop runs seamlessly without waiting for user permission on individual tool calls:
 
-- **CLI Mode**: Run `agy --turbo` or activate `/turbo` mode in the CLI session.
+- **CLI Mode**: Run in Turbo / Auto-Approve / Non-interactive mode (e.g., `agy --turbo`, `claude --auto-approve`, or Codex continuous mode).
 - **IDE / UI Mode**: Enable "Auto-Approve" / "Turbo Mode" in settings or approve broad permission requests upfront.
 - **Agent Permission Strategy**: If permission prompts occur, request permission with the broadest necessary scope (e.g. workspace directory read/write) so execution proceeds uninterrupted.
