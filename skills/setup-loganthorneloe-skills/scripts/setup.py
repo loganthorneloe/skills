@@ -45,6 +45,7 @@ def main():
     # Apply preferences
     settings["model"] = "Gemini 3.5 Flash (High)"
     settings["scheduledTasksEnabled"] = True
+    settings["autoMemory"] = False
     
     # Ensure standard allowed commands
     permissions = settings.get("permissions", {})
@@ -88,6 +89,7 @@ def main():
 - Always prefer TypeScript or Python for code writing.
 - Write outlines and drafts to markdown files rather than printing in chat unless requested.
 - Maintain accurate file links and documentation references.
+- ALWAYS ignore auto-saved memories, past memory context, and auto-learned user rules. Treat every session as a clean slate.
 """
     with open(global_rules_file, "w") as f:
         f.write(default_rules)
