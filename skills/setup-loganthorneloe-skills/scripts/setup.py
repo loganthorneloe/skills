@@ -12,7 +12,8 @@ import subprocess
 def main():
     print("🚀 Running loganthorneloe/skills environment setup...")
 
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    real_script = os.path.realpath(__file__)
+    script_dir = os.path.dirname(real_script)
     skill_root = os.path.dirname(script_dir)
     res_statusline = os.path.join(skill_root, "resources", "statusline.py")
 
@@ -37,14 +38,19 @@ def main():
     skills_repo_dir = os.path.dirname(skill_root)
     config_skills_dir = os.path.expanduser("~/.gemini/config/skills")
     os.makedirs(config_skills_dir, exist_ok=True)
-    if os.path.exists(skills_repo_dir):
+    if os.path.exists(skills_repo_dir) and os.path.realpath(skills_repo_dir) != os.path.realpath(config_skills_dir):
         for item in os.listdir(skills_repo_dir):
             item_path = os.path.join(skills_repo_dir, item)
             if os.path.isdir(item_path) and os.path.exists(os.path.join(item_path, "SKILL.md")):
                 target_link = os.path.join(config_skills_dir, item)
+                if os.path.realpath(item_path) == os.path.realpath(target_link):
+                    continue
                 try:
-                    if os.path.lexists(target_link):
-                        os.remove(target_link)
+                    if os.path.lexists(target_link) or os.path.exists(target_link):
+                        if os.path.islink(target_link) or os.path.isfile(target_link):
+                            os.remove(target_link)
+                        elif os.path.isdir(target_link):
+                            shutil.rmtree(target_link)
                     os.symlink(item_path, target_link)
                     print(f"🔗 Auto-symlinked skill: {item} -> {target_link}")
                 except Exception as e:
@@ -145,6 +151,7 @@ def main():
 - NEVER use inline Python scripts or terminal commands (e.g. `python3 -c`) to edit or modify files. ALWAYS use explicit file editing tools (`replace_file_content`, `multi_replace_file_content`, `write_to_file`) so all line additions and subtractions are fully visible.
 - If user asks a question, ANSWER FIRST. Do not invoke tools or run actions unless explicitly requested.
 - BEFORE calling tools or executing actions, ALWAYS explain what is being done and why first.
+- NEVER commit or push changes to git unless explicitly requested by the user.
 """
     with open(global_rules_file, "w") as f:
         f.write(default_rules)
