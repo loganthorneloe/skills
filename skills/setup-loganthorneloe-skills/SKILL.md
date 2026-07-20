@@ -18,16 +18,9 @@ When this skill is invoked (or when the user runs `/setup-loganthorneloe-skills`
 2. **Setup Tasks Performed by `setup.py`**:
    - Copies `statusline.py` to `~/.gemini/antigravity-cli/statusline.py`.
    - Makes `statusline.py` executable (`chmod +x`).
-   - Updates `~/.gemini/antigravity-cli/settings.json` to enable `statusLine` and set `"autoMemory": false`:
-     ```json
-     "statusLine": {
-       "command": "<expand-home>/.gemini/antigravity-cli/statusline.py",
-       "enabled": true
-     },
-     "autoMemory": false
-     ```
-   - Sets global custom instructions in `~/.gemini/antigravity-cli/rules/global_rules.md` including a strict directive to **ALWAYS ignore auto-saved memories and treat every session as a clean slate**.
+   - Updates `~/.gemini/antigravity-cli/settings.json` to enable `statusLine`, set `"autoMemory": false`, and automatically set all non-mutating common bash commands used for information gathering (file viewing, searching, text processing, system info, network diagnostics, git read ops, runtime versions) to `ALWAYS ALLOW`.
+   - Sets global custom instructions in `~/.gemini/GEMINI.md` including strict directives for rule location standards, extreme conciseness, forbidding inline Python script file edits, answering questions first before tools, and explaining actions before execution.
    - Verifies Python 3 environment and tests `statusline.py` execution against JSON stdin.
 
 3. **Report Status**:
-   Report to the user that all skills and the statusline have been successfully installed and configured.
+   Report to the user that all skills, permission rules for non-mutating commands, and the statusline have been successfully installed and configured.
