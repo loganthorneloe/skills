@@ -1,92 +1,113 @@
 ---
 name: setup-lat
-description: "Configures a new agent harness with productivity defaults: conciseness rule, memory disabled, and documents turbo/auto-accept toggle. Run once on first use of any harness."
+description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes) using whatever config system the current agent harness supports."
 metadata:
   opencode/slash: "true"
 ---
 
 # Setup LAT (Logan Thorneloe's Agent defaults)
 
-One-time setup for any agent harness. You are the harness — use your own knowledge of your config system to apply three productivity defaults.
+**Harness-agnostic preference workflow.** You are running inside some agent harness. Discover that harness's config system and apply the preferences below as far as it allows. Do not assume pi, Claude Code, Codex, or any other specific product — use your knowledge of *this* harness.
+
+Do not ship or depend on harness-specific asset bundles. Implement preferences via the harness's native instructions, settings, permissions, keybindings, extensions, or docs.
 
 ---
 
-## Step 0: Identify Your Harness
+## Preferences (goals)
 
-Before doing anything, identify which harness you are running in:
+Apply these in order. Skip only what the harness cannot support; say so explicitly.
 
-1. Name the harness (e.g. "OpenCode", "Claude Code", "Gemini CLI", "Aider", etc.)
-2. List the config paths/files your harness uses for persistent instructions, memory, and permissions
-3. If you are unsure which harness you are, ask the user
-4. If the harness supports it, attempt to register this skill as a slash command (e.g. `/setup-lat`).
+| # | Preference | Intent |
+|---|------------|--------|
+| 1 | **Conciseness** | Always-on instruction: be extremely concise |
+| 2 | **No auto-memory** | Disable learned/auto memory between sessions |
+| 3 | **Modes: ask / plan / turbo** | Easy switch; default = ask (prompting), never turbo-by-default |
+| 4 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
 
-Report your findings before proceeding.
+### Mode semantics (map harness features to these names)
+
+| Mode | Behavior |
+|------|----------|
+| **ask** | Full tools; confirm before mutating actions (shell, writes, edits) |
+| **plan** | Read-only exploration; no file mutations; block destructive shell |
+| **turbo** | Full tools; no confirmation prompts |
+
+Ideal UX when the harness allows it:
+
+- One hotkey to cycle modes (prefer **Shift+Tab**)
+- Explicit commands/flags too (e.g. `/mode`, `/plan`, `/turbo`, CLI flags)
+- In ask mode, confirmations offer: **allow once** / **deny** / **always allow** (persistent allow-list if supported)
+- Turbo off by default
+
+Thinking / model keybinds are harness-specific QoL — only set them if the harness exposes them and the user wants defaults; do not invent conflicts with mode cycling.
 
 ---
 
-## Step 1: Conciseness Rule
-...
+## Workflow
 
-Add this exact line to your instruction/config file:
+### Step 0 — Identify the harness
+
+1. Name the harness you are running in
+2. List paths/files for: persistent instructions, settings, memory, permissions/modes, keybindings, extensions/plugins
+3. If unsure, ask the user
+4. If the harness can register this skill as a command, do so
+
+Report findings before changing anything.
+
+### Step 1 — Conciseness
+
+Add this exact line under a `## Rules` heading in the harness's persistent instruction file (global scope preferred):
 
 ```
 Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness ALWAYS.
 ```
 
-### What to do
+- Append/merge only — never overwrite existing instruction content
+- Use always-on / always-apply if the harness has rule activation modes
+- Create the file only if the harness expects one and it is missing
 
-1. Identify where your harness reads persistent instructions (e.g. project-level instruction files, rules directories, settings).
-2. If a file already exists, append the rule under a `## Rules` heading. Never overwrite existing content.
-3. If creating a new file, use whatever filename your harness expects for project-level instructions.
-4. If your harness uses a rules system with activation modes (always-apply vs conditional), set this rule to always apply.
+### Step 2 — Disable auto-memory
 
----
+1. Check for auto-memory / learned-memory / continuous-memory features
+2. If present: disable via settings (and env vars if supported); delete existing memory stores for that feature
+3. If absent: skip
+4. Do **not** delete ordinary session transcripts unless the user asks
 
-## Step 2: Disable Memory
+### Step 3 — Modes (ask / plan / turbo)
 
-Harness memory (auto-memory, learned conventions, session history) causes inconsistent behavior across sessions. Disable it and delete existing memory files.
+1. Research native permission modes, plan mode, auto-accept, bypass-permissions, etc.
+2. Map them onto ask / plan / turbo as closely as possible
+3. Wire the best available toggle (hotkey and/or command/flag)
+4. **Do not** leave turbo/auto-approve enabled by default
+5. If mutable tool calls can be gated, prefer ask-by-default with optional always-allow persistence
+6. Document the real harness controls (not aspirational ones) in persistent instructions under `## Agent Modes` (or `## Turbo Mode` if only one switch exists)
 
-### What to do
+If the harness cannot implement a mode, skip it and report the gap. Build only with native extension/plugin APIs if that is the normal way to configure *this* harness — do not drop in files meant for a different product.
 
-1. Research whether your harness has an auto-memory or learned-memory feature that writes persistent notes between sessions.
-2. If it does:
-   - Find the setting that disables it and set it.
-   - If your harness supports environment variables in its settings, set the disable flag there too.
-   - Delete any existing memory directories/files so old learned behavior doesn't persist.
-3. If it doesn't, skip this step.
+### Step 4 — Optional QoL (only if native + easy)
 
----
+- Model favorites / cycle list
+- Shorter skill/command aliases
+- Ensure this skills repo's skills are installed for the harness
 
-## Step 3: Turbo Mode (Auto-Accept)
+Never change default model/provider without asking.
 
-Document how to enable auto-approve so the user can toggle it when needed. **Do NOT enable turbo mode by default.** The goal is to make it easy to activate, not to have it always on.
+### Step 5 — Verify and report
 
-### What to do
+1. **Conciseness** — file + change
+2. **Memory** — disabled / skipped; anything deleted
+3. **Modes** — how to switch; default mode; allow-list if any
+4. **Keys/commands** — actual bindings for this harness
+5. **Unable** — what could not be configured and why
 
-1. Research whether your harness has a permission mode or auto-accept setting that controls whether the agent asks before executing tool calls (file writes, shell commands, edits).
-2. If it does:
-   - Find the most permissive mode available (e.g. `--auto` flag, "bypass permissions", "auto-accept", "dont-ask", "turbo").
-   - **Do NOT enable it by default in config files.** Leave the default permission mode as-is (prompting/ask).
-   - If it uses a CLI flag (e.g. `--auto`), document the flag in the instruction file under a `## Turbo Mode` section so the user can invoke it when desired.
-   - If it uses a config setting, document how to toggle it but leave it off.
-3. If it doesn't, skip this step.
-
----
-
-## Verification
-
-After applying all three steps, report what was configured:
-
-1. **Conciseness**: Which file was created/modified and what was added.
-2. **Memory**: Whether memory was disabled or skipped. List deleted memory directories if any.
-3. **Turbo**: Documented how to toggle turbo mode, or that it was skipped.
-
-If any step failed (file not writable, directory not found, setting doesn't exist), report the error and continue with remaining steps. After all steps complete, explicitly tell the user what you were UNABLE to configure and why.
+Reload/restart instructions if the harness needs them.
 
 ---
 
 ## Safety
 
-- Never delete files outside the harness's known config/memory directories.
-- Never overwrite existing config files — always merge or append.
-- If a setting already has a value, ask the user before changing it.
+- Harness-agnostic: no hard-coded paths for a single product except what you discovered in Step 0
+- Never delete outside known config/memory locations for this harness
+- Never overwrite config/instruction files — merge or append
+- Ask before changing an existing non-default setting
+- Never enable turbo/auto-approve by default
