@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes) using whatever config system the current agent harness supports."
+description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes, /clear=fresh session) using whatever config system the current agent harness supports."
 metadata:
   opencode/slash: "true"
 ---
@@ -21,8 +21,9 @@ Apply these in order. Skip only what the harness cannot support; say so explicit
 |---|------------|--------|
 | 1 | **Conciseness** | Always-on instruction: be extremely concise |
 | 2 | **No auto-memory** | Disable learned/auto memory between sessions |
-| 3 | **Modes: ask / plan / turbo** | Easy switch; default = ask (prompting), never turbo-by-default |
-| 4 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
+| 3 | **Modes: ask / plan / turbo** | Easy switch; default = **turbo** (no prompts) |
+| 4 | **`/clear` = fresh session** | `/clear` starts a new/empty session (same as harness `/new` / clear-conversation). Keep native names too |
+| 5 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
 
 ### Mode semantics (map harness features to these names)
 
@@ -37,9 +38,17 @@ Ideal UX when the harness allows it:
 - One hotkey to cycle modes (prefer **Shift+Tab**)
 - Explicit commands/flags too (e.g. `/mode`, `/plan`, `/turbo`, CLI flags)
 - In ask mode, confirmations offer: **allow once** / **deny** / **always allow** (persistent allow-list if supported)
-- Turbo off by default
+- **Turbo on by default**; easy switch to ask/plan
 
 Thinking / model keybinds are harness-specific QoL — only set them if the harness exposes them and the user wants defaults; do not invent conflicts with mode cycling.
+
+### `/clear` semantics
+
+Goal: **user types `/clear` → fresh session / wiped conversation context.**
+
+Map to whatever the harness calls that natively (`/new`, clear conversation, new chat, etc.). Prefer aliasing or registering `/clear` via native command/keybind/extension APIs. Keep the native command working too when possible.
+
+If `/clear` already means something else (e.g. clear TTY only), override it to mean fresh session, or ask if override is risky. If the harness cannot alias/register commands, skip and report.
 
 ---
 
@@ -48,7 +57,7 @@ Thinking / model keybinds are harness-specific QoL — only set them if the harn
 ### Step 0 — Identify the harness
 
 1. Name the harness you are running in
-2. List paths/files for: persistent instructions, settings, memory, permissions/modes, keybindings, extensions/plugins
+2. List paths/files for: persistent instructions, settings, memory, permissions/modes, keybindings, extensions/plugins, custom commands
 3. If unsure, ask the user
 4. If the harness can register this skill as a command, do so
 
@@ -78,13 +87,21 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 1. Research native permission modes, plan mode, auto-accept, bypass-permissions, etc.
 2. Map them onto ask / plan / turbo as closely as possible
 3. Wire the best available toggle (hotkey and/or command/flag)
-4. **Do not** leave turbo/auto-approve enabled by default
-5. If mutable tool calls can be gated, prefer ask-by-default with optional always-allow persistence
+4. **Default mode = turbo** (full tools, no confirmation). Keep ask/plan available via hotkey/commands.
+5. If mutable tool calls can be gated in ask mode, offer always-allow persistence when supported.
 6. Document the real harness controls (not aspirational ones) in persistent instructions under `## Agent Modes` (or `## Turbo Mode` if only one switch exists)
 
 If the harness cannot implement a mode, skip it and report the gap. Build only with native extension/plugin APIs if that is the normal way to configure *this* harness — do not drop in files meant for a different product.
 
-### Step 4 — Optional QoL (only if native + easy)
+### Step 4 — `/clear` = fresh session
+
+1. Discover native session-reset / new-conversation command(s) and APIs
+2. Wire `/clear` to that behavior (alias, custom slash command, keybind, or extension)
+3. Prefer keeping the native command (`/new`, etc.) working as well
+4. Document real reset commands in persistent instructions
+5. Skip + report if unsupported
+
+### Step 5 — Optional QoL (only if native + easy)
 
 - Model favorites / cycle list
 - Shorter skill/command aliases
@@ -92,13 +109,14 @@ If the harness cannot implement a mode, skip it and report the gap. Build only w
 
 Never change default model/provider without asking.
 
-### Step 5 — Verify and report
+### Step 6 — Verify and report
 
 1. **Conciseness** — file + change
 2. **Memory** — disabled / skipped; anything deleted
 3. **Modes** — how to switch; default mode; allow-list if any
-4. **Keys/commands** — actual bindings for this harness
-5. **Unable** — what could not be configured and why
+4. **`/clear`** — wired / skipped; native equivalent
+5. **Keys/commands** — actual bindings for this harness
+6. **Unable** — what could not be configured and why
 
 Reload/restart instructions if the harness needs them.
 
@@ -110,4 +128,4 @@ Reload/restart instructions if the harness needs them.
 - Never delete outside known config/memory locations for this harness
 - Never overwrite config/instruction files — merge or append
 - Ask before changing an existing non-default setting
-- Never enable turbo/auto-approve by default
+- Default mode is turbo; do not force ask-by-default

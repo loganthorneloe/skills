@@ -13,11 +13,12 @@
 3. The agent executing the skill must **discover** the current harness and its config system, then apply the skill's goals with native mechanisms (instructions, settings, permissions, keybindings, extensions).
 4. Harness-specific examples are OK only as brief illustrations. Prefer semantic goals ("enable read-only plan mode") over copy-paste for a named product.
 5. Do **not** commit machine-local harness config (e.g. `~/.pi/agent/extensions/*`) into skills. If a preference needs code, describe behavior; let the agent implement it for the active harness when possible.
-6. `setup-lat` especially: preference workflow only (conciseness, no auto-memory, ask/plan/turbo). No pi-only install trees.
+6. `setup-lat` especially: preference workflow only (conciseness, no auto-memory, ask/plan/turbo, /clear=fresh session). No pi-only install trees.
 
 ## LAT Preferences (reference)
 When relevant, honor these user defaults:
 - Conciseness always on
 - Auto-memory off
-- Modes: **ask** (default, confirm mutations) → **plan** (read-only) → **turbo** (no prompts)
-- Turbo never default-on
+- Modes: **turbo** (default, no prompts) → **ask** (confirm mutations) → **plan** (read-only)
+- Turbo default-on
+- `/clear` = fresh session (alias native `/new` / clear-conversation)
