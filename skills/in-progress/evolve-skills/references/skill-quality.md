@@ -1,16 +1,8 @@
----
-name: skill-quality
-description: "Constitution for authoring/editing agent skills. Use when writing, reviewing, pruning, or evolving any SKILL.md — predictability, invocation, progressive disclosure, prune rules."
-metadata:
-  internal: true
-  opencode/slash: "true"
----
-
 # Skill quality (constitution)
 
 Root virtue: **predictability of process** (same *way* every run), not identical output.
 
-Load only this file unless a term needs the glossary → [GLOSSARY.md](GLOSSARY.md).
+Load only this file unless a term needs the glossary → [skill-quality-glossary.md](skill-quality-glossary.md).
 
 ## Invocation
 

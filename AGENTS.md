@@ -72,6 +72,18 @@ INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill <wip-name
 
 No other official “status” field in Agent Skills / `npx skills` — use **path + `internal`**.
 
+## Invocation (user slash vs model)
+
+| Intent | How |
+|--------|-----|
+| **User entry** | Own `SKILL.md` + `disable-model-invocation: true` if slash-only |
+| **Internal steps** | **Not** separate skills. Put under `steps/` or `references/` inside the parent skill; parent says `read` them. No slash, no extra discovery. |
+| **Model-auto skill** | Top-level skill, no `disable-model-invocation`; optional `user-invocable: false` (Claude hides slash; pi may still list `/skill:name`) |
+
+**Do not** ship multi-step packs as many top-level skills if only one should appear in slash — pi discovers every `SKILL.md` and registers `/skill:name`.
+
+Evolve pack pattern: one `evolve-skills` skill; pipeline in `steps/*.md`.
+
 ## Harness-agnostic skills (required)
 
 1. Workflows/preferences, not product installers. Any harness.

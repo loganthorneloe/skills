@@ -17,14 +17,13 @@ Stable. Safe default install.
 
 ## In progress
 
-Workshop only. Marked `metadata.internal: true` — **omitted** from default `npx skills` list/install.
+Workshop only. `metadata.internal: true` — omitted from default `npx skills` list/install.
 
 | Skill | Description |
 | --- | --- |
-| [`evolve-skills` pack](skills/in-progress/) | Trajectory → health/mine/diagnose/propose/apply (+ `skill-quality`). See [in-progress README](skills/in-progress/README.md). |
+| [`evolve-skills`](skills/in-progress/evolve-skills/SKILL.md) | Trajectory → health/mine/diagnose/propose/apply. One slash entry; steps internal. |
 
 ```bash
-# list / install WIP
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-skills
 ```
@@ -32,25 +31,26 @@ INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-sk
 ## Repository Structure
 
 ```text
-skills/                         # repo root
+skills/
 ├── README.md
-├── AGENTS.md                   # conventions for agents + humans
+├── AGENTS.md
 └── skills/
     ├── <stable-skill>/SKILL.md
     └── in-progress/
         ├── README.md
-        └── <wip-skill>/SKILL.md   # metadata.internal: true
+        └── evolve-skills/
+            ├── SKILL.md          # user entry only
+            ├── steps/            # loaded on demand (not separate skills)
+            └── references/
 ```
 
 ## Install
 
 ```bash
-# stable only (default)
 npx skills add loganthorneloe/skills
 npx skills add loganthorneloe/skills --skill commit-and-push
 npx skills add loganthorneloe/skills --list
 
-# include in-progress
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills
 ```
 
