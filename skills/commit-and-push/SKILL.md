@@ -1,6 +1,8 @@
 ---
 name: commit-and-push
 description: Automatically inspects and updates affected READMEs, stages, commits, and pushes recent changes with conventional commit messages.
+metadata:
+  opencode/slash: "true"
 ---
 
 # Commit and Push Skill

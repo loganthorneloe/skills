@@ -11,6 +11,7 @@ Each subdirectory in `skills/` represents a distinct skill that can be loaded in
 | [`auto-loop`](skills/auto-loop/SKILL.md) | Autonomous continuous development loop (plan, implement, test, debug, verify) until 100% complete. |
 | [`commit-and-push`](skills/commit-and-push/SKILL.md) | Inspects and updates affected READMEs, stages, commits, and pushes changes with conventional commit messages. |
 | [`cost`](skills/cost/SKILL.md) | Calculates session token usage and estimated cost ($) across AI harnesses. |
+| [`setup-lat`](skills/setup-lat/SKILL.md) | One-time harness setup: conciseness rule, disable memory, turbo/auto-accept mode. |
 
 ## Repository Structure
 

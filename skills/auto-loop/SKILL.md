@@ -1,6 +1,8 @@
 ---
 name: auto-loop
 description: Executes an autonomous continuous development loop (plan, implement, test, debug, verify) until the project goal is 100% complete without stopping prematurely. Enables continuous auto-execution and recommends Turbo Mode.
+metadata:
+  opencode/slash: "true"
 ---
 
 # Auto-Loop & Continuous Completion Skill
