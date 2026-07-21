@@ -1,48 +1,57 @@
 # Development Skills for AI Coding Agents
 
-A collection of public, custom AI skills designed for development workflows across modern AI agent harnesses (Antigravity, Claude Code, Cursor, Codex, OpenCode).
+Public skills for AI coding agents (Claude Code, Codex, Cursor, OpenCode, pi, etc.).
 
-Each subdirectory in `skills/` represents a distinct skill that can be loaded into any supported AI harness via Vercel's `npx skills` CLI.
+Install with Vercel’s `npx skills` CLI. Layout and stability rules: [`AGENTS.md`](AGENTS.md).
 
 ## Available Skills
 
+Stable. Safe default install.
+
 | Skill | Description |
 | --- | --- |
-| [`auto-loop`](skills/auto-loop/SKILL.md) | Autonomous continuous development loop (plan, implement, test, debug, verify) until 100% complete. |
-| [`commit-and-push`](skills/commit-and-push/SKILL.md) | Inspects and updates affected READMEs, stages, commits, and pushes changes with conventional commit messages. |
-| [`cost`](skills/cost/SKILL.md) | Calculates session token usage and estimated cost ($) across AI harnesses. |
-| [`setup-lat`](skills/setup-lat/SKILL.md) | Harness-agnostic LAT setup: conciseness, no memory, ask/plan/turbo, `/clear`=fresh session. |
+| [`auto-loop`](skills/auto-loop/SKILL.md) | Autonomous continuous development loop until the goal is done. |
+| [`commit-and-push`](skills/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
+| [`cost`](skills/cost/SKILL.md) | Session token usage and estimated cost across harnesses. |
+| [`setup-lat`](skills/setup-lat/SKILL.md) | LAT prefs: conciseness, no memory, ask/plan/turbo, `/clear`=fresh session. |
+
+## In progress
+
+Workshop only. Marked `metadata.internal: true` — **omitted** from default `npx skills` list/install.
+
+| Skill | Description |
+| --- | --- |
+| [`evolve-skills` pack](skills/in-progress/) | Trajectory → health/mine/diagnose/propose/apply (+ `skill-quality`). See [in-progress README](skills/in-progress/README.md). |
+
+```bash
+# list / install WIP
+INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
+INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-skills
+```
 
 ## Repository Structure
 
 ```text
-skills/ (repository root)
-├── README.md                 # Repository overview and guidelines
-├── AGENTS.md                 # Agent guidelines for this repository
-├── .gitignore                # Git ignore rules
-└── skills/                   # Folder housing all skills (for Vercel CLI)
-    └── [skill-name]/         # Individual custom skill folder
-        ├── SKILL.md          # Main instructions & metadata (required)
-        └── scripts/          # Helper scripts (TypeScript or Python)
+skills/                         # repo root
+├── README.md
+├── AGENTS.md                   # conventions for agents + humans
+└── skills/
+    ├── <stable-skill>/SKILL.md
+    └── in-progress/
+        ├── README.md
+        └── <wip-skill>/SKILL.md   # metadata.internal: true
 ```
 
-## Installing and Activating Skills
+## Install
 
-This repository is compatible with Vercel's `skills` CLI. Install skills directly into any agent harness:
-
-### Install all skills from this repository
 ```bash
+# stable only (default)
 npx skills add loganthorneloe/skills
-```
-
-### Install a specific skill from this repository
-```bash
 npx skills add loganthorneloe/skills --skill commit-and-push
-```
-
-### List skills available in this repository
-```bash
 npx skills add loganthorneloe/skills --list
+
+# include in-progress
+INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills
 ```
 
-Once installed, the skills will be automatically loaded by your AI agent.
+Local dev: symlink `skills/<name>` or `skills/in-progress/<name>` into the harness skills directory.
