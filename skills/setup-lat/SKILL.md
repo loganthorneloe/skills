@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes, /clear=fresh session) using whatever config system the current agent harness supports."
+description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes, /clear=fresh session, autonomous /goal loop) using whatever config system the current agent harness supports."
 metadata:
   opencode/slash: "true"
 ---
@@ -23,7 +23,8 @@ Apply these in order. Skip only what the harness cannot support; say so explicit
 | 2 | **No auto-memory** | Disable learned/auto memory between sessions |
 | 3 | **Modes: ask / plan / turbo** | Easy switch; default = **turbo** (no prompts) |
 | 4 | **`/clear` = fresh session** | `/clear` starts a new/empty session (same as harness `/new` / clear-conversation). Keep native names too |
-| 5 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
+| 5 | **Autonomous `/goal` loop** | Set one visible session goal; keep running until implementation, tests, and verification succeed |
+| 6 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
 
 ### Mode semantics (map harness features to these names)
 
@@ -49,6 +50,22 @@ Goal: **user types `/clear` → fresh session / wiped conversation context.**
 Map to whatever the harness calls that natively (`/new`, clear conversation, new chat, etc.). Prefer aliasing or registering `/clear` via native command/keybind/extension APIs. Keep the native command working too when possible.
 
 If `/clear` already means something else (e.g. clear TTY only), override it to mean fresh session, or ask if override is risky. If the harness cannot alias/register commands, skip and report.
+
+### Autonomous `/goal` semantics
+
+Goal: **user types `/goal <task>` → agent starts immediately and continues autonomously until fully implemented, tested, and verified.**
+
+Ideal UX when the harness allows it:
+
+- `/goal <task>` sets/replaces the active session goal and starts work
+- `/goal` or `/goal show` displays it; `/goal clear` stops the loop
+- Show a concise goal in the footer/status area while active
+- Persist goal state within the session and restore the correct state when branching/resuming
+- Inject the active goal into each turn
+- When the agent settles without completion, enqueue another continuation automatically
+- Provide an explicit model completion action requiring a summary and concrete verification evidence; stop only after that action or `/goal clear`
+
+Use native loop/task/extension APIs. Avoid external polling processes. If the harness cannot register commands, completion actions, or follow-up turns, implement the closest safe approximation and report the gap. Warn that autonomous loops can make repeated model calls and incur cost.
 
 ---
 
@@ -101,7 +118,19 @@ If the harness cannot implement a mode, skip it and report the gap. Build only w
 4. Document real reset commands in persistent instructions
 5. Skip + report if unsupported
 
-### Step 5 — Optional QoL (only if native + easy)
+### Step 5 — Autonomous `/goal` loop
+
+1. Discover native commands, durable session state, turn hooks, model-callable completion actions, and footer/status UI
+2. Wire `/goal <task>` to store the goal and start work immediately
+3. Keep issuing continuation turns whenever the agent settles while the goal remains active
+4. Let the model complete the loop only through an explicit completion action containing a summary and concrete test/verification evidence
+5. Add `/goal`/`/goal show` and `/goal clear`; show a concise active goal in footer/status UI when available
+6. Restore branch/session state correctly; a new goal replaces the old one
+7. Document controls and repeated-call/cost behavior
+
+Do not use a harness-specific implementation in another harness. Skip unsupported pieces and report exact gaps.
+
+### Step 6 — Optional QoL (only if native + easy)
 
 - Model favorites / cycle list
 - Shorter skill/command aliases
@@ -109,14 +138,15 @@ If the harness cannot implement a mode, skip it and report the gap. Build only w
 
 Never change default model/provider without asking.
 
-### Step 6 — Verify and report
+### Step 7 — Verify and report
 
 1. **Conciseness** — file + change
 2. **Memory** — disabled / skipped; anything deleted
 3. **Modes** — how to switch; default mode; allow-list if any
 4. **`/clear`** — wired / skipped; native equivalent
-5. **Keys/commands** — actual bindings for this harness
-6. **Unable** — what could not be configured and why
+5. **`/goal`** — set/show/clear, continuation behavior, completion gate, persistence, footer/status
+6. **Keys/commands** — actual bindings for this harness
+7. **Unable** — what could not be configured and why
 
 Reload/restart instructions if the harness needs them.
 
