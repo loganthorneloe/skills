@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes, /clear=fresh session, autonomous /goal loop, compact Git status) using whatever config system the current agent harness supports."
+description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/lfg modes, /clear=fresh session, autonomous /goal loop, compact Git status) using whatever config system the current agent harness supports."
 metadata:
   opencode/slash: "true"
 ---
@@ -21,7 +21,7 @@ Apply these in order. Skip only what the harness cannot support; say so explicit
 |---|------------|--------|
 | 1 | **Conciseness** | Always-on instruction: be extremely concise |
 | 2 | **No auto-memory** | Disable learned/auto memory between sessions |
-| 3 | **Modes: ask / plan / turbo** | Easy switch; default = **turbo** (no prompts) |
+| 3 | **Modes: ask / plan / lfg** | Easy switch; default = **lfg** (no prompts) |
 | 4 | **`/clear` = fresh session** | `/clear` starts a new/empty session (same as harness `/new` / clear-conversation). Keep native names too |
 | 5 | **Autonomous `/goal` loop** | Set one visible session goal; keep running until implementation, tests, and verification succeed |
 | 6 | **Compact Git status** | Show clean/dirty worktree state without adding avoidable footer height |
@@ -29,18 +29,19 @@ Apply these in order. Skip only what the harness cannot support; say so explicit
 
 ### Mode semantics (map harness features to these names)
 
-| Mode | Behavior |
-|------|----------|
-| **ask** | Full tools; confirm before mutating actions (shell, writes, edits) |
-| **plan** | Read-only exploration; no file mutations; block destructive shell |
-| **turbo** | Full tools; no confirmation prompts |
+| Mode | Behavior | Indicator color |
+|------|----------|-----------------|
+| **ask** | Full tools; confirm before mutating actions (shell, writes, edits) | **Green** |
+| **plan** | Read-only exploration; no file mutations; block destructive shell | **Red** |
+| **lfg** | Full tools; no confirmation prompts | **Yellow** |
 
 Ideal UX when the harness allows it:
 
 - One hotkey to cycle modes (prefer **Shift+Tab**)
-- Explicit commands/flags too (e.g. `/mode`, `/plan`, `/turbo`, CLI flags)
+- Explicit commands/flags too (e.g. `/mode`, `/plan`, `/lfg`, CLI flags)
 - In ask mode, confirmations offer: **allow once** / **deny** / **always allow** (persistent allow-list if supported)
-- **Turbo on by default**; easy switch to ask/plan
+- **LFG on by default**; easy switch to ask/plan
+- If the harness already calls unrestricted mode `turbo`, expose `lfg` as the canonical user-facing name; retain `turbo` only as an optional compatibility alias
 
 Thinking / model keybinds are harness-specific QoL — only set them if the harness exposes them and the user wants defaults; do not invent conflicts with mode cycling.
 
@@ -113,14 +114,15 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 3. If absent: skip
 4. Do **not** delete ordinary session transcripts unless the user asks
 
-### Step 3 — Modes (ask / plan / turbo)
+### Step 3 — Modes (ask / plan / lfg)
 
 1. Research native permission modes, plan mode, auto-accept, bypass-permissions, etc.
-2. Map them onto ask / plan / turbo as closely as possible
+2. Map them onto ask / plan / lfg as closely as possible
 3. Wire the best available toggle (hotkey and/or command/flag)
-4. **Default mode = turbo** (full tools, no confirmation). Keep ask/plan available via hotkey/commands.
-5. If mutable tool calls can be gated in ask mode, offer always-allow persistence when supported.
-6. Document the real harness controls (not aspirational ones) in persistent instructions under `## Agent Modes` (or `## Turbo Mode` if only one switch exists)
+4. **Default mode = lfg** (full tools, no confirmation). Keep ask/plan available via hotkey/commands.
+5. Color mode indicators consistently: **ask = green**, **plan = red**, **lfg = yellow**.
+6. If mutable tool calls can be gated in ask mode, offer always-allow persistence when supported.
+7. Document the real harness controls (not aspirational ones) in persistent instructions under `## Agent Modes` (or `## LFG Mode` if only one switch exists)
 
 If the harness cannot implement a mode, skip it and report the gap. Build only with native extension/plugin APIs if that is the normal way to configure *this* harness — do not drop in files meant for a different product.
 
@@ -182,4 +184,4 @@ Reload/restart instructions if the harness needs them.
 - Never delete outside known config/memory locations for this harness
 - Never overwrite config/instruction files — merge or append
 - Ask before changing an existing non-default setting
-- Default mode is turbo; do not force ask-by-default
+- Default mode is lfg; do not force ask-by-default

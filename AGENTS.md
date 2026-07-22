@@ -97,5 +97,5 @@ Evolve pack pattern: one `evolve-skills` skill; pipeline in `steps/*.md`.
 
 - Conciseness always on
 - Auto-memory off
-- Modes: **turbo** (default) → **ask** → **plan**
+- Modes: **lfg** (default, yellow) → **ask** (green) → **plan** (red)
 - `/clear` = fresh session (alias native `/new` / clear-conversation)
