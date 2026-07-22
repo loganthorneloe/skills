@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes, /clear=fresh session, autonomous /goal loop) using whatever config system the current agent harness supports."
+description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/turbo modes, /clear=fresh session, autonomous /goal loop, compact Git status) using whatever config system the current agent harness supports."
 metadata:
   opencode/slash: "true"
 ---
@@ -24,7 +24,8 @@ Apply these in order. Skip only what the harness cannot support; say so explicit
 | 3 | **Modes: ask / plan / turbo** | Easy switch; default = **turbo** (no prompts) |
 | 4 | **`/clear` = fresh session** | `/clear` starts a new/empty session (same as harness `/new` / clear-conversation). Keep native names too |
 | 5 | **Autonomous `/goal` loop** | Set one visible session goal; keep running until implementation, tests, and verification succeed |
-| 6 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
+| 6 | **Compact Git status** | Show clean/dirty worktree state without adding avoidable footer height |
+| 7 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
 
 ### Mode semantics (map harness features to these names)
 
@@ -66,6 +67,19 @@ Ideal UX when the harness allows it:
 - Provide an explicit model completion action requiring a summary and concrete verification evidence; expose it to the model only while a goal is active, and stop only after that action or `/goal clear`
 
 Use native loop/task/extension APIs. Avoid external polling processes. If the harness cannot register commands, completion actions, or follow-up turns, implement the closest safe approximation and report the gap. Warn that autonomous loops can make repeated model calls and incur cost.
+
+### Compact Git status semantics
+
+When the current directory is inside a Git repository, show a compact worktree indicator:
+
+- `git ✓` — clean
+- `git +2 ~1 ?3 !1` — staged, unstaged, untracked, conflicts
+- Right-align it beneath the model indicator when the harness supports custom footer layout
+- Otherwise place it compactly in an existing single-line status/footer area
+- Preserve native footer information and other extension statuses
+- Hide it outside Git repositories
+- Refresh after mutation tools and external changes; prefer native file/Git events, otherwise use a lightweight session-scoped interval and clean it up on shutdown
+- Do not add a dedicated vertical line when it can share an existing one
 
 ---
 
@@ -130,7 +144,16 @@ If the harness cannot implement a mode, skip it and report the gap. Build only w
 
 Do not use a harness-specific implementation in another harness. Skip unsupported pieces and report exact gaps.
 
-### Step 6 — Optional QoL (only if native + easy)
+### Step 6 — Compact Git status
+
+1. Discover native Git state, footer/status, and custom layout APIs
+2. Add the compact clean/dirty indicator described above
+3. Prefer right alignment beneath model information without replacing or dropping native footer data
+4. Refresh promptly after writes/edits/shell mutations and eventually after external changes
+5. Keep watchers/timers session-scoped and clean them up on reload, session switch, and shutdown
+6. If custom alignment is unsupported, use the existing status line; skip + report if no compact status surface exists
+
+### Step 7 — Optional QoL (only if native + easy)
 
 - Model favorites / cycle list
 - Shorter skill/command aliases
@@ -138,15 +161,16 @@ Do not use a harness-specific implementation in another harness. Skip unsupporte
 
 Never change default model/provider without asking.
 
-### Step 7 — Verify and report
+### Step 8 — Verify and report
 
 1. **Conciseness** — file + change
 2. **Memory** — disabled / skipped; anything deleted
 3. **Modes** — how to switch; default mode; allow-list if any
 4. **`/clear`** — wired / skipped; native equivalent
 5. **`/goal`** — set/show/clear, continuation behavior, completion gate, persistence, footer/status
-6. **Keys/commands** — actual bindings for this harness
-7. **Unable** — what could not be configured and why
+6. **Git status** — clean/dirty formats, placement, refresh behavior, non-repo behavior
+7. **Keys/commands** — actual bindings for this harness
+8. **Unable** — what could not be configured and why
 
 Reload/restart instructions if the harness needs them.
 
