@@ -111,7 +111,7 @@ Reason from retrieved evidence, not provider-generated answers. Separate:
 - unknowns
 - recommendations, if requested
 
-Place a citation immediately after the claim it supports. Prefer descriptive links, e.g. `[NIST guidance](https://…)`, not a detached source dump. For pivotal claims, include a short quote, table/page/section locator, or exact datum when available.
+Place a citation immediately after the claim it supports. Prefer descriptive links, e.g. `[NIST guidance](https://…)`. For pivotal claims, include a short quote, table/page/section locator, or exact datum when available. Inline citations remain required even though the report also ends with a bibliography.
 
 ## Deliverable
 
@@ -122,7 +122,16 @@ Use the smallest structure that remains auditable:
 3. **Contradictions, limitations, and uncertainty**
 4. **Implications or recommendation**, if relevant
 5. **Method note**: scope, search period, and major exclusions
+6. **Sources**: a full bibliography as the final section
 
-End with unanswered questions only when they matter. Never pad the report to appear deep.
+Put any material unanswered questions before **Sources**. The bibliography must:
+
+- include every source cited or materially relied upon, including sources used mainly for disagreement or limitations
+- deduplicate sources and provide author or organization, title, publisher/site, publication date when available, and direct URL
+- use a consistent, readable format; sort alphabetically by author/organization unless numbered citation order better fits the report
+- mark inaccessible or partially reviewed sources and include a retrieval date when publication date is unavailable
+- exclude mere search-result snippets and discarded candidates that did not inform the report
+
+Never pad the report to appear deep.
 
 For follow-up review, keep the workflow in chat. Incorporate the user's feedback and any newly researched evidence, then return the complete revised report rather than partial sections, tags, comments, or a separate review artifact—unless the user explicitly requests otherwise.

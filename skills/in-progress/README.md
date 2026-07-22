@@ -19,7 +19,7 @@ Local: symlink `skills/in-progress/<name>` → harness skills dir.
 
 | Skill | Notes |
 | --- | --- |
-| [`deep-research`](deep-research/SKILL.md) | Evidence-backed internet research workflow; uses native search/fetch capabilities. |
+| [`deep-research`](deep-research/SKILL.md) | Evidence-backed internet research with claim-level citations and a full bibliography. |
 | [`evolve-skills`](evolve-skills/SKILL.md) | **Only** user-facing evolve entry. Steps under `steps/`; law under `references/`. |
 | [`send-to-email`](send-to-email/SKILL.md) | Preserve transient work as a durable email handoff; resolve context, preview, confirm, and send. |
 
