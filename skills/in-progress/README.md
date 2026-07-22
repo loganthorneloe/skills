@@ -1,6 +1,6 @@
 # In progress
 
-Workshop skills. Rough edges expected. **Not** in the stable README table.
+Workshop skills. Rough edges expected. **Not** in the RTG README table.
 
 ## Install
 
@@ -28,6 +28,6 @@ Workers are **not** separate skills (no slash noise). Router loads `steps/*.md` 
 ## Graduate
 
 1. Drop `metadata.internal`
-2. `mv skills/in-progress/<name> skills/<name>`
+2. `mv skills/in-progress/<name> skills/rtg/<name>`
 3. Root README Available Skills row; remove its entry here
 4. `feat(skills): graduate <name>`

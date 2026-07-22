@@ -6,13 +6,13 @@ Install with Vercel’s `npx skills` CLI. Layout and stability rules: [`AGENTS.m
 
 ## Available Skills
 
-Stable. Safe default install.
+RTG (completed). Safe default install.
 
 | Skill | Description |
 | --- | --- |
-| [`commit-and-push`](skills/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
-| [`cost`](skills/cost/SKILL.md) | Session token usage and estimated cost across harnesses. |
-| [`setup-lat`](skills/setup-lat/SKILL.md) | LAT prefs: conciseness, no memory, modes, `/clear`, autonomous `/goal`, compact Git status. |
+| [`commit-and-push`](skills/rtg/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
+| [`cost`](skills/rtg/cost/SKILL.md) | Session token usage and estimated cost across harnesses. |
+| [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs: conciseness, no memory, modes, `/clear`, autonomous `/goal`, compact Git status. |
 
 ## In progress
 
@@ -38,7 +38,8 @@ skills/
 ├── README.md
 ├── AGENTS.md
 └── skills/
-    ├── <stable-skill>/SKILL.md
+    ├── rtg/
+    │   └── <completed-skill>/SKILL.md
     └── in-progress/
         ├── README.md
         └── evolve-skills/
@@ -57,4 +58,4 @@ npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills
 ```
 
-Local dev: symlink `skills/<name>` or `skills/in-progress/<name>` into the harness skills directory.
+Local dev: symlink `skills/rtg/<name>` or `skills/in-progress/<name>` into the harness skills directory.

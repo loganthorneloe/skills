@@ -12,13 +12,13 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 4. **Install**: `npx skills add loganthorneloe/skills`. Local test: symlink into harness skills dir.
 5. **Commits**: conventional (`feat(skills): …`, `fix(skills): …`).
 
-## Stable vs in-progress
+## RTG vs in-progress
 
 Two tiers. Do not mix.
 
 | Tier | Path | `metadata.internal` | README |
 |------|------|---------------------|--------|
-| **Stable** | `skills/<name>/` | omit or `false` | Root **Available Skills** table |
+| **RTG (completed)** | `skills/rtg/<name>/` | omit or `false` | Root **Available Skills** table |
 | **In progress** | `skills/in-progress/<name>/` | **`true` (required)** | `skills/in-progress/README.md` + short root **In progress** blurb |
 
 ### Why
@@ -26,9 +26,9 @@ Two tiers. Do not mix.
 - `npx skills` hides `metadata.internal: true` unless `INSTALL_INTERNAL_SKILLS=1`
 - Folder makes WIP obvious in git; flag makes WIP non-default for consumers
 
-### New stable skill
+### New completed skill
 
-1. `skills/<name>/SKILL.md` (no `internal: true`)
+1. `skills/rtg/<name>/SKILL.md` (no `internal: true`)
 2. Row in root `README.md` → **Available Skills**
 3. Thin SKILL.md; heavy detail in `references/` if needed
 
@@ -48,16 +48,16 @@ metadata:
 4. Do **not** add to root Available Skills table
 5. Description may say WIP; internal flag is what hides from default CLI
 
-### Graduate WIP → stable
+### Graduate WIP → RTG
 
 1. Remove `internal: true` (delete key; drop empty `metadata` only if nothing else left)
-2. `mv skills/in-progress/<name> skills/<name>`
+2. `mv skills/in-progress/<name> skills/rtg/<name>`
 3. Root README Available Skills row; remove from `skills/in-progress/README.md`
 4. Commit: `feat(skills): graduate <name>`
 
-### Demote stable → WIP
+### Demote RTG → WIP
 
-1. `mv skills/<name> skills/in-progress/<name>`
+1. `mv skills/rtg/<name> skills/in-progress/<name>`
 2. Set `metadata.internal: true`
 3. Swap README rows
 4. Commit: `chore(skills): demote <name> to in-progress`
@@ -65,7 +65,7 @@ metadata:
 ### CLI cheatsheet
 
 ```bash
-npx skills add loganthorneloe/skills --list          # stable only
+npx skills add loganthorneloe/skills --list          # RTG only
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill <wip-name>
 ```
