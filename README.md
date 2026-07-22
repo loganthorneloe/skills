@@ -10,7 +10,6 @@ Stable. Safe default install.
 
 | Skill | Description |
 | --- | --- |
-| [`auto-loop`](skills/auto-loop/SKILL.md) | Autonomous continuous development loop until the goal is done. |
 | [`commit-and-push`](skills/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
 | [`cost`](skills/cost/SKILL.md) | Session token usage and estimated cost across harnesses. |
 | [`setup-lat`](skills/setup-lat/SKILL.md) | LAT prefs: conciseness, no memory, modes, `/clear`, autonomous `/goal` loop. |
