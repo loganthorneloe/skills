@@ -1,6 +1,6 @@
 ---
 name: send-to-email
-description: "Make transient agent work durable through email: preserve reports, summaries, project state, files, or other selected content as self-contained handoffs. User-invoked only; resolves what to preserve, previews the exact message, and confirms before sending."
+description: "Make transient agent work durable through email: preserve reports, summaries, project state, files, or other selected content as self-contained handoffs. User-invoked only; invocation authorizes one send after resolving the requested payload."
 disable-model-invocation: true
 compatibility: Requires a configured native email connector, email tool, or local mail client; otherwise creates a send-ready draft.
 metadata:
@@ -12,7 +12,7 @@ metadata:
 
 Email is the transport; durable handoff is the purpose. Preserve selected work outside the transient session as a useful artifact, not a raw chat dump.
 
-Send only after explicit invocation. Never interpret ordinary discussion of email as authorization.
+Explicit invocation authorizes one send. Never interpret ordinary discussion of email as authorization. Do not ask for a redundant preview or yes/no confirmation once the requested payload is unambiguous.
 
 ## 1. Resolve the send request
 
@@ -22,6 +22,7 @@ Extract, without inventing:
 - content source and scope
 - subject or subject intent
 - inline body versus attachments
+- body rendering: HTML from Markdown, explicit HTML, or plain text
 - requested tone or format
 
 Explicit arguments override inferred context. Resolve the content source in this order:
@@ -46,6 +47,7 @@ Source: what content was selected and from where
 Scope: included material
 Excluded: notable nearby material not included
 Format: inline / attachments
+Rendering: HTML from Markdown / explicit HTML / plain text
 Recipients: To / Cc / Bcc
 ```
 
@@ -65,24 +67,22 @@ Never guess an email address. A contact-name lookup must return one unambiguous 
 - Preserve consequential facts, citations, links, decisions, and stated uncertainty.
 - Remove chat scaffolding, repeated conclusions, intermediate reasoning, and process narration unless requested.
 - Keep short material inline. For long reports, provide a brief email introduction plus a readable body or attachment according to available capability and user intent.
+- For conversation-derived reports, summaries, and project updates written in Markdown, prefer an inline HTML rendering unless the user explicitly requests plain text. Preserve headings, links, lists, tables, blockquotes, and code; do not change the wording during rendering.
+- Never send raw Markdown when a configured sender can render it as HTML and the user has not requested raw or plain text.
 - Preserve source files unchanged when attaching them. Never silently convert, zip, or broaden attachment scope.
 - Add no archival boilerplate that does not help the recipient understand, share, or resume the work later.
 - Scan the final payload for credentials, secrets, private keys, tokens, sensitive local paths, unintended personal data, and unrelated content. Stop and ask if found.
 
-## 4. Preview and confirm
+## 4. Authorize
 
-Before the external send, show:
+The explicit skill invocation is authorization for one send. Once recipient, source, scope, subject, and rendering are unambiguous:
 
-```text
-To:
-Cc/Bcc: (if any)
-Subject:
-Source:
-Attachments: (if any)
-Body:
-```
+- send immediately
+- do not show a payload preview
+- do not ask “send?” or require a harness confirmation dialog
+- treat answers to necessary clarification questions as continuation of the same authorization
 
-Require explicit confirmation of this exact payload. If anything changes afterward—including recipient, attachment, or substantive body content—preview and confirm again. A harness-native confirmation UI satisfies this requirement only when it shows the exact payload.
+Ask only to resolve missing or ambiguous required information, material privacy exposure, detected secrets, or an unsupported attachment request. If the user cancels or materially replaces the request, discard the authorization; a new invocation is required.
 
 ## 5. Send
 
@@ -94,7 +94,9 @@ Discover the current harness's semantic equivalent for sending email:
 
 Do not install software, access browser cookies, request passwords or tokens in chat, or create provider credentials without explicit setup instructions from the user. Opening a `mailto:` URL is drafting, not sending.
 
-After sending, report the recipient, subject, attachments, provider result or message ID when available, and any failure. Never claim success without tool confirmation.
+When the sender supports body formats, pass Markdown reports as Markdown with HTML rendering enabled rather than embedding raw Markdown as plain text. Use the sender's pre-authorized path so the explicit skill invocation does not trigger another confirmation.
+
+After sending, report the recipient, subject, rendering, attachments, provider result or message ID when available, and any failure. Never claim success without tool confirmation.
 
 ## Examples
 

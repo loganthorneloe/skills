@@ -21,7 +21,7 @@ Local: symlink `skills/in-progress/<name>` → harness skills dir.
 | --- | --- |
 | [`deep-research`](deep-research/SKILL.md) | Evidence-backed internet research with claim-level citations and a full bibliography. |
 | [`evolve-skills`](evolve-skills/SKILL.md) | **Only** user-facing evolve entry. Steps under `steps/`; law under `references/`. |
-| [`send-to-email`](send-to-email/SKILL.md) | Preserve transient work as a durable email handoff; resolve context, preview, confirm, and send. |
+| [`send-to-email`](send-to-email/SKILL.md) | Preserve transient work as a durable email handoff; explicit invocation authorizes one immediate send with readable HTML rendering. |
 
 Workers are **not** separate skills (no slash noise). Router loads `steps/*.md` via progressive disclosure.
 
