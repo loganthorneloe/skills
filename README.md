@@ -20,11 +20,15 @@ Workshop only. `metadata.internal: true` — omitted from default `npx skills` l
 
 | Skill | Description |
 | --- | --- |
+| [`deep-research`](skills/in-progress/deep-research/SKILL.md) | Iterative web research with primary-source verification, contradiction checks, and claim-level citations. |
 | [`evolve-skills`](skills/in-progress/evolve-skills/SKILL.md) | Trajectory → health/mine/diagnose/propose/apply. One slash entry; steps internal. |
+| [`send-to-email`](skills/in-progress/send-to-email/SKILL.md) | Preserve transient work as a durable email handoff; resolve context, preview, confirm, and send. |
 
 ```bash
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
+INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill deep-research
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-skills
+INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill send-to-email
 ```
 
 ## Repository Structure
