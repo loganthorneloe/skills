@@ -63,7 +63,7 @@ Ideal UX when the harness allows it:
 - Persist goal state within the session and restore the correct state when branching/resuming
 - Inject the active goal into each turn
 - When the agent settles without completion, enqueue another continuation automatically
-- Provide an explicit model completion action requiring a summary and concrete verification evidence; stop only after that action or `/goal clear`
+- Provide an explicit model completion action requiring a summary and concrete verification evidence; expose it to the model only while a goal is active, and stop only after that action or `/goal clear`
 
 Use native loop/task/extension APIs. Avoid external polling processes. If the harness cannot register commands, completion actions, or follow-up turns, implement the closest safe approximation and report the gap. Warn that autonomous loops can make repeated model calls and incur cost.
 
@@ -123,7 +123,7 @@ If the harness cannot implement a mode, skip it and report the gap. Build only w
 1. Discover native commands, durable session state, turn hooks, model-callable completion actions, and footer/status UI
 2. Wire `/goal <task>` to store the goal and start work immediately
 3. Keep issuing continuation turns whenever the agent settles while the goal remains active
-4. Let the model complete the loop only through an explicit completion action containing a summary and concrete test/verification evidence
+4. Let the model complete the loop only through an explicit completion action containing a summary and concrete test/verification evidence; keep that action hidden/disabled when no goal is active
 5. Add `/goal`/`/goal show` and `/goal clear`; show a concise active goal in footer/status UI when available
 6. Restore branch/session state correctly; a new goal replaces the old one
 7. Document controls and repeated-call/cost behavior
