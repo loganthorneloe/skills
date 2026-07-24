@@ -10,9 +10,10 @@ RTG (completed). Safe default install.
 
 | Skill | Description |
 | --- | --- |
+| [`brand`](skills/rtg/brand/SKILL.md) | Apply the AI for Software Engineers brand to slides, videos, diagrams, thumbnails, and illustrations. |
 | [`commit-and-push`](skills/rtg/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
 | [`cost`](skills/rtg/cost/SKILL.md) | Session token usage and estimated cost across harnesses. |
-| [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs: conciseness, no memory, modes, `/clear`, autonomous `/goal`, compact Git status. |
+| [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs plus branded visual tooling with `/brand` and Bento Slides. |
 
 ## In progress
 

@@ -92,6 +92,8 @@ Evolve pack pattern: one `evolve-skills` skill; pipeline in `steps/*.md`.
 4. Harness examples OK as brief illustrations. Prefer semantic goals.
 5. Do not commit machine-local harness config into skills.
 6. `setup-lat`: preference workflow only. No pi-only install trees.
+7. Skill installs must target one current harness + one scope. Never use all-agent fan-out when native and shared discovery roots may overlap.
+8. After changing install instructions, audit every discovered root for duplicate frontmatter names; zero skill collisions required.
 
 ## LAT Preferences (reference)
 

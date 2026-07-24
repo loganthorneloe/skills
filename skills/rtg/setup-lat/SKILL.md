@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/lfg modes, /clear=fresh session, autonomous /goal loop, compact Git status) using whatever config system the current agent harness supports."
+description: "Harness-agnostic workflow: apply LAT preferences (conciseness, no memory, ask/plan/lfg modes, /clear, autonomous /goal, compact Git status) and configure branded visual tooling using the current harness."
 metadata:
   opencode/slash: "true"
 ---
@@ -26,6 +26,7 @@ Apply these in order. Skip only what the harness cannot support; say so explicit
 | 5 | **Autonomous `/goal` loop** | Set one visible session goal; keep running until implementation, tests, and verification succeed |
 | 6 | **Compact Git status** | Show clean/dirty worktree state without adding avoidable footer height |
 | 7 | **Document controls** | Write how to toggle modes/keys into persistent instructions |
+| 8 | **Branded visual tooling** | Default visual deliverables to `/brand`; ensure Bento Slides is available |
 
 ### Mode semantics (map harness features to these names)
 
@@ -155,15 +156,40 @@ Do not use a harness-specific implementation in another harness. Skip unsupporte
 5. Keep watchers/timers session-scoped and clean them up on reload, session switch, and shutdown
 6. If custom alignment is unsupported, use the existing status line; skip + report if no compact status surface exists
 
-### Step 7 — Optional QoL (only if native + easy)
+### Step 7 — Branded visual content
+
+1. Determine the current harness's `npx skills` agent ID and whether `setup-lat` is project- or user-scoped. Every install below must target **only that agent and scope** (add `--agent <current-agent-id>` and, for user scope, `-g`). Never use `--all`.
+
+2. Install or update only `/brand` from this repository; do not reinstall its full RTG set:
+
+   ```bash
+   npx --yes skills add loganthorneloe/skills --skill brand --agent <current-agent-id> -y
+   ```
+
+3. Add this exact rule to the harness's persistent instructions under `## Brand`:
+
+   ```text
+   For visual deliverables (slides, videos, diagrams, charts, thumbnails, illustrations, and motion graphics), load `/brand` unless the user explicitly requests another brand or an unbranded output. `/brand` routes branded slides through `/bento-slides`.
+   ```
+
+4. Install or update Bento Slides for the current harness:
+
+   ```bash
+   npx --yes skills add nyblnet/bento --skill bento-slides --agent <current-agent-id> -y
+   ```
+
+5. Audit every skill root the harness discovers. Group `SKILL.md` files by frontmatter `name`; each name must resolve to one physical skill. Remove only confirmed installer-managed duplicate links/copies, preserving the newest canonical install and anything other harnesses still need. For Pi specifically, both `~/.pi/agent/skills` and `~/.agents/skills` are auto-discovered, so never leave the same skill in both.
+
+6. Verify `/brand` and `/bento-slides` are discoverable with zero name-collision diagnostics. Reload the harness if newly installed skills are not visible immediately.
+
+### Step 8 — Optional QoL (only if native + easy)
 
 - Model favorites / cycle list
 - Shorter skill/command aliases
-- Ensure this skills repo's skills are installed for the harness
 
 Never change default model/provider without asking.
 
-### Step 8 — Verify and report
+### Step 9 — Verify and report
 
 1. **Conciseness** — file + change
 2. **Memory** — disabled / skipped; anything deleted
@@ -171,8 +197,9 @@ Never change default model/provider without asking.
 4. **`/clear`** — wired / skipped; native equivalent
 5. **`/goal`** — set/show/clear, continuation behavior, completion gate, persistence, footer/status
 6. **Git status** — clean/dirty formats, placement, refresh behavior, non-repo behavior
-7. **Keys/commands** — actual bindings for this harness
-8. **Unable** — what could not be configured and why
+7. **Brand/content skills** — `/brand` and `/bento-slides` available; persistent visual-brand rule added
+8. **Keys/commands** — actual bindings for this harness
+9. **Unable** — what could not be configured and why
 
 Reload/restart instructions if the harness needs them.
 
