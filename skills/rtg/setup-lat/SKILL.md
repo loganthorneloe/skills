@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: 'Load when the user says "set up LAT", "apply Logan''s agent defaults", "configure ask plan lfg modes", or requests LAT preferences, /clear, /goal, compact Git status, and branded visual tooling in an agent harness.'
+description: 'Load when the user says "set up LAT", "apply Logan''s agent defaults", "configure ask plan lfg modes", or requests LAT preferences, /clear, /goal, compact Git status, MCP connectivity, and branded visual tooling in an agent harness.'
 metadata:
   opencode/slash: "true"
 ---
@@ -37,7 +37,13 @@ Merge existing configuration; never overwrite an entire config/instruction file.
 
 Criterion: each configured control is callable in the current harness and persisted at the resolved scope.
 
-## 3. Configure branded visuals
+## 3. Enable MCP connectivity
+
+Use native MCP support when available. Otherwise use the harness's native extension/plugin mechanism and the reference's harness-specific branch. Install no MCP server and configure no credentials unless separately requested.
+
+Criterion: MCP support is persisted, loaded after reload/restart, and exposes its native status/setup control.
+
+## 4. Configure branded visuals
 
 Follow the reference's exact installation scope rules. Install/update only `/brand` from this repository and `/bento-slides` from Bento's repository for the current harness/agent. Add the exact persistent brand-routing rule.
 
@@ -45,7 +51,7 @@ Audit every skill root discovered by this harness. Each frontmatter name must re
 
 Criterion: `/brand` and `/bento-slides` are discoverable with zero name-collision diagnostics.
 
-## 4. Verify
+## 5. Verify
 
 Exercise, do not merely inspect:
 
@@ -55,6 +61,7 @@ Exercise, do not merely inspect:
 - `/clear` starts a fresh conversation;
 - `/goal` set/show/clear, continuation, completion gate, session restore, and status indicator;
 - Git indicator shows clean/dirty forms and hides outside repositories;
+- MCP support loads and its status/setup control runs;
 - brand skills load without collisions.
 
 Hard exit: every supported preference has concrete test evidence. Unsupported capability, failed install, or untestable behavior is reported **blocked/unsupported**, never “configured.”
@@ -68,4 +75,4 @@ Hard exit: every supported preference has concrete test evidence. Unsupported ca
 
 ## Report
 
-Return changed paths, real controls/keybindings, scope, per-preference test evidence, skill collision audit, reload instructions, and exact unsupported gaps.
+Return changed paths, real controls/keybindings, MCP mechanism/status, scope, per-preference test evidence, skill collision audit, reload instructions, and exact unsupported gaps.

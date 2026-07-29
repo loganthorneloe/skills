@@ -53,7 +53,22 @@ Inside a Git repository show:
 
 Prefer right alignment beneath model information without adding a dedicated row. Otherwise share an existing status line. Preserve native footer data. Hide outside Git repositories. Refresh after mutation tools and external changes; prefer native events, otherwise a lightweight session-scoped interval cleaned up on reload, session switch, and shutdown.
 
-## 6. Branded visual tooling
+## 6. MCP connectivity
+
+Enable MCP through the current harness's native client when available. Otherwise use its native extension/plugin mechanism; do not add a standalone compatibility layer outside the harness.
+
+For Pi, install and enable the token-efficient `pi-mcp-adapter` as a user package. Resolve and pin the current registry version rather than using a floating tag:
+
+```bash
+version="$(npm view pi-mcp-adapter version)"
+pi install "npm:pi-mcp-adapter@$version"
+```
+
+Verify the package appears in `pi list` and the persistent package list, then reload or restart and invoke `/mcp`. Installation is incomplete until `/mcp` loads without an extension error. Do not add MCP servers, import host-specific MCP configuration, or configure credentials unless the user requests that separate action.
+
+For another harness, persist its native MCP enablement and run its server-status or setup command. If neither native MCP nor a documented extension/plugin API exists, report MCP as unsupported rather than installing another harness's files.
+
+## 7. Branded visual tooling
 
 Determine the current harness's `npx skills` agent ID and whether setup is project- or user-scoped. Every install targets exactly that agent and scope; add `-g` only for user scope. Never use `--all`.
 
@@ -77,7 +92,7 @@ npx --yes skills add nyblnet/bento --skill bento-slides --agent <current-agent-i
 
 Audit every discovered skill root. Group `SKILL.md` files by frontmatter `name`; one name must resolve to one physical skill. Remove only confirmed installer-managed duplicate links/copies, preserving the newest canonical install and anything another harness still needs. Reload the harness if new skills are not immediately visible.
 
-## 7. Optional QoL
+## 8. Optional QoL
 
 Configure model favorites/cycling or short command aliases only when native, easy, and requested. Never change the default model/provider without asking.
 
@@ -90,4 +105,6 @@ Configure model favorites/cycling or short command aliases only when native, eas
 - Disabling auto-memory does not authorize deleting transcripts, authored notes, or unrelated caches.
 - A footer that drops native information or leaks timers/watchers is not complete.
 - A stored goal without autonomous continuation and evidence-gated completion is only a partial implementation; label the gap.
+- An installed MCP package is not necessarily enabled or loaded. Verify persisted enablement and invoke the harness's MCP status/setup control after reload.
+- MCP enablement does not authorize importing server definitions or credentials from another host.
 - Installed files alone do not prove discoverability. Run the harness's list/load check and inspect collision diagnostics.
