@@ -163,7 +163,7 @@ Do not use a harness-specific implementation in another harness. Skip unsupporte
 2. Install or update only `/brand` from this repository; do not reinstall its full RTG set:
 
    ```bash
-   npx --yes skills add loganthorneloe/skills --skill brand --agent <current-agent-id> -y
+   INSTALL_INTERNAL_SKILLS=1 npx --yes skills add loganthorneloe/skills --skill brand --agent <current-agent-id> -y
    ```
 
 3. Add this exact rule to the harness's persistent instructions under `## Brand`:

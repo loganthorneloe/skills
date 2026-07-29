@@ -2,6 +2,7 @@
 name: brand
 description: Apply Logan Thorneloe's AI for Software Engineers brand to presentations, videos, diagrams, thumbnails, and illustrations. Must use for visual content created for Logan or AI for Software Engineers unless the user explicitly requests another brand or an unbranded output.
 metadata:
+  internal: true
   opencode/slash: "true"
 ---
 

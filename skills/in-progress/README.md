@@ -8,9 +8,9 @@ Hidden from default `npx skills` (`metadata.internal: true`).
 
 ```bash
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
+INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill brand
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill deep-research
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-skills
-INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill send-to-email
 ```
 
 Local: symlink `skills/in-progress/<name>` → harness skills dir.
@@ -19,9 +19,9 @@ Local: symlink `skills/in-progress/<name>` → harness skills dir.
 
 | Skill | Notes |
 | --- | --- |
+| [`brand`](brand/SKILL.md) | AI for Software Engineers visual identity; hidden from default installs. |
 | [`deep-research`](deep-research/SKILL.md) | Evidence-backed internet research with claim-level citations and a full bibliography. |
 | [`evolve-skills`](evolve-skills/SKILL.md) | **Only** user-facing evolve entry. Steps under `steps/`; law under `references/`. |
-| [`send-to-email`](send-to-email/SKILL.md) | Preserve transient work as a durable email handoff; explicit invocation authorizes one immediate send with readable HTML rendering. |
 
 Workers are **not** separate skills (no slash noise). Router loads `steps/*.md` via progressive disclosure.
 
