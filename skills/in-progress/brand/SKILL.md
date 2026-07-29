@@ -1,6 +1,6 @@
 ---
 name: brand
-description: Apply Logan Thorneloe's AI for Software Engineers brand to presentations, videos, diagrams, thumbnails, and illustrations. Must use for visual content created for Logan or AI for Software Engineers unless the user explicitly requests another brand or an unbranded output.
+description: 'Load when the user says "make this on-brand", "use the AI for Software Engineers brand", "create branded slides", or requests visual content for Logan Thorneloe or AI for Software Engineers.'
 metadata:
   internal: true
   opencode/slash: "true"
@@ -8,29 +8,28 @@ metadata:
 
 # Brand
 
-Create in the AI for Software Engineers visual identity. Read [`references/brand.md`](references/brand.md) before authoring.
-
-## Invocation policy
-
-Use this skill by default for **visual deliverables** for Logan or AI for Software Engineers: slides, videos, diagrams, charts, thumbnails, illustrations, and motion graphics. Do not apply it to plain prose, research, code, or operational work unless visual output is part of the request. Another named brand or an explicit unbranded request overrides this default.
-
-`/brand` is the entry point for branded visual work. Do not invoke `/bento-slides` alone when the output should carry this brand.
-
-## Compose with upstream skills
-
-- **Slides/presentations:** load and follow `/bento-slides` for its document contract, then apply this brand.
-- **Video/motion:** use the user's requested tool or framework, then apply this brand.
-- **Standalone diagrams, thumbnails, or illustrations:** use the mode router in the brand reference.
-
-This skill overrides upstream **creative defaults**, not technical schemas, validation, rendering, or safety requirements. Priority: explicit user direction → this brand → upstream creative guidance → generic defaults.
+Create visual deliverables in the AI for Software Engineers identity. Another named brand or an explicit unbranded request overrides this skill.
 
 ## Workflow
 
-1. Identify output, audience, aspect ratio, and source material.
-2. Load the relevant upstream skill when creating slides or video.
-3. Choose Technical Graphic or Realistic Cel-Shaded Illustration mode.
-4. Use bundled logos/fonts only where the reference permits. Resolve paths relative to this skill.
-5. Build one clear visual argument per frame or slide.
-6. Audit against the reference before delivery.
+1. Identify output, audience, source material, channel, and aspect ratio.
+2. Before authoring, read [`references/brand.md`](references/brand.md) completely. It is the source of truth for mode routing, palette, typography, assets, and audit criteria.
+3. Load the technical upstream skill:
+   - slides/presentations → `/bento-slides`
+   - video/motion → the requested video framework
+   - standalone visual → current harness's strongest deterministic visual tool
+4. Route the concept using the reference's default:
+   - systems, flows, comparisons, architecture → Technical Graphic
+   - one physical object or metaphor → Realistic Cel-Shaded Illustration
+5. Build one visual argument per output/frame/slide. Resolve bundled asset paths relative to this skill.
+6. Run the reference's Final audit plus every upstream renderer/validator.
 
-Do not edit or fork vendor skills to apply branding. Keep brand customizations here so upstream skills remain safely updateable.
+Hard exit: deliverable passes the brand audit and upstream technical validation. Report **blocked** if the required upstream capability or validation cannot run.
+
+## Gotchas
+
+- `/brand` owns creative direction; upstream skills retain schemas, rendering, validation, and safety rules.
+- Keep customization here. Never edit or fork installed vendor skills merely to apply branding.
+- Multiple concepts become separate outputs, not a grid/collage default.
+- Logos belong at identity moments, not explanatory graphics, unless requested.
+- “It uses the colors” is not proof of brand compliance; run the complete audit.

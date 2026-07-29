@@ -1,6 +1,6 @@
 ---
 name: skill-refiner
-description: 'Load when the user says "create a skill", "refine this skill", "improve this SKILL.md", or "make this skill more reliable".'
+description: 'Load when the user says "create a skill", "refine this skill", "refine all skills", "improve this SKILL.md", or "make this skill more reliable".'
 metadata:
   opencode/slash: "true"
 ---

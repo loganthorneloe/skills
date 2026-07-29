@@ -1,61 +1,46 @@
-# Skill quality (constitution)
+# Skill quality
 
-Root virtue: **predictability of process** (same *way* every run), not identical output.
+Root virtue: **predictable process**, not identical output. Read this file before every proposal or apply. Load [skill-quality-glossary.md](skill-quality-glossary.md) only when one of its terms needs depth.
 
-Load only this file unless a term needs the glossary → [skill-quality-glossary.md](skill-quality-glossary.md).
+## Routing
 
-## Invocation
+- Description is routing context, not documentation. Start `Load when...` and quote phrases users type.
+- Model-invoked disciplines remain discoverable; slash-only orchestrators use the harness's disable-model-invocation field.
+- One router owns internal steps; worker files do not get extra `SKILL.md` entrypoints.
 
-| Kind | When | Cost |
-|------|------|------|
-| **Model-invoked** | Agent must auto-fire or other skills call it | Always-on **description** = context load |
-| **User-invoked** | Human types name only (`disable-model-invocation: true`) | Zero context load; human remembers it |
+## Workflow design
 
-- Description = **triggers** only ("Use when…"). No body restatement.
-- Many user-invoked skills → one **router** skill naming them.
-- Orchestrators = user-invoked. Reusable disciplines = model-invoked.
+1. Ordered actions; every risky step ends in checkable evidence.
+2. One prescribed default; alternatives only for materially different constraints.
+3. Always-needed rules inline; branch-only/heavy material behind links with explicit load conditions.
+4. Domain anomalies centralized in one gotchas section/reference and required before the affected action.
+5. Likely shortcuts get nearby rebuttals; completion requires a concrete test, artifact, or log.
 
-## Content ladder (progressive disclosure)
+Use scripts for portable deterministic work. Keep project memory in project rules/ADRs, not portable skills.
 
-1. **In-skill steps** — ordered actions; each ends on a **checkable** completion criterion
-2. **In-skill reference** — short rules needed every run
-3. **Linked file** — heavy detail; load only when pointer fires
+## Prune before adding
 
-Inline what every branch needs. Disclose what only some branches need.
+| Failure | Response |
+|---|---|
+| No-op or generic exhortation | delete |
+| Duplicate rule | keep one source of truth |
+| Stale sediment | delete or replace |
+| Reference dump | convert to workflow; disclose detail |
+| Premature completion | add observable criterion |
+| Multiple equal paths | choose one default |
 
-## Write rules
+Prefer delete → sharpen → reorder → extract → add. Target `SKILL.md` at ~1,500 tokens maximum; required detail may live in linked files.
 
-- **Single source of truth** — one meaning, one place
-- **Leading words** — pretrained hooks (`tracer bullet`, `red`, `seam`) over long restatements
-- **Positive steering** — say what to do; avoid pure negation piles
-- **Degrees of freedom** — fragile → tight steps/scripts; judgment → heuristics
-- **Scripts** when step must be deterministic (parse/sort/check)
-- **Portable skill** ≠ project memory — glossary/ADRs/CONTEXT stay in the repo, not global skills
+## Gate — all pass
 
-## Prune (every edit)
+- [ ] Routing description uses exact user language
+- [ ] Invocation type is intentional
+- [ ] Default workflow is ordered and checkable
+- [ ] References have explicit load conditions
+- [ ] Gotchas and shortcut rebuttals are centralized
+- [ ] No no-op, duplication, sediment, or unresolved menu
+- [ ] Portable; metadata/path valid
+- [ ] `SKILL.md` ≤~1,500 tokens
+- [ ] Target validator/tests and one representative pressure scenario pass
 
-Delete or sharpen:
-
-| Failure | Cure |
-|---------|------|
-| **No-op** | Line model already obeys → cut |
-| **Duplication** | Same meaning twice → one home |
-| **Sediment** | Stale "lessons" layers → remove |
-| **Sprawl** | Too long → disclose/split |
-| **Premature completion** | Fuzzy done → sharper criterion or split steps |
-| **Append-only rot** | New rule without deleting old → forbidden |
-
-Prefer **sharpen / split / delete** over append.
-
-## Gate checklist (pass/fail)
-
-Before shipping any skill or patch:
-
-- [ ] Process predictable without bloating tokens
-- [ ] Invocation kind correct; description earns its load
-- [ ] Steps have checkable completion criteria
-- [ ] Heavy detail behind links, not dumped in SKILL.md
-- [ ] No no-ops, dupes, sediment, sprawl
-- [ ] Positive steering; no prohibition pile
-- [ ] Project-specific stuff not shoved into portable skill
-- [ ] SKILL.md stays thin (~≤150–200 lines body ideal)
+“The existing skill works” and “there are no tests” do not waive the gate. Failed proof means reject/revert, not success.

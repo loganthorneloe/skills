@@ -9,4 +9,4 @@ Args: skill name or path (required).
 5. Write `.scratch/skill-evolution/YYYY-MM-DD-diagnose-<name>.md`
    - k per cluster, session ids, quotes, suggested lever — **no diff**
 
-k<3 → note only unless user forces. Next: propose.
+Criterion: each suggested lever maps to a quoted failure cluster. k<3 → note only unless user forces. Next: propose.

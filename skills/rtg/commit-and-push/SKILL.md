@@ -1,32 +1,80 @@
 ---
 name: commit-and-push
-description: Automatically inspects and updates affected READMEs, stages, commits, and pushes recent changes with conventional commit messages.
+description: 'Load when the user says "commit and push", "ship these changes", "push my changes", or asks to commit the current worktree and synchronize it with Git remote.'
 metadata:
   opencode/slash: "true"
 ---
 
-# Commit and Push Skill
+# Commit and push
 
-This skill automates the process of identifying changes in the working directory, writing a descriptive commit message based on the diffs, staging the changes, committing them, and pushing to the remote repository.
+Commit the intended worktree changes and push the current branch. Default: include all changes belonging to the completed task, use the repository's convention, and push to the configured upstream.
 
-## When to Use
-- You are explicitly asked to "commit and push" changes.
-- A feature or fix is complete and ready to be synchronized with the remote branch.
+## 1. Inspect
 
-## Procedure
+Run:
 
-1. **Analyze Working Tree**: Run `git status`, `git diff`, and `git diff --cached` to identify modified, untracked, or deleted files and code changes.
-2. **Inspect & Update Relevant READMEs**:
-   - Identify the directory paths of all modified/added/deleted files.
-   - Inspect relevant `README.md` files in those modified file directories and parent directories up to the repository root.
-   - Do NOT inspect or edit `README.md` files in untouched, unrelated directories.
-   - If the code changes alter features, skill lists, CLI commands, setup procedures, or repo structure, update the affected `README.md` file(s) so documentation stays synchronized with code changes.
-3. **Determine Commit Message Style**: Review `git log -n 5` for conventions (`feat:`, `fix:`, `docs:`, etc.).
-   - Title: Single line under 72 chars, active present tense ("Add X", "Update Y").
-   - Spacing: Exactly two line breaks (one empty line).
-   - Body: Detailed bullet points of changes.
-4. **Stage, Commit & Push**:
-   - Stage modified/untracked/updated files: `git add .`
-   - Commit: `git commit -m "<title>\n\n<body>"`
-   - Push: `git push origin <current-branch>`
+```bash
+git status --short --branch
+git diff
+git diff --cached
+git log -n 5 --oneline
+```
 
+Identify intended files, unrelated pre-existing changes, secrets, generated artifacts, and the current branch/upstream. Never discard user changes. Ask before staging only when ownership is genuinely ambiguous or sensitive material appears.
+
+Criterion: every file to stage is understood and belongs in this commit.
+
+## 2. Synchronize documentation
+
+Inspect `README.md` files in changed directories and their parents up to the repository root. Update only documentation affected by changed features, commands, setup, structure, or skill lists.
+
+Criterion: docs describe the post-commit state; unrelated READMEs remain untouched.
+
+## 3. Check and stage
+
+Run available checks relevant to the changed files plus:
+
+```bash
+git diff --check
+git add <intended-paths>
+git diff --cached --check
+git diff --cached --stat
+git diff --cached
+```
+
+Use explicit paths by default. If the staged diff is empty, stop and report that there is nothing to commit.
+
+Criterion: staged diff contains exactly the intended, checked change.
+
+## 4. Commit
+
+Match `git log` conventions. Default message:
+
+- conventional title, active voice, ≤72 characters
+- blank line
+- concise bullets describing material changes
+
+Commit without rewriting existing history unless the user explicitly requests it. Capture the resulting commit hash.
+
+Criterion: `git show --stat --oneline HEAD` matches the staged intent.
+
+## 5. Push and prove
+
+Push the current branch to its upstream. If none exists, default to `origin` and set upstream:
+
+```bash
+git push -u origin <current-branch>
+```
+
+Then run `git status --short --branch`. Hard exit: push succeeds and local HEAD is synchronized with its upstream. Authentication, hooks, rejected updates, or conflicts mean **blocked**, not complete.
+
+## Gotchas
+
+- A clean working tree does not prove the remote received the commit; require successful push output and synchronized status.
+- Do not stage unrelated files merely because `git add .` is shorter.
+- Do not bypass hooks or force-push to make a failure disappear.
+- Detached HEAD, protected branches, submodules, and multiple remotes require resolving the real target before commit.
+
+## Report
+
+Return commit hash/title, pushed remote/branch, checks run, and final sync state. Keep it brief.

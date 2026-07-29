@@ -107,10 +107,14 @@ def validate(skill_arg: str, max_tokens: int) -> int:
             failures.append(f"remove empty imperative: {phrase!r}")
 
     missing_links: list[str] = []
-    for raw in LINK_RE.findall(text):
-        target = local_link_target(raw)
-        if target and not (skill_file.parent / target).resolve().exists():
-            missing_links.append(target)
+    markdown_files = sorted(skill_file.parent.rglob("*.md"))
+    for markdown_file in markdown_files:
+        markdown = markdown_file.read_text(encoding="utf-8")
+        for raw in LINK_RE.findall(markdown):
+            target = local_link_target(raw)
+            if target and not (markdown_file.parent / target).resolve().exists():
+                relative = markdown_file.relative_to(skill_file.parent)
+                missing_links.append(f"{relative}: {target}")
     if missing_links:
         failures.append("missing local links: " + ", ".join(sorted(set(missing_links))))
 
@@ -125,7 +129,8 @@ def validate(skill_arg: str, max_tokens: int) -> int:
 
     print(
         f"PASS: {skill_file} | description={len(description or '')} chars "
-        f"| approximate_tokens={approximate_tokens} | local_links=ok"
+        f"| approximate_tokens={approximate_tokens} | markdown_files={len(markdown_files)} "
+        f"| local_links=ok"
     )
     return 0
 

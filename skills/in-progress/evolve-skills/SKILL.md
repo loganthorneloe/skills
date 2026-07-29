@@ -1,6 +1,6 @@
 ---
 name: evolve-skills
-description: "Mine agent trajectories and improve skills: health, mine new skills, diagnose, propose gated patches, apply after approval. Use when user says evolve skills, skill health, improve skills from history, or skill dojo."
+description: 'Load when the user invokes "/evolve-skills", says "evolve skills", "skill health", "skill dojo", or asks to improve skills from agent history.'
 disable-model-invocation: true
 metadata:
   internal: true
@@ -9,30 +9,40 @@ metadata:
 
 # Evolve skills
 
-**You only enter here.** Steps below are files in this skill — load with `read`, do not expect separate slash skills.
+Use agent trajectories as evidence for skill changes. This is the only entrypoint; linked `steps/` files are internal workflow, not separate skills.
 
-Quality law: read [references/skill-quality.md](references/skill-quality.md) before any proposal/apply. Do not restate it.
+**Default: propose only.** Never edit a real `SKILL.md` until the user explicitly accepts a proposal and requests apply.
 
-**Default: propose only.** Edit real SKILL.md only in the apply step after explicit user OK.
+## Route
 
-## Modes
-
-| Arg / intent | Load and run |
-|--------------|----------------|
-| (default) / full | [steps/default.md](steps/default.md) |
+| Intent | Load and run |
+|---|---|
+| default/full | [steps/default.md](steps/default.md) |
 | `health` | [steps/health.md](steps/health.md) |
 | `mine` | [steps/mine.md](steps/mine.md) |
-| `diagnose [name]` | [steps/diagnose.md](steps/diagnose.md) |
+| `diagnose <name>` | [steps/diagnose.md](steps/diagnose.md) |
 | `propose` | [steps/propose.md](steps/propose.md) |
-| `apply [proposal]` | [steps/apply.md](steps/apply.md) |
+| `apply <proposal>` | [steps/apply.md](steps/apply.md) |
 | sessions only | [steps/sessions.md](steps/sessions.md) |
 
-Shared: always start heavy work with [steps/sessions.md](steps/sessions.md) ingest unless evidence already in-hand.
+Before proposal or apply, read [references/skill-quality.md](references/skill-quality.md) completely. Heavy work begins with [steps/sessions.md](steps/sessions.md) unless current-session evidence is already in hand.
 
-## Hard limits
+## Hard gates
 
-- k≥3 sessions per change (unless user sets `k=1`)
-- One concern per proposal
-- No vendor/plugin in-place edits
-- Prefer sharpen/split/delete over append
-- Artifacts → `.scratch/skill-evolution/`
+- Default evidence: ≥3 independent sessions per proposed concern; only an explicit user `k=1` overrides it.
+- One concern per proposal.
+- Owned skills only; vendor/plugin skills require a fork.
+- Prefer sharpen, split, or delete over append.
+- Store artifacts under `.scratch/skill-evolution/`.
+- Apply must pass the quality gate and a representative pressure scenario; failure reverts the patch.
+
+## Gotchas
+
+- Repeated text is not repeated evidence when sessions share one cause.
+- “The pattern is obvious” does not waive session IDs and quotations.
+- Health and diagnosis produce evidence, not patches.
+- Proposal acceptance does not authorize unrelated improvements.
+
+## Report
+
+Return artifact paths, evidence count, mode reached, gate result, and next required user decision.

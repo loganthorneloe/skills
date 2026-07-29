@@ -12,4 +12,6 @@ Output evidence; don't patch skills.
 
 **Out:** harness, paths, skills roots, counts per skill. Huge notes → `.scratch/skill-evolution/ingest-*.md`
 
+Criterion: every downstream quotation can be traced to a redacted session ID and timestamp.
+
 Unknown harness → ask once for session dir.
