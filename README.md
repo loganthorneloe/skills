@@ -13,6 +13,7 @@ RTG (completed). Safe default install.
 | [`commit-and-push`](skills/rtg/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
 | [`cost`](skills/rtg/cost/SKILL.md) | Session token usage and estimated cost across harnesses. |
 | [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs plus branded visual tooling with `/brand` and Bento Slides. |
+| [`skill-refiner`](skills/rtg/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
 
 ## In progress
 

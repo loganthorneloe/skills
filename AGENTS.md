@@ -12,6 +12,10 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 4. **Install**: `npx skills add loganthorneloe/skills`. Local test: symlink into harness skills dir.
 5. **Commits**: conventional (`feat(skills): …`, `fix(skills): …`).
 
+## Skill quality workflow
+
+Before creating or refining any skill, read and follow [`skills/rtg/skill-refiner/SKILL.md`](skills/rtg/skill-refiner/SKILL.md), including its required gotchas reference. Apply it from the first draft, not only during cleanup. Completion requires validator `PASS`, available target-specific checks, and a representative dry run; otherwise report blocked.
+
 ## RTG vs in-progress
 
 Two tiers. Do not mix.
