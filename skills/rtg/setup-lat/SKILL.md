@@ -1,6 +1,6 @@
 ---
 name: setup-lat
-description: 'Load when the user says "set up LAT", "apply Logan''s agent defaults", "configure ask plan lfg modes", or requests LAT preferences, /clear, /goal, compact Git status, MCP connectivity, and branded visual tooling in an agent harness.'
+description: 'Load when the user says "set up LAT", "apply Logan''s agent defaults", "configure ask plan lfg modes", or requests LAT preferences, /clear, /goal, compact Git status, secure Readwise Reader MCP connectivity, and branded visual tooling in an agent harness.'
 metadata:
   opencode/slash: "true"
 ---
@@ -37,11 +37,11 @@ Merge existing configuration; never overwrite an entire config/instruction file.
 
 Criterion: each configured control is callable in the current harness and persisted at the resolved scope.
 
-## 3. Enable MCP connectivity
+## 3. Enable MCP and Readwise Reader
 
-Use native MCP support when available. Otherwise use the harness's native extension/plugin mechanism and the reference's harness-specific branch. Install no MCP server and configure no credentials unless separately requested.
+Use native MCP support when available. Otherwise use the harness's native extension/plugin mechanism and the reference's harness-specific branch. After its status control works, configure only the official hosted Readwise MCP using remote HTTP and browser OAuth. Merge the server definition at the resolved scope; never place tokens, authorization codes, callback URLs, or credentials in skills, tracked files, commands, logs, or chat. Require the harness's OS/native secure credential store; plaintext fallback is blocked.
 
-Criterion: MCP support is persisted, loaded after reload/restart, and exposes its native status/setup control.
+Criterion: MCP support persists and loads after reload/restart; Readwise appears as configured, browser OAuth succeeds, and connected tool metadata includes Reader and Readwise tools without invoking a library mutation.
 
 ## 4. Configure branded visuals
 
@@ -62,6 +62,7 @@ Exercise, do not merely inspect:
 - `/goal` set/show/clear, continuation, completion gate, session restore, and status indicator;
 - Git indicator shows clean/dirty forms and hides outside repositories;
 - MCP support loads and its status/setup control runs;
+- Readwise config contains only the official URL and non-secret options, OAuth completes through the browser/native credential store, and tool metadata loads;
 - brand skills load without collisions.
 
 Hard exit: every supported preference has concrete test evidence. Unsupported capability, failed install, or untestable behavior is reported **blocked/unsupported**, never “configured.”
@@ -75,4 +76,4 @@ Hard exit: every supported preference has concrete test evidence. Unsupported ca
 
 ## Report
 
-Return changed paths, real controls/keybindings, MCP mechanism/status, scope, per-preference test evidence, skill collision audit, reload instructions, and exact unsupported gaps.
+Return changed paths, real controls/keybindings, MCP and Readwise auth/status, scope, per-preference test evidence, skill collision audit, reload instructions, and exact unsupported gaps.

@@ -64,9 +64,38 @@ version="$(npm view pi-mcp-adapter version)"
 pi install "npm:pi-mcp-adapter@$version"
 ```
 
-Verify the package appears in `pi list` and the persistent package list, then reload or restart and invoke `/mcp`. Installation is incomplete until `/mcp` loads without an extension error. Do not add MCP servers, import host-specific MCP configuration, or configure credentials unless the user requests that separate action.
+Verify the package appears in `pi list` and the persistent package list, then reload or restart and invoke `/mcp`. Installation is incomplete until `/mcp` loads without an extension error. Do not import host-specific MCP configuration or configure servers other than Readwise.
 
 For another harness, persist its native MCP enablement and run its server-status or setup command. If neither native MCP nor a documented extension/plugin API exists, report MCP as unsupported rather than installing another harness's files.
+
+### Readwise Reader
+
+After MCP connectivity works, configure Readwise as part of the standard setup:
+
+1. Check Readwise's official MCP documentation and confirm its current remote HTTP endpoint is on `readwise.io`. The expected endpoint is `https://mcp2.readwise.io/mcp`; stop if official documentation disagrees or redirects to a non-Readwise domain.
+2. Merge one server named `readwise` into the harness's native MCP config at the resolved scope. Never overwrite unrelated servers or settings.
+3. Configure remote HTTP plus OAuth. The server definition may contain only the official URL and non-secret transport/lifecycle options—no bearer token, API key, client secret, authorization code, callback URL, or credential command.
+4. Reload/restart, start browser OAuth through the harness's native auth control, and let the callback complete locally. Never ask the user to paste a token, code, authorization URL, or callback URL into chat or a shell command.
+5. Require the harness's OS/native secure credential store. If it is unavailable or the harness would persist OAuth material in plaintext, stop and report **blocked**; do not downgrade to a Reader API token.
+6. Verify connected status and tool metadata containing both `reader_` and `readwise_` tools. Do not call a create, update, delete, move, tag, highlight, or bulk-edit tool as a setup test.
+
+For Pi user scope, merge this non-secret entry into `~/.config/mcp/mcp.json`; for project scope, use `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "readwise": {
+      "url": "https://mcp2.readwise.io/mcp",
+      "auth": "oauth",
+      "lifecycle": "lazy"
+    }
+  }
+}
+```
+
+Create a user config directory with mode `0700` and config file with mode `0600` when possible. Then run `/reload`, `/mcp-auth readwise`, approve the browser prompt, and inspect `/mcp` or `mcp({ connect: "readwise" })`. The adapter stores OAuth credentials in the operating-system credential store; its legacy OAuth directory is not an acceptable new credential target.
+
+For another harness, use its native equivalent of the same remote server and browser OAuth flow. Do not copy Pi config paths or commands.
 
 ## 7. Branded visual tooling
 
@@ -107,4 +136,6 @@ Configure model favorites/cycling or short command aliases only when native, eas
 - A stored goal without autonomous continuation and evidence-gated completion is only a partial implementation; label the gap.
 - An installed MCP package is not necessarily enabled or loaded. Verify persisted enablement and invoke the harness's MCP status/setup control after reload.
 - MCP enablement does not authorize importing server definitions or credentials from another host.
+- Readwise setup is incomplete until browser OAuth and tool metadata loading succeed; a config entry alone is not completion.
+- OAuth URLs, callback URLs, and authorization codes are transient secrets. Keep them out of prompts, skills, shell history, logs, and tracked files.
 - Installed files alone do not prove discoverability. Run the harness's list/load check and inspect collision diagnostics.
