@@ -20,7 +20,7 @@ Local: symlink `skills/in-progress/<name>` → harness skills dir.
 | Skill | Notes |
 | --- | --- |
 | [`brand`](brand/SKILL.md) | AI for Software Engineers visual identity; hidden from default installs. |
-| [`deep-research`](deep-research/SKILL.md) | Source-gated web research saved as a concise, cited Markdown report; Reddit prohibited. |
+| [`deep-research`](deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
 | [`evolve-skills`](evolve-skills/SKILL.md) | **Only** user-facing evolve entry. Steps under `steps/`; law under `references/`. |
 
 Workers are **not** separate skills (no slash noise). Router loads `steps/*.md` via progressive disclosure.

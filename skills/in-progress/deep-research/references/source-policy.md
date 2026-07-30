@@ -46,6 +46,18 @@ A creator’s article, newsletter, talk, or technical blog is admissible only wh
 
 Use class C mainly for explanation, implementation experience, interpretation, or expert disagreement. Do not use it as the sole basis for a pivotal factual claim when class A/B evidence should exist.
 
+## Readwise Reader discovery
+
+When authenticated Reader tools are already connected, search only the user's `archive` and `later` locations as an additional discovery channel. Saved status is not endorsement or a source class. Classify the underlying publication under this policy.
+
+- Treat Reader-generated summaries, highlights, notes, and tags as leads, not factual evidence.
+- Retrieve shortlisted document details, then retrieve and cite the canonical publisher URL when available.
+- If only the archived Reader copy is accessible, verify its identity/provenance, cite the canonical URL, and disclose that the live original was unavailable.
+- Deduplicate Reader and web results from the same evidence chain.
+- Keep unrelated library items private and never mutate the library during research.
+
+Reader unavailability is not blocking when normal web capabilities work. Record it briefly in the report method; never initiate OAuth or request credentials as part of a research run.
+
 ## Admission test
 
 Before relying on a source, verify:

@@ -23,7 +23,7 @@ Workshop only. `metadata.internal: true` — omitted from default `npx skills` l
 | Skill | Description |
 | --- | --- |
 | [`brand`](skills/in-progress/brand/SKILL.md) | Apply the AI for Software Engineers brand to slides, videos, diagrams, thumbnails, and illustrations. |
-| [`deep-research`](skills/in-progress/deep-research/SKILL.md) | Source-gated web research saved as a concise, cited Markdown report; Reddit prohibited. |
+| [`deep-research`](skills/in-progress/deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
 | [`evolve-skills`](skills/in-progress/evolve-skills/SKILL.md) | Trajectory → health/mine/diagnose/propose/apply. One slash entry; steps internal. |
 
 ```bash

@@ -22,7 +22,7 @@ Use only needed sections, in this order:
 3. `## Key findings` — evidence-dense bullets/tables
 4. `## Contradictions, limitations, and unknowns`
 5. `## Implications` or `## Recommendation` — only when useful/requested
-6. `## Method` — compact scope, search date, restrictions, and major exclusions
+6. `## Method` — compact scope, search date, restrictions, major exclusions, and whether connected Reader archive/later discovery was used
 7. material unanswered questions, when any
 8. `## Sources` — always final
 
