@@ -25,13 +25,11 @@ Workshop only. `metadata.internal: true` — omitted from default `npx skills` l
 | --- | --- |
 | [`brand`](skills/in-progress/brand/SKILL.md) | Apply the AI for Software Engineers brand to slides, videos, diagrams, thumbnails, and illustrations. |
 | [`deep-research`](skills/in-progress/deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
-| [`evolve-skills`](skills/in-progress/evolve-skills/SKILL.md) | Trajectory → health/mine/diagnose/propose/apply. One slash entry; steps internal. |
 
 ```bash
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill brand
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill deep-research
-INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-skills
 ```
 
 ## Repository Structure
@@ -45,10 +43,7 @@ skills/
     │   └── <completed-skill>/SKILL.md
     └── in-progress/
         ├── README.md
-        └── evolve-skills/
-            ├── SKILL.md          # user entry only
-            ├── steps/            # loaded on demand (not separate skills)
-            └── references/
+        └── <workshop-skill>/SKILL.md
 ```
 
 ## Install

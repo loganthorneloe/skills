@@ -10,7 +10,6 @@ Hidden from default `npx skills` (`metadata.internal: true`).
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill brand
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill deep-research
-INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill evolve-skills
 ```
 
 Local: symlink `skills/in-progress/<name>` → harness skills dir.
@@ -21,9 +20,6 @@ Local: symlink `skills/in-progress/<name>` → harness skills dir.
 | --- | --- |
 | [`brand`](brand/SKILL.md) | AI for Software Engineers visual identity; hidden from default installs. |
 | [`deep-research`](deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
-| [`evolve-skills`](evolve-skills/SKILL.md) | **Only** user-facing evolve entry. Steps under `steps/`; law under `references/`. |
-
-Workers are **not** separate skills (no slash noise). Router loads `steps/*.md` via progressive disclosure.
 
 ## Graduate
 

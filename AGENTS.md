@@ -9,8 +9,9 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 1. **Source only here**: create/edit skills under `skills/` in this repo. NEVER only in a harness folder (`~/.claude/skills`, `~/.pi/agent/skills`, etc.).
 2. **Entrypoint**: every skill is `…/<skill-name>/SKILL.md` (YAML frontmatter + body).
 3. **Scripts**: `scripts/` only when portable (no single-harness config trees).
-4. **Install**: `npx skills add loganthorneloe/skills`. Local test: symlink into harness skills dir.
-5. **Commits**: conventional (`feat(skills): …`, `fix(skills): …`).
+4. **Install**: `npx skills add loganthorneloe/skills`.
+5. **Personal-machine link (required)**: whenever a skill is created in this repo, symlink its source directory into the active personal harness’s global skills directory (Pi: `~/.pi/agent/skills/<name>`). Confirm the link resolves to `SKILL.md` and creates no duplicate frontmatter name.
+6. **Commits**: conventional (`feat(skills): …`, `fix(skills): …`).
 
 ## Skill quality workflow
 
@@ -85,8 +86,6 @@ No other official “status” field in Agent Skills / `npx skills` — use **pa
 | **Model-auto skill** | Top-level skill, no `disable-model-invocation`; optional `user-invocable: false` (Claude hides slash; pi may still list `/skill:name`) |
 
 **Do not** ship multi-step packs as many top-level skills if only one should appear in slash — pi discovers every `SKILL.md` and registers `/skill:name`.
-
-Evolve pack pattern: one `evolve-skills` skill; pipeline in `steps/*.md`.
 
 ## Harness-agnostic skills (required)
 
