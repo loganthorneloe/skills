@@ -37,5 +37,5 @@ When refining `loganthorneloe/skills`:
 
 - Source belongs under `skills/`, never only in a harness install directory.
 - Completed skills belong in `skills/rtg/` and the root Available Skills table.
-- Work-in-progress skills belong in `skills/in-progress/`, require `metadata.internal: true`, and belong in both in-progress README listings—not the Available Skills table.
+- WIP skills belong in `skills/wip/`, require `metadata.internal: true`, and belong in both WIP README listings—not the Available Skills table.
 - Follow `AGENTS.md` for graduation, installation, and harness-agnostic rules.

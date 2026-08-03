@@ -1,4 +1,4 @@
-# In progress
+# WIP
 
 Workshop skills. Rough edges expected. **Not** in the RTG README table.
 
@@ -14,7 +14,7 @@ INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill prompt-re
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill skill-refiner
 ```
 
-Local: symlink `skills/in-progress/<name>` → harness skills dir.
+Local: symlink `skills/wip/<name>` → harness skills dir.
 
 ## Current
 
@@ -28,6 +28,6 @@ Local: symlink `skills/in-progress/<name>` → harness skills dir.
 ## Graduate
 
 1. Drop `metadata.internal`
-2. `mv skills/in-progress/<name> skills/rtg/<name>`
+2. `mv skills/wip/<name> skills/rtg/<name>`
 3. Root README Available Skills row; remove its entry here
 4. `feat(skills): graduate <name>`

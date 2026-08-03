@@ -15,16 +15,16 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 
 ## Skill quality workflow
 
-Before creating or refining any skill, read and follow [`skills/rtg/skill-refiner/SKILL.md`](skills/rtg/skill-refiner/SKILL.md), including its required gotchas reference. Apply it from the first draft, not only during cleanup. Completion requires validator `PASS`, available target-specific checks, and a representative dry run; otherwise report blocked.
+Before creating or refining any skill, read and follow [`skills/wip/skill-refiner/SKILL.md`](skills/wip/skill-refiner/SKILL.md), including its required gotchas reference. Apply it from the first draft, not only during cleanup. Completion requires validator `PASS`, available target-specific checks, and a representative dry run; otherwise report blocked.
 
-## RTG vs in-progress
+## RTG vs WIP
 
 Two tiers. Do not mix.
 
 | Tier | Path | `metadata.internal` | README |
 |------|------|---------------------|--------|
 | **RTG (completed)** | `skills/rtg/<name>/` | omit or `false` | Root **Available Skills** table |
-| **In progress** | `skills/in-progress/<name>/` | **`true` (required)** | `skills/in-progress/README.md` + short root **In progress** blurb |
+| **WIP** | `skills/wip/<name>/` | **`true` (required)** | `skills/wip/README.md` + root **WIP** table |
 
 ### Why
 
@@ -37,9 +37,9 @@ Two tiers. Do not mix.
 2. Row in root `README.md` → **Available Skills**
 3. Thin SKILL.md; heavy detail in `references/` if needed
 
-### New in-progress skill
+### New WIP skill
 
-1. `skills/in-progress/<name>/SKILL.md`
+1. `skills/wip/<name>/SKILL.md`
 2. Frontmatter must include:
 
 ```yaml
@@ -49,23 +49,23 @@ metadata:
 
 (merge with existing `metadata` keys, e.g. `opencode/slash`)
 
-3. One-line entry in `skills/in-progress/README.md`
+3. One-line entry in `skills/wip/README.md`
 4. Do **not** add to root Available Skills table
 5. Description may say WIP; internal flag is what hides from default CLI
 
 ### Graduate WIP → RTG
 
 1. Remove `internal: true` (delete key; drop empty `metadata` only if nothing else left)
-2. `mv skills/in-progress/<name> skills/rtg/<name>`
-3. Root README Available Skills row; remove from `skills/in-progress/README.md`
+2. `mv skills/wip/<name> skills/rtg/<name>`
+3. Root README Available Skills row; remove from `skills/wip/README.md`
 4. Commit: `feat(skills): graduate <name>`
 
 ### Demote RTG → WIP
 
-1. `mv skills/rtg/<name> skills/in-progress/<name>`
+1. `mv skills/rtg/<name> skills/wip/<name>`
 2. Set `metadata.internal: true`
 3. Swap README rows
-4. Commit: `chore(skills): demote <name> to in-progress`
+4. Commit: `chore(skills): demote <name> to WIP`
 
 ### CLI cheatsheet
 

@@ -16,16 +16,16 @@ RTG (completed). Safe default install.
 | [`no-edit`](skills/rtg/no-edit/SKILL.md) | Discuss one request without changing files or external state. |
 | [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs, secure Readwise Reader MCP setup, and branded visual tooling with `/brand` and Bento Slides. |
 
-## In progress
+## WIP
 
 Workshop only. `metadata.internal: true` — omitted from default `npx skills` list/install.
 
 | Skill | Description |
 | --- | --- |
-| [`brand`](skills/in-progress/brand/SKILL.md) | Apply the AI for Software Engineers brand to slides, videos, diagrams, thumbnails, and illustrations. |
-| [`deep-research`](skills/in-progress/deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
-| [`prompt-refiner`](skills/in-progress/prompt-refiner/SKILL.md) | Compile a prompt for a fresh agent context while preserving its semantics and excluding unapproved conversation context. |
-| [`skill-refiner`](skills/in-progress/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
+| [`brand`](skills/wip/brand/SKILL.md) | Apply the AI for Software Engineers brand to slides, videos, diagrams, thumbnails, and illustrations. |
+| [`deep-research`](skills/wip/deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
+| [`prompt-refiner`](skills/wip/prompt-refiner/SKILL.md) | Compile a prompt for a fresh agent context while preserving its semantics and excluding unapproved conversation context. |
+| [`skill-refiner`](skills/wip/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
 
 ```bash
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
@@ -44,7 +44,7 @@ skills/
 └── skills/
     ├── rtg/
     │   └── <completed-skill>/SKILL.md
-    └── in-progress/
+    └── wip/
         ├── README.md
         └── <workshop-skill>/SKILL.md
 ```
@@ -59,4 +59,4 @@ npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills
 ```
 
-Local dev: symlink `skills/rtg/<name>` or `skills/in-progress/<name>` into the harness skills directory.
+Local dev: symlink `skills/rtg/<name>` or `skills/wip/<name>` into the harness skills directory.
