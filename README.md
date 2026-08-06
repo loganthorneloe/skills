@@ -15,6 +15,7 @@ RTG (completed). Safe default install.
 | [`edit`](skills/rtg/edit/SKILL.md) | Diagnose prose rigorously, then apply only approved minimal corrections. |
 | [`no-edit`](skills/rtg/no-edit/SKILL.md) | Discuss one request without changing files or external state. |
 | [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs, secure Readwise Reader MCP setup, and branded visual tooling with `/brand` and Bento Slides. |
+| [`skill-refiner`](skills/rtg/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
 
 ## WIP
 
@@ -25,14 +26,12 @@ Workshop only. `metadata.internal: true` — omitted from default `npx skills` l
 | [`brand`](skills/wip/brand/SKILL.md) | Apply the AI for Software Engineers brand to slides, videos, diagrams, thumbnails, and illustrations. |
 | [`deep-research`](skills/wip/deep-research/SKILL.md) | Source-gated web and connected Reader archive/later research saved as a concise cited report; Reddit prohibited. |
 | [`prompt-refiner`](skills/wip/prompt-refiner/SKILL.md) | Compile a prompt for a fresh agent context while preserving its semantics and excluding unapproved conversation context. |
-| [`skill-refiner`](skills/wip/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
 
 ```bash
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --list
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill brand
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill deep-research
 INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill prompt-refiner
-INSTALL_INTERNAL_SKILLS=1 npx skills add loganthorneloe/skills --skill skill-refiner
 ```
 
 ## Repository Structure

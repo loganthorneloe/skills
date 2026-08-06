@@ -2,7 +2,6 @@
 name: skill-refiner
 description: 'Load when the user says "create a skill", "refine this skill", "refine all skills", "improve this SKILL.md", or "make this skill more reliable".'
 metadata:
-  internal: true
   opencode/slash: "true"
 ---
 
@@ -23,14 +22,17 @@ Criterion: target, intent, invocation type, and proof of completion are unambigu
 Check the current draft against this order:
 
 1. **Routing:** description starts `Load when...` and contains quoted phrases users actually type. It triggers loading; it does not summarize internals.
-2. **Workflow:** ordered actions replace reference-dump prose. Each risky step ends in observable evidence.
-3. **One default:** prescribe the best normal path. Add alternatives only for materially different constraints.
-4. **Progressive disclosure:** keep always-needed rules in `SKILL.md`; move branch-specific or heavy detail into clearly linked files with explicit load conditions.
-5. **Defensive design:** identify likely shortcuts, place direct rebuttals near them, and make verification a hard exit gate.
-6. **Directness:** remove filler, motivational language, obvious reminders, duplication, and empty quality imperatives.
-7. **Size:** target about 1,500 tokens maximum. Shorten first; then disclose detail. Do not omit necessary constraints merely to hit the number.
+2. **Cohesion:** one skill teaches one cohesive capability. Separate independently invocable outcomes; keep internal workflow steps in the parent skill.
+3. **Workflow:** ordered actions replace reference-dump prose. Each risky step ends in observable evidence.
+4. **One default:** prescribe the best normal path. Add alternatives only for materially different constraints.
+5. **Progressive disclosure:** keep always-needed rules in `SKILL.md`; move branch-specific or heavy detail into clearly linked files with explicit load conditions.
+6. **Consistency:** resolve contradictory instructions, competing defaults, and duplicated sources of truth within the target materials.
+7. **Examples:** flag non-obvious commands, arguments, or expected outputs where a concrete example would materially reduce reasoning. Report the opportunity instead of changing the target; add one only after the user explicitly approves that example.
+8. **Defensive design:** identify likely shortcuts, place direct rebuttals near them, and make verification a hard exit gate.
+9. **Directness:** remove filler, motivational language, obvious reminders, duplication, and empty quality imperatives.
+10. **Size:** target about 1,500 tokens maximum. Shorten first; then disclose detail. Do not omit necessary constraints merely to hit the number.
 
-Criterion: every retained instruction changes routing, decisions, actions, or verification.
+Criterion: every retained instruction changes routing, decisions, actions, or verification; unresolved example opportunities are recorded for the report.
 
 ## 3. Design the patch
 
@@ -78,4 +80,4 @@ Hard exit: validator prints `PASS`, every available target check passes, and the
 
 ## Report
 
-Return: changed paths, major deletions/extractions, validator and test commands with results, approximate token count, dry-run result, and any blocker. Keep it brief.
+Return: changed paths, major deletions/extractions, validator and test commands with results, approximate token count, dry-run result, unresolved example opportunities, and any blocker. Keep it brief.

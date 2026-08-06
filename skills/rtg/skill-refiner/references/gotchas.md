@@ -13,7 +13,7 @@ Read completely before creating or refining a skill. Apply only relevant domain 
 - `SKILL.md` must stand alone for the default path. A reference cannot contain a rule needed before the agent knows to load it.
 - Every reference link needs a load condition: always before step N, or only when branch X applies.
 - Centralize legacy behavior, API inconsistencies, edge cases, and unsafe defaults in one `## Gotchas` section or reference. Require it before the affected action.
-- Keep examples only when they resolve a real ambiguity. Examples can accidentally become a second specification.
+- Examples can accidentally become a second specification. Flag where one would resolve real ambiguity, but leave the target unchanged unless the user explicitly approves an authoritative example.
 - Scripts are for portable deterministic work. Do not package machine-local or single-harness configuration trees as skill scripts.
 
 ## Defensive design
