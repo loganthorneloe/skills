@@ -12,7 +12,8 @@ RTG (completed). Safe default install.
 | --- | --- |
 | [`commit-and-push`](skills/rtg/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
 | [`cost`](skills/rtg/cost/SKILL.md) | Session token usage and recorded cost when available across harnesses. |
-| [`edit`](skills/rtg/edit/SKILL.md) | Diagnose prose rigorously, then apply only approved minimal corrections. |
+| [`edit`](skills/rtg/edit/SKILL.md) | Inline editing for grammar, spelling, and clarity with bulleted change reports while preserving voice. |
+| [`fact-checker`](skills/rtg/fact-checker/SKILL.md) | Audit linked claims in documents, verify sources directly, and report accuracy with recommendations. |
 | [`no-edit`](skills/rtg/no-edit/SKILL.md) | Discuss one request without changing files or external state. |
 | [`research`](skills/rtg/research/SKILL.md) | Source-first technical research briefs on AI systems and architectures for software engineers. |
 | [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs, secure Readwise Reader MCP setup, and branded visual tooling with `/brand` and Bento Slides. |
