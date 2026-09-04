@@ -14,6 +14,7 @@ RTG (completed). Safe default install.
 | [`cost`](skills/rtg/cost/SKILL.md) | Session token usage and recorded cost when available across harnesses. |
 | [`edit`](skills/rtg/edit/SKILL.md) | Diagnose prose rigorously, then apply only approved minimal corrections. |
 | [`no-edit`](skills/rtg/no-edit/SKILL.md) | Discuss one request without changing files or external state. |
+| [`research`](skills/rtg/research/SKILL.md) | Source-first technical research briefs on AI systems and architectures for software engineers. |
 | [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs, secure Readwise Reader MCP setup, and branded visual tooling with `/brand` and Bento Slides. |
 | [`skill-refiner`](skills/rtg/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
 
