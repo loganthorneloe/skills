@@ -15,7 +15,7 @@ Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness 
 
 ## Skill quality workflow
 
-Before creating or refining any skill, read and follow [`skills/wip/skill-refiner/SKILL.md`](skills/wip/skill-refiner/SKILL.md), including its required gotchas reference. Apply it from the first draft, not only during cleanup. Completion requires validator `PASS`, available target-specific checks, and a representative dry run; otherwise report blocked.
+Before creating or refining any skill, read and follow [`skills/rtg/skill-refiner/SKILL.md`](skills/rtg/skill-refiner/SKILL.md), including its required gotchas reference. Apply it from the first draft, not only during cleanup. Completion requires validator `PASS`, available target-specific checks, and a representative dry run; otherwise report blocked.
 
 ## RTG vs WIP
 
@@ -94,9 +94,8 @@ No other official “status” field in Agent Skills / `npx skills` — use **pa
 3. Discover current harness; use native instructions/settings/permissions/keybindings/extensions.
 4. Harness examples OK as brief illustrations. Prefer semantic goals.
 5. Do not commit machine-local harness config into skills.
-6. `setup-lat`: preference workflow only. No pi-only install trees.
-7. Skill installs must target one current harness + one scope. Never use all-agent fan-out when native and shared discovery roots may overlap.
-8. After changing install instructions, audit every discovered root for duplicate frontmatter names; zero skill collisions required.
+6. Skill installs must target one current harness + one scope. Never use all-agent fan-out when native and shared discovery roots may overlap.
+7. After changing install instructions, audit every discovered root for duplicate frontmatter names; zero skill collisions required.
 
 ## LAT Preferences (reference)
 
