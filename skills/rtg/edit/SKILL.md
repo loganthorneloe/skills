@@ -1,77 +1,59 @@
 ---
 name: edit
-description: 'Load when the user says "edit this article", "review this draft", "proofread this document", or asks for a grammar, spelling, and clarity review of prose without changing its voice or content.'
-metadata:
-  opencode/slash: "true"
+description: 'Load when the user says "edit this article", "edit this passage", "clean up this paragraph", "proofread this text", or asks to edit writing for grammar, spelling, and clarity while preserving voice and meaning.'
 ---
 
-# Edit
+# Edit Skill
 
-Review prose rigorously; revise conservatively. Default to two phases: diagnose first, then apply only after the user has seen and explicitly approved the proposed edits.
+Edit prose directly inline for grammar, spelling, and clarity while strictly preserving the author's voice, tone, and technical meaning.
 
-## 1. Fix the editing contract
+This skill works across any scope, including a single paragraph, an excerpt, or a full article. Edits are applied directly inline, accompanied by a concise report detailing exactly what was changed and why in short bullets.
 
-Read the complete source before commenting. Preserve its meaning, claims, examples, organization, voice, tone, audience, technical detail, and formatting. Follow the document's existing conventions unless the user supplies a style guide.
+## 1. Establish the Editing Scope
 
-Review grammar, spelling, punctuation, usage, consistency, ambiguity, referents, sentence logic, and readability. In technical writing, also inspect terminology, definitions, units, identifiers, internal contradictions, and whether instructions can be followed as written.
+1. Read the complete target passage or document before making modifications.
+2. Determine whether the input is a local file path, a markdown document, or an inline passage.
+3. Establish preservation boundaries. Maintain the author's voice, direct tone, rhythm, technical claims, arguments, code snippets, identifiers, and markdown structure.
+4. Consult [references/editing-rubric.md](references/editing-rubric.md) to review voice preservation rules and editing standards.
 
-Unless requested, do not fact-check, alter arguments, rewrite for another audience, or edit quoted material, citations, code, commands, API names, or other exact literals.
+Criterion. Target text and preservation boundaries are clear before modifying content.
 
-Criterion: the source and preservation boundaries are clear. Ask only when missing context makes a reliable review impossible.
+## 2. Apply Conservative Inline Edits
 
-## 2. Diagnose—do not edit
+1. Edit the text directly inline for spelling, typos, punctuation, grammatical slips, and accidental syntactic ambiguity.
+2. For file inputs, edit the file directly in place using available file editing tools.
+3. For inline text or passages, output the complete edited text directly in the response.
+4. Never alter the author's underlying arguments, opinions, technical conclusions, or vocabulary.
+5. Do not inject synthetic transitions, academic hedging, introductory filler, or generic smoothing.
+6. Preserve all exact literals, including code blocks, CLI commands, package names, and API signatures.
 
-Return findings before changing the source. Be exhaustive about concrete problems, but do not manufacture criticism or substitute personal style preferences.
+Criterion. All corrections are applied directly inline without modifying voice or meaning.
 
-Use this structure:
+## 3. Generate the Change Report
 
-### Necessary edits
+After applying the inline edits, compile a concise report in short bullets detailing each modification.
 
-Number findings in document order. For each, give:
+1. State the exact location or original text snippet.
+2. State what was changed.
+3. Provide the concrete grammatical or clarity reason why the edit was made.
+4. If an ambiguity or technical contradiction exists that cannot be resolved safely without guessing author intent, flag it under Author Decisions for the author to review.
 
-- location or a short unique excerpt;
-- the problem and why it impairs correctness or understanding;
-- the smallest replacement that fixes it.
+Criterion. Every inline change is accounted for in a short, bulleted change report.
 
-Group repeated mechanical issues only when every affected location remains identifiable. If none exist, say so plainly.
+## 4. Formatting and Proof Gates
 
-### Author decisions
+Enforce strict formatting constraints across all report text and edited prose.
 
-List ambiguities, apparent contradictions, unsupported transitions, or technical questions that deserve attention but have no safe correction without changing meaning, voice, or content. Explain the risk; do not invent a fix. Omit this section when empty.
+* Zero colons rule. Never use a colon anywhere in headings, bullet labels, or prose notes. Colons are permissible only inside verified markdown link protocol prefixes like https.
+* Zero parentheses rule. Never use parentheses in prose notes or explanations. Rewrite sentences smoothly with commas or periods. Parentheses are strictly reserved for markdown link syntax.
+* Zero em dashes. Use commas, periods, or hyphens instead.
+* Zero buzzwords. Eliminate words like game-changing, delve, tapestry, landscape, revolutionize, crucial, and foster.
+* Zero metaphors. Describe systems using literal technical terminology.
 
-End by asking: **“Apply all necessary edits, or tell me which item numbers to apply or skip?”** The initial request to edit is not approval: the user must first see the findings. Do not mutate a file or return a silently revised document in this phase.
+## Hard Exit
 
-## 3. Resolve approval
-
-Treat “yes,” “apply,” or equivalent confirmation as approval for all **Necessary edits** only. Apply a subset when the user names item numbers. Author decisions require specific author direction; never fold them into a general approval.
-
-If the user changes a proposed replacement, use that wording. If approval is ambiguous, ask one narrow question before editing.
-
-Criterion: every planned change maps to an approved finding or explicit author instruction.
-
-## 4. Apply minimally
-
-Make only the approved replacements. Preserve surrounding wording and document structure. Do not opportunistically polish adjacent prose. If edits interact, use the smallest combined correction and disclose the interaction.
-
-For a source file, edit that file in place unless the user requests another output. For pasted prose, return the complete revised prose. Never overwrite a file merely because pasted text resembles its contents.
-
-## 5. Verify and report
-
-Compare the revision against the original. Confirm:
-
-- every change maps to an approved item;
-- each approved problem is resolved;
-- meaning, voice, tone, claims, numbers, citations, literals, and formatting remain unchanged except where explicitly approved;
-- no unapproved edit slipped in.
-
-For file edits, inspect the resulting diff. Hard exit: without post-review confirmation, produce findings only.
-
-Return the revised artifact, applied item numbers, skipped items, and unresolved author decisions. Keep the report brief.
-
-## Gotchas
-
-- A large critique does not justify a large rewrite. Findings may be extensive; edits remain minimal.
-- “Make it clearer” does not authorize simplification, added explanation, reordered ideas, or a new voice.
-- Unfamiliar technical terms are not misspellings. Correct them only from document evidence or author confirmation.
-- A technically questionable claim is an author decision unless fact-checking was requested.
-- A document's suggestion/track-changes mode, or returning an already rewritten preview, does not bypass approval.
+Verify each condition before concluding.
+* The edits are made directly inline in the target file or returned in the conversation.
+* The author's voice, tone, and technical meaning remain intact.
+* Every modification is recorded in the change report with what changed and why in short bullets.
+* The output contains zero colons outside https links, zero parentheses in prose notes, and zero em dashes.
