@@ -13,7 +13,6 @@ RTG (completed). Safe default install.
 | [`commit-and-push`](skills/rtg/commit-and-push/SKILL.md) | Update affected READMEs, commit, push (conventional commits). |
 | [`cost`](skills/rtg/cost/SKILL.md) | Session token usage and recorded cost when available across harnesses. |
 | [`no-edit`](skills/rtg/no-edit/SKILL.md) | Discuss one request without changing files or external state. |
-| [`setup-lat`](skills/rtg/setup-lat/SKILL.md) | LAT prefs, secure Readwise Reader MCP setup, and branded visual tooling with `/brand` and Bento Slides. |
 | [`skill-refiner`](skills/rtg/skill-refiner/SKILL.md) | Create or refine skills with routing, workflow, disclosure, and proof gates. |
 
 ## WIP
