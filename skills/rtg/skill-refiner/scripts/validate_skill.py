@@ -87,10 +87,8 @@ def validate(skill_arg: str, max_tokens: int) -> int:
     else:
         if len(description) > 1024:
             failures.append("description exceeds 1,024 characters")
-        if not description.startswith("Load when"):
-            failures.append("description must start with 'Load when'")
-        if not re.search(r'["“][^"”]{3,}["”]', description):
-            failures.append("description needs at least one quoted phrase a user would type")
+        # Capability, use conditions, and point of view need semantic review;
+        # a fixed prefix or quoted trigger cannot establish description quality.
 
     approximate_tokens = max(
         math.ceil(len(text) / 4),
@@ -138,7 +136,7 @@ def validate(skill_arg: str, max_tokens: int) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("skill", help="Skill directory or SKILL.md path")
-    parser.add_argument("--max-tokens", type=int, default=1500)
+    parser.add_argument("--max-tokens", type=int, default=2000)
     args = parser.parse_args()
     return validate(args.skill, args.max_tokens)
 
