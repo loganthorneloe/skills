@@ -103,3 +103,11 @@ No other official “status” field in Agent Skills / `npx skills` — use **pa
 - Auto-memory off
 - Modes: **lfg** (default, yellow) → **ask** (green) → **plan** (red)
 - `/clear` = fresh session (alias native `/new` / clear-conversation)
+
+## Break It Down maintenance
+
+- Canonical source: `skills/rtg/break-it-down/`; maintain it here instead of the standalone repository.
+- Preserve the original ELI5 first-principles approach. Keep web-report presentation guidance in `references/web-reports.md` inside the skill, with a short routing instruction in `SKILL.md`.
+- Keep the skill agnostic to the AI provider, model, tools, and topic. Do not require a particular agent, personal path, account, local repository, or companion skill.
+- Keep sufficient Logan styling guidance bundled so the skill works on its own. A brand kit may improve fidelity but must remain optional.
+- Keep development notes and evaluation artifacts outside the installable skill folder. Make focused changes driven by requested behavior and observed results.
