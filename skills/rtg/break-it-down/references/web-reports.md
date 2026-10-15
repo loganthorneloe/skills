@@ -1,18 +1,25 @@
 # Web reports
 
-Use the same source audit, first-principles explanation, and source evidence as the core skill. The default deliverable is a simple HTML report.
+Read before composing an HTML report. Use the core skill's source audit, depth, and evidence requirements. HTML is an explanatory medium: use its visual and interactive capabilities to help the reader understand relationships, not merely to format a document.
 
-## Logan styling
+## Logan typography and styling
 
-The guidance below is the portable Logan visual style for this skill. It is sufficient without a `logan-brand` skill, `logan-style` checkout, installed fonts, network-loaded styles, or a particular AI tool. An available brand kit can supply exact assets, but is optional. Honor explicit user design direction.
+The bundled assets and rules are sufficient without a separate brand skill, personal checkout, account, or font download. An available current brand kit can refine them. Honor explicit user design direction.
 
-### Palette and typography
+### Load the actual fonts
 
-Default to light. Define semantic CSS variables for these colors; use the dark column when the destination or user calls for dark styling. Do not invert source images to create a dark theme.
+- Use **Sora SemiBold, weight 600**, for headings and prominent numbers, with tight letter spacing. Use **Inter 400** for body text and **Inter 500** for labels and controls. Use a readable monospace face for code.
+- Copy [the bundled fonts stylesheet](../assets/fonts.css) and its sibling `fonts/` directory into the report assets, or embed the font files with equivalent `@font-face` rules for a single-file report. Keep the Sora and Inter OFL licenses with distributed font files; include their notices in the HTML when embedding fonts.
+- The stylesheet declares font faces; the report must also apply Sora to headings/numbers and Inter to body/controls. Font-family names without loaded assets are insufficient. Do not substitute system fonts to avoid bundling available fonts.
+- Keep system fallbacks for loading failures. Verify that the declared font faces actually load and that rendered headings use Sora 600. A computed CSS font-family string alone does not prove this. If the delivery environment prevents font loading, disclose degraded typography.
+
+### Palette
+
+Default to light. Define semantic CSS variables using the following values. Use the dark column only when requested or useful to the destination. Never invert source figures.
 
 | Role | Light | Dark |
 | --- | --- | --- |
-| Canvas | `#f5f4f0` warm paper | `#101527` ink navy |
+| Canvas | `#f5f4f0` | `#101527` |
 | Surface | `#ffffff` | `#1e2537` |
 | Main text | `#101527` | `#f3f5f8` |
 | Secondary text | `#646c77` | `#adb4c0` |
@@ -21,26 +28,53 @@ Default to light. Define semantic CSS variables for these colors; use the dark c
 | Green accent | `#46734d` | `#9ac9a2` |
 | Red accent | `#bf3030` | `#ed7777` |
 
-Use Sora at weight 600 for headings and prominent numbers, Inter for body text and labels, and a readable monospace face for code. When those fonts are unavailable, use system sans-serif fallbacks such as `"Sora", system-ui, sans-serif` and `"Inter", system-ui, sans-serif`. Do not require font downloads; the report must remain readable offline with fallback fonts.
+### Composition
 
-### Composition and detail
+- Keep prose around 720px wide with responsive 20–24px side padding, 16–17px body text, and line height around 1.75. Let figures and interactive explanations use a wider bounded area when their labels or relationships need it. Do not squeeze every visual into the prose column.
+- Use warm paper, ink text, thin structural lines, near-square surfaces, deliberate whitespace, and consistent spacing. Avoid gradients, decorative backgrounds, shadows, and dashboard cards around ordinary paragraphs.
+- Place short headings above their content. Omit obligatory logos, eyebrow labels, slogans, generic subtitles, and footer strips. A red terminal period is optional on the main title, not required on subheadings. Keep substantive text in the main text color.
+- Make body links visibly heavier and underlined, with red hover/focus treatment and visible keyboard-focus outlines. Use a small red external-link arrow only for external text destinations, hidden from assistive technology. Internal actions and downloads need no decorative arrow.
+- Give important metrics Sora numerals plus the units, conditions, and comparison needed to interpret them. Color must not be the only carrier of meaning. Retain category distinctions even when additional chart colors are needed.
+- Preserve source images, labels, colors, proportions, and attribution. Add the report's styling around them. Provide an enlarged view or full-resolution link when fine details cannot be read at report width, and explain the important details in the visible text.
 
-- Use a centered reading column around 720px wide, responsive side padding around 20–24px, 16–17px body text, and line height around 1.75. Place headings above the content they introduce. Separate prose sections with whitespace.
-- Favor warm paper, dark text, square or nearly square surfaces, thin structural lines, and restrained accents. Avoid shadows, gradients, decorative backgrounds, and rounded dashboard cards around ordinary paragraphs. Use tables or grouped surfaces only when the information calls for them.
-- Keep headings short and descriptive. Omit obligatory logos, slogans, eyebrow labels, subtitles, decorative numbering, and footer strips. A red terminal period is optional for the main report title, never required on subheadings or figure labels.
-- Make body links visibly heavier and underlined, with red hover/focus text and a visible keyboard-focus outline. External text links may carry a small red `↗` hidden from assistive technology; omit directional decoration from internal links and controls.
-- Use blue as a restrained accent; use red or green when their meaning is useful. Never communicate a distinction by color alone. Keep labels, units, conditions, and category identities intact; use additional distinguishable colors when the data needs them. Styling must not alter values or imply evidence that the sources do not provide.
-- Preserve source figures, screenshots, authentic logos, colors, labels, and attribution. Apply the report style to surrounding text and captions, not to the source evidence itself. Use responsive images with their original aspect ratios. The core skill's source-evidence requirement still applies.
+## Design the explanation in HTML
 
-### Portable HTML
+### Use interaction to teach
 
-Prefer one HTML file with embedded CSS and minimal JavaScript, without a framework, server, or build pipeline. Use the bundled guidance to write the small amount of CSS needed for the report. Adjacent assets with relative paths are appropriate when supported; embed required assets when a self-contained file is requested and embedding is permitted. Do not rely on personal filesystem paths. External source images may require network access; retain source links and captions and disclose unavailable assets rather than promising offline access to them.
+For a full report, actively design a substantive interactive explanation around a relationship the reader needs to understand. Prefer a manipulable model, a process that can be inspected step by step, or a comparison whose relevant differences are made visible. Use appropriate native controls and lightweight JavaScript with HTML, SVG, or canvas. The topic determines the form; do not reuse one widget for every report.
 
-## Report and delivery
+Before implementing it, identify the question the interaction answers, what the reader controls, what visibly changes, and what they should learn. If changing the control teaches nothing beyond the prose, redesign or omit it. When the subject genuinely offers no useful interaction, use a clear static explanatory visual rather than adding decorative controls. A short fact or follow-up need not become an interactive report.
 
-- Keep the page simple: a clear title, compact source audit, direct answer, then a connected explanation with descriptive headings. Use a readable column, generous spacing, strong contrast, and responsive source figures with captions and attribution. Choose layout for the explanation; do not force prose into dashboard tiles or add decorative labels and filler.
-- Put source links beside the claims, figures, metrics, and short quotations they support. Do not fabricate visuals or evidence to fill the layout; state when source material is unavailable.
-- Add interaction only when it improves understanding: expandable detail, a comparison toggle, or a small parameter control. Keep the main explanation readable without interaction. Clearly label assumptions and illustrative calculations; distinguish them from source findings.
-- Use semantic HTML, keyboard-accessible controls, descriptive links, and alt text. Keep essential content visible if JavaScript is unavailable.
-- Deliver the report as a file or HTML artifact using the current environment's capabilities. When file tools are available, save it and any assets in the user's requested location or the normal output location. If neither files nor artifacts are supported, return the complete HTML source for the user to save. Include a brief summary and a usable link or attachment when available; never invent a saved file or preview.
-- Preview when tools permit; check narrow and wide layouts, font and asset loading, source images, links, controls, and each delivered theme. Report checks you could not perform. Opening a supported preview is useful but is not a dependency of this skill.
+Keep controls next to their consequences. Show current values, meaningful units, a clear default state, and a reset when useful. Explain assumptions and provenance alongside the visual. Do not invent empirical relationships to make a simulation work. Label constructed data and calculations clearly, and link the source of empirical inputs. Source findings and interactive illustrations must remain distinguishable.
+
+### Keep the reading path open
+
+Keep definitions, explanation, quotations, evidence interpretation, caveats, and technical detail visible in the normal reading flow. Do not use `<details>`, accordions, or disclosure dropdowns to hide report content unless the user explicitly requests that treatment. A select control may choose an actual model parameter when appropriate; it must not become a container for prose. No hover-only explanations of essential information.
+
+The page should explain the subject before the reader touches a control. Interaction deepens that understanding. Provide a static initial view and readable explanation if JavaScript is unavailable. Respect reduced motion, label controls, support keyboard use, and expose changing results accessibly.
+
+### Choose tables deliberately
+
+Use tables when readers need to compare the same attributes across multiple items or inspect precise values. Use connected prose for reasoning and visual models for mechanisms. Do not turn every list, conceptual distinction, or sequence into a table. Review repeated tables together: each must offer a comparison that would be harder to understand in another form. A sortable table is useful only when sorting helps answer a real question.
+
+## Evidence placement and depth
+
+Plan the explanation and evidence together before coding. Each major section should advance understanding and resolve its subquestion, not simply name a category. Allow enough space for definitions, intermediate causal steps, conditions, and implications. Short sentences can support a long, comprehensive explanation.
+
+For every retained source exhibit, make its purpose explicit in the surrounding prose: what question it answers, what the reader should notice, how that supports the explanation, and which limits matter. Read the complete caption and relevant methods. Preserve original figures as evidence; original diagrams and interactions can explain or extend them, with separate attribution. Do not replace a revealing source figure with a generic generated graphic or insert irrelevant evidence to meet a quota.
+
+Quotes should preserve a precise definition, consequential argument, or useful limitation in the author's own words. Metrics should quantify something the reader needs to understand. A large number without its denominator, comparison, or measurement conditions is incomplete. Be selective without stripping away the evidence needed for depth.
+
+## Packaging and verification
+
+Prefer portable HTML with embedded CSS and only the JavaScript needed for the explanation. No framework, server, or build pipeline is required. Bundle fonts, licenses, and source assets with relative paths, or embed them for single-file delivery. Avoid personal filesystem dependencies. If an asset requires the network, disclose that rather than claiming offline availability.
+
+Before delivery, check:
+
+1. **Understanding.** The direct answer, prerequisites, mechanism, important conditions, and implications are explained. Major questions are answered, not deferred to links or hidden content.
+2. **Evidence.** Source claims and interpretations match the full material. Every quote, number, and figure has a clear role and nearby attribution. Constructed visuals are labeled. Important source findings were not skipped for brevity.
+3. **Typography.** Font files load successfully, the Sora 600 and Inter faces are loaded, and heading/body styles use the intended faces and weights. Inspect the rendered result, not only the CSS.
+4. **Visual layout.** Inspect desktop and narrow layouts. Text, controls, images, legends, and labels remain readable without clipping. All packaged assets resolve. Test each delivered theme.
+5. **Interaction.** Operate each control. Check its default, changed, and boundary states against the stated calculation or logic. Verify keyboard access, visible focus, meaningful result updates, and a readable noninteractive view.
+
+Fix failed checks and repeat affected checks. Report checks that the environment cannot support. Deliver the actual file or artifact with a brief summary and working link. Keep validation fixtures and maintenance notes outside the installable skill.
