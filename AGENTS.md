@@ -107,7 +107,7 @@ No other official “status” field in Agent Skills / `npx skills` — use **pa
 ## Break It Down maintenance
 
 - Canonical source: `skills/rtg/break-it-down/`; maintain it here instead of the standalone repository.
-- Preserve the original ELI5 first-principles approach. Keep web-report presentation guidance in `references/web-reports.md` inside the skill, with a short routing instruction in `SKILL.md`.
+- Preserve the ELI5 first-principles approach and single-file portability. Keep all instructions, including web-report presentation guidance, in `SKILL.md`; no required companion references or local assets. Allow up to 3,000 estimated tokens for this self-contained skill when validating.
 - Keep the skill agnostic to the AI provider, model, tools, and topic. Do not require a particular agent, personal path, account, local repository, or companion skill.
-- Keep sufficient Logan styling guidance bundled so the skill works on its own. A brand kit may improve fidelity but must remain optional.
+- Keep sufficient Logan styling guidance inline so the skill works on its own. Use public font sources with explicit fallback behavior. A brand kit may improve fidelity but must remain optional.
 - Keep development notes and evaluation artifacts outside the installable skill folder. Make focused changes driven by requested behavior and observed results.
