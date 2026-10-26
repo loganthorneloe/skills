@@ -104,10 +104,16 @@ No other official “status” field in Agent Skills / `npx skills` — use **pa
 - Modes: **lfg** (default, yellow) → **ask** (green) → **plan** (red)
 - `/clear` = fresh session (alias native `/new` / clear-conversation)
 
+## Research skills
+
+- `skills/rtg/research/` holds `break-it-down`, `source-audit`, `find-evidence`, and `voice`. Each companion is independently usable; `break-it-down` loads them by name or sibling path (`../<name>/SKILL.md`) and stops if one is missing. Keep them siblings.
+- Each rule lives in one skill: source vetting in `source-audit`, exhibit extraction in `find-evidence`, prose style in `voice`, report structure/HTML/styling in `break-it-down`. Do not duplicate across them.
+- Keep result-record formats in `source-audit` and `find-evidence` stable; `break-it-down` and subagents consume them.
+
 ## Break It Down maintenance
 
-- Canonical source: `skills/rtg/break-it-down/`; maintain it here instead of the standalone repository.
-- Preserve the ELI5 first-principles approach and single-file portability. Keep all instructions, including web-report presentation guidance, in `SKILL.md`; no required companion references or local assets. Allow up to 3,000 estimated tokens for this self-contained skill when validating.
-- Keep the skill agnostic to the AI provider, model, tools, and topic. Do not require a particular agent, personal path, account, local repository, or companion skill.
+- Canonical source: `skills/rtg/research/break-it-down/`; maintain it here instead of the standalone repository.
+- Preserve the ELI5 first-principles approach. Keep report and web-presentation guidance in `SKILL.md`; no required local assets. Allow up to 3,000 estimated tokens when validating.
+- Keep the skill agnostic to the AI provider, model, tools, and topic. Do not require a particular agent, personal path, account, or local repository. Its only required dependencies are the sibling research skills.
 - Keep sufficient Logan styling guidance inline so the skill works on its own. Use public font sources with explicit fallback behavior. A brand kit may improve fidelity but must remain optional.
 - Keep development notes and evaluation artifacts outside the installable skill folder. Make focused changes driven by requested behavior and observed results.
