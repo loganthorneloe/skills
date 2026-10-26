@@ -25,3 +25,7 @@ Or install specific skills with `--skill <name>`. The research skills in `skills
 ```bash
 npx skills add loganthorneloe/skills --skill break-it-down source-audit find-evidence voice
 ```
+
+## License
+
+[MIT](LICENSE)
