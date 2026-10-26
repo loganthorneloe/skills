@@ -14,8 +14,14 @@ Reusable skills for AI agents.
 
 ## Install
 
-Research skills live in `skills/rtg/research/` and work separately; `break-it-down` loads the other three.
+Install everything:
 
 ```bash
 npx skills add loganthorneloe/skills
+```
+
+Or install specific skills with `--skill <name>`. The research skills in `skills/rtg/research/` each work on their own, but `break-it-down` requires the other three, so install them together:
+
+```bash
+npx skills add loganthorneloe/skills --skill break-it-down source-audit find-evidence voice
 ```

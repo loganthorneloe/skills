@@ -1,9 +1,5 @@
 # Agent Guidelines for `loganthorneloe/skills` Repository
 
-## Rules
-
-Be EXTREMELY concise. Sacrifice grammatical correctness in favor of conciseness ALWAYS.
-
 ## Repository Layout & Skill Conventions
 
 1. **Source only here**: create/edit skills under `skills/` in this repo. NEVER only in a harness folder (`~/.claude/skills`, `~/.pi/agent/skills`, etc.).
@@ -115,5 +111,5 @@ No other official “status” field in Agent Skills / `npx skills` — use **pa
 - Canonical source: `skills/rtg/research/break-it-down/`; maintain it here instead of the standalone repository.
 - Preserve the ELI5 first-principles approach. Keep report and web-presentation guidance in `SKILL.md`; no required local assets. Allow up to 3,000 estimated tokens when validating.
 - Keep the skill agnostic to the AI provider, model, tools, and topic. Do not require a particular agent, personal path, account, or local repository. Its only required dependencies are the sibling research skills.
-- Keep sufficient Logan styling guidance inline so the skill works on its own. Use public font sources with explicit fallback behavior. A brand kit may improve fidelity but must remain optional.
+- Keep the house style (Logan's brand defaults, named neutrally in the skill) inline so the skill works on its own. Use public font sources with explicit fallback behavior. A brand kit may improve fidelity but must remain optional.
 - Keep development notes and evaluation artifacts outside the installable skill folder. Make focused changes driven by requested behavior and observed results.

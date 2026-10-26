@@ -4,7 +4,7 @@ description: Explains complex topics from first principles with source evidence 
 ---
 # Break It Down
 
-Explain the subject in plain language with enough depth to understand how it works. Default to a Logan-styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not short. Read the Gotchas before starting.
+Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not short. Read the Gotchas before starting.
 
 ## Companion research skills
 
@@ -46,9 +46,9 @@ Keep controls next to results, with current values, units, sensible defaults, an
 
 Keep definitions, explanation, evidence, caveats, and implications visible in the reading flow; end on implications and limits rather than a recap. No accordions, disclosure dropdowns, or hover-only essential text unless requested. A select may change a genuine model parameter. Prefer relevant source tables with attribution and context; use clearly labeled synthesis tables when the comparison spans sources. Choose by purpose, not a table quota.
 
-## 5. Apply Logan styling
+## 5. Apply the house style
 
-Use these self-contained defaults. An accessible current Logan style reference can refine them but is never required. Honor explicit design direction.
+Use these self-contained defaults. A brand or style reference the user provides can refine them but is never required. Honor explicit design direction.
 
 - **Typography:** Sora SemiBold 600 for headings and prominent numbers; Inter 400 for body and 500 for labels/controls; monospace for code. Apply tight heading letter spacing. Retrieve the faces through this [public font stylesheet](https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap). External loading requires network access. For offline delivery, embed retrieved fonts and preserve their license notices; obtain licenses from the Sora and Inter directories in the [Google Fonts repository](https://github.com/google/fonts/tree/main/ofl). If retrieval is unavailable, use system sans-serif fallbacks and disclose reduced brand fidelity. Do not invent font data or assume a family declaration loads it.
 - **Palette:** default light: canvas `#f5f4f0`, surface `#ffffff`, text `#101527`, muted `#646c77`, border `#cbd0d3`, blue `#2f6c9e`, green `#46734d`, red `#bf3030`. If dark is requested, use respectively `#101527`, `#1e2537`, `#f3f5f8`, `#adb4c0`, `#3e4659`, `#8db7de`, `#9ac9a2`, `#ed7777`. Never invert source figures or rely on color alone for meaning.
