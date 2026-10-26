@@ -33,7 +33,7 @@ Select exhibits that teach different things. Include several when each adds some
 4. Open each extracted image and check it for clipping, blur, and legibility. Keep a full-resolution version for an enlarged view.
 5. For a key table, return both a rendered image and the transcribed values. A table may be rebuilt as HTML with attribution only when its values match the source exactly.
 6. Copy quotations exactly and keep them short; use ellipses only where omission does not change meaning.
-7. Follow the source's stated reuse terms. When none are stated, attribute the exhibit, record "rights unstated," and let the caller decide whether to embed or link.
+7. Follow the source's stated reuse terms. When copies of a source (publisher, repository, PubMed Central) carry different terms, use the most permissive copy. When none are stated, attribute the exhibit, record "rights unstated," and let the caller decide whether to embed or link.
 
 Generated visuals, calculations, and constructed data may supplement source exhibits; return them as type `generated` and never mix them with published observations.
 

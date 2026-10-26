@@ -8,7 +8,7 @@ Decide whether each source can support the claims a task needs, and record why i
 
 ## 1. Number the claims
 
-Break the question into numbered claims (C1, C2, …), each specific enough to check. Cover every part of the question, usually in two to six claims. "How much?" becomes a claim about a named measure, such as an effect size or percentage-point difference. If the question assumes something the sources reject (for example, that lab "massed" study equals real cramming), say so in the gaps list. Take claims from the calling agent when it supplies them, and keep its numbering so other skills can refer to the same IDs. Ask only when no claim can be inferred.
+Break the question into numbered claims (C1, C2, …), each specific enough to check. Cover every part of the question with as many claims as it needs. "How much?" becomes a claim about a named measure, such as an effect size or percentage-point difference. If the question assumes something the sources reject (for example, that lab "massed" study equals real cramming), say so in the gaps list. Take claims from the calling agent when it supplies them, and keep its numbering so other skills can refer to the same IDs. Ask only when no claim can be inferred.
 
 ## 2. Read the source, not its surface
 
