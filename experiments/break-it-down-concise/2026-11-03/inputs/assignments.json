@@ -1,0 +1,14 @@
+[
+ {"id":"c-base1","topic":"causal","variant":"baseline"},
+ {"id":"c-base2","topic":"causal","variant":"baseline"},
+ {"id":"c-budget","topic":"causal","variant":"budget"},
+ {"id":"c-select","topic":"causal","variant":"select"},
+ {"id":"c-combined","topic":"causal","variant":"combined"},
+ {"id":"c-distill","topic":"causal","variant":"distill"},
+ {"id":"i-base1","topic":"isolation","variant":"baseline"},
+ {"id":"i-base2","topic":"isolation","variant":"baseline"},
+ {"id":"i-budget","topic":"isolation","variant":"budget"},
+ {"id":"i-select","topic":"isolation","variant":"select"},
+ {"id":"i-combined","topic":"isolation","variant":"combined"},
+ {"id":"i-distill","topic":"isolation","variant":"distill"}
+]

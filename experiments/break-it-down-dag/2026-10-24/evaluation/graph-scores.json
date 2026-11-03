@@ -1,0 +1,357 @@
+{
+  "encryption": {
+    "run": "e02",
+    "report_label": "B",
+    "scores": {
+      "reader_fit": 4,
+      "completeness": 3,
+      "edge_validity": 2,
+      "granularity": 3,
+      "evidence_alignment": 3,
+      "research_trace": 3,
+      "synthesis_realization": 4
+    },
+    "structural_validity": {
+      "unique_ids": true,
+      "valid_endpoints": true,
+      "acyclic": true,
+      "all_nodes_reach_target": true,
+      "nodes": 11,
+      "edges": 13
+    },
+    "issues": [
+      {
+        "nodes": [
+          "bits",
+          "mod",
+          "secrecy"
+        ],
+        "kind": "unnecessary_edges",
+        "detail": "bits\u2192mod and bits\u2192secrecy confuse the message representation used by the example with prerequisites for understanding remainders or confidentiality."
+      },
+      {
+        "nodes": [
+          "construction",
+          "randomness",
+          "hybrid"
+        ],
+        "kind": "unnecessary_edges",
+        "detail": "construction\u2192randomness makes a particular RSA calculation prerequisite to understanding deterministic guessing; randomness\u2192hybrid carries an RSA/OAEP-specific answer into a generic HPKE explanation."
+      },
+      {
+        "nodes": [
+          "pair",
+          "construction",
+          "hybrid"
+        ],
+        "kind": "missing_prerequisites",
+        "detail": "The graph omits the symmetric-key baseline, explicit prime/exponent prerequisites, and the remainder/correctness bridge used by the report; pair uses a private exponent without a mod prerequisite."
+      },
+      {
+        "nodes": [
+          "mod",
+          "limits"
+        ],
+        "kind": "bundling",
+        "detail": "mod combines remainder arithmetic with efficient exponentiation; limits combines sender authentication, compromise, and length leakage, all made prerequisite to the target."
+      },
+      {
+        "nodes": [
+          "bits",
+          "secrecy",
+          "construction",
+          "target"
+        ],
+        "kind": "partial_evidence",
+        "detail": "Byte-to-integer conversion and glossary definitions do not explain every novice-facing claim. construction records the numerical inverse relation without the report\u2019s explanation of why it restores messages."
+      },
+      {
+        "nodes": [],
+        "kind": "research_trace",
+        "detail": "Round 1 and round 2 node/edge snapshots both equal the final graph despite round 2 claiming additional terminology and reversibility work; chronology cannot be reconstructed faithfully."
+      },
+      {
+        "nodes": [
+          "hard",
+          "mod",
+          "pair",
+          "hybrid"
+        ],
+        "kind": "rendering",
+        "detail": "Several long SVG edges pass behind intermediate node boxes; narrow rendering shrinks labels to roughly 7\u20138 CSS pixels."
+      }
+    ],
+    "proposed_repairs": [
+      "Replace bits\u2192mod with bits\u2192construction; remove bits\u2192secrecy. Add only the arithmetic and symmetric-key prerequisites actually used in answers.",
+      "Make generic deterministic-guessing/randomization reasoning independent of the specific RSA example; treat OAEP and HPKE as separate applications.",
+      "Separate remainder meaning from the exponentiation/correctness bridge; mark peripheral limit nodes as scope conditions rather than necessary foundations.",
+      "Use claim-specific source passages and mark derived explanations as synthesis; retain partial/gap status until the question is actually explained.",
+      "Preserve genuine intermediate snapshots or explicitly label reconstructed states; route edges outside node boxes and permit readable-width graph scrolling or zoom."
+    ]
+  },
+  "isolation": {
+    "run": "e04",
+    "report_label": "A",
+    "scores": {
+      "reader_fit": 4,
+      "completeness": 4,
+      "edge_validity": 2,
+      "granularity": 3,
+      "evidence_alignment": 3,
+      "research_trace": 4,
+      "synthesis_realization": 4
+    },
+    "structural_validity": {
+      "unique_ids": true,
+      "valid_endpoints": true,
+      "acyclic": true,
+      "all_nodes_reach_target": true,
+      "nodes": 13,
+      "edges": 19
+    },
+    "issues": [
+      {
+        "nodes": [
+          "levels",
+          "serial"
+        ],
+        "kind": "wrong_direction",
+        "detail": "The definition of serial equivalence is needed to interpret the serializable guarantee in the levels comparison; levels\u2192serial reverses that definitional dependency."
+      },
+      {
+        "nodes": [
+          "snapshot",
+          "anomalies",
+          "transaction",
+          "rule",
+          "skew",
+          "serial"
+        ],
+        "kind": "unnecessary_edges",
+        "detail": "snapshot\u2192anomalies treats MVCC as necessary to understand read anomalies; transaction\u2192rule and skew\u2192serial turn an example-driven reading sequence into prerequisites."
+      },
+      {
+        "nodes": [
+          "interleave",
+          "skew"
+        ],
+        "kind": "missing_edge",
+        "detail": "skew requires understanding overlapping decisions, but interleave\u2192skew is absent; the rendered ordering places skew earlier."
+      },
+      {
+        "nodes": [
+          "anomalies",
+          "practice"
+        ],
+        "kind": "bundling_and_omission",
+        "detail": "Five anomalies and three remedies are bundled. The important relative conditional UPDATE versus stale absolute-value distinction is developed in the report but lacks its own explicit prerequisite answer."
+      },
+      {
+        "nodes": [
+          "practice",
+          "anomalies",
+          "snapshot"
+        ],
+        "kind": "partial_evidence",
+        "detail": "practice cites only locking passages for an answer also asserting conditional updates and whole retries. The anomaly table does not teach all listed failures; snapshot omits the own-writes qualification supplied by the report."
+      },
+      {
+        "nodes": [
+          "retry",
+          "practice"
+        ],
+        "kind": "synthesis_order",
+        "detail": "The report begins the practice section with conditional updates and locks before fully teaching retries, contrary to the broad retry\u2192practice edge; the prose order is sensible and the node should be split."
+      },
+      {
+        "nodes": [],
+        "kind": "rendering",
+        "detail": "Many right-margin hairpin edges are difficult to trace, and the SVG shrinks to roughly 7\u20138-pixel labels on a narrow screen."
+      }
+    ],
+    "proposed_repairs": [
+      "Separate serial equivalence from enforcement; teach the definition before the isolation-level table. Remove skew\u2192serial-definition and add interleave\u2192skew.",
+      "Remove transaction\u2192rule and avoid making MVCC snapshots a prerequisite for all anomaly definitions.",
+      "Split practice into the three independently selectable remedies; add a concise conditional-update answer contrasting relative expression and stale constant.",
+      "Attach PostgreSQL \u00a713.2.1 to conditional updates and \u00a713.5 to whole-operation retries; connect the write-skew source to anomalies, and qualify snapshot visibility for own writes.",
+      "Keep the useful initial/final research history, but preserve gaps when evidence supports only one part of a bundled node; improve edge routing and narrow-screen readability."
+    ]
+  },
+  "evals": {
+    "run": "e05",
+    "report_label": "A",
+    "scores": {
+      "reader_fit": 4,
+      "completeness": 4,
+      "edge_validity": 3,
+      "granularity": 3,
+      "evidence_alignment": 3,
+      "research_trace": 4,
+      "synthesis_realization": 4
+    },
+    "structural_validity": {
+      "unique_ids": true,
+      "valid_endpoints": true,
+      "acyclic": true,
+      "all_nodes_reach_target": true,
+      "nodes": 10,
+      "edges": 11
+    },
+    "issues": [
+      {
+        "nodes": [
+          "outcome",
+          "grader"
+        ],
+        "kind": "conditional_edge",
+        "detail": "outcome\u2192grader makes action records and authorization history mandatory for answer-only evals; the report correctly treats action-taking as a conditional branch."
+      },
+      {
+        "nodes": [
+          "compare",
+          "workflow"
+        ],
+        "kind": "bundled_target_and_order",
+        "detail": "compare\u2192workflow fits maintenance but not starting a first run. The report teaches the starter run in \u00a75 and controlled changes in \u00a76."
+      },
+      {
+        "nodes": [
+          "variation",
+          "sample"
+        ],
+        "kind": "bundling_and_reader_gap",
+        "detail": "variation combines fluent wrongness with stochastic variation; sample combines population selection, binary sampling, repeated-study coverage, and grader error without unpacking the statistics used in prose."
+      },
+      {
+        "nodes": [
+          "case",
+          "population",
+          "workflow"
+        ],
+        "kind": "missing_explicit_prerequisites",
+        "detail": "Application configuration, reset conditions, and case-versus-attempt distinctions are not clearly represented as reusable dependencies; population uses case/score concepts without a corresponding edge."
+      },
+      {
+        "nodes": [
+          "outcome"
+        ],
+        "kind": "overstatement",
+        "detail": "A final record alone does not prove that an action caused the expected effect. Controlled starting state and an expected final-state comparison are required; the report supplies these."
+      },
+      {
+        "nodes": [
+          "case",
+          "grader",
+          "sample",
+          "compare",
+          "workflow"
+        ],
+        "kind": "evidence_precision",
+        "detail": "Repeated broad source dictionaries are relevant but do not map individual answers to their explanatory passages. The NIST-derived numerical bound is a calculation under assumptions, not a directly reported result."
+      },
+      {
+        "nodes": [],
+        "kind": "rendering",
+        "detail": "The embedded graph scales to approximately 4\u20135-pixel labels on mobile; HTML edge text remains readable, but node answers are in JSON rather than the graph page."
+      }
+    ],
+    "proposed_repairs": [
+      "Make observable evidence the generic grader prerequisite; keep final-state and permission-history checks on an explicit action-taking branch.",
+      "Split initial execution from controlled comparison/maintenance so the graph matches the useful \u00a75\u2192\u00a76 teaching sequence.",
+      "Qualify outcome with controlled starting state and expected final-state comparison; make case-versus-attempt and the whole application under test explicit.",
+      "Add only the probability/coverage bridge needed for the zero-failure example, or label the optional statistical extension accordingly.",
+      "Replace repeated source bundles with precise task-instance, reward, isolation, and calibration passages; distinguish source-backed formulas from the author\u2019s calculation.",
+      "Retain the documented removal of variation\u2192goal; preserve an intermediate state or precise machine-readable delta and provide readable graph zoom/scroll."
+    ]
+  },
+  "causal": {
+    "run": "e07",
+    "report_label": "B",
+    "scores": {
+      "reader_fit": 4,
+      "completeness": 3,
+      "edge_validity": 3,
+      "granularity": 3,
+      "evidence_alignment": 3,
+      "research_trace": 2,
+      "synthesis_realization": 4
+    },
+    "structural_validity": {
+      "unique_ids": true,
+      "valid_endpoints": true,
+      "acyclic": true,
+      "all_nodes_reach_target": true,
+      "nodes": 9,
+      "edges": 12
+    },
+    "issues": [
+      {
+        "nodes": [
+          "random",
+          "missing",
+          "uncertainty"
+        ],
+        "kind": "overstrong_dependencies",
+        "detail": "Random assignment is an example context, not a general prerequisite for missing-outcome selection, interference, or sampling uncertainty. The current nodes combine trial-specific and broader concepts."
+      },
+      {
+        "nodes": [
+          "missing",
+          "uncertainty"
+        ],
+        "kind": "bundling",
+        "detail": "missing combines selective outcome loss with interference; uncertainty combines random assignment, sampling, confidence intervals, and bias limits."
+      },
+      {
+        "nodes": [
+          "target",
+          "random",
+          "uncertainty"
+        ],
+        "kind": "missing_prerequisites",
+        "detail": "Random assignment versus population sampling/generalization and assignment unit/dependent observations are important in the report but not explicit in the graph."
+      },
+      {
+        "nodes": [
+          "assignment"
+        ],
+        "kind": "partial_evidence",
+        "detail": "The cited early What If passages assume full adherence; they motivate a difficulty but do not directly explain the assignment-versus-received-treatment estimand. \u00a722.1 is the appropriate explanatory passage."
+      },
+      {
+        "nodes": [
+          "missing"
+        ],
+        "kind": "partial_evidence",
+        "detail": "The interference passage explains that part of the node. A trial\u2019s attrition assessment does not itself explain why selecting complete outcomes can bias a comparison."
+      },
+      {
+        "nodes": [],
+        "kind": "research_trace",
+        "detail": "Rounds 1 and 2 are each repeated three times, yielding four duplicate entries. Only the initial graph is snapshotted; the repeated summaries do not reconstruct two distinct final-state transitions."
+      },
+      {
+        "nodes": [
+          "target",
+          "assignment",
+          "missing",
+          "uncertainty"
+        ],
+        "kind": "synthesis_order",
+        "detail": "The practical trial checklist appears in \u00a73 before the full \u00a75 explanations of nonuse, missingness, and uncertainty; reasonable previews, but not a strict topological realization of the final target dependencies."
+      },
+      {
+        "nodes": [],
+        "kind": "rendering",
+        "detail": "Desktop branches are relatively legible and correspond to JSON; mobile labels shrink to about 7 pixels and node answers are not shown in the graph page."
+      }
+    ],
+    "proposed_repairs": [
+      "Separate selective missing outcomes from interference; connect them to the relevant comparison/intervention concepts instead of requiring random assignment universally.",
+      "Separate random allocation variation from population sampling and add a short assignment-unit/dependence bridge for the clustered trial.",
+      "Use What If \u00a722.1, pp.299\u2013301, for assignment versus received treatment and Fine Point 22.2 for selection after missing follow-up; retain the existing uncertainty and interference passages.",
+      "Either split trial planning from final interpretation or label the \u00a73 checklist as a preview rather than claiming full dependency-order synthesis.",
+      "Deduplicate the revision history, preserve actual state changes, and retain the useful source-identity correction as research evidence; provide readable graph zoom/scroll and accessible node answers."
+    ]
+  }
+}

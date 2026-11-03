@@ -1,0 +1,128 @@
+{
+  "status": "PASS",
+  "node_count": 18,
+  "edge_count": 31,
+  "unique_ids": true,
+  "valid_endpoints": true,
+  "acyclic": true,
+  "every_node_reaches_target": true,
+  "required_fields": true,
+  "supported_nodes_have_locator_evidence": true,
+  "required_gap_nodes": 0,
+  "initial_and_round_history_preserved": true,
+  "topological_order": [
+    "sql_state",
+    "transaction",
+    "correctness",
+    "atomicity",
+    "overlap",
+    "serial",
+    "interference",
+    "visibility",
+    "serializable",
+    "anomalies",
+    "snapshot",
+    "retries",
+    "levels",
+    "snapshot_limit",
+    "mechanisms",
+    "engine_details",
+    "choice",
+    "target"
+  ],
+  "constructed_example_state_model": {
+    "serial_outcomes": [
+      [
+        false,
+        true
+      ],
+      [
+        true,
+        false
+      ]
+    ],
+    "interleaved_outcome": [
+      false,
+      false
+    ],
+    "all_six_ordered_schedules": [
+      {
+        "schedule": [
+          "AR",
+          "AW",
+          "BR",
+          "BW"
+        ],
+        "result": [
+          false,
+          true
+        ]
+      },
+      {
+        "schedule": [
+          "AR",
+          "BR",
+          "AW",
+          "BW"
+        ],
+        "result": [
+          false,
+          false
+        ]
+      },
+      {
+        "schedule": [
+          "AR",
+          "BR",
+          "BW",
+          "AW"
+        ],
+        "result": [
+          false,
+          false
+        ]
+      },
+      {
+        "schedule": [
+          "BR",
+          "AR",
+          "AW",
+          "BW"
+        ],
+        "result": [
+          false,
+          false
+        ]
+      },
+      {
+        "schedule": [
+          "BR",
+          "AR",
+          "BW",
+          "AW"
+        ],
+        "result": [
+          false,
+          false
+        ]
+      },
+      {
+        "schedule": [
+          "BR",
+          "BW",
+          "AR",
+          "AW"
+        ],
+        "result": [
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "Structural validity does not prove prerequisite quality.",
+    "Evidence checking is a manual source review, not automated fact verification.",
+    "State-transition model is not live database execution."
+  ]
+}

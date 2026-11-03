@@ -1,0 +1,62 @@
+{
+  "fonts": [
+    {
+      "family": "Inter",
+      "weight": "400",
+      "status": "loaded"
+    },
+    {
+      "family": "Inter",
+      "weight": "500",
+      "status": "loaded"
+    },
+    {
+      "family": "Sora",
+      "weight": "600",
+      "status": "loaded"
+    }
+  ],
+  "checks": [
+    {
+      "input": "42",
+      "cipher": "81",
+      "again": "16",
+      "recovered": "42",
+      "search": "Recovered 42 after 43 trials (testing from 0). Only public n, public e, and ciphertext were used."
+    },
+    {
+      "input": "80",
+      "cipher": "141",
+      "again": "15",
+      "recovered": "80",
+      "search": "Recovered 80 after 81 trials (testing from 0). Only public n, public e, and ciphertext were used."
+    },
+    {
+      "input": "0",
+      "cipher": "0",
+      "again": "0",
+      "recovered": "0",
+      "search": "Recovered 0 after 1 trial (testing from 0). Only public n, public e, and ciphertext were used."
+    },
+    {
+      "input": "1",
+      "cipher": "1",
+      "again": "1",
+      "recovered": "1",
+      "search": "Recovered 1 after 2 trials (testing from 0). Only public n, public e, and ciphertext were used."
+    },
+    {
+      "input": "142",
+      "cipher": "142",
+      "again": "142",
+      "recovered": "142",
+      "search": "Recovered 142 after 143 trials (testing from 0). Only public n, public e, and ciphertext were used."
+    }
+  ],
+  "keyboard": "43",
+  "desktopOverflow": false,
+  "mobileOverflow": false,
+  "errors": [],
+  "fallback": "JavaScript is off. The displayed example is complete: 42 encrypts to 81; public repetition gives 16; private recovery gives 42. Testing candidates 0 through 42 finds the match after 43 trials.",
+  "all143Roundtrips": true
+}

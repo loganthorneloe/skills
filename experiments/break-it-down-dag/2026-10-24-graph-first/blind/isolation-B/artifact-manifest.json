@@ -1,0 +1,57 @@
+[
+  {
+    "file": "dag.html",
+    "original_sha256": "fe2bc54f09aa5b8b28ca11668aed4b0ca2cf49d95d4cd9618f215e232b58d59a",
+    "blind_sha256": "fe2bc54f09aa5b8b28ca11668aed4b0ca2cf49d95d4cd9618f215e232b58d59a"
+  },
+  {
+    "file": "checks.json",
+    "original_sha256": "22c44265ce7c6c4244227d1507dc832c2ae646bc2acb403ae06870628de44095",
+    "blind_sha256": "22c44265ce7c6c4244227d1507dc832c2ae646bc2acb403ae06870628de44095"
+  },
+  {
+    "file": "dag.svg",
+    "original_sha256": "406117ecae9addffbbbba2d8190b3308aa020528dddd60bfee37f9a872003232",
+    "blind_sha256": "406117ecae9addffbbbba2d8190b3308aa020528dddd60bfee37f9a872003232"
+  },
+  {
+    "file": "run-notes.md",
+    "original_sha256": "ca280826fab0a8ebc780ba63258facaf0e3fe14ebed205be0ce9ed3af69e7659",
+    "blind_sha256": "dcbe6d8c9727b764c51f56afa03b9a56106a50e653af18e48d1e906570bfe2ab"
+  },
+  {
+    "file": "request.txt",
+    "original_sha256": "d1d154f679c125bd527cab5978c49ff51cf1b93af567a1a71c07e613622652de",
+    "blind_sha256": "d1d154f679c125bd527cab5978c49ff51cf1b93af567a1a71c07e613622652de"
+  },
+  {
+    "file": "dag.json",
+    "original_sha256": "fb6e33027029a653a44ad6148515f81d874b723b626ba9894560fe652165ffdc",
+    "blind_sha256": "fb6e33027029a653a44ad6148515f81d874b723b626ba9894560fe652165ffdc"
+  },
+  {
+    "file": "history/round-1-dag.json",
+    "original_sha256": "a92c3aef0cbeb141fccbdc1133f76c9bbb8ebd90a3193ec4374b85e6e5b767b7",
+    "blind_sha256": "a92c3aef0cbeb141fccbdc1133f76c9bbb8ebd90a3193ec4374b85e6e5b767b7"
+  },
+  {
+    "file": "history/round-2.json",
+    "original_sha256": "886b1ae6a63bf9d5d36648f872d536e02e3c1f08b1fcdf5c99ae41fa78fe777a",
+    "blind_sha256": "886b1ae6a63bf9d5d36648f872d536e02e3c1f08b1fcdf5c99ae41fa78fe777a"
+  },
+  {
+    "file": "history/round-1.json",
+    "original_sha256": "04bd870e00fe1b457a3dea378247970fd46165b70a067522fbe845b919726f98",
+    "blind_sha256": "04bd870e00fe1b457a3dea378247970fd46165b70a067522fbe845b919726f98"
+  },
+  {
+    "file": "history/round-0.json",
+    "original_sha256": "5270c7e463554ef3663240c6a2d212b334e8dc62e2b8eb1284c2334666d14508",
+    "blind_sha256": "5270c7e463554ef3663240c6a2d212b334e8dc62e2b8eb1284c2334666d14508"
+  },
+  {
+    "file": "history/initial.json",
+    "original_sha256": "3b0c864a5f2d246bdc1e74c022e81698b3d79a895d9ab97dcb3e471d13346818",
+    "blind_sha256": "3b0c864a5f2d246bdc1e74c022e81698b3d79a895d9ab97dcb3e471d13346818"
+  }
+]

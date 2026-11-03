@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Application Evals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{--canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font:400 17px/1.75 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.25}
+h1{font-size:2.4rem;margin:0 0 40px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.5rem;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.1rem;margin:36px 0 8px}
+p{margin:0 0 20px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red)}
+a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em}
+code{background:var(--surface);border:1px solid var(--border);padding:1px 5px}
+pre{background:var(--surface);border:1px solid var(--border);padding:18px 20px;overflow-x:auto;line-height:1.55;margin:0 0 24px}
+pre code{border:0;padding:0;background:none;font-size:1em}
+.sources{margin:0;padding:0;list-style:none;border-top:1px solid var(--border)}
+.sources li{padding:18px 0;border-bottom:1px solid var(--border)}
+.sources .t{display:block;font-weight:500}
+.sources .m{display:block;font-style:italic;color:var(--muted);font-size:.92em;margin:2px 0 6px}
+.sources p{margin:0;font-size:.95em}
+.answer{font-size:1.06rem}
+figure{margin:32px 0 36px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;border:1px solid var(--border);background:#fff}
+figcaption{font-size:.9em;color:var(--muted);margin-top:10px;line-height:1.6}
+figcaption a{color:var(--muted)}
+.wide{margin-left:calc(50% - min(50vw - 24px, 480px));margin-right:calc(50% - min(50vw - 24px, 480px))}
+.scroll{overflow-x:auto}
+.scroll img{max-width:none;width:900px}
+@media (min-width:960px){.scroll img{width:100%;max-width:100%}}
+.scroll-sm img{width:680px}
+@media (min-width:720px){.scroll-sm img{width:100%}}
+.scroll:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+table{border-collapse:collapse;width:100%;font-size:.93em;margin:8px 0 28px;background:var(--surface)}
+th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.55}
+th{font-weight:500}
+.tablewrap{overflow-x:auto}
+.tablewrap table{min-width:600px}
+.tablewrap:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.sources li:last-child{border-bottom:0}
+ol.steps{padding-left:1.3em}
+ol.steps li{margin-bottom:12px}
+@media (max-width:600px){main{padding:36px 20px 72px}h1{font-size:1.9rem}body{font-size:16px}}
+</style>
+</head>
+<body>
+<main>
+<h1>AI application evals<span class="dot">.</span></h1>
+
+<h2 style="border-top:0;padding-top:0;margin-top:0">Sources</h2>
+<ul class="sources">
+<li>
+<a class="t" href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Mikaela Grace, Jeremy Hadfield, and colleagues · Engineering blog post · Anthropic · January 2026</span>
+<p>The engineers who build a model developer's internal agent evals describe the vocabulary and workflow used here, including how to grade a support agent. It is practitioner guidance from a company that sells models, not a controlled study, so its advice is presented as recommended practice.</p>
+</li>
+<li>
+<a class="t" href="https://hamel.dev/blog/posts/evals/">Your AI Product Needs Evals<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Hamel Husain · Blog post and case study · hamel.dev · March 2024</span>
+<p>A consultant's firsthand account of building the eval system for a deployed real-estate assistant whose progress had stalled under prompt tweaking. It is one case with no reported numbers, but its process for reading transcripts and aligning an automated grader with a human is concrete.</p>
+</li>
+<li>
+<a class="t" href="https://arxiv.org/abs/2406.12045">τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Shunyu Yao, Noah Shinn, and colleagues · Research preprint · arXiv · June 2024</span>
+<p>The authors built simulated retail and airline customer-service systems, ran mid-2024 models through them many times, and measured both success and consistency. Newer models score higher, so its numbers are historical; the pattern it measured, that an assistant succeeding on average can still fail the same request on a rerun, is the lasting point.</p>
+</li>
+<li>
+<a class="t" href="https://arxiv.org/abs/2306.05685">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Lianmin Zheng, Wei-Lin Chiang, and colleagues · Conference paper · NeurIPS 2023 Datasets and Benchmarks · June 2023</span>
+<p>Controlled experiments comparing model graders with thousands of human expert and crowd votes. The judges tested are 2023 models answering general chat questions, so the exact bias rates will differ for today's models and for a company's own policies.</p>
+</li>
+<li>
+<a class="t" href="https://arxiv.org/abs/2404.12272">Who Validates the Validators? Aligning LLM-Assisted Evaluation of LLM Outputs with Human Preferences<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Shreya Shankar, J.D. Zamfirescu-Pereira, and colleagues · Research preprint · arXiv · April 2024</span>
+<p>Berkeley researchers watched nine industry practitioners build graders with their tool. With so few participants it supports one qualitative observation, about how people discover their own standards, rather than any measured effect.</p>
+</li>
+</ul>
+
+<h2>The short answer</h2>
+<p class="answer">A model API does not return the same answer twice, and a prompt change that fixes one conversation can quietly break others. An eval is a repeatable test for that kind of program: a set of realistic inputs, a way to decide whether each output is acceptable, and a score you can compare before and after every change. For a customer-support assistant, you start by reading real conversations, writing down how they go wrong, turning 20 to 50 of those cases into tests, grading them with code where an answer can be checked and with a carefully checked model grader where it cannot, and running each test several times because a support assistant has to be right every time, not on average.</p>
+
+<h2>Why ordinary testing stops working</h2>
+<p>In ordinary code, <code>add(2, 3)</code> returns 5 every time, so a test can assert the exact value. A program that calls a model API behaves differently in two ways. First, the model samples its words, so the same input can produce different replies on different runs. Second, there is rarely one correct reply: "I've refunded your order" and "Your refund is on its way" may both be fine, while a polite reply that refunds the wrong order is not. An <code>assert reply == expected</code> check fails on good answers and passes nothing useful.</p>
+<p>The natural substitute is to try a few questions by hand and see whether the answers look right. Husain calls this a vibe check and describes what happened when one team relied on it. Rechat built an assistant named Lucy for real-estate agents. Early prompt edits helped, then progress stalled: fixing one failure tended to expose another, prompts grew long to cover edge cases, and nobody could see how the assistant performed across all its tasks. The team changed course by putting evaluation at the center of its work. His conclusion is blunt: unsuccessful AI products "almost always share a common root cause: a failure to create robust evaluation systems."</p>
+<p>The underlying problem is visibility. Without a fixed set of cases you rerun after every change, you cannot tell whether a new prompt, a new model version, or a new tool made the assistant better overall or just better on the three examples you happened to try.</p>
+
+<h2>What an eval is made of</h2>
+<p>Anthropic's guide gives the parts names that are worth learning, because most tools and articles use them. A <strong>task</strong> is one test case: an input, such as a customer's opening message, plus success criteria. A <strong>trial</strong> is one run of that task; because replies vary, you run several. The <strong>transcript</strong> (also called a trace) is the full record of a trial: every message, tool call and intermediate result. The <strong>outcome</strong> is the state of the world when the trial ends, such as whether a refund row now exists in the database, which can differ from what the assistant claimed. A <strong>grader</strong> is the logic that scores the transcript or the outcome. A collection of tasks is a <strong>suite</strong>, and the code that runs the suite and totals the scores is the <strong>harness</strong>.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Eval components diagram, scrollable on narrow screens"><a href="assets/anthropic-eval-components.png"><img src="assets/anthropic-eval-components-web.png" width="1800" height="1013" alt="Diagram: an evaluation harness contains an evaluation suite of tasks. Each task lists graders (deterministic tests, LLM rubric, state check, tool calls), tracked metrics (turns, tool calls, tokens, latency) and several trials, each with a trajectory. The suite connects to the agent harness; the final outcome and trajectory go to graders, which produce scores."></a>
+</div>
+<figcaption>Components of evaluations for agents, from Anthropic, <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents</a>. Rights unstated; reproduced with attribution. Notice that one task carries several graders at once and is run as a stack of trials, and that grading looks at both the record of the conversation and the final state. The example task here is a coding fix, but the structure is the same for support. <a href="assets/anthropic-eval-components.png">Full-size image</a>.</figcaption>
+</figure>
+<p>If you can write a small Python program, you can build a harness: a list of task dictionaries, a loop that calls your assistant on each one several times, a few grading functions, and a printed pass rate. Specialised platforms exist, but Husain's advice is to start with tools you already have and build something specific to your problem.</p>
+
+<h2>Three ways to grade, and their trade-offs</h2>
+<p>The hardest design choice is the grader, because it decides what "correct" means. Anthropic's guide sorts graders into three kinds, and the table below condenses its comparison.</p>
+<div class="tablewrap" tabindex="0" role="region" aria-label="Grader comparison table, scrollable on narrow screens">
+<table>
+<thead><tr><th>Grader</th><th>Examples for a support assistant</th><th>Strength</th><th>Weakness</th></tr></thead>
+<tbody>
+<tr><td>Code</td><td>Was the refund tool called with the right order ID? Is the refund at most the policy limit? Did the reply avoid leaking an internal ID?</td><td>Fast, cheap, identical every run, easy to debug</td><td>Rejects valid answers phrased differently; cannot judge tone or helpfulness</td></tr>
+<tr><td>Model (an LLM judge)</td><td>Does the reply explain the resolution clearly and match the policy text the tool returned?</td><td>Handles open-ended text; scales to many cases</td><td>Varies between runs, costs money, and must be checked against people</td></tr>
+<tr><td>Human</td><td>A support lead marks each transcript pass or fail and writes why</td><td>The standard the others are measured against</td><td>Slow and expensive</td></tr>
+</tbody>
+</table>
+</div>
+<p>Use code wherever an answer can be checked mechanically, and reserve the model grader for what code cannot see. The model grader is attractive because it reads like a person, which is also why it needs scrutiny: it can be wrong in systematic ways. Zheng and colleagues measured this. They gave judge models two similar answers, then swapped the order and asked again.</p>
+<figure>
+<div class="scroll scroll-sm" tabindex="0" role="region" aria-label="Position bias table, scrollable on narrow screens"><img src="assets/zheng-table2-position-bias.png" width="1431" height="497" alt="Table 2 from Zheng et al.: position bias of LLM judges. Claude-v1 default prompt: consistency 23.8%, biased toward first 75.0%. GPT-3.5 default: 46.2% consistent, 50.0% biased toward first. GPT-4 default: 65.0% consistent, 30.0% biased toward first; with renamed assistants 66.2% and 28.7%."></div>
+<figcaption>Table 2 from Zheng et al., <a href="https://arxiv.org/abs/2306.05685">Judging LLM-as-a-Judge</a> (arXiv v4), page 5. Rights unstated; reproduced with attribution. Read the Consistency column: even the strongest judge tested gave the same verdict after a swap in only about two-thirds of cases, and the weakest favored whichever answer came first three times in four. The pairs were built to be nearly identical, which makes the test harder than typical use.</figcaption>
+</figure>
+<p>The same paper found judges preferred answers padded with a rephrased copy of their own list: two of the three judges fell for it on 91.3% of 23 answers, GPT-4 on 8.7%. Yet the news is not all bad. On non-tied comparisons, GPT-4's verdicts agreed with human experts 85% of the time, while two human experts agreed with each other 81% of the time. A model grader can be about as consistent as a person, but only once you have checked that it is, on your kind of question.</p>
+<p>Checking means comparing it with your own labels. Husain's process is to label 25 to 50 transcripts yourself as pass or fail with a short critique, run the model grader on the same transcripts, put both in a spreadsheet, and rewrite the grader's prompt until it agrees with you. He warns that a plain agreement percentage misleads when most transcripts pass, because a grader that always says "pass" scores well. Count separately how many real failures it catches and how many of its failure flags are real.</p>
+
+<h2>Why one run is not enough</h2>
+<p>Because replies vary, a single trial tells you little about whether the assistant handles a request reliably. τ-bench measured this directly in a simulated retail store. Each task gives the model tools such as order lookup and exchange, a written store policy, and a second model playing a customer with a specific goal. The grader ignores the wording of the conversation and compares the store's database at the end with the state it should be in.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="τ-bench setup figure, scrollable on narrow screens">
+<a href="assets/taubench-teaser.png"><img src="assets/taubench-teaser-web.png" width="2000" height="971" alt="Left panel: tools (get_user_details, book_reservation, cancel_reservation, update_reservation_flights) connect to an agent with a domain policy as system prompt, which talks to a simulated user given an instruction. Right panel: user asks to change a flight; agent reads the reservation, sees it is basic economy, explains it cannot be changed but can be cancelled within 24 hours; user says cancel; agent calls cancel_reservation and the database records status cancelled."></a>
+</div>
+<figcaption>Figure 1 from Yao et al., <a href="https://arxiv.org/abs/2406.12045">τ-bench</a> (arXiv v1, CC BY 4.0). On the right, the correct move is to refuse a change the policy forbids and offer cancel-and-rebook instead; what gets graded is the final database write, not the friendliness of the reply. The customer is simulated by a model, so real customers may behave differently. <a href="assets/taubench-teaser.png">Full-size image</a>.</figcaption>
+</figure>
+<p>The authors ran each task many times and reported two numbers. <strong>pass@k</strong> is the chance that at least one of <em>k</em> runs succeeds. <strong>pass^k</strong> is the chance that all <em>k</em> runs succeed, which is the number that matters when many customers send the same request. The best model in mid-2024, gpt-4o, succeeded on 61.2% of retail tasks per run, but the chance it succeeded on all eight runs of a task fell below 25%.</p>
+<figure>
+<img src="assets/taubench-passatk.png" width="1500" height="750" alt="Line chart from τ-bench, retail domain. x axis: number of trials k from 1 to about 40. y axis: percent. Dotted lines (pass@k) for gpt-4o, gpt-4-turbo, gpt-4-32k, claude-3-opus and gpt-3.5-turbo rise toward 90 to 95. Solid lines (pass^k) fall: gpt-4o from about 61 at k=1 to about 25 at k=8; gpt-4-turbo continues to about 5 at k=40; gpt-3.5-turbo falls from 20 to about 3.">
+<figcaption>Consistency figure from Yao et al., <a href="https://arxiv.org/abs/2406.12045">τ-bench</a>, retail domain (CC BY 4.0); solid lines are pass^k, dotted lines pass@k, and the unlabeled y axis is percent. Notice how quickly the solid lines fall: average success near 60% hides that most tasks are handled inconsistently. These are 2024 models; later ones score higher, but the gap between average and consistent success is the thing to measure in your own assistant.</figcaption>
+</figure>
+
+<h2>Starting an eval for a customer-support assistant</h2>
+<p>The first step is reading, not writing tests. You cannot list everything "good" means before you see your assistant's answers; Shankar and colleagues observed that "users need criteria to grade outputs, but grading outputs helps users define criteria." So gather 50 or more real or realistic conversations, read every one, and write a one-line note on each failure. Husain's rule of thumb is to keep reading until you stop learning anything new.</p>
+<p>Your notes will cluster into a few kinds of failure, and each kind points to a grader. τ-bench's authors did this by hand for 36 failed gpt-4o conversations.</p>
+<figure>
+<img src="assets/taubench-breakdown.png" width="1000" height="749" alt="Donut chart: breakdown of 36 failed gpt-4o retail trajectories. Wrong argument 33.3%, wrong decision 25.0%, wrong info 22.2%, partially resolve 19.4%.">
+<figcaption>Failure breakdown from Yao et al., <a href="https://arxiv.org/abs/2406.12045">τ-bench</a> (CC BY 4.0), one model, one run per task. "Wrong argument" means the right tool with a wrong value, such as the wrong item ID; "wrong decision" means breaking a policy rule, such as exchanging items one at a time when the policy requires a single exchange call. Each category suggests a different check. The same review found that 4 of the 40 failures were mistakes in the tasks themselves, a reminder that evals need debugging too.</figcaption>
+</figure>
+<p>From those notes, build the suite. Anthropic's guide recommends starting with 20 to 50 simple tasks drawn from real failures and common requests, because early changes have large effects that a small suite can detect. The steps below put the pieces together.</p>
+<ol class="steps">
+<li>Write each task as a starting message, any customer details the assistant should look up, and the outcome that counts as success. Include cases where the assistant should act and cases where it should refuse, so you do not reward an assistant that refunds everything.</li>
+<li>Check the outcome with code first: the ticket status, the refund amount, which tools were called and with what arguments. Anthropic's example refund task checks that identity was verified, the refund tool was called with an amount within the limit, and a confirmation was sent.</li>
+<li>Add a model grader only for what code cannot judge, such as whether the explanation is clear and matches the policy, and check it against 25 to 50 of your own labels before trusting it.</li>
+<li>Run each task several times and report both the average pass rate and the share of tasks that passed on every run.</li>
+<li>Read the failing transcripts after each run to decide whether the assistant or the grader was wrong. Anthropic reports one benchmark where its model scored 42% until bugs in the grading and an over-constrained setup were fixed, then 95%.</li>
+</ol>
+<p>A minimal harness in Python looks like this. <code>run_assistant</code> stands for your own code that calls the model API with your tools and returns the transcript and the final state.</p>
+<pre><code>tasks = [
+    {"id": "refund-damaged",
+     "message": "My blender arrived cracked. Order 4471.",
+     "expect": {"refund_issued": True, "max_refund": 100}},
+    {"id": "refund-too-late",
+     "message": "I want a refund for order 3120 from last year.",
+     "expect": {"refund_issued": False}},
+]
+
+def grade(task, result):
+    state, exp = result["state"], task["expect"]
+    if state["refund_issued"] != exp["refund_issued"]:
+        return False
+    if exp["refund_issued"] and state["refund_amount"] &gt; exp["max_refund"]:
+        return False
+    return True
+
+TRIALS = 5
+for task in tasks:
+    passes = [grade(task, run_assistant(task["message"])) for _ in range(TRIALS)]
+    print(task["id"], f"{sum(passes)}/{TRIALS}",
+          "reliable" if all(passes) else "INCONSISTENT")</code></pre>
+<p>Once the assistant reliably passes a task, it moves into a regression suite, a set you expect to stay near 100% and run on every prompt or model change, the way you run unit tests before merging code. New, still-failing tasks form a capability suite that starts with a low pass rate and shows whether changes move you forward. Husain runs cheap code checks on every change, model and human review on a regular schedule, and A/B tests with real users only for significant product changes on a mature product.</p>
+
+<h2>What evals can and cannot tell you</h2>
+<p>An eval only measures what its tasks and graders capture. A suite built from last month's conversations will miss new kinds of requests, a simulated customer behaves more predictably than a real one, and a model grader that agreed with you on refunds may not agree on account security. That is why the sources treat evals as one layer among several: production monitoring, user feedback and periodic human review catch what the suite misses, and what they catch becomes new tasks. The practical consequence is that an eval suite is never finished. It grows from the failures you read, and its value comes from rerunning the same cases every time you change the assistant.</p>
+</main>
+</body>
+</html>

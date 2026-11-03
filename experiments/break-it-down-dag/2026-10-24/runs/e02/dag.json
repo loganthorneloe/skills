@@ -1,0 +1,842 @@
+{
+  "reader_assumptions": [
+    "Understands files and internet message sending",
+    "No cryptography background"
+  ],
+  "target": "target",
+  "nodes": [
+    {
+      "id": "bits",
+      "question": "How can a message be transformed mathematically?",
+      "answer": "Files are bits; groups can be interpreted as integers without hiding them.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+          "locator": "\u00a74.2",
+          "claim": "Converts byte strings to integers."
+        }
+      ]
+    },
+    {
+      "id": "secrecy",
+      "question": "What must encryption hide, and what may be public?",
+      "answer": "The procedure and encryption key may be public; the decryption capability must remain infeasible to recover.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+          "locator": "Definition from SP 800-56B Rev. 2",
+          "claim": "Two related keys; private-key recovery from the public key computationally infeasible."
+        }
+      ]
+    },
+    {
+      "id": "hard",
+      "question": "How can an easy calculation be hard to reverse?",
+      "answer": "Multiplication is efficient; recovering large hidden factors is believed hard. RSA inversion is not proven equivalent to factoring.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+          "locator": "\u00a7\u00a7V, IX.A\u2013D",
+          "claim": "Factors enable computing a private exponent; no proof that every inversion method must factor."
+        }
+      ]
+    },
+    {
+      "id": "mod",
+      "question": "What does taking a remainder mean?",
+      "answer": "Modulo retains the remainder after division; powers can be evaluated by repeated squaring and reduction.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+          "locator": "\u00a7\u00a7V, VII.A",
+          "claim": "RSA encryption is exponentiation modulo n; efficient repeated-squaring algorithm."
+        }
+      ]
+    },
+    {
+      "id": "pair",
+      "question": "How can two related keys have different capabilities?",
+      "answer": "The public exponent and product permit forward arithmetic; the secret factors permit calculation of a matching private exponent.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+          "locator": "\u00a7\u00a73.1\u20133.2",
+          "claim": "Public (n,e); private (n,d) satisfying the modular inverse relation."
+        }
+      ]
+    },
+    {
+      "id": "construction",
+      "question": "How does RSA recover the message?",
+      "answer": "Encrypt with exponent 17 modulo 2773; decrypt with exponent 157. Their product is 2668+1, giving the inverse relation.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+          "locator": "\u00a7\u00a7VI, VIII",
+          "claim": "Example uses p=47 q=59 n=2773 d=157 e=17; 920 encrypts to 948."
+        }
+      ]
+    },
+    {
+      "id": "randomness",
+      "question": "Why must predictable messages be randomized?",
+      "answer": "A deterministic public encryption lets an observer encrypt candidate messages and compare. OAEP encodes with fresh randomness before RSA.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+          "locator": "\u00a7\u00a75,7.1.1 steps 2\u20133",
+          "claim": "Primitive alone provides no security; OAEP explicitly generates a random seed and encodes before RSA."
+        }
+      ]
+    },
+    {
+      "id": "hybrid",
+      "question": "How does a practical scheme protect arbitrary files?",
+      "answer": "A public-key mechanism produces a shared secret and public encapsulation; derived symmetric keys protect the file.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+          "locator": "\u00a7\u00a71,4,5.1.1,5.2",
+          "claim": "KEM encapsulation/decapsulation, key schedule and authenticated encryption."
+        }
+      ]
+    },
+    {
+      "id": "identity",
+      "question": "How do I know whose public key I received?",
+      "answer": "A key must be authenticated through already trusted information; substitution encrypts to the attacker.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+          "locator": "\u00a7IV last paragraph",
+          "claim": "Public-directory substitution attack and signed directory response rooted in trusted initial key."
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "question": "What does the construction leave unprotected?",
+      "answer": "Base HPKE lacks sender identity authentication; recipient key compromise reveals old ciphertexts; plaintext length is not hidden.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+          "locator": "\u00a7\u00a79.1,9.7.4,9.7.6",
+          "claim": "Documented non-goals and compromise conditions."
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why can strangers encrypt with a public key without decrypting messages?",
+      "answer": "Forward and reverse computations have different costs without the private information; complete randomized schemes and authentic keys preserve that distinction.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+          "locator": "Definition from SP 800-56B Rev. 2",
+          "claim": "Public-key cryptography requires infeasible private-key derivation; synthesis incorporates the other nodes."
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "bits",
+      "to": "secrecy",
+      "why": "The object being protected must first be understood as encoded data."
+    },
+    {
+      "from": "bits",
+      "to": "mod",
+      "why": "Arithmetic requires a numeric interpretation of message data."
+    },
+    {
+      "from": "secrecy",
+      "to": "pair",
+      "why": "The pair must realize the distinct public and secret capabilities."
+    },
+    {
+      "from": "hard",
+      "to": "pair",
+      "why": "Hard inversion explains why related public information need not reveal secret information."
+    },
+    {
+      "from": "mod",
+      "to": "construction",
+      "why": "The exponent operations only make sense after the remainder rule."
+    },
+    {
+      "from": "pair",
+      "to": "construction",
+      "why": "A concrete round trip requires knowing which exponent each party has."
+    },
+    {
+      "from": "construction",
+      "to": "randomness",
+      "why": "The deterministic example exposes the guess-and-compare weakness."
+    },
+    {
+      "from": "randomness",
+      "to": "hybrid",
+      "why": "The practical scheme must incorporate fresh randomness to address predictable-message comparisons."
+    },
+    {
+      "from": "pair",
+      "to": "identity",
+      "why": "Key possession must be distinguished from the identity of its holder."
+    },
+    {
+      "from": "hybrid",
+      "to": "limits",
+      "why": "Limits here are specific to the practical HPKE construction just explained."
+    },
+    {
+      "from": "limits",
+      "to": "target",
+      "why": "The conclusion needs the conditions under which privacy holds."
+    },
+    {
+      "from": "identity",
+      "to": "target",
+      "why": "Encryption to the intended person requires authentic public-key ownership."
+    },
+    {
+      "from": "hybrid",
+      "to": "target",
+      "why": "The full answer must cover a complete scheme rather than raw RSA."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "kind": "initial",
+      "time": "2026-10-24T15:22:25.318191+00:00",
+      "nodes": [
+        {
+          "id": "bits",
+          "question": "How can a message be transformed mathematically?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "secrecy",
+          "question": "What must encryption hide, and what may be public?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "hard",
+          "question": "How can an easy calculation be hard to reverse?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "pair",
+          "question": "How can two related keys have different capabilities?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "construction",
+          "question": "How does a public-key construction use that difference?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "practical",
+          "question": "Why does practical encryption need randomness and symmetric encryption?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "identity",
+          "question": "How do I know whose public key I received?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "target",
+          "question": "Why can strangers encrypt with a public key without decrypting messages?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "bits",
+          "to": "secrecy",
+          "why": "Secrecy concerns transformations of encoded message data."
+        },
+        {
+          "from": "bits",
+          "to": "hard",
+          "why": "Arithmetic acts on numbers encoded as bits."
+        },
+        {
+          "from": "hard",
+          "to": "pair",
+          "why": "Key asymmetry requires a computationally hard reverse task."
+        },
+        {
+          "from": "pair",
+          "to": "construction",
+          "why": "A construction instantiates the key capabilities."
+        },
+        {
+          "from": "secrecy",
+          "to": "practical",
+          "why": "Practical protection must hide predictable messages and patterns."
+        },
+        {
+          "from": "construction",
+          "to": "practical",
+          "why": "A primitive needs safe encoding and an efficient message scheme."
+        },
+        {
+          "from": "pair",
+          "to": "identity",
+          "why": "A public key does not identify its owner by itself."
+        },
+        {
+          "from": "practical",
+          "to": "target",
+          "why": "The complete answer must distinguish a safe scheme from raw arithmetic."
+        },
+        {
+          "from": "identity",
+          "to": "target",
+          "why": "Privacy for the intended recipient requires an authentic key."
+        }
+      ],
+      "gaps": [
+        "bits",
+        "secrecy",
+        "hard",
+        "pair",
+        "construction",
+        "practical",
+        "identity",
+        "target"
+      ],
+      "searches": [],
+      "evidence": [],
+      "changes": []
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "Meaning of remainder arithmetic absent from initial graph",
+        "Bundled practical node conflated guess resistance with hybrid construction",
+        "Key compromise and sender authentication limits absent"
+      ],
+      "searches": [
+        "RFC 8017 RSA encryption OAEP public key private key",
+        "RFC 9180 hybrid public key encryption authentication",
+        "RSA original paper Rivest Shamir Adleman"
+      ],
+      "evidence": [
+        {
+          "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+          "locators": [
+            "\u00a7\u00a7IV\u2013IX"
+          ]
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+          "locators": [
+            "\u00a7\u00a73\u20135,7.1.1"
+          ]
+        },
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+          "locators": [
+            "\u00a7\u00a71,4\u20135,9.1,9.7"
+          ]
+        }
+      ],
+      "changes": [
+        "Added mod prerequisite",
+        "Split practical into randomness and hybrid",
+        "Added limits dependent on hybrid"
+      ],
+      "nodes": [
+        {
+          "id": "bits",
+          "question": "How can a message be transformed mathematically?",
+          "answer": "Files are bits; groups can be interpreted as integers without hiding them.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+              "locator": "\u00a74.2",
+              "claim": "Converts byte strings to integers."
+            }
+          ]
+        },
+        {
+          "id": "secrecy",
+          "question": "What must encryption hide, and what may be public?",
+          "answer": "The procedure and encryption key may be public; the decryption capability must remain infeasible to recover.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+              "locator": "Definition from SP 800-56B Rev. 2",
+              "claim": "Two related keys; private-key recovery from the public key computationally infeasible."
+            }
+          ]
+        },
+        {
+          "id": "hard",
+          "question": "How can an easy calculation be hard to reverse?",
+          "answer": "Multiplication is efficient; recovering large hidden factors is believed hard. RSA inversion is not proven equivalent to factoring.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7\u00a7V, IX.A\u2013D",
+              "claim": "Factors enable computing a private exponent; no proof that every inversion method must factor."
+            }
+          ]
+        },
+        {
+          "id": "mod",
+          "question": "What does taking a remainder mean?",
+          "answer": "Modulo retains the remainder after division; powers can be evaluated by repeated squaring and reduction.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7\u00a7V, VII.A",
+              "claim": "RSA encryption is exponentiation modulo n; efficient repeated-squaring algorithm."
+            }
+          ]
+        },
+        {
+          "id": "pair",
+          "question": "How can two related keys have different capabilities?",
+          "answer": "The public exponent and product permit forward arithmetic; the secret factors permit calculation of a matching private exponent.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+              "locator": "\u00a7\u00a73.1\u20133.2",
+              "claim": "Public (n,e); private (n,d) satisfying the modular inverse relation."
+            }
+          ]
+        },
+        {
+          "id": "construction",
+          "question": "How does RSA recover the message?",
+          "answer": "Encrypt with exponent 17 modulo 2773; decrypt with exponent 157. Their product is 2668+1, giving the inverse relation.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7\u00a7VI, VIII",
+              "claim": "Example uses p=47 q=59 n=2773 d=157 e=17; 920 encrypts to 948."
+            }
+          ]
+        },
+        {
+          "id": "randomness",
+          "question": "Why must predictable messages be randomized?",
+          "answer": "A deterministic public encryption lets an observer encrypt candidate messages and compare. OAEP encodes with fresh randomness before RSA.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+              "locator": "\u00a7\u00a75,7.1.1 steps 2\u20133",
+              "claim": "Primitive alone provides no security; OAEP explicitly generates a random seed and encodes before RSA."
+            }
+          ]
+        },
+        {
+          "id": "hybrid",
+          "question": "How does a practical scheme protect arbitrary files?",
+          "answer": "A public-key mechanism produces a shared secret and public encapsulation; derived symmetric keys protect the file.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+              "locator": "\u00a7\u00a71,4,5.1.1,5.2",
+              "claim": "KEM encapsulation/decapsulation, key schedule and authenticated encryption."
+            }
+          ]
+        },
+        {
+          "id": "identity",
+          "question": "How do I know whose public key I received?",
+          "answer": "A key must be authenticated through already trusted information; substitution encrypts to the attacker.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7IV last paragraph",
+              "claim": "Public-directory substitution attack and signed directory response rooted in trusted initial key."
+            }
+          ]
+        },
+        {
+          "id": "limits",
+          "question": "What does the construction leave unprotected?",
+          "answer": "Base HPKE lacks sender identity authentication; recipient key compromise reveals old ciphertexts; plaintext length is not hidden.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+              "locator": "\u00a7\u00a79.1,9.7.4,9.7.6",
+              "claim": "Documented non-goals and compromise conditions."
+            }
+          ]
+        },
+        {
+          "id": "target",
+          "question": "Why can strangers encrypt with a public key without decrypting messages?",
+          "answer": "Forward and reverse computations have different costs without the private information; complete randomized schemes and authentic keys preserve that distinction.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+              "locator": "Definition from SP 800-56B Rev. 2",
+              "claim": "Public-key cryptography requires infeasible private-key derivation; synthesis incorporates the other nodes."
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "bits",
+          "to": "secrecy",
+          "why": "The object being protected must first be understood as encoded data."
+        },
+        {
+          "from": "bits",
+          "to": "mod",
+          "why": "Arithmetic requires a numeric interpretation of message data."
+        },
+        {
+          "from": "secrecy",
+          "to": "pair",
+          "why": "The pair must realize the distinct public and secret capabilities."
+        },
+        {
+          "from": "hard",
+          "to": "pair",
+          "why": "Hard inversion explains why related public information need not reveal secret information."
+        },
+        {
+          "from": "mod",
+          "to": "construction",
+          "why": "The exponent operations only make sense after the remainder rule."
+        },
+        {
+          "from": "pair",
+          "to": "construction",
+          "why": "A concrete round trip requires knowing which exponent each party has."
+        },
+        {
+          "from": "construction",
+          "to": "randomness",
+          "why": "The deterministic example exposes the guess-and-compare weakness."
+        },
+        {
+          "from": "randomness",
+          "to": "hybrid",
+          "why": "The practical scheme must incorporate fresh randomness to address predictable-message comparisons."
+        },
+        {
+          "from": "pair",
+          "to": "identity",
+          "why": "Key possession must be distinguished from the identity of its holder."
+        },
+        {
+          "from": "hybrid",
+          "to": "limits",
+          "why": "Limits here are specific to the practical HPKE construction just explained."
+        },
+        {
+          "from": "limits",
+          "to": "target",
+          "why": "The conclusion needs the conditions under which privacy holds."
+        },
+        {
+          "from": "identity",
+          "to": "target",
+          "why": "Encryption to the intended person requires authentic public-key ownership."
+        },
+        {
+          "from": "hybrid",
+          "to": "target",
+          "why": "The full answer must cover a complete scheme rather than raw RSA."
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "gaps": [
+        "Terminology source and source identity verification",
+        "Need concrete rather than merely asserted reversibility"
+      ],
+      "searches": [
+        "NIST public key cryptography definition",
+        "Original source frontmatter and affiliations; RSA worked example \u00a7VIII"
+      ],
+      "evidence": [
+        {
+          "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+          "locator": "Definitions"
+        },
+        {
+          "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+          "locator": "\u00a7VIII, PDF p.11"
+        }
+      ],
+      "changes": [
+        "All necessary nodes supported",
+        "Extracted original calculation line",
+        "Added independent exhaustive check and public-operation-twice calculation",
+        "Pruned no-path topics including certificates internals, algorithm catalogs, historical performance estimates"
+      ],
+      "nodes": [
+        {
+          "id": "bits",
+          "question": "How can a message be transformed mathematically?",
+          "answer": "Files are bits; groups can be interpreted as integers without hiding them.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+              "locator": "\u00a74.2",
+              "claim": "Converts byte strings to integers."
+            }
+          ]
+        },
+        {
+          "id": "secrecy",
+          "question": "What must encryption hide, and what may be public?",
+          "answer": "The procedure and encryption key may be public; the decryption capability must remain infeasible to recover.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+              "locator": "Definition from SP 800-56B Rev. 2",
+              "claim": "Two related keys; private-key recovery from the public key computationally infeasible."
+            }
+          ]
+        },
+        {
+          "id": "hard",
+          "question": "How can an easy calculation be hard to reverse?",
+          "answer": "Multiplication is efficient; recovering large hidden factors is believed hard. RSA inversion is not proven equivalent to factoring.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7\u00a7V, IX.A\u2013D",
+              "claim": "Factors enable computing a private exponent; no proof that every inversion method must factor."
+            }
+          ]
+        },
+        {
+          "id": "mod",
+          "question": "What does taking a remainder mean?",
+          "answer": "Modulo retains the remainder after division; powers can be evaluated by repeated squaring and reduction.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7\u00a7V, VII.A",
+              "claim": "RSA encryption is exponentiation modulo n; efficient repeated-squaring algorithm."
+            }
+          ]
+        },
+        {
+          "id": "pair",
+          "question": "How can two related keys have different capabilities?",
+          "answer": "The public exponent and product permit forward arithmetic; the secret factors permit calculation of a matching private exponent.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+              "locator": "\u00a7\u00a73.1\u20133.2",
+              "claim": "Public (n,e); private (n,d) satisfying the modular inverse relation."
+            }
+          ]
+        },
+        {
+          "id": "construction",
+          "question": "How does RSA recover the message?",
+          "answer": "Encrypt with exponent 17 modulo 2773; decrypt with exponent 157. Their product is 2668+1, giving the inverse relation.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7\u00a7VI, VIII",
+              "claim": "Example uses p=47 q=59 n=2773 d=157 e=17; 920 encrypts to 948."
+            }
+          ]
+        },
+        {
+          "id": "randomness",
+          "question": "Why must predictable messages be randomized?",
+          "answer": "A deterministic public encryption lets an observer encrypt candidate messages and compare. OAEP encodes with fresh randomness before RSA.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc8017.html",
+              "locator": "\u00a7\u00a75,7.1.1 steps 2\u20133",
+              "claim": "Primitive alone provides no security; OAEP explicitly generates a random seed and encodes before RSA."
+            }
+          ]
+        },
+        {
+          "id": "hybrid",
+          "question": "How does a practical scheme protect arbitrary files?",
+          "answer": "A public-key mechanism produces a shared secret and public encapsulation; derived symmetric keys protect the file.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+              "locator": "\u00a7\u00a71,4,5.1.1,5.2",
+              "claim": "KEM encapsulation/decapsulation, key schedule and authenticated encryption."
+            }
+          ]
+        },
+        {
+          "id": "identity",
+          "question": "How do I know whose public key I received?",
+          "answer": "A key must be authenticated through already trusted information; substitution encrypts to the attacker.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://people.csail.mit.edu/rivest/Rsapaper.pdf",
+              "locator": "\u00a7IV last paragraph",
+              "claim": "Public-directory substitution attack and signed directory response rooted in trusted initial key."
+            }
+          ]
+        },
+        {
+          "id": "limits",
+          "question": "What does the construction leave unprotected?",
+          "answer": "Base HPKE lacks sender identity authentication; recipient key compromise reveals old ciphertexts; plaintext length is not hidden.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://www.rfc-editor.org/rfc/rfc9180.html",
+              "locator": "\u00a7\u00a79.1,9.7.4,9.7.6",
+              "claim": "Documented non-goals and compromise conditions."
+            }
+          ]
+        },
+        {
+          "id": "target",
+          "question": "Why can strangers encrypt with a public key without decrypting messages?",
+          "answer": "Forward and reverse computations have different costs without the private information; complete randomized schemes and authentic keys preserve that distinction.",
+          "status": "supported",
+          "evidence": [
+            {
+              "url": "https://csrc.nist.gov/glossary/term/public_key_cryptography",
+              "locator": "Definition from SP 800-56B Rev. 2",
+              "claim": "Public-key cryptography requires infeasible private-key derivation; synthesis incorporates the other nodes."
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "from": "bits",
+          "to": "secrecy",
+          "why": "The object being protected must first be understood as encoded data."
+        },
+        {
+          "from": "bits",
+          "to": "mod",
+          "why": "Arithmetic requires a numeric interpretation of message data."
+        },
+        {
+          "from": "secrecy",
+          "to": "pair",
+          "why": "The pair must realize the distinct public and secret capabilities."
+        },
+        {
+          "from": "hard",
+          "to": "pair",
+          "why": "Hard inversion explains why related public information need not reveal secret information."
+        },
+        {
+          "from": "mod",
+          "to": "construction",
+          "why": "The exponent operations only make sense after the remainder rule."
+        },
+        {
+          "from": "pair",
+          "to": "construction",
+          "why": "A concrete round trip requires knowing which exponent each party has."
+        },
+        {
+          "from": "construction",
+          "to": "randomness",
+          "why": "The deterministic example exposes the guess-and-compare weakness."
+        },
+        {
+          "from": "randomness",
+          "to": "hybrid",
+          "why": "The practical scheme must incorporate fresh randomness to address predictable-message comparisons."
+        },
+        {
+          "from": "pair",
+          "to": "identity",
+          "why": "Key possession must be distinguished from the identity of its holder."
+        },
+        {
+          "from": "hybrid",
+          "to": "limits",
+          "why": "Limits here are specific to the practical HPKE construction just explained."
+        },
+        {
+          "from": "limits",
+          "to": "target",
+          "why": "The conclusion needs the conditions under which privacy holds."
+        },
+        {
+          "from": "identity",
+          "to": "target",
+          "why": "Encryption to the intended person requires authentic public-key ownership."
+        },
+        {
+          "from": "hybrid",
+          "to": "target",
+          "why": "The full answer must cover a complete scheme rather than raw RSA."
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "unique_ids": true,
+    "valid_endpoints": true,
+    "acyclic": true,
+    "all_nodes_reach_target": true,
+    "node_count": 11,
+    "edge_count": 13,
+    "prose_check": "All answers appear in report; edges reviewed as required knowledge, not merely reading order."
+  }
+}

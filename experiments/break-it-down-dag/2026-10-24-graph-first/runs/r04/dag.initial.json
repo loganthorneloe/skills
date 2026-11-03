@@ -1,0 +1,401 @@
+{
+  "title": "Hash tables: prerequisite research graph",
+  "reader_assumptions": [
+    "Arithmetic and basic Python.",
+    "Generic separate chaining with key-value entries; not a CPython implementation description.",
+    "Finite nonnegative integer keys and identity hash only in the constructed numerical trace."
+  ],
+  "scope": {
+    "included": [
+      "Lookup mechanism",
+      "Collisions and equality",
+      "Growth and redistribution",
+      "Expected/worst-case/amortized distinctions",
+      "Tiny numerical trace"
+    ],
+    "excluded": [
+      "CPython storage layout",
+      "Open addressing implementation",
+      "Advanced probability proofs"
+    ],
+    "examples_are_not_prerequisites": true
+  },
+  "target": "target",
+  "nodes": [
+    {
+      "id": "baseline",
+      "question": "What can the reader already use?",
+      "answer": "Arithmetic, remainder division after a short definition, Python variables, equality comparisons, lists, and dictionary syntax. No prior data-structures knowledge.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "entry",
+      "question": "What does a dictionary lookup have to identify?",
+      "answer": "A stored entry pairs a key with a value. Lookup must find an entry whose key equals the requested key, or report that none exists.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "ods-chaining",
+          "locator": "find(x) pseudocode",
+          "claim": "Find uses equality; adapting stored elements to key-value entries is an explicit synthesis.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "array",
+      "question": "Why can a known array index be accessed without inspecting preceding entries?",
+      "answer": "An array has numbered storage locations. Direct access at a known index is the primitive enabling hash tables; the physical address calculation still needs beginner-level evidence.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cornell-hashing",
+          "locator": "Hash Tables",
+          "claim": "Known array indices allow direct access.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "hash",
+      "question": "What is a hash code and what must equality imply?",
+      "answer": "A hash function computes an integer code from a key. Equal keys must have equal codes; unequal keys can have equal codes. Computing the code is distinct from converting it to a current table position.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "cornell-hashing",
+          "locator": "Hashing; hashCode() Method",
+          "claim": "Hash code meaning, equality contract and possible collisions.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "index",
+      "question": "How does a code select one of m buckets?",
+      "answer": "For nonnegative hash code h and positive capacity m, h mod m is the remainder after division by m, between 0 and m-1. It selects a numbered bucket. Real implementations can use other index calculations.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "cornell-hashing",
+          "locator": "Hashing",
+          "claim": "Remainder converts a hash code to a capacity-dependent array index.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "collision",
+      "question": "What is a collision and why does the index not identify the key?",
+      "answer": "Different keys can obtain the same bucket index, either from equal hash codes or distinct codes with the same remainder. Sharing a bucket is not key equality.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "cornell-hashing",
+          "locator": "Hashing; hashCode() Method",
+          "claim": "Unequal objects can share hash codes; index uses remainder.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "chain",
+      "question": "How can one bucket retain colliding entries?",
+      "answer": "In separate chaining, each array location holds a sequence of entries. Inserting a new distinct key adds its entry to the selected sequence instead of replacing another key.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "ods-chaining",
+          "locator": "Opening array-of-lists description; add pseudocode",
+          "claim": "A bucket contains a list and stores colliding entries.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "find",
+      "question": "How does lookup find the right value or conclude that it is missing?",
+      "answer": "Compute the query hash, convert it to an index, access that bucket, then compare the query key with stored keys in that bucket. Return the matching entry\u2019s value; reaching the end without equality means missing.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "ods-chaining",
+          "locator": "find(x) pseudocode",
+          "claim": "Search selected list, compare equality, return failure if no match.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "load",
+      "question": "What makes bucket searches longer as a table fills?",
+      "answer": "With n entries and m buckets, the mean bucket length is n/m, called load factor. More entries without more buckets raise this mean; individual buckets can be much longer or shorter.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cornell-growth",
+          "locator": "Opening discussion",
+          "claim": "Growing entry count relative to capacity increases bucket search work.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "expected",
+      "question": "Under what assumptions is expected lookup time constant?",
+      "answer": "If hashes distribute queried entries suitably across buckets and n/m remains bounded, expected bucket work stays bounded as n grows. With constant-time hash, index and equality operations, expected lookup is O(1), meaning bounded expected work independent of n, not zero work or an exact time.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "ods-chaining",
+          "locator": "Paragraphs preceding 5.1.1",
+          "claim": "Spreading entries keeps lists short; work depends on selected list length.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "worst",
+      "question": "Why can one lookup still examine every key?",
+      "answer": "If all n entries select one bucket, a missing-key lookup or a late match scans that bucket, taking O(n) key comparisons. A bounded mean load does not prevent this concentration.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "ods-chaining",
+          "locator": "Paragraphs preceding 5.1.1",
+          "claim": "Poor hashing can place all entries into one list.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "growth",
+      "question": "Why grow the table and what triggers growth?",
+      "answer": "Increasing m controls n/m as n grows. An implementation chooses a load threshold; crossing it can allocate a larger bucket array. In the selected example the threshold is n>m and capacity doubles. Chaining can remain correct without growth but may become slow.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "ods-chaining",
+          "locator": "add and resize description",
+          "claim": "Growth before entry count exceeds capacity; double and reinsert.",
+          "basis": "supplied verified source packet"
+        },
+        {
+          "source": "cornell-growth",
+          "locator": "Opening discussion",
+          "claim": "Thresholds trade space against speed.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "reindex",
+      "question": "Why must entries move when capacity changes?",
+      "answer": "After growth, each entry must be placed at the bucket selected by its hash code under the new capacity. An old bucket index may differ from the new one. Hash codes need not change; redistribution does. Merely appending empty buckets leaves lookup using new indices unable to find some entries.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "cornell-hashing",
+          "locator": "Hash Table Resizing",
+          "claim": "New capacity changes index calculation, requiring redistribution, not new object codes.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "amortized",
+      "question": "How can occasional expensive growth have a small long-run insertion cost?",
+      "answer": "Rebuilding a table visits its stored entries and costs proportional to its size under constant-cost per-entry work. Successive doubled capacities have a geometric sum, so over N insertions total rebuilding work is O(N), or O(1) per insertion on average. This amortized rebuilding claim is not a worst-case bound for one insertion and does not cure bad collisions.",
+      "status": "supported",
+      "evidence": [
+        {
+          "source": "cornell-growth",
+          "locator": "Doubling and resizing-cost paragraphs",
+          "claim": "Geometric sum of rebuilding costs; amortized versus individual cost.",
+          "basis": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "keycost",
+      "question": "What costs are hidden by treating key operations as constant?",
+      "answer": "Hashing and equality can depend on the key representation and length. Need a located source before specifying their effect on the fast-lookup claim.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "target",
+      "question": "Why can dictionary lookup be fast, what do collisions and resizing do, and where does the speed claim stop?",
+      "answer": "Hashing computes where to look, so direct bucket access avoids scanning the whole table when bucket sequences stay short. Equality resolves collisions. Growth maintains room and redistributes entries under the new capacity. Expected constant lookup assumes suitable hashing, controlled load and constant-cost key operations; worst cases can scan all entries and a single growth insertion can be expensive. This graph explains a generic chained dictionary, not CPython internals.",
+      "status": "partial",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "baseline",
+      "to": "entry",
+      "why": "Understanding a key-value entry and testing key equality uses the stated Python baseline."
+    },
+    {
+      "from": "baseline",
+      "to": "array",
+      "why": "The numbered-location calculation uses arithmetic and list indexing from the baseline."
+    },
+    {
+      "from": "baseline",
+      "to": "hash",
+      "why": "An integer-valued function and equality rule use the baseline."
+    },
+    {
+      "from": "hash",
+      "to": "index",
+      "why": "The index formula takes the computed hash code as its input."
+    },
+    {
+      "from": "index",
+      "to": "collision",
+      "why": "The claim that distinct codes can choose the same bucket requires the capacity-dependent index mapping."
+    },
+    {
+      "from": "collision",
+      "to": "chain",
+      "why": "The claim that one bucket must retain different keys requires distinguishing collision from equality."
+    },
+    {
+      "from": "entry",
+      "to": "chain",
+      "why": "The bucket sequence must retain key-value entries, not only keys."
+    },
+    {
+      "from": "array",
+      "to": "find",
+      "why": "Lookup accesses the selected bucket directly at an array index."
+    },
+    {
+      "from": "index",
+      "to": "find",
+      "why": "Lookup needs the query bucket index before accessing the bucket."
+    },
+    {
+      "from": "chain",
+      "to": "find",
+      "why": "The search iterates the selected sequence and returns the matching stored entry."
+    },
+    {
+      "from": "find",
+      "to": "expected",
+      "why": "Expected lookup work counts the selected bucket\u2019s equality comparisons."
+    },
+    {
+      "from": "load",
+      "to": "expected",
+      "why": "The bounded expected chain-length claim depends on n/m staying bounded."
+    },
+    {
+      "from": "keycost",
+      "to": "expected",
+      "why": "Constant total lookup cost additionally requires bounded hash and equality cost."
+    },
+    {
+      "from": "find",
+      "to": "worst",
+      "why": "The n-comparison bound follows from scanning the selected sequence to its end."
+    },
+    {
+      "from": "load",
+      "to": "growth",
+      "why": "The reason increasing capacity helps is reducing n/m."
+    },
+    {
+      "from": "index",
+      "to": "reindex",
+      "why": "The placement rule changes because its capacity input changes."
+    },
+    {
+      "from": "growth",
+      "to": "amortized",
+      "why": "The geometric sum uses the successive doubled capacities from the growth policy."
+    },
+    {
+      "from": "reindex",
+      "to": "amortized",
+      "why": "The rebuilding cost counts redistributing existing entries."
+    },
+    {
+      "from": "find",
+      "to": "target",
+      "why": "The target\u2019s fast lookup mechanism is computing one bucket and testing keys within it."
+    },
+    {
+      "from": "expected",
+      "to": "target",
+      "why": "The target\u2019s expected constant-speed claim requires the load, distribution and primitive-cost conditions."
+    },
+    {
+      "from": "worst",
+      "to": "target",
+      "why": "The target\u2019s limit on speed includes an individual lookup scanning all entries."
+    },
+    {
+      "from": "growth",
+      "to": "target",
+      "why": "The target\u2019s reason for resizing is controlling load as entry count grows."
+    },
+    {
+      "from": "reindex",
+      "to": "target",
+      "why": "The target\u2019s resize mechanism requires redistributing old entries under the new capacity."
+    },
+    {
+      "from": "amortized",
+      "to": "target",
+      "why": "The target distinguishes low average insertion overhead from a costly individual resize."
+    }
+  ],
+  "sources": [
+    {
+      "id": "cornell-hashing",
+      "title": "20. Hashing",
+      "publisher": "Cornell CS 2110",
+      "url": "https://courses.cis.cornell.edu/courses/cs2110/2026sp/lectures/lec20/",
+      "section_locator": "Hash Tables; Hashing; hashCode() Method; Hash Table Resizing",
+      "paraphrase": "An array allows direct access at a known index. Hashing calculates an index from an object's value, avoiding a search through every bucket. A hash code and a capacity-dependent index are distinct quantities: remainder division can convert the code into an index. Equal objects must yield equal codes, but unequal objects can share codes. When capacity changes, the indexing calculation changes; existing elements must be redistributed accordingly. Increasing capacity does not require changing the underlying object hash codes.",
+      "access_notes": "Public HTML retrieved; relevant passages verified. Java examples illustrate generic mechanisms."
+    },
+    {
+      "id": "ods-chaining",
+      "title": "5.1 Hashing with Chaining",
+      "publisher": "Pat Morin, Open Data Structures",
+      "url": "https://opendatastructures.org/ods-cpp/5_1_Hashing_with_Chaining.html",
+      "section_locator": "Opening array-of-lists description; add/find pseudocode; paragraphs preceding 5.1.1",
+      "paraphrase": "Chaining stores a list at each array location. Several elements with the same index occupy that list. Searching computes the index, compares the query with individual entries there, and returns failure after reaching the list's end without a match. The work depends on the selected list's length. Spreading entries among lists keeps searches short; a poor hash function can put every entry together. This implementation grows before the entry count exceeds capacity and reinserts entries into a doubled table.",
+      "access_notes": "Public HTML/pseudocode retrieved. Some formulas are images with text alternatives; advanced proof not used."
+    },
+    {
+      "id": "cornell-growth",
+      "title": "Lecture 22: Hash tables and amortized analysis",
+      "publisher": "Cornell CS 3110",
+      "url": "https://www.cs.cornell.edu/courses/cs3110/2008fa/lectures/lec22_amort.html",
+      "section_locator": "Opening discussion before Amortized analysis; doubling and resizing-cost paragraphs",
+      "paraphrase": "If entries outgrow bucket capacity, bucket searches become longer. Growth allocates more buckets and redistributes existing entries, so an insertion triggering growth can take work proportional to the stored population. With doubling, rebuilding costs across successive expansions form a geometric sum; over many insertions the rebuilding work averages to a constant amount per insertion. This average does not bound every individual insertion. Load thresholds are implementation choices that trade storage against performance, rather than universal constants.",
+      "access_notes": "Public HTML retrieved; opening argument verified; potential-function proof outside packet scope."
+    }
+  ],
+  "worked_examples": [],
+  "revisions": [
+    {
+      "round": 0,
+      "timestamp": "2026-10-24T20:47:00.043825+00:00",
+      "stage": "initial",
+      "basis": "Supplied source packet only; no supplemental research performed.",
+      "open_gaps": [
+        "array address arithmetic",
+        "explicit load formula",
+        "expected lookup assumptions",
+        "key-size costs"
+      ]
+    }
+  ]
+}

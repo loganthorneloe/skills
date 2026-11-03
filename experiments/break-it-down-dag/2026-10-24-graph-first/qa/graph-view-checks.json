@@ -1,0 +1,14 @@
+{
+  "artifact": "runs/g02/dag.html",
+  "browser": "headless Google Chrome via Playwright",
+  "viewports": [
+    1440,
+    390
+  ],
+  "page_overflow": false,
+  "graph_scrollable": true,
+  "question_label_size_px": 15,
+  "status_label_size_px": 12,
+  "node_link_destination": "#node-loss",
+  "visual_inspection": "Both screenshots inspected; readable fixed-size questions, graph scroll contained, page fits viewport. Dense edge routing remains; edge reasons available as text."
+}

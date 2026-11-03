@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Did the App Help?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{
+  --canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;
+  --blue:#2f6c9e;--green:#46734d;--red:#bf3030;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --head:"Sora","Inter",system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:var(--sans);font-size:17px;line-height:1.75}
+main{max-width:1000px;margin:0 auto;padding:56px 24px 96px}
+.prose{max-width:720px;margin:0 auto}
+h1,h2,h3{font-family:var(--head);font-weight:600;letter-spacing:-0.02em;line-height:1.2}
+h1{font-size:2.3rem;margin:0 0 40px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.45rem;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.05rem;margin:0 0 6px;letter-spacing:-0.01em}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,.scroll:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px;text-decoration:none;display:inline-block}
+.sources{margin:0 0 8px}
+.src{padding:18px 0;border-bottom:1px solid var(--border)}
+.src:first-child{border-top:1px solid var(--border)}
+.src .t{display:block;font-size:1rem}
+.src .m{display:block;font-style:italic;color:var(--muted);font-size:.92rem;line-height:1.55;margin:4px 0 8px}
+.src p{margin:0;font-size:.95rem;line-height:1.65}
+.answer{font-size:1.08rem}
+figure{margin:28px auto 32px;max-width:960px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+figcaption{max-width:720px;margin:12px auto 0;font-size:.92rem;line-height:1.6;color:var(--muted)}
+figcaption strong{color:var(--text);font-weight:500}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem;line-height:1.5;margin:8px 0 24px;background:var(--surface)}
+th,td{border:1px solid var(--border);padding:8px 12px;text-align:left;vertical-align:top}
+th{font-weight:500;background:var(--canvas)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+caption{caption-side:bottom;text-align:left;font-size:.88rem;color:var(--muted);padding-top:8px}
+blockquote{margin:20px 0;padding-left:18px;border-left:2px solid var(--red)}
+blockquote p{margin:0 0 4px}
+blockquote cite{font-style:normal;font-size:.9rem;color:var(--muted)}
+.lab{max-width:860px;margin:28px auto 32px;background:var(--surface);border:1px solid var(--border)}
+.lab .controls{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)}
+.lab .controls>div{padding:20px 24px;border-right:1px solid var(--border)}
+.lab .controls>div:last-child{border-right:0}
+.lab label{display:block;font-weight:500;font-size:.92rem;margin-bottom:6px}
+.lab select,.lab input[type=range]{width:100%;font:inherit;font-size:.95rem}
+.lab select{padding:6px 8px;border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:0}
+.lab .val{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem}
+.lab .results{display:grid;grid-template-columns:repeat(4,1fr)}
+.lab .results>div{padding:20px 24px;border-right:1px solid var(--border)}
+.lab .results>div:last-child{border-right:0}
+.lab .k{font-size:.85rem;color:var(--muted);line-height:1.4;margin-bottom:6px;font-weight:500}
+.lab .big{font-family:var(--head);font-weight:600;font-size:1.7rem;letter-spacing:-0.02em;line-height:1.1;font-variant-numeric:tabular-nums}
+.lab .sub{font-size:.85rem;color:var(--muted);line-height:1.4;margin-top:4px}
+.lab .foot{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding:16px 24px;border-top:1px solid var(--border);font-size:.92rem}
+.lab button{font:inherit;font-weight:500;font-size:.92rem;padding:7px 14px;border:1px solid var(--text);background:var(--surface);color:var(--text);cursor:pointer;border-radius:0}
+.lab button:hover{border-color:var(--red);color:var(--red)}
+.lab .hist{color:var(--muted);font-variant-numeric:tabular-nums}
+.lab .note{padding:0 24px 18px;font-size:.88rem;color:var(--muted);line-height:1.55}
+.noscript-note{padding:12px 24px 0;font-size:.88rem;color:var(--muted)}
+@media (max-width:700px){
+  main{padding:36px 20px 72px}
+  h1{font-size:1.8rem}
+  .lab .controls{grid-template-columns:1fr}
+  .lab .results{grid-template-columns:1fr 1fr}
+  .lab .controls>div{border-right:0}
+  .lab .controls>div+div{border-top:1px solid var(--border)}
+  .lab .results>div:nth-child(2){border-right:0}
+  .lab .results>div:nth-child(n+3){border-top:1px solid var(--border)}
+  .lab .controls>div,.lab .results>div{padding:16px 18px}
+  .wide-scroll img{max-width:none;width:860px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+<div class="prose">
+<h1>Did the learning app help? Causal inference from first principles<span class="dot">.</span></h1>
+
+<h2 style="border-top:0;padding-top:0;margin-top:0">Sources</h2>
+<div class="sources">
+  <div class="src">
+    <a class="t" href="https://miguelhernan.org/whatifbook">Causal Inference: What If<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Miguel A. Hernán and James M. Robins · Textbook, living online edition · Chapman &amp; Hall/CRC · 2020, revised August 2026</span>
+    <p>A free graduate textbook by two Harvard epidemiologists whose work built much of the modern way of defining cause and effect. Its opening chapters supply the definitions used here and the reasons random assignment works and statistical adjustment rests on an assumption no one can check. Its examples are invented medical cases, so they show logic, not anything measured about apps.</p>
+  </div>
+  <div class="src">
+    <a class="t" href="https://mixtape-1ed.netlify.app/04-potential_outcomes">Causal Inference: The Mixtape (Chapters 4 and 5)<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Scott Cunningham · Textbook, free online first edition · Yale University Press · 2021</span>
+    <p>A Baylor economist's widely taught textbook. It works through ten invented patients whose outcomes are known both ways, which lets it show exactly how self-sorting can make a helpful treatment look harmful. The patients are made up, so the example teaches the mechanism and says nothing about how large the distortion is for a real app.</p>
+  </div>
+  <div class="src">
+    <a class="t" href="https://ies.ed.gov/use-work/resource-library/report/evaluation-report/effectiveness-reading-and-mathematics-software-products-findings-first-student-cohort">Effectiveness of Reading and Mathematics Software Products: Findings from the First Student Cohort<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Mark Dynarski, Roberto Agodini, and colleagues (Mathematica Policy Research and SRI International) · Evaluation report to Congress · U.S. Department of Education, Institute of Education Sciences · March 2007</span>
+    <p>A national study ordered by Congress and run by two independent research firms: in 132 schools, teachers were randomly assigned to use one of 16 commercial reading or math programs or to teach as usual. It is the clearest real example here of a randomized test of learning software. It covers specific products in their first year, used about a tenth of class time, so it does not show that all software fails.</p>
+  </div>
+  <div class="src">
+    <a class="t" href="https://www.aeaweb.org/articles?id=10.1257/aer.20171112">Disrupting Education? Experimental Evidence on Technology-Aided Instruction in India<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Karthik Muralidharan, Abhijeet Singh, and Alejandro J. Ganimian · Peer-reviewed journal article · American Economic Review · April 2019</span>
+    <p>Economists who run large school experiments used a lottery to decide which of 619 Delhi applicants got free seats in an after-school program built around adaptive software. It shows a randomized comparison finding a large gain. The program bundled software with a tutor and extra hours, so the software's separate contribution is not isolated. Its figures were read from the 2017 working paper, whose numbers differ slightly from the published ones; the published figures are used here.</p>
+  </div>
+  <div class="src">
+    <a class="t" href="https://www.jstor.org/stable/1806062">Evaluating the Econometric Evaluations of Training Programs with Experimental Data<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Robert J. LaLonde · Peer-reviewed journal article · American Economic Review · September 1986</span>
+    <p>A labor economist took a job-training program whose true effect was known from a randomized experiment, swapped in comparison groups from national surveys, and applied the standard statistical adjustments. It is the best real test here of how adjusted comparisons perform against a known answer. It concerns job training, not schooling, and later methods did better on the same data.</p>
+  </div>
+  <div class="src">
+    <a class="t" href="https://openknowledge.worldbank.org/handle/10986/25030">Impact Evaluation in Practice, Second Edition<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Paul J. Gertler, Sebastian Martinez, Patrick Premand, Laura B. Rawlings, and Christel M. J. Vermeersch · Practitioner handbook · World Bank and Inter-American Development Bank · 2016</span>
+    <p>An openly licensed training text by economists who evaluate government programs. It is used here for its plain account of tempting but misleading comparisons and its summary of the alternatives to randomizing. Its running case is fictional, so its numbers show how methods behave, not what any real program did.</p>
+  </div>
+  <div class="src">
+    <a class="t" href="https://www.nber.org/papers/w23744">Education Technology: An Evidence-Based Review<span class="ext" aria-hidden="true">↗</span></a>
+    <span class="m">Maya Escueta, Vincent Quan, Andre Joshua Nickow, and Philip Oreopoulos · Review, working paper · National Bureau of Economic Research · August 2017</span>
+    <p>Education economists collected only randomized and similarly rigorous studies of education technology. It is used for the count of what such trials found and for a scale for judging effect sizes. It counts studies rather than averaging their results, and its later journal version, which may have updated counts, was not read.</p>
+  </div>
+</div>
+
+<h2>The short answer</h2>
+<p class="answer">Higher scores among app users compare two different groups of students, not the same students with and without the app. Students who choose an app tend to differ from those who do not, in motivation, preparation, or time, and those differences raise scores on their own. The gap therefore mixes whatever the app did with how the groups already differed, and the data cannot tell you how much is which. To find out, let chance decide who gets the app, as with a lottery. Chance makes the two groups alike on average in everything, including traits nobody measured, so the gap that remains estimates the app's effect. Real trials done this way have found everything from no detectable gain to a large one, which is why the answer has to be measured.</p>
+
+<h2>What “the app helped” means</h2>
+<p>The app helped a particular student if that student scored higher with it than the same student would have scored without it, with nothing else changed. That difference is the app's causal effect on that student. The trouble is that each student either used the app or did not, so we see one of the two scores. The other, the score in the world that did not happen, is called the counterfactual, and it is missing for everyone. Hernán and Robins treat this missing score as the core difficulty of the whole subject.</p>
+<p>Since no single student's effect can be seen, we ask about a group. The average causal effect compares two imagined worlds for one group of students: everyone uses the app, versus no one does. The comparison we actually have is different. It splits the real group into those who used the app and those who did not and compares those two subsets. Statisticians call that an association. It describes the world as it is, while the causal question asks a “what if.”</p>
+
+<figure>
+  <img src="assets/E1-hernan-robins-fig1-1-causation-vs-association.jpeg" width="3001" height="2251" alt="Diagram: a population split into treated and untreated parts. The causation arrow leads to the whole population treated versus the whole population untreated; the association arrow leads to the treated part versus the untreated part.">
+  <figcaption><strong>The two comparisons.</strong> On the left, causation compares the whole population in two worlds, all treated (white) against all untreated (grey). On the right, association compares the piece that happened to be treated against the piece that did not. “App users versus non-users” is the right-hand comparison. The symbols mean “average outcome” under each condition. Hernán and Robins, <em>Causal Inference: What If</em>, Figure 1.1. © the authors, all rights reserved; reproduced with attribution for commentary.</figcaption>
+</figure>
+
+<p>The two numbers can disagree sharply. In a made-up population of 20 patients, Hernán and Robins show 54% of the treated dying against 43% of the untreated, although the treatment changes nobody's outcome: in the full “what if” table, 50% die either way. The treated patients were simply sicker to begin with.</p>
+
+<h2>Where the gap comes from when students choose</h2>
+<p>When students pick for themselves whether to use the app, the gap between users and non-users breaks into two parts. One is the app's real effect. The other, called selection bias, is how differently the two groups would have scored if nobody had the app. Suppose six students take the exam, and the app raises every student's score by exactly 2 points. The three most motivated choose the app.</p>
+
+<div class="scroll" tabindex="0" role="region" aria-label="Worked example table">
+<table>
+  <thead><tr><th>Student</th><th class="n">Score without app</th><th class="n">Score with app</th><th>Chose the app?</th><th class="n">Score we see</th></tr></thead>
+  <tbody>
+    <tr><td>A</td><td class="n">80</td><td class="n">82</td><td>Yes</td><td class="n">82</td></tr>
+    <tr><td>B</td><td class="n">78</td><td class="n">80</td><td>Yes</td><td class="n">80</td></tr>
+    <tr><td>C</td><td class="n">76</td><td class="n">78</td><td>Yes</td><td class="n">78</td></tr>
+    <tr><td>D</td><td class="n">64</td><td class="n">66</td><td>No</td><td class="n">64</td></tr>
+    <tr><td>E</td><td class="n">62</td><td class="n">64</td><td>No</td><td class="n">62</td></tr>
+    <tr><td>F</td><td class="n">60</td><td class="n">62</td><td>No</td><td class="n">60</td></tr>
+  </tbody>
+  <caption>Constructed illustration, not data. In real life only the last column is ever visible.</caption>
+</table>
+</div>
+
+<p>Users average 80 and non-users 62, a gap of 18 points. The app's true effect is 2. The other 16 points are selection bias: users would have averaged 78 without the app, against the non-users' 62. So the 18-point gap equals 2 points of effect plus 16 points of difference that existed before anyone opened the app. Nothing in the last column reveals that split, because the “without app” scores of users are never observed.</p>
+<p>Selection bias can also run the other way, so the gap can hide a real benefit or point in the wrong direction. Cunningham's ten invented patients each get whichever treatment suits them best. Surgery adds 0.6 years of life on average across all ten, yet the patients who chose surgery live 0.4 years less than those who did not, because the people who chose it would have done far worse without it. He describes the whole enterprise of causal inference as finding a strategy for “negating the role that selection bias is playing in estimated causal effects.”</p>
+
+<h2>Try it: choice versus a coin flip</h2>
+<p>The worked example uses six students and one fixed sorting. The model below creates many hypothetical students, each with a score they would get without the app, and lets you decide how they come to use it. Watch the selection-bias tile. When students choose, it stays large however many students you add. When a coin flip decides, it shrinks toward zero as the group grows, and the gap settles near the true effect.</p>
+</div>
+
+<section class="lab" aria-labelledby="lab-title">
+  <h3 id="lab-title" style="padding:20px 24px 0;margin:0">Simulated exam</h3>
+  <div class="note" style="padding-top:4px">Constructed model, not data. Each student's no-app score is about 70, spread by motivation (most fall between 54 and 86). Under “students choose,” more motivated students are more likely to use the app. The app adds the same number of points to every user.</div>
+  <div class="controls">
+    <div>
+      <label for="mode">Who uses the app</label>
+      <select id="mode">
+        <option value="choose" selected>Students choose</option>
+        <option value="coin">A coin flip decides</option>
+      </select>
+    </div>
+    <div>
+      <label for="effect">True effect of the app <span class="val" id="effect-val">2 points</span></label>
+      <input id="effect" type="range" min="0" max="10" step="1" value="2" aria-describedby="effect-val">
+    </div>
+    <div>
+      <label for="n">Number of students</label>
+      <select id="n">
+        <option value="40">40</option>
+        <option value="400" selected>400</option>
+        <option value="4000">4,000</option>
+      </select>
+    </div>
+  </div>
+  <div class="results" aria-live="polite" id="results">
+    <div><div class="k">Users' average</div><div class="big" id="r-users">76.5</div><div class="sub" id="r-nu">197 students</div></div>
+    <div><div class="k">Non-users' average</div><div class="big" id="r-non">65.6</div><div class="sub" id="r-nn">203 students</div></div>
+    <div><div class="k">Gap you would see</div><div class="big" id="r-gap">10.9</div><div class="sub" id="r-check">= 2.0 effect + 8.9 bias</div></div>
+    <div><div class="k">Selection bias</div><div class="big" id="r-bias">8.9</div><div class="sub">difference in no-app scores, normally hidden</div></div>
+  </div>
+  <div class="foot">
+    <button type="button" id="rerun">Draw new students</button>
+    <button type="button" id="reset">Reset</button>
+    <span class="hist" id="hist">Recent gaps: 10.9</span>
+  </div>
+  <noscript><div class="noscript-note">Scripts are off, so this shows the default run only: 400 students who choose, true effect 2 points.</div></noscript>
+</section>
+
+<div class="prose">
+<p>With a coin flip and 40 students, the gap still wanders a few points from the truth on each draw. That is chance, the same luck that makes any two groups differ a little, and it is why real trials use many students and report how uncertain their estimate is.</p>
+
+<h2>Other ways a gap appears without the app helping</h2>
+<p>Choice is the main route, but not the only one. The cause can run backward: students who are already doing well may enjoy the app and keep using it, while struggling students give up on it, so high scores produce app use rather than the reverse. A before-and-after comparison of the same users fails differently, because scores rise over a term for many reasons. In the Delhi lottery described below, students who lost the lottery also improved, by 0.34 standard deviations in math, so counting all of the winners' improvement as the program's effect would have roughly doubled it.</p>
+<p>Patterns in how much students use an app mislead in the same way as the original question. In the federal study described below, fourth-grade reading effects were larger where teachers reported more use, and the evaluators warned that “these relationships do not have a causal interpretation.” Heavier users chose to be heavier users, even inside an experiment.</p>
+
+<h2>Why “controlling for” differences is not enough</h2>
+<p>The usual response is to compare users and non-users who look alike on recorded traits such as past grades, age, or family income, by matching them or by a statistical adjustment called regression. That removes differences in what was recorded and nothing else. If motivation was never measured, it still differs between the groups. Hernán and Robins add that no one can check from the data whether such a hidden difference remains:</p>
+<blockquote>
+  <p>“Worse yet, even if conditional exchangeability … held, the investigators cannot empirically verify that is actually the case.”</p>
+  <cite>Hernán and Robins, <em>Causal Inference: What If</em>, §3.2</cite>
+</blockquote>
+<p>Here “conditional exchangeability” means that, once the recorded traits are matched, the groups would have scored the same without the treatment. LaLonde tested how well adjustment works when the right answer is known. A job-training program had been run as a randomized experiment, and it raised trainees' 1978 earnings by $886.</p>
+
+</div>
+<figure class="wide">
+  <div class="scroll wide-scroll" tabindex="0" role="region" aria-label="LaLonde Table 5, scrollable">
+    <img src="assets/E9-lalonde-1986-table5-experimental-vs-nonexperimental.png" width="1814" height="1259" alt="LaLonde 1986 Table 5: estimated training effects using the experimental controls and six survey comparison groups, unadjusted and adjusted, with standard errors.">
+  </div>
+  <figcaption><strong>Adjusted comparisons against a known answer.</strong> Read columns 4 and 5. The “Controls” row uses the randomized control group and gives the true effect, $886. Each other row replaces it with people drawn from a national survey. With the PSID-1 group, the program appears to cut earnings by $15,578, and after adjusting for age, schooling, race, and dropout status (column 5) still by $8,067. Adjustment shrinks the error without fixing it. Dollars are 1982 dollars; parentheses hold standard errors. Later methods came closer on this data, so the lesson is that results depend heavily on the comparison group and method. LaLonde, <em>American Economic Review</em> 76(4), 1986, Table 5; reuse rights unstated, reproduced with attribution. <a href="assets/E9-lalonde-1986-table5-experimental-vs-nonexperimental.png">Open full size</a></figcaption>
+</figure>
+<div class="prose">
+
+<h2>Random assignment: the fair comparison</h2>
+<p>Random assignment fixes the problem at its source. If a coin flip or lottery decides who gets the app, motivation cannot influence who uses it, so motivated and unmotivated students land in both groups in about equal shares. The same holds for every trait, measured or not. Before the app is used, the two groups would score about the same, so selection bias is zero on average, and the difference in average scores estimates the app's average effect. Hernán and Robins put it in one line: “In ideal randomized experiments, association is causation.” The federal evaluators made the same point about teachers' unmeasurable qualities, such as “a teacher's ability to motivate students,” which were “controlled” because teachers were assigned at random.</p>
+<p>Chance still leaves small differences, so trials check that the groups started level and report how uncertain their result is. In the federal study, randomly assigned first-grade classrooms scored 50.1 and 50.9 on a fall reading test before using any software, and the two recorded traits that differed (teachers' master's degrees and students' age) were, the report says, not significant once it allowed for having tested many traits; it adjusted for them anyway. A p-value measures how often chance alone would produce a gap as large as the one seen; a large p-value means the gap could easily be luck. It says nothing about whether a gap is causal, only whether it is bigger than chance.</p>
+
+<figure>
+  <img src="assets/E8-mindspark-fig2-with-caption-note.png" width="1356" height="923" alt="Bar chart from Muralidharan, Singh and Ganimian: math and Hindi scores for lottery losers (control, grey) and winners (treatment, navy) at baseline and endline, with 95% confidence intervals.">
+  <figcaption><strong>A lottery's before-and-after check.</strong> At baseline (left pair in each panel), lottery winners and losers scored the same, which is what random assignment should produce. By the endline, 4.5 months later, winners were well ahead in math (0.70 against 0.34) and Hindi (0.41 against 0.10). The losers also improved, which is the “what would have happened anyway” a before-and-after comparison lacks. Scores are in standard deviations relative to baseline; the whiskers are 95% confidence intervals, the range of values consistent with the data. These are raw group averages; the published effects come from regressions. Muralidharan, Singh and Ganimian, NBER Working Paper 22923 (2017), Figure 2; reuse rights unstated, reproduced with attribution.</figcaption>
+</figure>
+
+<h2>What real trials of learning software found</h2>
+<p>Education studies report gains in standard deviations, a measure of how spread out scores are. On a typical test, one standard deviation is roughly the distance from the 50th to the 84th percentile. Escueta and colleagues offer a scale: under 0.10 is small, 0.10 to 0.25 encouraging, 0.25 to 0.40 large, and above 0.40 very large.</p>
+<p>The federal study, with about 9,400 tested students, found that classrooms assigned to the software did not score measurably higher after a year. In first grade the effects ranged from −0.01 to 0.06 standard deviations, which the report translates as about 0 to 2 percentile points, and none was statistically significant. The same held for fourth-grade reading, sixth-grade math, and algebra.</p>
+</div>
+
+<figure>
+  <img src="assets/E6-ies-2007-table-II6-score-differences.png" width="1826" height="1400" alt="IES Table II.6: spring reading scores for treatment and control first-grade classrooms, with differences, effect sizes from -0.01 to 0.06, and p-values from 0.16 to 0.89.">
+  <figcaption><strong>A fair comparison that found almost nothing.</strong> The overall reading gap is 0.73 points (effect size 0.03, p = 0.34), small and well within what chance produces. The treatment averages are the control average plus the estimated effect, not raw scores. This covers five first-grade products pooled, in their first year, used about 11% of reading time. Dynarski et al., IES NCEE 2007-4005, Table II.6; public domain. <a href="assets/E6-ies-2007-table-II6-score-differences.png">Open full size</a></figcaption>
+</figure>
+
+<div class="prose">
+<p>A second-year follow-up found one of ten products with a statistically significant positive effect. The Delhi lottery found much more: winners scored 0.37 standard deviations higher in math and 0.23 higher in Hindi after 4.5 months, large on the scale above. Across 29 randomized trials of learning software in wealthy countries, Escueta and colleagues count 20 with positive results, most of them in math, 8 with no effect, and 1 negative. They restricted themselves to such trials because the field is, in their words, “flooded with observational research.” None of these trials tested a phone app that students use on their own, so they cannot say whether such an app works; each answer belongs to its own product and setting.</p>
+
+<h2>What a trial measures, exactly</h2>
+<p>A lottery decides who is offered the app, not who uses it. In Delhi, winners attended 58% of sessions on average. Comparing everyone offered with everyone not offered keeps the comparison fair and measures the effect of the offer; the authors estimate the effect of actually attending with an extra step that uses the lottery itself, and comparing heavy attenders with light ones directly would bring self-selection back. Students also drop out of follow-up testing, 16% of winners against 12% of losers in Delhi, which the authors address with reweighting and bounding checks. A fair comparison also needs the no-app group untouched by the app, for instance by not borrowing a friend's. And every result belongs to one product, place, and test: the federal evaluators warn that their findings do not support conclusions “beyond the study's context.”</p>
+
+<h2>When you cannot run a lottery</h2>
+<p>Sometimes randomizing is impossible or unfair, and researchers look for a situation that approximates it. Each design trades the coin flip for an assumption that cannot be fully checked.</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Quasi-experimental designs table">
+<table>
+  <thead><tr><th>Design</th><th>Compares</th><th>Works only if</th></tr></thead>
+  <tbody>
+    <tr><td>Regression discontinuity</td><td>Students just above and just below a cutoff that decides who gets the app, such as a placement score</td><td>Students on either side of the cutoff are alike apart from the app</td></tr>
+    <tr><td>Difference-in-differences</td><td>The change in scores over time for users against the change for non-users</td><td>Both groups would have changed by the same amount without the app</td></tr>
+    <tr><td>Matching</td><td>Users with non-users who look similar on recorded traits</td><td>No unrecorded trait differs between them</td></tr>
+    <tr><td>Natural experiment or instrument</td><td>Groups split by some as-if-random event, such as an oversubscribed lottery for access</td><td>That event affects scores only through app use</td></tr>
+  </tbody>
+  <caption>Synthesis of the method summary in Gertler et al., <em>Impact Evaluation in Practice</em>, Table 11.2 (CC BY 3.0 IGO), restated for the app example.</caption>
+</table>
+</div>
+<p>In the World Bank handbook's fictional case, one program run through every method gives estimates from −$6.65 to −$14.46 against a randomized −$10.14, and the decision to expand the program flips depending on which method is used. LaLonde's real data showed that the spread can be far wider.</p>
+<p>A users-versus-non-users gap is therefore not evidence against the app either: the true effect could be larger, zero, or negative. What settles it is a comparison in which the groups were made alike before the app arrived, so the first question to ask of any claim that an app works is how the comparison group was chosen. Even a clean trial answers only for the product, the students, the test, and the stretch of time it studied.</p>
+</div>
+</main>
+
+<script>
+(function(){
+  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+  function simulate(n,effect,mode,seed){
+    var r=mulberry32(seed),su=0,sn=0,nu=0,nn=0,ou=0,on=0;
+    for(var i=0;i<n;i++){
+      var u1=r()||1e-9,u2=r();
+      var z=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+      var base=70+8*z;
+      var p=mode==='choose'?1/(1+Math.exp(-2*z)):0.5;
+      if(r()<p){nu++;su+=base;ou+=base+effect;}else{nn++;sn+=base;on+=base;}
+    }
+    if(!nu||!nn)return null;
+    var mu=ou/nu,mn=on/nn;
+    return{nu:nu,nn:nn,mu:mu,mn:mn,gap:mu-mn,bias:su/nu-sn/nn};
+  }
+  var $=function(id){return document.getElementById(id);};
+  var seed=1,hist=[];
+  function f(x){var s=x.toFixed(1);return s==='-0.0'?'0.0':s.replace('-','−');}
+  function fmt(n){return n.toLocaleString('en-US');}
+  function run(addHist){
+    var n=+$('n').value,e=+$('effect').value,m=$('mode').value;
+    $('effect-val').textContent=e+(e===1?' point':' points');
+    var res=simulate(n,e,m,seed);
+    if(!res){seed++;return run(addHist);}
+    $('r-users').textContent=f(res.mu);
+    $('r-non').textContent=f(res.mn);
+    $('r-nu').textContent=fmt(res.nu)+' students';
+    $('r-nn').textContent=fmt(res.nn)+' students';
+    $('r-gap').textContent=f(res.gap);
+    var b=res.bias;
+    $('r-check').textContent='= '+e.toFixed(1)+' effect '+(b<0?'− ':'+ ')+Math.abs(b).toFixed(1)+' bias';
+    $('r-bias').textContent=f(b);
+    if(addHist){hist.unshift(f(res.gap));hist=hist.slice(0,6);}
+    else{hist=[f(res.gap)];}
+    $('hist').textContent='Recent gaps: '+hist.join(', ');
+  }
+  ['mode','effect','n'].forEach(function(id){$(id).addEventListener('input',function(){run(false);});});
+  $('rerun').addEventListener('click',function(){seed++;run(true);});
+  $('reset').addEventListener('click',function(){$('mode').value='choose';$('effect').value=2;$('n').value='400';seed=1;run(false);});
+  run(false);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "benchmark_version": "repair-heldout-1.0-frozen",
+  "purpose": "Fresh graph-only transfer audit; original rubric unchanged.",
+  "design_inputs": ["design/benchmark/rubric.md", "design/benchmark/benchmark.json"],
+  "independence": {
+    "candidate_instructions_seen": false,
+    "generated_graphs_seen": false,
+    "scores_seen": false,
+    "held_out_topic_ids": ["hash_tables"],
+    "holdout_rule": "Coordinator/evaluator only; hidden from repair instruction designer. Generator receives request and source packet only, after freeze."
+  },
+  "representation_policy": {
+    "coverage": "Conceptual obligations, not mandatory nodes; equivalent decompositions accepted.",
+    "topology": "No canonical graph, edges, labels, size, or teaching order prescribed."
+  },
+  "topics": [{
+    "id": "hash_tables",
+    "role": "held_out",
+    "reader": "Arithmetic and basic Python; no data-structures or complexity background.",
+    "request": "Break down hash tables from first principles. I know arithmetic and basic Python. Why can looking up a dictionary value by its key be fast? What happens when keys collide, and why does the table need resizing? Use a tiny, traceable numerical example and explain the limits of the speed claim.",
+    "essential_questions": [
+      {"id":"H1","question":"What does lookup recover?","minimum":"Distinguish key, associated value, and numbered storage location; searching by key differs from scanning every entry."},
+      {"id":"H2","question":"How is a location calculated?","minimum":"Explain repeatable key-to-number-to-index calculation and direct indexed access; introduce remainder if used."},
+      {"id":"H3","question":"What is a collision?","minimum":"Different keys can select the same location; matching hashes or indices does not establish key equality."},
+      {"id":"H4","question":"How does lookup remain correct after collisions?","minimum":"Explain one concrete collision strategy, key comparisons, successful lookup and justified absence; retain both distinct entries."},
+      {"id":"H5","question":"What makes lookup fast?","minimum":"With inexpensive hashing/comparison and suitably distributed entries, few candidates need checking; crowding increases work. Explain entries divided by capacity without assuming probability."},
+      {"id":"H6","question":"Why and how resize?","minimum":"Growth controls crowding using more storage; existing entries must be placed consistently with the new capacity. Merely appending empty locations can break lookup."},
+      {"id":"H7","question":"What are the performance limits?","minimum":"Poor distribution can require many comparisons; growth can be costly on an individual insertion. Enlarging capacity does not guarantee eliminating collisions."}
+    ],
+    "scope_distinctions": ["One collision strategy suffices. Deletion, cryptography, CPython internals, hash-family proofs, and formal amortized analysis are optional; any claims made still require support."],
+    "application_questions": [
+      {"id":"HA1","question":"Use hash code 3*k+1 and remainder modulo 8. Where do keys 2, 10, 18 initially point? How could lookup return key 10's value without mistaking another key for it, or report absent key 26?","expected":"Codes 7,31,55 all point to 7; 26 also points to 7. Follow the explained collision strategy, compare actual keys, and exhaust the relevant candidates before declaring absence.","prerequisite_use":"H1-H4"},
+      {"id":"HA2","question":"After capacity grows to 16, recalculate those three indices. Can their old placement simply be kept? Are collisions eliminated?","expected":"7,15,7; placement/search must honor the new indexing. Some collisions remain.","prerequisite_use":"H2,H3,H6,H7"},
+      {"id":"HA3","question":"Entries increase from 12 to 48 while capacity stays 16. What happens to crowding, and what changes if capacity becomes 64?","expected":"Ratios rise from 0.75 to 3, then return to 0.75; more capacity reduces average crowding, with actual lookup work dependent on distribution/strategy.","prerequisite_use":"H4-H6"},
+      {"id":"HA4","question":"If every key has the same hash code, does a larger table guarantee quick lookup? Does typical fast lookup guarantee each insertion is quick?","expected":"No: candidates remain concentrated; resizing can require relocating many entries on one insertion.","prerequisite_use":"H5-H7"}
+    ]
+  }]
+}

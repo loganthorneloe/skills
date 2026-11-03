@@ -1,0 +1,18 @@
+[
+  {
+    "run": "r01",
+    "topic": "evals"
+  },
+  {
+    "run": "r02",
+    "topic": "isolation"
+  },
+  {
+    "run": "r03",
+    "topic": "bayesian_spam"
+  },
+  {
+    "run": "r04",
+    "topic": "hash_tables"
+  }
+]

@@ -1,0 +1,67 @@
+{
+  "errors": [],
+  "desktop": {
+    "width": 1440,
+    "documentWidth": 1440,
+    "images": [
+      {
+        "loaded": true,
+        "width": 712
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ]
+  },
+  "states": [
+    {
+      "value": 80,
+      "result": "Observed difference: +18.0 points. Actual app effect: 0 points.",
+      "app": "84.0",
+      "nonuser": "66.0"
+    },
+    {
+      "value": 50,
+      "result": "Observed difference: 0.0 points. Actual app effect: 0 points.",
+      "app": "75.0",
+      "nonuser": "75.0"
+    },
+    {
+      "value": 0,
+      "result": "Observed difference: -30.0 points. Actual app effect: 0 points.",
+      "app": "60.0",
+      "nonuser": "90.0"
+    },
+    {
+      "value": 100,
+      "result": "Observed difference: +30.0 points. Actual app effect: 0 points.",
+      "app": "90.0",
+      "nonuser": "60.0"
+    }
+  ],
+  "keyboard": "99",
+  "reset": "80",
+  "mobile": {
+    "width": 390,
+    "documentWidth": 390
+  },
+  "static": {
+    "result": "Observed difference: +18.0 points. Actual app effect: 0 points.",
+    "paragraphs": 40
+  },
+  "graphRendered": true
+}

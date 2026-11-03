@@ -1,0 +1,3 @@
+Break down Bayesian spam classification from first principles. I understand percentages but have never studied probability. A filter flags 90% of spam but also flags 10% of legitimate messages. If only 1% of my messages are spam, why isn't a flagged message almost certainly spam? Show how the base rate changes the answer and how this relates to using words as clues.
+
+For this task, produce only the prerequisite research graph and its evidence/history, not the full explanation report.

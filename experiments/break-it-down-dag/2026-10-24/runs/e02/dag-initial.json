@@ -1,0 +1,237 @@
+{
+  "reader_assumptions": [
+    "Understands files and internet message sending",
+    "No cryptography background"
+  ],
+  "target": "target",
+  "nodes": [
+    {
+      "id": "bits",
+      "question": "How can a message be transformed mathematically?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "secrecy",
+      "question": "What must encryption hide, and what may be public?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "hard",
+      "question": "How can an easy calculation be hard to reverse?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "pair",
+      "question": "How can two related keys have different capabilities?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "construction",
+      "question": "How does a public-key construction use that difference?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "practical",
+      "question": "Why does practical encryption need randomness and symmetric encryption?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "identity",
+      "question": "How do I know whose public key I received?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "target",
+      "question": "Why can strangers encrypt with a public key without decrypting messages?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "bits",
+      "to": "secrecy",
+      "why": "Secrecy concerns transformations of encoded message data."
+    },
+    {
+      "from": "bits",
+      "to": "hard",
+      "why": "Arithmetic acts on numbers encoded as bits."
+    },
+    {
+      "from": "hard",
+      "to": "pair",
+      "why": "Key asymmetry requires a computationally hard reverse task."
+    },
+    {
+      "from": "pair",
+      "to": "construction",
+      "why": "A construction instantiates the key capabilities."
+    },
+    {
+      "from": "secrecy",
+      "to": "practical",
+      "why": "Practical protection must hide predictable messages and patterns."
+    },
+    {
+      "from": "construction",
+      "to": "practical",
+      "why": "A primitive needs safe encoding and an efficient message scheme."
+    },
+    {
+      "from": "pair",
+      "to": "identity",
+      "why": "A public key does not identify its owner by itself."
+    },
+    {
+      "from": "practical",
+      "to": "target",
+      "why": "The complete answer must distinguish a safe scheme from raw arithmetic."
+    },
+    {
+      "from": "identity",
+      "to": "target",
+      "why": "Privacy for the intended recipient requires an authentic key."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "kind": "initial",
+      "time": "2026-10-24T15:22:25.318191+00:00",
+      "nodes": [
+        {
+          "id": "bits",
+          "question": "How can a message be transformed mathematically?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "secrecy",
+          "question": "What must encryption hide, and what may be public?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "hard",
+          "question": "How can an easy calculation be hard to reverse?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "pair",
+          "question": "How can two related keys have different capabilities?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "construction",
+          "question": "How does a public-key construction use that difference?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "practical",
+          "question": "Why does practical encryption need randomness and symmetric encryption?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "identity",
+          "question": "How do I know whose public key I received?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        },
+        {
+          "id": "target",
+          "question": "Why can strangers encrypt with a public key without decrypting messages?",
+          "answer": "",
+          "status": "gap",
+          "evidence": []
+        }
+      ],
+      "edges": [
+        {
+          "from": "bits",
+          "to": "secrecy",
+          "why": "Secrecy concerns transformations of encoded message data."
+        },
+        {
+          "from": "bits",
+          "to": "hard",
+          "why": "Arithmetic acts on numbers encoded as bits."
+        },
+        {
+          "from": "hard",
+          "to": "pair",
+          "why": "Key asymmetry requires a computationally hard reverse task."
+        },
+        {
+          "from": "pair",
+          "to": "construction",
+          "why": "A construction instantiates the key capabilities."
+        },
+        {
+          "from": "secrecy",
+          "to": "practical",
+          "why": "Practical protection must hide predictable messages and patterns."
+        },
+        {
+          "from": "construction",
+          "to": "practical",
+          "why": "A primitive needs safe encoding and an efficient message scheme."
+        },
+        {
+          "from": "pair",
+          "to": "identity",
+          "why": "A public key does not identify its owner by itself."
+        },
+        {
+          "from": "practical",
+          "to": "target",
+          "why": "The complete answer must distinguish a safe scheme from raw arithmetic."
+        },
+        {
+          "from": "identity",
+          "to": "target",
+          "why": "Privacy for the intended recipient requires an authentic key."
+        }
+      ],
+      "gaps": [
+        "bits",
+        "secrecy",
+        "hard",
+        "pair",
+        "construction",
+        "practical",
+        "identity",
+        "target"
+      ],
+      "searches": [],
+      "evidence": [],
+      "changes": []
+    }
+  ]
+}

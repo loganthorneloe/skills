@@ -1,0 +1,50 @@
+{
+  "given_case": {
+    "messages": 10000,
+    "spam": 100,
+    "legitimate": 9900,
+    "spam_flags": 90,
+    "legitimate_flags": 990,
+    "all_flags": 1080,
+    "spam_fraction_among_flags": "1/12"
+  },
+  "base_rates": [
+    {
+      "prior_fraction": "0",
+      "posterior_fraction": "0",
+      "posterior_percent": 0.0
+    },
+    {
+      "prior_fraction": "1/1000",
+      "posterior_fraction": "1/112",
+      "posterior_percent": 0.8928571428571429
+    },
+    {
+      "prior_fraction": "1/100",
+      "posterior_fraction": "1/12",
+      "posterior_percent": 8.333333333333334
+    },
+    {
+      "prior_fraction": "1/10",
+      "posterior_fraction": "1/2",
+      "posterior_percent": 50.0
+    },
+    {
+      "prior_fraction": "1/2",
+      "posterior_fraction": "9/10",
+      "posterior_percent": 90.0
+    },
+    {
+      "prior_fraction": "1",
+      "posterior_fraction": "1",
+      "posterior_percent": 100.0
+    }
+  ],
+  "two_clue_example": {
+    "independent_spam_score": "81/10000",
+    "independent_legitimate_score": "99/10000",
+    "independent_posterior": "9/20",
+    "duplicate_posterior": "1/12",
+    "type": "Constructed inputs; not measured word statistics"
+  }
+}

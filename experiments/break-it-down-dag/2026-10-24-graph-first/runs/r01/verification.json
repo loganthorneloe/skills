@@ -1,0 +1,47 @@
+{
+  "result": "PASS",
+  "nodes": 22,
+  "edges": 39,
+  "checks": [
+    "unique IDs",
+    "valid endpoints",
+    "no duplicate edges",
+    "acyclic",
+    "all nodes reach target",
+    "required node fields/statuses",
+    "supported nodes have located evidence",
+    "manual every-edge necessity audit",
+    "unfamiliar transfer and counterexample",
+    "incomplete-run boundary repaired and retested"
+  ],
+  "topological_order": [
+    "objective",
+    "variability",
+    "baseline",
+    "tool",
+    "application",
+    "action_outcome",
+    "case",
+    "coverage",
+    "reference",
+    "repeatability",
+    "heldout",
+    "grader",
+    "calibration",
+    "run",
+    "uncertainty",
+    "incomplete",
+    "aggregate",
+    "comparison",
+    "decision",
+    "improvement",
+    "start",
+    "target"
+  ],
+  "limitations": [
+    "No live application run",
+    "No independent human grader validation",
+    "No rendered visual inspection; common renderer handles visuals",
+    "No formal close-score inference"
+  ]
+}

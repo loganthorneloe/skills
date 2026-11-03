@@ -1,0 +1,143 @@
+{
+  "round": 1,
+  "type": "Supplemental primary-source research and reconciliation",
+  "gaps_before": [
+    "dependency",
+    "anomaly",
+    "atomicity_limit",
+    "All partial nodes needed located passage confirmation."
+  ],
+  "searches": [],
+  "retrievals": [
+    {
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "calls": "Open full tutorial"
+    },
+    {
+      "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+      "calls": "Open initial page; open near lines 82 and 123 for complete relevant isolation sections"
+    },
+    {
+      "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+      "calls": "Open page; open near lines 336 and 470 to traverse navigation and read behavior sections"
+    },
+    {
+      "url": "https://www.sqlite.org/isolation.html",
+      "calls": "Open page; open near line 42 for snapshot promotion and same-connection qualifications"
+    }
+  ],
+  "evidence": "Located passages attached to every non-assumed node. Supplied paraphrases remain the starting material. Supplemental documentation establishes read/write-dependency mechanism and precise statement exceptions.",
+  "changes": {
+    "updated_nodes": [
+      "invariant",
+      "transaction",
+      "atomicity",
+      "concurrency",
+      "serial",
+      "dependency",
+      "snapshot",
+      "anomaly",
+      "atomicity_limit",
+      "serializable",
+      "dirty",
+      "nonrepeatable",
+      "phantom",
+      "levels",
+      "read_committed",
+      "repeatable_read",
+      "mechanisms",
+      "retry",
+      "target"
+    ],
+    "moved_optional": [
+      "choice"
+    ],
+    "removed_edges": [
+      [
+        "choice",
+        "target"
+      ],
+      [
+        "concurrency",
+        "serial"
+      ],
+      [
+        "invariant",
+        "atomicity"
+      ],
+      [
+        "levels",
+        "read_committed"
+      ],
+      [
+        "levels",
+        "repeatable_read"
+      ],
+      [
+        "mechanisms",
+        "retry"
+      ],
+      [
+        "read_committed",
+        "choice"
+      ],
+      [
+        "repeatable_read",
+        "choice"
+      ],
+      [
+        "retry",
+        "choice"
+      ],
+      [
+        "serializable",
+        "mechanisms"
+      ]
+    ],
+    "added_edges": [
+      {
+        "from": "transaction",
+        "to": "serial",
+        "why": "Whole transaction boundaries must be known before specifying noninterleaving transaction order."
+      },
+      {
+        "from": "read_committed",
+        "to": "levels",
+        "why": "The comparison explicitly uses statement-level visibility to explain Read Committed protections."
+      },
+      {
+        "from": "repeatable_read",
+        "to": "levels",
+        "why": "The comparison explicitly distinguishes stable reads and PostgreSQL\u2019s phantom protection from serial equivalence."
+      },
+      {
+        "from": "concurrency",
+        "to": "mechanisms",
+        "why": "Blocking or rejecting an operation requires identifying the other overlapping operation whose interaction is controlled."
+      },
+      {
+        "from": "serializable",
+        "to": "retry",
+        "why": "The retry consequence follows from rejecting transactions to preserve serial equivalence."
+      },
+      {
+        "from": "mechanisms",
+        "to": "target",
+        "why": "The requested distinction between guarantees and implementations requires explaining version retention, blocking, and dependency checking."
+      },
+      {
+        "from": "retry",
+        "to": "target",
+        "why": "Serializable helps only if the application handles rejected attempts and recomputes its decisions."
+      }
+    ],
+    "added_fields": [
+      "examples",
+      "sources",
+      "optional_material"
+    ],
+    "snapshot": "history/round-1-dag.json"
+  },
+  "remaining_gaps": [],
+  "access_limits": "No relevant page access failure. No live database execution or direct SQL standard access."
+}

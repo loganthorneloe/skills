@@ -1,0 +1,964 @@
+{
+  "reader_assumptions": [
+    "Can read basic SQL SELECT and UPDATE.",
+    "No database-internals knowledge."
+  ],
+  "target": "target",
+  "nodes": [
+    {
+      "id": "sql",
+      "question": "What does the reader already know?",
+      "answer": "Basic SELECT and UPDATE syntax.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "transaction",
+      "question": "What is a transaction?",
+      "answer": "A transaction groups database statements into one commit-or-rollback unit; atomicity does not by itself prevent concurrent decision conflicts.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "\u00a73.4",
+          "claim": "BEGIN, COMMIT, ROLLBACK and implicit statement transactions"
+        }
+      ]
+    },
+    {
+      "id": "interleave",
+      "question": "How can individually correct operations become incorrect together?",
+      "answer": "Transactions overlap when their steps interleave. A previously read value can become stale before a dependent write.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "\u00a713.2.1",
+          "claim": "Read Committed gives successive statements different views; updates can use rows changed by concurrent transactions"
+        }
+      ]
+    },
+    {
+      "id": "snapshot",
+      "question": "What values can an operation see while another transaction is changing data?",
+      "answer": "A snapshot chooses visible committed row versions. MVCC lets reads use older versions while updates proceed.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+          "locator": "\u00a713.1",
+          "claim": "MVCC provides snapshot visibility without ordinary reader/writer blocking"
+        }
+      ]
+    },
+    {
+      "id": "anomalies",
+      "question": "What different kinds of concurrent errors matter?",
+      "answer": "Dirty reads use uncommitted data; nonrepeatable reads change observed values; phantoms change result membership. Lost updates and write skew expose additional decision failures.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "\u00a713.2 definitions, Table 13.1",
+          "claim": "Read anomalies and serialization anomalies are distinct"
+        }
+      ]
+    },
+    {
+      "id": "levels",
+      "question": "What guarantees do isolation levels provide?",
+      "answer": "The four levels exclude progressively stronger classes of outcomes, with vendor-specific stronger guarantees possible.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "Table 13.1 and following paragraphs",
+          "claim": "PostgreSQL maps RU to RC and prevents phantoms in RR"
+        }
+      ]
+    },
+    {
+      "id": "serial",
+      "question": "What does serializable mean and how can a database enforce it?",
+      "answer": "Serializable requires equivalence to some serial ordering of all successfully committed transactions; concurrent execution is still possible.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/sql-set-transaction.html",
+          "locator": "Description: SERIALIZABLE",
+          "claim": "Read/write patterns inconsistent with a serial ordering cause a serialization failure"
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "question": "How should a programmer choose isolation and handle conflicts?",
+      "answer": "Protect the read-to-write dependency using a suitable atomic conditional statement, locking protocol, or Serializable transactions with whole-operation retries.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+          "locator": "\u00a713.3.2; \u00a713.3.4",
+          "claim": "FOR UPDATE locks rows; lock waits can deadlock"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why can correct operations conflict and how does isolation help?",
+      "answer": "Individually correct operations can make decisions using shared data that another operation changes; isolation limits observations and successful joint outcomes.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "\u00a713.2.1\u201313.2.3",
+          "claim": "Weaker levels allow outcomes that serializable excludes"
+        }
+      ]
+    },
+    {
+      "id": "rule",
+      "question": "What makes an outcome incorrect?",
+      "answer": "An invariant is a stated rule that must hold; storing legal values is insufficient to preserve every application rule.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+          "locator": "\u00a75.5; \u00a75.5.1 note",
+          "claim": "Declared constraints enforce particular rules, and CHECK cannot depend on other rows"
+        }
+      ]
+    },
+    {
+      "id": "skew",
+      "question": "Why can a stable snapshot still violate a multirow rule?",
+      "answer": "Two transactions can read the same initial rows and modify different rows; both local decisions pass while their joint result violates the rule.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://arxiv.org/pdf/1208.4179",
+          "locator": "\u00a72.1.1, Figure 1, p.1851",
+          "claim": "Two doctors each remove themselves based on the other remaining; snapshot isolation allows both."
+        }
+      ]
+    },
+    {
+      "id": "locks",
+      "question": "How does locking change concurrent progress?",
+      "answer": "A conflicting updater waits for a held row lock; locks on selected rows do not automatically protect absent rows or every multirow condition.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+          "locator": "\u00a713.3.2\u201313.3.4",
+          "claim": "FOR UPDATE prevents concurrent modification until transaction end; conflicts can deadlock"
+        }
+      ]
+    },
+    {
+      "id": "retry",
+      "question": "What must happen after a serialization failure?",
+      "answer": "Start the complete transaction again, including application decisions and values; retrying only the previous UPDATE retains stale reasoning.",
+      "status": "supported",
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/mvcc-serialization-failure-handling.html",
+          "locator": "\u00a713.5",
+          "claim": "Retry the entire transaction; repeated conflicts may require multiple attempts"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "to": "transaction",
+      "why": "Transactions group familiar SQL statements.",
+      "from": "sql"
+    },
+    {
+      "to": "interleave",
+      "why": "Need transaction boundaries to distinguish within-operation reasoning from concurrent execution.",
+      "from": "transaction"
+    },
+    {
+      "to": "snapshot",
+      "why": "Need committed and incomplete transactions to explain visibility.",
+      "from": "transaction"
+    },
+    {
+      "to": "anomalies",
+      "why": "Anomalies classify the ways interleavings violate expectations.",
+      "from": "interleave"
+    },
+    {
+      "to": "anomalies",
+      "why": "Visibility explains dirty, nonrepeatable, and phantom reads.",
+      "from": "snapshot"
+    },
+    {
+      "to": "levels",
+      "why": "Level guarantees are meaningful only once the prevented outcomes are understood.",
+      "from": "anomalies"
+    },
+    {
+      "to": "practice",
+      "why": "Choosing guarantees and retry behavior requires understanding serial equivalence.",
+      "from": "serial"
+    },
+    {
+      "to": "target",
+      "why": "Practical consequence completes the requested explanation.",
+      "from": "practice"
+    },
+    {
+      "to": "target",
+      "why": "The target explicitly asks why overlap creates wrong outcomes.",
+      "from": "interleave"
+    },
+    {
+      "from": "transaction",
+      "to": "rule",
+      "why": "Must define the unit of changes whose correctness is assessed."
+    },
+    {
+      "from": "rule",
+      "to": "interleave",
+      "why": "Need a rule to distinguish an invalid joint result from merely a different result."
+    },
+    {
+      "from": "snapshot",
+      "to": "skew",
+      "why": "Stable visibility explains how both transactions retain the initial premise."
+    },
+    {
+      "from": "rule",
+      "to": "skew",
+      "why": "A multirow invariant defines why the two locally allowed changes are invalid together."
+    },
+    {
+      "from": "skew",
+      "to": "serial",
+      "why": "The counterexample shows why stable reads are weaker than serial equivalence."
+    },
+    {
+      "from": "levels",
+      "to": "serial",
+      "why": "Compare named level guarantees before establishing the strongest level."
+    },
+    {
+      "from": "transaction",
+      "to": "locks",
+      "why": "Lock lifetime follows transaction lifetime."
+    },
+    {
+      "from": "locks",
+      "to": "practice",
+      "why": "A correct explicit-lock strategy requires understanding conflict scope."
+    },
+    {
+      "from": "serial",
+      "to": "retry",
+      "why": "Serialization rejection requires a fresh decision."
+    },
+    {
+      "from": "retry",
+      "to": "practice",
+      "why": "A usable isolation strategy includes transaction restart behavior."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "kind": "initial",
+      "graph": {
+        "nodes": [
+          {
+            "id": "sql",
+            "question": "What does the reader already know?",
+            "answer": "Basic SELECT and UPDATE syntax.",
+            "status": "assumed",
+            "evidence": []
+          },
+          {
+            "id": "transaction",
+            "question": "What is a transaction?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "interleave",
+            "question": "How can individually correct operations become incorrect together?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "snapshot",
+            "question": "What values can an operation see while another transaction is changing data?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "anomalies",
+            "question": "What different kinds of concurrent errors matter?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "levels",
+            "question": "What guarantees do isolation levels provide?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "serial",
+            "question": "What does serializable mean and how can a database enforce it?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "practice",
+            "question": "How should a programmer choose isolation and handle conflicts?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "target",
+            "question": "Why can correct operations conflict and how does isolation help?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          }
+        ],
+        "edges": [
+          {
+            "to": "transaction",
+            "why": "Transactions group familiar SQL statements.",
+            "from": "sql"
+          },
+          {
+            "to": "interleave",
+            "why": "Need transaction boundaries to distinguish within-operation reasoning from concurrent execution.",
+            "from": "transaction"
+          },
+          {
+            "to": "snapshot",
+            "why": "Need committed and incomplete transactions to explain visibility.",
+            "from": "transaction"
+          },
+          {
+            "to": "anomalies",
+            "why": "Anomalies classify the ways interleavings violate expectations.",
+            "from": "interleave"
+          },
+          {
+            "to": "anomalies",
+            "why": "Visibility explains dirty, nonrepeatable, and phantom reads.",
+            "from": "snapshot"
+          },
+          {
+            "to": "levels",
+            "why": "Level guarantees are meaningful only once the prevented outcomes are understood.",
+            "from": "anomalies"
+          },
+          {
+            "to": "serial",
+            "why": "Serializable is the strongest level and needs a separate correctness definition.",
+            "from": "levels"
+          },
+          {
+            "to": "practice",
+            "why": "Choosing guarantees and retry behavior requires understanding serial equivalence.",
+            "from": "serial"
+          },
+          {
+            "to": "target",
+            "why": "Practical consequence completes the requested explanation.",
+            "from": "practice"
+          },
+          {
+            "to": "target",
+            "why": "The target explicitly asks why overlap creates wrong outcomes.",
+            "from": "interleave"
+          }
+        ]
+      },
+      "gaps": [
+        "transaction",
+        "interleave",
+        "snapshot",
+        "anomalies",
+        "levels",
+        "serial",
+        "practice",
+        "target"
+      ],
+      "searches": [],
+      "evidence": [],
+      "changes": []
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "transaction",
+        "interleave",
+        "snapshot",
+        "anomalies",
+        "levels",
+        "serial",
+        "practice",
+        "target"
+      ],
+      "searches": [
+        "PostgreSQL 18 transaction isolation",
+        "PostgreSQL tutorial transactions MVCC introduction"
+      ],
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "\u00a73.4",
+          "claim": "BEGIN, COMMIT, ROLLBACK and implicit statement transactions"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "\u00a713.2.1",
+          "claim": "Read Committed gives successive statements different views; updates can use rows changed by concurrent transactions"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+          "locator": "\u00a713.1",
+          "claim": "MVCC provides snapshot visibility without ordinary reader/writer blocking"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "\u00a713.2 definitions, Table 13.1",
+          "claim": "Read anomalies and serialization anomalies are distinct"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "Table 13.1 and following paragraphs",
+          "claim": "PostgreSQL maps RU to RC and prevents phantoms in RR"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/sql-set-transaction.html",
+          "locator": "Description: SERIALIZABLE",
+          "claim": "Read/write patterns inconsistent with a serial ordering cause a serialization failure"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+          "locator": "\u00a713.3.2; \u00a713.3.4",
+          "claim": "FOR UPDATE locks rows; lock waits can deadlock"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "\u00a713.2.1\u201313.2.3",
+          "claim": "Weaker levels allow outcomes that serializable excludes"
+        }
+      ],
+      "changes": [
+        "Added explanatory evidence and identified missing prerequisites: explicit correctness rule, difference between row-write conflict and multirow decision conflict, and complete retries."
+      ],
+      "graph": {
+        "nodes": [
+          {
+            "id": "sql",
+            "question": "What does the reader already know?",
+            "answer": "Basic SELECT and UPDATE syntax.",
+            "status": "assumed",
+            "evidence": []
+          },
+          {
+            "id": "transaction",
+            "question": "What is a transaction?",
+            "answer": "A transaction groups database statements into one commit-or-rollback unit; atomicity does not by itself prevent concurrent decision conflicts.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+                "locator": "\u00a73.4",
+                "claim": "BEGIN, COMMIT, ROLLBACK and implicit statement transactions"
+              }
+            ]
+          },
+          {
+            "id": "interleave",
+            "question": "How can individually correct operations become incorrect together?",
+            "answer": "Transactions overlap when their steps interleave. A previously read value can become stale before a dependent write.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "\u00a713.2.1",
+                "claim": "Read Committed gives successive statements different views; updates can use rows changed by concurrent transactions"
+              }
+            ]
+          },
+          {
+            "id": "snapshot",
+            "question": "What values can an operation see while another transaction is changing data?",
+            "answer": "A snapshot chooses visible committed row versions. MVCC lets reads use older versions while updates proceed.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+                "locator": "\u00a713.1",
+                "claim": "MVCC provides snapshot visibility without ordinary reader/writer blocking"
+              }
+            ]
+          },
+          {
+            "id": "anomalies",
+            "question": "What different kinds of concurrent errors matter?",
+            "answer": "Dirty reads use uncommitted data; nonrepeatable reads change observed values; phantoms change result membership. Lost updates and write skew expose additional decision failures.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "\u00a713.2 definitions, Table 13.1",
+                "claim": "Read anomalies and serialization anomalies are distinct"
+              }
+            ]
+          },
+          {
+            "id": "levels",
+            "question": "What guarantees do isolation levels provide?",
+            "answer": "The four levels exclude progressively stronger classes of outcomes, with vendor-specific stronger guarantees possible.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "Table 13.1 and following paragraphs",
+                "claim": "PostgreSQL maps RU to RC and prevents phantoms in RR"
+              }
+            ]
+          },
+          {
+            "id": "serial",
+            "question": "What does serializable mean and how can a database enforce it?",
+            "answer": "Serializable requires equivalence to some serial ordering of all successfully committed transactions; concurrent execution is still possible.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/sql-set-transaction.html",
+                "locator": "Description: SERIALIZABLE",
+                "claim": "Read/write patterns inconsistent with a serial ordering cause a serialization failure"
+              }
+            ]
+          },
+          {
+            "id": "practice",
+            "question": "How should a programmer choose isolation and handle conflicts?",
+            "answer": "Protect the read-to-write dependency using a suitable atomic conditional statement, locking protocol, or Serializable transactions with whole-operation retries.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+                "locator": "\u00a713.3.2; \u00a713.3.4",
+                "claim": "FOR UPDATE locks rows; lock waits can deadlock"
+              }
+            ]
+          },
+          {
+            "id": "target",
+            "question": "Why can correct operations conflict and how does isolation help?",
+            "answer": "Individually correct operations can make decisions using shared data that another operation changes; isolation limits observations and successful joint outcomes.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "\u00a713.2.1\u201313.2.3",
+                "claim": "Weaker levels allow outcomes that serializable excludes"
+              }
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "to": "transaction",
+            "why": "Transactions group familiar SQL statements.",
+            "from": "sql"
+          },
+          {
+            "to": "interleave",
+            "why": "Need transaction boundaries to distinguish within-operation reasoning from concurrent execution.",
+            "from": "transaction"
+          },
+          {
+            "to": "snapshot",
+            "why": "Need committed and incomplete transactions to explain visibility.",
+            "from": "transaction"
+          },
+          {
+            "to": "anomalies",
+            "why": "Anomalies classify the ways interleavings violate expectations.",
+            "from": "interleave"
+          },
+          {
+            "to": "anomalies",
+            "why": "Visibility explains dirty, nonrepeatable, and phantom reads.",
+            "from": "snapshot"
+          },
+          {
+            "to": "levels",
+            "why": "Level guarantees are meaningful only once the prevented outcomes are understood.",
+            "from": "anomalies"
+          },
+          {
+            "to": "serial",
+            "why": "Serializable is the strongest level and needs a separate correctness definition.",
+            "from": "levels"
+          },
+          {
+            "to": "practice",
+            "why": "Choosing guarantees and retry behavior requires understanding serial equivalence.",
+            "from": "serial"
+          },
+          {
+            "to": "target",
+            "why": "Practical consequence completes the requested explanation.",
+            "from": "practice"
+          },
+          {
+            "to": "target",
+            "why": "The target explicitly asks why overlap creates wrong outcomes.",
+            "from": "interleave"
+          }
+        ]
+      }
+    },
+    {
+      "round": 2,
+      "gaps": [
+        "rule",
+        "skew",
+        "locks",
+        "retry"
+      ],
+      "searches": [
+        "Serializable Snapshot Isolation in PostgreSQL paper full PDF",
+        "PostgreSQL explicit locking",
+        "PostgreSQL serialization failure handling",
+        "PostgreSQL constraints"
+      ],
+      "evidence": [
+        {
+          "URL": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+          "locator": "\u00a75.5; \u00a75.5.1 note",
+          "claim": "Declared constraints enforce particular rules, and CHECK cannot depend on other rows"
+        },
+        {
+          "URL": "https://arxiv.org/pdf/1208.4179",
+          "locator": "\u00a72.1.1, Figure 1, p.1851",
+          "claim": "Two doctors each remove themselves based on the other remaining; snapshot isolation allows both."
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+          "locator": "\u00a713.3.2\u201313.3.4",
+          "claim": "FOR UPDATE prevents concurrent modification until transaction end; conflicts can deadlock"
+        },
+        {
+          "URL": "https://www.postgresql.org/docs/18/mvcc-serialization-failure-handling.html",
+          "locator": "\u00a713.5",
+          "claim": "Retry the entire transaction; repeated conflicts may require multiple attempts"
+        }
+      ],
+      "changes": [
+        "Added rule, skew, locks, retry nodes to make implicit prerequisites explicit.",
+        "Retained initial graph and first evidence round.",
+        "Pruned implementation details (lock compatibility matrix, SSI serialization graphs, benchmark timings) unnecessary for the target."
+      ],
+      "graph": {
+        "nodes": [
+          {
+            "id": "sql",
+            "question": "What does the reader already know?",
+            "answer": "Basic SELECT and UPDATE syntax.",
+            "status": "assumed",
+            "evidence": []
+          },
+          {
+            "id": "transaction",
+            "question": "What is a transaction?",
+            "answer": "A transaction groups database statements into one commit-or-rollback unit; atomicity does not by itself prevent concurrent decision conflicts.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+                "locator": "\u00a73.4",
+                "claim": "BEGIN, COMMIT, ROLLBACK and implicit statement transactions"
+              }
+            ]
+          },
+          {
+            "id": "interleave",
+            "question": "How can individually correct operations become incorrect together?",
+            "answer": "Transactions overlap when their steps interleave. A previously read value can become stale before a dependent write.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "\u00a713.2.1",
+                "claim": "Read Committed gives successive statements different views; updates can use rows changed by concurrent transactions"
+              }
+            ]
+          },
+          {
+            "id": "snapshot",
+            "question": "What values can an operation see while another transaction is changing data?",
+            "answer": "A snapshot chooses visible committed row versions. MVCC lets reads use older versions while updates proceed.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+                "locator": "\u00a713.1",
+                "claim": "MVCC provides snapshot visibility without ordinary reader/writer blocking"
+              }
+            ]
+          },
+          {
+            "id": "anomalies",
+            "question": "What different kinds of concurrent errors matter?",
+            "answer": "Dirty reads use uncommitted data; nonrepeatable reads change observed values; phantoms change result membership. Lost updates and write skew expose additional decision failures.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "\u00a713.2 definitions, Table 13.1",
+                "claim": "Read anomalies and serialization anomalies are distinct"
+              }
+            ]
+          },
+          {
+            "id": "levels",
+            "question": "What guarantees do isolation levels provide?",
+            "answer": "The four levels exclude progressively stronger classes of outcomes, with vendor-specific stronger guarantees possible.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "Table 13.1 and following paragraphs",
+                "claim": "PostgreSQL maps RU to RC and prevents phantoms in RR"
+              }
+            ]
+          },
+          {
+            "id": "serial",
+            "question": "What does serializable mean and how can a database enforce it?",
+            "answer": "Serializable requires equivalence to some serial ordering of all successfully committed transactions; concurrent execution is still possible.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/sql-set-transaction.html",
+                "locator": "Description: SERIALIZABLE",
+                "claim": "Read/write patterns inconsistent with a serial ordering cause a serialization failure"
+              }
+            ]
+          },
+          {
+            "id": "practice",
+            "question": "How should a programmer choose isolation and handle conflicts?",
+            "answer": "Protect the read-to-write dependency using a suitable atomic conditional statement, locking protocol, or Serializable transactions with whole-operation retries.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+                "locator": "\u00a713.3.2; \u00a713.3.4",
+                "claim": "FOR UPDATE locks rows; lock waits can deadlock"
+              }
+            ]
+          },
+          {
+            "id": "target",
+            "question": "Why can correct operations conflict and how does isolation help?",
+            "answer": "Individually correct operations can make decisions using shared data that another operation changes; isolation limits observations and successful joint outcomes.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/transaction-iso.html",
+                "locator": "\u00a713.2.1\u201313.2.3",
+                "claim": "Weaker levels allow outcomes that serializable excludes"
+              }
+            ]
+          },
+          {
+            "id": "rule",
+            "question": "What makes an outcome incorrect?",
+            "answer": "An invariant is a stated rule that must hold; storing legal values is insufficient to preserve every application rule.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/ddl-constraints.html",
+                "locator": "\u00a75.5; \u00a75.5.1 note",
+                "claim": "Declared constraints enforce particular rules, and CHECK cannot depend on other rows"
+              }
+            ]
+          },
+          {
+            "id": "skew",
+            "question": "Why can a stable snapshot still violate a multirow rule?",
+            "answer": "Two transactions can read the same initial rows and modify different rows; both local decisions pass while their joint result violates the rule.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://arxiv.org/pdf/1208.4179",
+                "locator": "\u00a72.1.1, Figure 1, p.1851",
+                "claim": "Two doctors each remove themselves based on the other remaining; snapshot isolation allows both."
+              }
+            ]
+          },
+          {
+            "id": "locks",
+            "question": "How does locking change concurrent progress?",
+            "answer": "A conflicting updater waits for a held row lock; locks on selected rows do not automatically protect absent rows or every multirow condition.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/explicit-locking.html",
+                "locator": "\u00a713.3.2\u201313.3.4",
+                "claim": "FOR UPDATE prevents concurrent modification until transaction end; conflicts can deadlock"
+              }
+            ]
+          },
+          {
+            "id": "retry",
+            "question": "What must happen after a serialization failure?",
+            "answer": "Start the complete transaction again, including application decisions and values; retrying only the previous UPDATE retains stale reasoning.",
+            "status": "supported",
+            "evidence": [
+              {
+                "URL": "https://www.postgresql.org/docs/18/mvcc-serialization-failure-handling.html",
+                "locator": "\u00a713.5",
+                "claim": "Retry the entire transaction; repeated conflicts may require multiple attempts"
+              }
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "to": "transaction",
+            "why": "Transactions group familiar SQL statements.",
+            "from": "sql"
+          },
+          {
+            "to": "interleave",
+            "why": "Need transaction boundaries to distinguish within-operation reasoning from concurrent execution.",
+            "from": "transaction"
+          },
+          {
+            "to": "snapshot",
+            "why": "Need committed and incomplete transactions to explain visibility.",
+            "from": "transaction"
+          },
+          {
+            "to": "anomalies",
+            "why": "Anomalies classify the ways interleavings violate expectations.",
+            "from": "interleave"
+          },
+          {
+            "to": "anomalies",
+            "why": "Visibility explains dirty, nonrepeatable, and phantom reads.",
+            "from": "snapshot"
+          },
+          {
+            "to": "levels",
+            "why": "Level guarantees are meaningful only once the prevented outcomes are understood.",
+            "from": "anomalies"
+          },
+          {
+            "to": "practice",
+            "why": "Choosing guarantees and retry behavior requires understanding serial equivalence.",
+            "from": "serial"
+          },
+          {
+            "to": "target",
+            "why": "Practical consequence completes the requested explanation.",
+            "from": "practice"
+          },
+          {
+            "to": "target",
+            "why": "The target explicitly asks why overlap creates wrong outcomes.",
+            "from": "interleave"
+          },
+          {
+            "from": "transaction",
+            "to": "rule",
+            "why": "Must define the unit of changes whose correctness is assessed."
+          },
+          {
+            "from": "rule",
+            "to": "interleave",
+            "why": "Need a rule to distinguish an invalid joint result from merely a different result."
+          },
+          {
+            "from": "snapshot",
+            "to": "skew",
+            "why": "Stable visibility explains how both transactions retain the initial premise."
+          },
+          {
+            "from": "rule",
+            "to": "skew",
+            "why": "A multirow invariant defines why the two locally allowed changes are invalid together."
+          },
+          {
+            "from": "skew",
+            "to": "serial",
+            "why": "The counterexample shows why stable reads are weaker than serial equivalence."
+          },
+          {
+            "from": "levels",
+            "to": "serial",
+            "why": "Compare named level guarantees before establishing the strongest level."
+          },
+          {
+            "from": "transaction",
+            "to": "locks",
+            "why": "Lock lifetime follows transaction lifetime."
+          },
+          {
+            "from": "locks",
+            "to": "practice",
+            "why": "A correct explicit-lock strategy requires understanding conflict scope."
+          },
+          {
+            "from": "serial",
+            "to": "retry",
+            "why": "Serialization rejection requires a fresh decision."
+          },
+          {
+            "from": "retry",
+            "to": "practice",
+            "why": "A usable isolation strategy includes transaction restart behavior."
+          }
+        ]
+      }
+    }
+  ],
+  "validation": {
+    "unique_IDs": true,
+    "valid_endpoints": true,
+    "acyclic": true,
+    "all_nodes_reach_target": true,
+    "topological_order": [
+      "sql",
+      "transaction",
+      "locks",
+      "rule",
+      "snapshot",
+      "skew",
+      "interleave",
+      "anomalies",
+      "levels",
+      "serial",
+      "retry",
+      "practice",
+      "target"
+    ],
+    "limitations": "Structural validity does not prove pedagogical necessity; edges manually reviewed against report."
+  }
+}

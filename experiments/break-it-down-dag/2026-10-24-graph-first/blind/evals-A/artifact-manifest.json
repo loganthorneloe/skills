@@ -1,0 +1,62 @@
+[
+  {
+    "file": "dag.html",
+    "original_sha256": "8399d45954a7350fec062978a38773367e42ec8a0fa1470866ae8fe4a86efd05",
+    "blind_sha256": "8399d45954a7350fec062978a38773367e42ec8a0fa1470866ae8fe4a86efd05"
+  },
+  {
+    "file": "checks.json",
+    "original_sha256": "29ef8e5e4d182c7617516a8335da48aac51512cd7731b6e7ced93703d370d4c3",
+    "blind_sha256": "29ef8e5e4d182c7617516a8335da48aac51512cd7731b6e7ced93703d370d4c3"
+  },
+  {
+    "file": "dag.svg",
+    "original_sha256": "a201042e00595fb05d91362731bbf51ffb4735e64a9384863d1b50f0007b291d",
+    "blind_sha256": "a201042e00595fb05d91362731bbf51ffb4735e64a9384863d1b50f0007b291d"
+  },
+  {
+    "file": "run-notes.md",
+    "original_sha256": "ac24d1811c61328e09791d89bff60bd5f3ccd31a5303d62729acd88b2fe32984",
+    "blind_sha256": "1cbf23995f200b7b7f65e61c260541a857071364750a01622f7e1c6324994d5c"
+  },
+  {
+    "file": "request.txt",
+    "original_sha256": "9f0e2a2240e7a78da59527a909800a5859e91ceb2a46fdafdef9c0527116ce4a",
+    "blind_sha256": "9f0e2a2240e7a78da59527a909800a5859e91ceb2a46fdafdef9c0527116ce4a"
+  },
+  {
+    "file": "dag.json",
+    "original_sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a",
+    "blind_sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a"
+  },
+  {
+    "file": "history/after-round-02.json",
+    "original_sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a",
+    "blind_sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a"
+  },
+  {
+    "file": "history/round-02.json",
+    "original_sha256": "55572cf8501d0c6f6d1c826c12d460bf35636342c3bc3b614d29c24540f1c75a",
+    "blind_sha256": "55572cf8501d0c6f6d1c826c12d460bf35636342c3bc3b614d29c24540f1c75a"
+  },
+  {
+    "file": "history/round-00.json",
+    "original_sha256": "f458a5cc3507735f76b7f655b455ab37fe141013c4f95d8eacbbcbcd50b1fec5",
+    "blind_sha256": "f458a5cc3507735f76b7f655b455ab37fe141013c4f95d8eacbbcbcd50b1fec5"
+  },
+  {
+    "file": "history/round-01.json",
+    "original_sha256": "e5d3968fe06b91e177ff5f2e287986e45f616a24c644f7389111c0e26353b50d",
+    "blind_sha256": "e5d3968fe06b91e177ff5f2e287986e45f616a24c644f7389111c0e26353b50d"
+  },
+  {
+    "file": "history/after-round-01.json",
+    "original_sha256": "ccebe1f57b0b68dcec5cd24528bff32e87d00d116ff5955baee0a8f31fd4ebb5",
+    "blind_sha256": "ccebe1f57b0b68dcec5cd24528bff32e87d00d116ff5955baee0a8f31fd4ebb5"
+  },
+  {
+    "file": "history/initial.json",
+    "original_sha256": "4ad69d09853d2a79a83c2f604694c2ee91d75c88b19bc6fa5ba885fb7eb3d9fe",
+    "blind_sha256": "4ad69d09853d2a79a83c2f604694c2ee91d75c88b19bc6fa5ba885fb7eb3d9fe"
+  }
+]

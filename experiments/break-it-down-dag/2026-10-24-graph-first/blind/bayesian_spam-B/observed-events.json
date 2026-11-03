@@ -1,0 +1,18 @@
+[
+  {
+    "time": "2026-10-24T20:34:19.497741+00:00",
+    "file": "bayesian_spam-B/dag.json",
+    "sha256": "51f762acfd46d6f74ae92794f87827aade77bfcba20eb8c88e0c921b40eff1b8",
+    "snapshot": "observed/dag-51f762acfd46.json",
+    "nodes": 14,
+    "edges": 20
+  },
+  {
+    "time": "2026-10-24T20:35:35.793874+00:00",
+    "file": "bayesian_spam-B/dag.json",
+    "sha256": "3c29bffa64fb59fc81205bd613829b84f026382755957be729bb6b2a5c1e60dc",
+    "snapshot": "observed/dag-3c29bffa64fb.json",
+    "nodes": 15,
+    "edges": 23
+  }
+]

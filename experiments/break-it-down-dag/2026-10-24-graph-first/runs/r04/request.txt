@@ -1,0 +1,3 @@
+Break down hash tables from first principles. I know arithmetic and basic Python. Why can looking up a dictionary value by its key be fast? What happens when keys collide, and why does the table need resizing? Use a tiny, traceable numerical example and explain the limits of the speed claim.
+
+For this task, produce only the prerequisite research graph and its evidence/history, not the full explanation report.

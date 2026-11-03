@@ -1,0 +1,46 @@
+{
+  "topic": "Bayesian spam classification and base rates",
+  "reader_baseline": "Understands percentages, counts, multiplication, and division; no prior probability notation assumed.",
+  "scope": "Explain how evidence changes the proportion of messages expected to be spam, why the starting spam rate matters, and what a naive Bayes classifier assumes when combining features.",
+  "retrieved_on": "2026-10-24",
+  "packet_notes": "Four source pages: two sections of an author's original probability textbook, official scikit-learn documentation, and Google's classification course. Source listing is bibliographic, not a proposed teaching order. No claims are made about the actual prevalence of spam in current email. Probability examples are mathematical models; a deployed classifier's numerical outputs require empirical evaluation.",
+  "sources": [
+    {
+      "id": "conditional-probability",
+      "title": "1.4.0 Conditional Probability",
+      "publisher": "Hossein Pishro-Nik, Introduction to Probability, Statistics, and Random Processes",
+      "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+      "section_locator": "Opening rain/cloud example; first die example; conditional-probability definition and intuition; Chain rule for conditional probability, Equation 1.5",
+      "paraphrase": "A conditional probability describes the chance of an event after restricting attention to outcomes consistent with some known information. The notation P(A given B) means the proportion of the B outcomes that also satisfy A. The denominator changes because outcomes outside B are no longer eligible. For a fair die, the chance of an odd number is one-half; if the outcome is known to be at most three, the eligible values are one, two, and three, and two of those three are odd. In general, the probability of both A and B is divided by the probability of B. This requires B to have positive probability. The same relationship can be rearranged: the probability that both events occur equals the probability of B multiplied by the probability of A within B. An unconditional probability before receiving additional information can be called a prior. The example makes clear why changing the group being counted can change a percentage even though the possible outcomes themselves have not changed.",
+      "access_notes": "Public HTML and explanatory passages retrieved."
+    },
+    {
+      "id": "total-probability",
+      "title": "1.4.2 Law of Total Probability",
+      "publisher": "Hossein Pishro-Nik, Introduction to Probability, Statistics, and Random Processes",
+      "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+      "section_locator": "Opening province/forest analogy; two-event partition formula; Law of Total Probability; final three-bag example",
+      "paraphrase": "A population can be divided into groups that do not overlap and together cover every possibility. To count all outcomes with a property, count the qualifying outcomes inside each group and add them. For probabilities, each group's contribution equals the chance of being in that group multiplied by the chance of the property within that group. With two complementary groups, the total is the sum of those two weighted contributions. Group sizes therefore matter: identical within-group percentages can produce different overall counts when the groups have different sizes. The textbook illustrates the idea with forest areas from distinct provinces and with differently colored marbles in bags. To calculate the chance of a red marble, it combines the chance of selecting each bag with the red fraction inside that bag. Equal bag-selection probabilities give an ordinary average; the general formula allows unequal selection probabilities. The rule supplies the total frequency of evidence when that evidence can arise in more than one kind of case, rather than counting only one possible origin.",
+      "access_notes": "Public HTML and explanatory passages retrieved."
+    },
+    {
+      "id": "sklearn-naive-bayes",
+      "title": "1.9. Naive Bayes",
+      "publisher": "scikit-learn User Guide",
+      "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+      "section_locator": "1.9 opening theorem and classification rule; 1.9.2 Multinomial Naive Bayes; 1.9.4 Bernoulli Naive Bayes",
+      "paraphrase": "Bayes' theorem expresses a class's probability after observing features as its prior probability multiplied by the probability of those features within that class, divided by the overall probability of the features. For spam classification, the classes can be spam and legitimate mail. A class prior can be estimated from its share of labeled training examples. Naive Bayes simplifies the within-class feature probability by assuming conditional independence: after fixing the class, it multiplies the individual feature probabilities. This is an assumption about features within a class, not a claim that all words are independent in ordinary language. Classification can compare the class scores without the shared denominator, because that denominator is identical for the observed message. Multinomial models commonly use word counts; Bernoulli models use whether features occur and also account for their absence. Smoothing avoids assigning impossible probability merely because a feature was absent from a training sample. Useful classification does not guarantee reliable probabilities: the guide cautions against treating naive Bayes probability outputs as well-calibrated estimates.",
+      "access_notes": "Public HTML and explanatory passages retrieved."
+    },
+    {
+      "id": "google-classification-metrics",
+      "title": "Classification: Accuracy, recall, precision, and related metrics",
+      "publisher": "Google Machine Learning Crash Course",
+      "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+      "section_locator": "Accuracy; Recall or true positive rate; False positive rate; Precision; Choice of metric and tradeoffs",
+      "paraphrase": "A spam classifier makes two kinds of mistakes: marking legitimate mail as spam and letting spam through. Recall asks what fraction of actual spam was detected. The false-positive rate asks what fraction of legitimate mail was incorrectly flagged. Precision asks what fraction of flagged messages really was spam. These denominators describe different groups, so the percentages are not interchangeable. Overall accuracy counts all correct decisions, but it can be misleading when one class greatly outnumbers the other. A system can appear accurate while performing poorly on a small class that matters. Changing the decision threshold changes which messages receive the spam label. A higher threshold generally reduces false positives while increasing false negatives; a lower threshold has the reverse tendency. The desirable balance depends on the consequences of losing legitimate mail and missing spam. Precision is especially relevant when a positive decision must be trustworthy. These measurements evaluate actual classifications and complement a model's probability estimates; they do not establish that a model's claimed confidence is correct for every individual message.",
+      "access_notes": "Public HTML and explanatory passages retrieved."
+    }
+  ],
+  "retrieval_limitations": "Penn State course pages and Stanford's older IR-book page failed direct retrieval. They are not relied on here. An AWS overview was excluded after its probability labels conflicted with its own examples."
+}

@@ -1,0 +1,78 @@
+[
+  {
+    "name": "desktop",
+    "title": "AI application evals",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "images": [
+      {
+        "loaded": true,
+        "naturalWidth": 614,
+        "width": 720
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "sections": 11,
+    "interactiveControls": 0,
+    "links": [
+      "evaluate.py",
+      "tau-figure4.png",
+      "tau-figure4.png"
+    ],
+    "errors": []
+  },
+  {
+    "name": "mobile",
+    "title": "AI application evals",
+    "width": 390,
+    "scrollWidth": 390,
+    "images": [
+      {
+        "loaded": true,
+        "naturalWidth": 614,
+        "width": 350
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "sections": 11,
+    "interactiveControls": 0,
+    "links": [
+      "evaluate.py",
+      "tau-figure4.png",
+      "tau-figure4.png"
+    ],
+    "errors": []
+  }
+]

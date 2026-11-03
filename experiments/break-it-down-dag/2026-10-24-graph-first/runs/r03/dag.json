@@ -1,0 +1,924 @@
+{
+  "target": "target",
+  "reader_assumptions": [
+    "Understands percentages, counts, multiplication, and division.",
+    "No probability notation or machine learning background."
+  ],
+  "scope": {
+    "included": [
+      "Reverse conditional denominators",
+      "Expected-count calculation",
+      "Base-rate sensitivity with fixed conditional rates",
+      "Words as binary clues",
+      "Origin of class and feature estimates",
+      "Conditional independence and probability limitations"
+    ],
+    "excluded": [
+      "Implementing a classifier",
+      "Smoothing algorithms",
+      "Threshold optimization",
+      "Current real-world spam prevalence"
+    ],
+    "given_inputs": "The three filter rates are user-supplied mathematical assumptions, not measurements."
+  },
+  "nodes": [
+    {
+      "id": "chance",
+      "question": "What does a probability describe here?",
+      "answer": "A fraction of a stated population or modeled set of cases; 1% means 1 in every 100 on average, not a guarantee for any particular next 100.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional-probability definition and intuition",
+          "claim": "Probabilities describe proportions within specified eligible outcomes.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "condition",
+      "question": "What changes when a percentage is conditional?",
+      "answer": "Restrict the counted population to cases meeting the condition. Spam among flagged mail uses all flagged mail as its denominator; flagged among spam uses all spam. Reversing those groups changes the question.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Definition of conditional probability",
+          "claim": "P(A given B) counts A within B; B must have positive probability.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "given",
+      "question": "What exactly do the three supplied rates say?",
+      "answer": "Out of actual spam, 90% are flagged; out of legitimate messages, 10% are flagged; out of all incoming mail, 1% is spam. These are supplied population rates, not measured here. Spam and legitimate exhaust the population.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Recall; False positive rate; Precision",
+          "claim": "Recall and false-positive rate condition on actual classes; precision conditions on flags.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": null,
+          "locator": "Assigned user request",
+          "claim": "Detection 90%, false-positive rate 10%, spam prevalence 1%."
+        }
+      ]
+    },
+    {
+      "id": "prior",
+      "question": "What is a base rate or prior?",
+      "answer": "The spam fraction before considering the current clue. If that fraction is p, the legitimate fraction is 1\u2212p. This population assumption must match the incoming messages for the calculation to apply.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Opening conditional probability examples",
+          "claim": "An unconditional probability is the starting probability before added information.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "counts",
+      "question": "How many messages of each kind get flagged?",
+      "answer": "In a constructed population of 10,000, 100 are spam and 9,900 legitimate. The rates give 90 flagged spam and 990 flagged legitimate messages. These are expected counts, not observed data.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Chain rule, Equation 1.5",
+          "claim": "Joint frequency is class frequency times within-class flag rate.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": null,
+          "locator": "case-tests.initial.json",
+          "claim": "Exact arithmetic confirms the constructed count/formula results.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        }
+      ]
+    },
+    {
+      "id": "total",
+      "question": "What is the entire flagged population?",
+      "answer": "Flagged spam and flagged legitimate mail are disjoint groups and cover all flagged mail, so add 90+990=1,080.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event partition formula",
+          "claim": "Total evidence frequency sums contributions from complementary classes.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": null,
+          "locator": "case-tests.initial.json",
+          "claim": "Exact arithmetic confirms the constructed count/formula results.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "question": "What fraction of flagged messages is actually spam?",
+      "answer": "90/1,080=1/12, about 8.33%. The 90% rate answers a different denominator question. Numerous legitimate messages generate eleven times as many false flags as spam generates true flags.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Precision",
+          "claim": "Precision is true positives divided by all positives.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": null,
+          "locator": "case-tests.initial.json",
+          "claim": "Exact arithmetic confirms the constructed count/formula results.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        }
+      ]
+    },
+    {
+      "id": "bayes",
+      "question": "How does the counting rule become Bayes\u2019 rule?",
+      "answer": "For a clue E and spam S, spam among clue-bearing messages equals p\u00b7P(E|S)/[p\u00b7P(E|S)+(1\u2212p)\u00b7P(E|legitimate)]. Here P(E|S) means the clue fraction within spam. Multiply to count each contribution, add for all clue cases, then divide for the spam fraction. Denominator must be positive.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening Bayes theorem",
+          "claim": "Posterior is prior times likelihood divided by evidence probability.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Law of Total Probability",
+          "claim": "Evidence denominator combines both class contributions.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "vary",
+      "question": "How does changing the base rate change this filter\u2019s answer?",
+      "answer": "Holding 90% detection and 10% false positives fixed: spam among flags = 0.9p/(0.9p+0.1(1\u2212p)). At p=0.001, 0.01, 0.10, 0.50 the answers are approximately 0.8929%, 8.3333%, 50%, 90%. More than half the flagged messages are spam only when p>10%. These comparisons assume the two within-class rates stay fixed.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening Bayes theorem",
+          "claim": "Posterior depends on prior and likelihood, not just detection rate.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": null,
+          "locator": "case-tests.initial.json",
+          "claim": "Exact arithmetic confirms the constructed count/formula results.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        }
+      ]
+    },
+    {
+      "id": "word",
+      "question": "How can a word serve as a clue?",
+      "answer": "Treat \u201ccontains a chosen word\u201d as the clue E in Bayes\u2019 rule, using occurrence rates separately within spam and legitimate mail. For a prior between 0 and 1, a word occurring more frequently within spam raises the spam fraction among messages containing it, but need not make that fraction exceed 50%. Equal nonzero occurrence rates leave the prior unchanged.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening theorem; Bernoulli Naive Bayes",
+          "claim": "Observed features serve as evidence; binary features can encode word occurrence.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        },
+        {
+          "url": null,
+          "locator": "case-tests.initial.json; equal-rate boundary check",
+          "claim": "Equal clue likelihoods cancel and leave the prior unchanged. Direction follows comparing p\u00b7s/[p\u00b7s+(1\u2212p)\u00b7l] with p.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "question": "What does the model record about the message?",
+      "answer": "Choose a representation explicitly. This graph uses binary word features: for each selected word, record present or absent. A count model instead records how many times words occur; its probabilities have a different meaning.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "1.9.2 Multinomial; 1.9.4 Bernoulli",
+          "claim": "Multinomial uses counts; Bernoulli uses binary features and includes absence.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "estimate",
+      "question": "Where do the starting rate and word-clue rates come from?",
+      "answer": "Given labeled example messages, the class share estimates the prior. For a binary word feature, its occurrence fraction separately within spam and legitimate examples estimates its class-conditioned rate. Applying those estimates to new mail requires relevant data; the user\u2019s filter rates were already supplied and need no training calculation.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening classification rule; Bernoulli Naive Bayes",
+          "claim": "Class priors and feature likelihoods are estimated from labeled training data.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "joint",
+      "question": "What probability is needed for several clues together?",
+      "answer": "For each class, need the fraction with the full observed pattern together. For two present words A and B, this is the fraction with A in that class multiplied by the fraction with B among that class\u2019s A-containing messages. The second fraction can differ from B\u2019s overall within-class rate. Separate word rates therefore do not determine the joint rate.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Chain rule, equations 1.5 and 1.7; lines 110\u2013116",
+          "claim": "Joint probability retains the dependence of a later event on earlier events, also within a class.",
+          "basis": "Directly read primary-source passage"
+        }
+      ]
+    },
+    {
+      "id": "independence",
+      "question": "What does the naive independence assumption add?",
+      "answer": "Within each fixed class, assume one feature\u2019s observed value does not change the probabilities of the others. Then estimate the full-pattern likelihood by multiplying the probabilities of all observed feature values, including absent features in a Bernoulli model. This is not a claim that words are independent across all mail.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening conditional independence assumption; Bernoulli Naive Bayes",
+          "claim": "Naive Bayes factorizes likelihood conditional on class; Bernoulli includes absent features.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "scores",
+      "question": "How do the prior and the observed word pattern form a class score?",
+      "answer": "For each class, multiply its prior by its estimated full-pattern likelihood. Naive Bayes obtains that likelihood by multiplying the probabilities of all observed feature values within the class. These two scores are unnormalized amounts of model support; each score alone is not the spam fraction among matching messages.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening classification rule",
+          "claim": "Shared evidence denominator can be omitted for classification; Bayes normalizes class scores.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "dependence",
+      "question": "What goes wrong when two clues repeat the same information?",
+      "answer": "Constructed counterexample: spam prior 1%; word A occurs in 50% of spam and 10% of legitimate messages; B occurs exactly when A does in each class. For both words present, true joint likelihoods remain 50% and 10%, giving 0.005/(0.005+0.099)=4.8077% spam. Naive multiplication instead uses 25% and 1%, giving 0.0025/(0.0025+0.0099)=20.1613%. Repeated evidence inflated confidence; these are constructed probabilities, not measured spam behavior.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Chain rule equation 1.7; lines 114\u2013116",
+          "claim": "If B is certain after A within class, the joint likelihood equals A\u2019s likelihood.",
+          "basis": "Directly read primary-source passage"
+        },
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Section 1.9 factorization; lines 78\u201387",
+          "claim": "Naive multiplication substitutes individual within-class likelihoods.",
+          "basis": "Directly read primary-source passage"
+        },
+        {
+          "url": null,
+          "locator": "case-tests.initial.json; counterexample",
+          "claim": "True posterior 5/104; naive posterior 25/124, calculated exactly.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        }
+      ]
+    },
+    {
+      "id": "calibration",
+      "question": "Does the model\u2019s calculated probability guarantee the true spam fraction?",
+      "answer": "A normalized model score is conditional on its assumed prior, feature probabilities, and independence. It need not equal the actual spam fraction among comparable messages. Test predictions against relevant labeled mail; useful class decisions alone do not establish trustworthy numerical probabilities.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening discussion of probability estimation",
+          "claim": "Naive Bayes is a bad estimator; probability outputs should not be taken too seriously.",
+          "basis": "Supplied packet and directly verified relevant source section"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why is a flag not almost certain spam, how do base rates change the answer, and how do words supply evidence?",
+      "answer": "Only about 8.33% of flags are spam at the stipulated 1% base rate: false flags from 9,900 legitimate messages outnumber true flags from 100 spam messages. With the same detection and false-positive rates, 10% prevalence yields 50% spam among flags; 50% prevalence yields 90%. A word\u2019s occurrence is another clue in the same update rule. Labeled messages can supply class and word rates; naive Bayes combines observed word values under independence within each class and normalizes prior-weighted likelihoods. Dependent words can make that model probability unreliable.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": null,
+          "locator": "case-tests.initial.json",
+          "claim": "The stated base-rate results are exact constructed calculations.",
+          "basis": "Original derivation checked with exact arithmetic; not an empirical source result"
+        },
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Section 1.9; lines 75\u201394",
+          "claim": "Feature evidence is combined with priors under conditional independence; estimated probabilities may be unreliable.",
+          "basis": "Directly read primary-source passage"
+        },
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Precision; lines 111\u2013117",
+          "claim": "Fraction of spam among flags uses all flagged messages as denominator.",
+          "basis": "Directly read primary-source passage"
+        }
+      ]
+    },
+    {
+      "id": "multiply",
+      "question": "How do within-group rates become fractions of all mail?",
+      "answer": "If p of all messages are in a group, and fraction q of that group has a clue, fraction p\u00d7q of all messages has both properties. In a population of N messages the expected count is N\u00d7p\u00d7q.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Chain rule equation 1.5; lines 110\u2013112",
+          "claim": "Intersection probability equals group probability times within-group conditional probability.",
+          "basis": "Directly read primary-source passage"
+        }
+      ]
+    },
+    {
+      "id": "partition",
+      "question": "How do contributions from different classes form the clue total?",
+      "answer": "Spam and legitimate mail do not overlap and together cover all mail. All messages with a clue therefore equal clue-bearing spam plus clue-bearing legitimate messages. Add these class contributions; do not average their within-class percentages without weighting by class size.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-class formula; lines 25\u201329",
+          "claim": "Total evidence probability sums class-prior-weighted likelihoods.",
+          "basis": "Directly read primary-source passage"
+        }
+      ]
+    },
+    {
+      "id": "feature_value",
+      "question": "What probability should an absent word contribute?",
+      "answer": "For a binary word with occurrence rate q within a class, use q if present and 1\u2212q if absent. For example, a word present in 75% of spam is absent in 25% of spam. Do this separately for each class.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Bernoulli Naive Bayes; lines 141\u2013148",
+          "claim": "Bernoulli likelihood uses occurrence or its complement according to observed feature value.",
+          "basis": "Directly read primary-source passage"
+        }
+      ]
+    },
+    {
+      "id": "normalize",
+      "question": "How do the two class scores become a model probability?",
+      "answer": "Divide the spam score by the sum of spam and legitimate scores. Both scores together account for all classes for the observed pattern under the model. A shared denominator can be omitted when only choosing the larger class score, but it is required for the probability. If both scores are zero, normalization is undefined; an unseen training pattern is not evidence of impossibility.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Bayes theorem and classification rule; lines 75\u201389; smoothing lines 119\u2013124",
+          "claim": "Bayes uses the evidence denominator; shared normalization may be omitted for class comparison; smoothing addresses unseen features.",
+          "basis": "Directly read primary-source passage"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional probability definition; lines 40\u201342",
+          "claim": "The conditioning event must have positive probability.",
+          "basis": "Directly read primary-source passage"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "chance",
+      "to": "condition",
+      "why": "Restricting a probability requires knowing which population a fraction describes."
+    },
+    {
+      "from": "condition",
+      "to": "given",
+      "why": "The 90% and 10% inputs require distinct conditional denominators."
+    },
+    {
+      "from": "chance",
+      "to": "prior",
+      "why": "The starting spam fraction requires the population meaning of probability."
+    },
+    {
+      "from": "given",
+      "to": "counts",
+      "why": "Expected true and false flag counts need the supplied within-class rates and 1% prevalence."
+    },
+    {
+      "from": "counts",
+      "to": "total",
+      "why": "The total flagged count needs contributions from both true and false flags."
+    },
+    {
+      "from": "total",
+      "to": "answer",
+      "why": "The spam fraction among flags needs the complete flagged denominator."
+    },
+    {
+      "from": "counts",
+      "to": "answer",
+      "why": "The spam fraction among flags needs the true-flag numerator of 90."
+    },
+    {
+      "from": "condition",
+      "to": "answer",
+      "why": "Interpreting 90/1080 as spam among flags requires restricting to flagged mail."
+    },
+    {
+      "from": "prior",
+      "to": "bayes",
+      "why": "The general formula needs p and its legitimate complement 1\u2212p."
+    },
+    {
+      "from": "condition",
+      "to": "bayes",
+      "why": "The likelihood and posterior terms require distinguishing conditional populations."
+    },
+    {
+      "from": "bayes",
+      "to": "vary",
+      "why": "Changing the prior requires the posterior formula containing p."
+    },
+    {
+      "from": "given",
+      "to": "vary",
+      "why": "The numerical base-rate comparison fixes the supplied 90% and 10% rates."
+    },
+    {
+      "from": "bayes",
+      "to": "word",
+      "why": "Interpreting word occurrence as evidence requires the general clue update rule."
+    },
+    {
+      "from": "features",
+      "to": "estimate",
+      "why": "Estimating a word occurrence rate requires specifying binary feature representation."
+    },
+    {
+      "from": "condition",
+      "to": "estimate",
+      "why": "Per-class word rates require restricting counts to each labeled class."
+    },
+    {
+      "from": "features",
+      "to": "joint",
+      "why": "The full message pattern requires defined present/absent feature values."
+    },
+    {
+      "from": "condition",
+      "to": "joint",
+      "why": "The required joint likelihood is a pattern frequency within a fixed class."
+    },
+    {
+      "from": "joint",
+      "to": "independence",
+      "why": "The multiplication assumption answers how to estimate the otherwise undetermined full-pattern likelihood."
+    },
+    {
+      "from": "independence",
+      "to": "scores",
+      "why": "Multiplying individual feature probabilities in a class score requires conditional independence."
+    },
+    {
+      "from": "bayes",
+      "to": "scores",
+      "why": "Prior-weighted likelihood scores and their normalization use Bayes\u2019 rule."
+    },
+    {
+      "from": "independence",
+      "to": "dependence",
+      "why": "The repeated-clue failure arises from violating the stated within-class independence."
+    },
+    {
+      "from": "dependence",
+      "to": "calibration",
+      "why": "The reliability warning requires a concrete failure mechanism for the model assumptions."
+    },
+    {
+      "from": "answer",
+      "to": "target",
+      "why": "The requested answer needs the 8.33% flagged-spam calculation and denominator distinction."
+    },
+    {
+      "from": "vary",
+      "to": "target",
+      "why": "The requested answer explicitly needs the effect of changing base rate."
+    },
+    {
+      "from": "word",
+      "to": "target",
+      "why": "The requested answer explicitly connects flag evidence to word evidence."
+    },
+    {
+      "from": "calibration",
+      "to": "target",
+      "why": "The target qualifies naive Bayes confidence and therefore needs the model-versus-frequency distinction."
+    },
+    {
+      "from": "condition",
+      "to": "multiply",
+      "why": "The q multiplier is defined within the selected group, so its denominator must be understood."
+    },
+    {
+      "from": "multiply",
+      "to": "counts",
+      "why": "Multiplying 10,000 by class share and flag rate requires the within-group multiplication rule."
+    },
+    {
+      "from": "partition",
+      "to": "total",
+      "why": "Adding true and false flags requires the disjoint and exhaustive two-class sum rule."
+    },
+    {
+      "from": "multiply",
+      "to": "bayes",
+      "why": "Prior times likelihood in the numerator and denominator requires the joint-probability multiplication rule."
+    },
+    {
+      "from": "partition",
+      "to": "bayes",
+      "why": "The full clue denominator requires summing the two class contributions."
+    },
+    {
+      "from": "features",
+      "to": "feature_value",
+      "why": "Choosing occurrence or absence probability requires the binary feature meaning."
+    },
+    {
+      "from": "condition",
+      "to": "feature_value",
+      "why": "The complement must be calculated within the same class as the occurrence rate."
+    },
+    {
+      "from": "feature_value",
+      "to": "scores",
+      "why": "Each product factor must correspond to the observed present or absent value."
+    },
+    {
+      "from": "scores",
+      "to": "normalize",
+      "why": "Normalization needs the two unnormalized prior-weighted likelihood scores."
+    },
+    {
+      "from": "normalize",
+      "to": "dependence",
+      "why": "The numerical repeated-clue counterexample compares two normalized probabilities, not raw scores."
+    },
+    {
+      "from": "normalize",
+      "to": "calibration",
+      "why": "The reliability question concerns a normalized model probability, whose construction must be understood."
+    },
+    {
+      "from": "normalize",
+      "to": "target",
+      "why": "The target explicitly explains normalizing word-pattern scores into model probabilities."
+    },
+    {
+      "from": "estimate",
+      "to": "target",
+      "why": "The target explicitly says labeled messages can supply class and word rates; obtaining those estimates is separate from using supplied inputs."
+    }
+  ],
+  "revisions": [
+    {
+      "time": "2026-10-24T20:43:19.958272+00:00",
+      "round": "initial",
+      "changes": "Initial graph from assigned request and verified source packet; calculations not yet independently checked. Joint dependence and numerical counterexample require research/checks."
+    },
+    {
+      "time": "2026-10-24T20:45:17.841674+00:00",
+      "round": "repair-1",
+      "changes": "Added multiply, partition, feature_value, normalize; made joint chain rule explicit; supplied calculated dependence counterexample; removed worked-example-to-general-rule edge; separated learning rates from using supplied rates; attached located evidence and arithmetic results."
+    }
+  ],
+  "edge_audit": {
+    "method": "Reviewed each destination claim against the stated arithmetic-only reader baseline. Retained edges identify required information or concepts; removed worked-example-to-general-rule order and training-as-required-input coupling.",
+    "retained": [
+      {
+        "from": "chance",
+        "to": "condition",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Restricting a probability requires knowing which population a fraction describes."
+      },
+      {
+        "from": "condition",
+        "to": "given",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The 90% and 10% inputs require distinct conditional denominators."
+      },
+      {
+        "from": "chance",
+        "to": "prior",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The starting spam fraction requires the population meaning of probability."
+      },
+      {
+        "from": "given",
+        "to": "counts",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Expected true and false flag counts need the supplied within-class rates and 1% prevalence."
+      },
+      {
+        "from": "counts",
+        "to": "total",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The total flagged count needs contributions from both true and false flags."
+      },
+      {
+        "from": "total",
+        "to": "answer",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The spam fraction among flags needs the complete flagged denominator."
+      },
+      {
+        "from": "counts",
+        "to": "answer",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The spam fraction among flags needs the true-flag numerator of 90."
+      },
+      {
+        "from": "condition",
+        "to": "answer",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Interpreting 90/1080 as spam among flags requires restricting to flagged mail."
+      },
+      {
+        "from": "prior",
+        "to": "bayes",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The general formula needs p and its legitimate complement 1\u2212p."
+      },
+      {
+        "from": "condition",
+        "to": "bayes",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The likelihood and posterior terms require distinguishing conditional populations."
+      },
+      {
+        "from": "bayes",
+        "to": "vary",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Changing the prior requires the posterior formula containing p."
+      },
+      {
+        "from": "given",
+        "to": "vary",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The numerical base-rate comparison fixes the supplied 90% and 10% rates."
+      },
+      {
+        "from": "bayes",
+        "to": "word",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Interpreting word occurrence as evidence requires the general clue update rule."
+      },
+      {
+        "from": "features",
+        "to": "estimate",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Estimating a word occurrence rate requires specifying binary feature representation."
+      },
+      {
+        "from": "condition",
+        "to": "estimate",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Per-class word rates require restricting counts to each labeled class."
+      },
+      {
+        "from": "features",
+        "to": "joint",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The full message pattern requires defined present/absent feature values."
+      },
+      {
+        "from": "condition",
+        "to": "joint",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The required joint likelihood is a pattern frequency within a fixed class."
+      },
+      {
+        "from": "joint",
+        "to": "independence",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The multiplication assumption answers how to estimate the otherwise undetermined full-pattern likelihood."
+      },
+      {
+        "from": "independence",
+        "to": "scores",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Multiplying individual feature probabilities in a class score requires conditional independence."
+      },
+      {
+        "from": "bayes",
+        "to": "scores",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Prior-weighted likelihood scores and their normalization use Bayes\u2019 rule."
+      },
+      {
+        "from": "independence",
+        "to": "dependence",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The repeated-clue failure arises from violating the stated within-class independence."
+      },
+      {
+        "from": "dependence",
+        "to": "calibration",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The reliability warning requires a concrete failure mechanism for the model assumptions."
+      },
+      {
+        "from": "answer",
+        "to": "target",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The requested answer needs the 8.33% flagged-spam calculation and denominator distinction."
+      },
+      {
+        "from": "vary",
+        "to": "target",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The requested answer explicitly needs the effect of changing base rate."
+      },
+      {
+        "from": "word",
+        "to": "target",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The requested answer explicitly connects flag evidence to word evidence."
+      },
+      {
+        "from": "calibration",
+        "to": "target",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The target qualifies naive Bayes confidence and therefore needs the model-versus-frequency distinction."
+      },
+      {
+        "from": "condition",
+        "to": "multiply",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The q multiplier is defined within the selected group, so its denominator must be understood."
+      },
+      {
+        "from": "multiply",
+        "to": "counts",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Multiplying 10,000 by class share and flag rate requires the within-group multiplication rule."
+      },
+      {
+        "from": "partition",
+        "to": "total",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Adding true and false flags requires the disjoint and exhaustive two-class sum rule."
+      },
+      {
+        "from": "multiply",
+        "to": "bayes",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Prior times likelihood in the numerator and denominator requires the joint-probability multiplication rule."
+      },
+      {
+        "from": "partition",
+        "to": "bayes",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The full clue denominator requires summing the two class contributions."
+      },
+      {
+        "from": "features",
+        "to": "feature_value",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Choosing occurrence or absence probability requires the binary feature meaning."
+      },
+      {
+        "from": "condition",
+        "to": "feature_value",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The complement must be calculated within the same class as the occurrence rate."
+      },
+      {
+        "from": "feature_value",
+        "to": "scores",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Each product factor must correspond to the observed present or absent value."
+      },
+      {
+        "from": "scores",
+        "to": "normalize",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "Normalization needs the two unnormalized prior-weighted likelihood scores."
+      },
+      {
+        "from": "normalize",
+        "to": "dependence",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The numerical repeated-clue counterexample compares two normalized probabilities, not raw scores."
+      },
+      {
+        "from": "normalize",
+        "to": "calibration",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The reliability question concerns a normalized model probability, whose construction must be understood."
+      },
+      {
+        "from": "normalize",
+        "to": "target",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The target explicitly explains normalizing word-pattern scores into model probabilities."
+      },
+      {
+        "from": "estimate",
+        "to": "target",
+        "verdict": "retain",
+        "claim_that_needs_prerequisite": "The target explicitly says labeled messages can supply class and word rates; obtaining those estimates is separate from using supplied inputs."
+      }
+    ],
+    "removed": [
+      {
+        "from": "estimate",
+        "to": "scores"
+      },
+      {
+        "from": "scores",
+        "to": "calibration"
+      },
+      {
+        "from": "scores",
+        "to": "target"
+      },
+      {
+        "from": "total",
+        "to": "bayes"
+      }
+    ]
+  },
+  "worked_cases": {
+    "time": "2026-10-24T20:44:08.622201+00:00",
+    "method": "Exact rational arithmetic in Python; original constructed examples, no empirical observations. Manual graph-only replay identifies conceptual gaps below.",
+    "base_rate_cases": [
+      {
+        "prior": 0.0,
+        "posterior": 0.0
+      },
+      {
+        "prior": 0.001,
+        "posterior": 0.008928571428571428
+      },
+      {
+        "prior": 0.01,
+        "posterior": 0.08333333333333333
+      },
+      {
+        "prior": 0.1,
+        "posterior": 0.5
+      },
+      {
+        "prior": 0.5,
+        "posterior": 0.9
+      },
+      {
+        "prior": 1.0,
+        "posterior": 1.0
+      }
+    ],
+    "unfamiliar_case": {
+      "inputs": "p=20%; A appears in 40% spam and 10% legitimate; B appears in 75% spam and 20% legitimate; observe A present, B absent; assume conditional independence.",
+      "spam_pattern_likelihood": "1/10",
+      "legitimate_pattern_likelihood": "2/25",
+      "posterior": "5/21",
+      "posterior_percent": 23.80952380952381,
+      "graph_replay": "After repair: feature_value supplies complements; independence multiplies pattern likelihoods; scores gives 0.02 spam and 0.064 legitimate; normalize gives 5/21=23.8095%."
+    },
+    "counterexample": {
+      "inputs": "p=1%; A occurs in 50% spam and 10% legitimate; B occurs exactly when A does within both classes. Observe both.",
+      "true_posterior": "5/104",
+      "naive_posterior": "25/124",
+      "true_percent": 4.8076923076923075,
+      "naive_percent": 20.161290322580644,
+      "graph_replay": "After repair: joint preserves B given A and class; normalize gives the true 5/104; independence and scores give the naive 25/124. dependence identifies the violated assumption."
+    },
+    "boundary_checks": [
+      "p=0 -> 0; p=1 -> 1 for stipulated nonzero filter rates",
+      "Equal nonzero clue rates leave prior unchanged",
+      "Zero false positives and positive prior/detection -> posterior 1",
+      "A clue absent in both classes has zero denominator and cannot be conditioned on in this model"
+    ],
+    "result": "Arithmetic passed; identified conceptual gaps repaired and manually replayed."
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "topics": [
+    {
+      "topic": "evals",
+      "winner": "tie",
+      "rationale": "Both cover the necessary foundations and support transfer. A is particularly clear on sampling uncertainty and process checks; B on grader error and dialogue coverage. Their complementary strengths do not justify a rubric-level overall preference.",
+      "variant": {
+        "label": "A",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 5
+        },
+        "total": 44
+      },
+      "baseline": {
+        "label": "B",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 5
+        },
+        "total": 44
+      }
+    },
+    {
+      "topic": "causal",
+      "winner": "variant",
+      "rationale": "B explicitly teaches random assignment versus representative sampling, while A leaves that distinction inferable from context limits. B also preserves the original chart aspect ratio; A renders it stretched on desktop and squeezed on mobile. Both explain confounding and causal study design well; A\u2019s independently adjustable selection and benefit simulation is a strength.",
+      "baseline": {
+        "label": "A",
+        "scores": {
+          "prerequisites": 4,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 4
+        },
+        "total": 42
+      },
+      "variant": {
+        "label": "B",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 5
+        },
+        "total": 44
+      }
+    },
+    {
+      "topic": "encryption",
+      "winner": "variant",
+      "rationale": "Narrow B preference: its explanation connects the inverse-exponent relation to restoring prime remainders for arbitrary inputs. A validates examples and cites the general proof without teaching that connection, but offers easier interactive exploration and lower cognitive load.",
+      "baseline": {
+        "label": "A",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 4,
+          "mechanism": 4,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 5,
+          "presentation": 5
+        },
+        "total": 43
+      },
+      "variant": {
+        "label": "B",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 5
+        },
+        "total": 44
+      }
+    },
+    {
+      "topic": "isolation",
+      "winner": "baseline",
+      "rationale": "Conceptual tie. B has a narrow presentation advantage: explicit horizontal-scrolling instructions and labeled focusable table/figure containers make wide evidence easier to discover on mobile. A hides the table\u2019s final columns without an explicit hint while asking the reader to inspect them.",
+      "variant": {
+        "label": "A",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 4
+        },
+        "total": 43
+      },
+      "baseline": {
+        "label": "B",
+        "scores": {
+          "prerequisites": 5,
+          "continuity": 5,
+          "mechanism": 5,
+          "foundation_evidence": 5,
+          "accuracy": 5,
+          "transfer": 5,
+          "exhibits": 5,
+          "readability": 4,
+          "presentation": 5
+        },
+        "total": 44
+      }
+    }
+  ],
+  "dimension_means": {
+    "prerequisites": {
+      "baseline": 4.75,
+      "variant": 5.0,
+      "delta": 0.25
+    },
+    "continuity": {
+      "baseline": 4.75,
+      "variant": 5.0,
+      "delta": 0.25
+    },
+    "mechanism": {
+      "baseline": 4.75,
+      "variant": 5.0,
+      "delta": 0.25
+    },
+    "foundation_evidence": {
+      "baseline": 5.0,
+      "variant": 5.0,
+      "delta": 0.0
+    },
+    "accuracy": {
+      "baseline": 5.0,
+      "variant": 5.0,
+      "delta": 0.0
+    },
+    "transfer": {
+      "baseline": 5.0,
+      "variant": 5.0,
+      "delta": 0.0
+    },
+    "exhibits": {
+      "baseline": 5.0,
+      "variant": 5.0,
+      "delta": 0.0
+    },
+    "readability": {
+      "baseline": 4.25,
+      "variant": 4.0,
+      "delta": -0.25
+    },
+    "presentation": {
+      "baseline": 4.75,
+      "variant": 4.75,
+      "delta": 0.0
+    }
+  },
+  "totals": {
+    "baseline": 173,
+    "variant": 175
+  },
+  "note": "Descriptive ordinal scores only; one evaluator, one generation per cell, four topics."
+}

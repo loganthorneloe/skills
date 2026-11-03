@@ -1,0 +1,42 @@
+[
+  {
+    "name": "unfamiliar: delivery-address change",
+    "constructed": true,
+    "input": "Verified owner requests an allowed address change; assistant reports completion; saved resulting address is unchanged.",
+    "walk": [
+      "objective",
+      "case",
+      "reference",
+      "tool",
+      "run",
+      "action_outcome",
+      "decision"
+    ],
+    "result": "Graph correctly rejects relying on the fluent completion claim. Expected state and actual state differ; owner policy is a required supplied input.",
+    "gap_found": null
+  },
+  {
+    "name": "counterexample: misleading average",
+    "constructed": true,
+    "input": "99 correct FAQ answers and one unauthorized refund; binary overall pass rate is 99/100.",
+    "walk": [
+      "aggregate",
+      "objective",
+      "action_outcome",
+      "decision"
+    ],
+    "result": "Graph allows calculating 99% but blocks inferring readiness; critical action failure remains visible.",
+    "gap_found": null
+  },
+  {
+    "name": "boundary: missing grading evidence",
+    "constructed": true,
+    "input": "Five cases selected; two complete and pass; three tool requests time out before grading.",
+    "walk": [
+      "run",
+      "aggregate"
+    ],
+    "result": "Current graph defines number graded but does not require disclosing selected versus completed counts. Reporting 2/2 alone would hide failures.",
+    "gap_found": "Need explicit incomplete-run and denominator handling."
+  }
+]

@@ -4,7 +4,7 @@ description: Writes and revises prose in a plain, direct, connected explanatory 
 ---
 # Voice
 
-Write so the reader understands what happens, how, and why on the first read. Simple means understandable, not short. This skill governs wording, sentence and paragraph shape, and text structure. The user or calling task sets scope, reader, length, format, and visual design, and its explicit instructions override these defaults.
+Write so the reader understands what happens, how, and why on the first read. Simple means understandable and free of padding. This skill governs wording, sentence and paragraph shape, and text structure. The user or calling task sets scope, reader, length, format, and visual design, and its explicit instructions override these defaults.
 
 When no reader is named, write for a capable adult new to the subject. When a reader is named, define only what that reader would not know.
 
@@ -42,4 +42,5 @@ Before finishing, reread as the intended reader:
 1. Resolve circular definitions, unexplained jargon, and claims that leave "how?" or "why?" unanswered.
 2. Compare consecutive sentences and paragraphs. Revise runs that open the same way, share a length, or repeat one explanatory pattern, unless the parallel wording marks a real parallel, such as two passes of one process.
 3. Delete sentences that change nothing the reader knows or does.
-4. Check the length against any limit the caller set.
+4. Cut every sentence that repeats a point already made, previews what comes next, or explains something this reader already knows.
+5. Check the length against any limit the caller set.

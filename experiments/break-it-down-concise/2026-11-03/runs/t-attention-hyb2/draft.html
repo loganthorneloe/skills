@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Attention in Transformer Language Models</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{--canvas:#f5f4f0;--surface:#fff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{background:var(--canvas)}
+body{margin:0;background:var(--canvas);color:var(--text);font:400 17px/1.75 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-text-size-adjust:100%}
+main{max-width:768px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.25}
+h1{font-size:2.3rem;margin:0 0 40px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.45rem;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.05rem;margin:0 0 6px;letter-spacing:-0.01em}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,button:focus-visible,input:focus-visible,.scroll:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+code,.mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:.92em}
+.eq{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:1.02rem;text-align:center;margin:6px 0 22px;padding:14px 8px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow-x:auto}
+.sources{margin:0 0 8px;padding:0;list-style:none;border-top:1px solid var(--border)}
+.sources li{padding:18px 0;border-bottom:1px solid var(--border)}
+.sources .t{display:block;font-size:1.02rem}
+.sources .meta{display:block;font-style:italic;color:var(--muted);font-size:.92rem;margin:2px 0 6px}
+.sources p{margin:0;font-size:.96rem}
+.lede{font-size:1.08rem}
+figure{margin:28px 0 30px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+figcaption{font-size:.92rem;color:var(--muted);margin-top:10px;line-height:1.6}
+figcaption a{color:var(--muted)}
+.wide{width:min(1040px,calc(100vw - 48px));position:relative;left:50%;transform:translateX(-50%)}
+.scroll{overflow-x:auto}
+blockquote{margin:0 0 20px;padding:2px 0 2px 18px;border-left:2px solid var(--blue)}
+blockquote p{margin:0}
+.demo{margin:28px 0 32px;background:var(--surface);border:1px solid var(--border);padding:24px}
+.demo h3{margin-bottom:10px}
+.controls{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin:0 0 16px;font-weight:500;font-size:.95rem}
+.qpick{display:flex;flex-wrap:wrap;gap:6px}
+.qpick button{font:500 .92rem Inter,system-ui,sans-serif;padding:6px 12px;border:1px solid var(--border);background:var(--canvas);color:var(--text);cursor:pointer;border-radius:0}
+.qpick button[aria-pressed="true"]{background:var(--text);color:#fff;border-color:var(--text)}
+.controls label{display:inline-flex;gap:8px;align-items:center;cursor:pointer}
+.controls input{width:18px;height:18px;accent-color:var(--blue)}
+.reset{font:500 .9rem Inter,system-ui,sans-serif;padding:6px 12px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:right;padding:7px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{font-weight:500;color:var(--muted)}
+td.bar{width:34%;text-align:left}
+.b{display:inline-block;height:12px;background:var(--blue);vertical-align:middle}
+tr.masked td{color:var(--muted)}
+tr.masked .b{background:transparent}
+.out{margin:14px 0 0;font-size:.96rem}
+.note{font-size:.9rem;color:var(--muted);margin:12px 0 0}
+@media (max-width:600px){.scroll img.mw{min-width:720px;max-width:none}main{padding:36px 20px 72px}h1{font-size:1.85rem}body{font-size:16px}.wide{width:auto;left:auto;transform:none}.demo{padding:18px 14px}th,td{padding:6px 5px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>Attention in transformer language models<span class="dot">.</span></h1>
+
+<h2 style="margin-top:0;border-top:0;padding-top:0">Sources</h2>
+<ul class="sources">
+<li><a class="t" href="https://arxiv.org/abs/1706.03762">Attention Is All You Need<span class="ext" aria-hidden="true">↗</span></a>
+<span class="meta">Ashish Vaswani, Noam Shazeer, and colleagues · Conference paper, NeurIPS 2017 (arXiv preprint) · June 2017</span>
+<p>The Google team that designed and trained the Transformer wrote this, so it is the primary definition of the attention computation used here. It was built for translation, not chat, and its cost comparisons are mathematical estimates rather than timed measurements.</p></li>
+<li><a class="t" href="https://arxiv.org/abs/2001.08361">Scaling Laws for Neural Language Models<span class="ext" aria-hidden="true">↗</span></a>
+<span class="meta">Jared Kaplan, Sam McCandlish, and colleagues · Preprint, arXiv (OpenAI) · January 2020</span>
+<p>The authors trained hundreds of language models, including LSTM baselines on the same data, and plotted the measured results. It measures prediction error, not usefulness in conversation, and its advice on how to split compute between model size and data was later revised by <a href="https://arxiv.org/abs/2203.15556">Hoffmann and colleagues<span class="ext" aria-hidden="true">↗</span></a>.</p></li>
+<li><a class="t" href="https://arxiv.org/abs/2005.14165">Language Models are Few-Shot Learners<span class="ext" aria-hidden="true">↗</span></a>
+<span class="meta">Tom B. Brown, Benjamin Mann, and colleagues · Conference paper, NeurIPS 2020 (arXiv, OpenAI) · May 2020</span>
+<p>OpenAI's description of its own GPT-3 model gives the architecture and sizes cited below. It predates ChatGPT and says nothing about the later GPT-3.5 models.</p></li>
+<li><a class="t" href="https://openai.com/index/chatgpt/">ChatGPT: Optimizing Language Models for Dialogue<span class="ext" aria-hidden="true">↗</span></a>
+<span class="meta">OpenAI · Company announcement, OpenAI blog · November 2022</span>
+<p>The builder's own statement of where ChatGPT came from and how it was fine-tuned (read from the <a href="https://web.archive.org/web/2022/https://openai.com/blog/chatgpt/">archived copy<span class="ext" aria-hidden="true">↗</span></a>). It gives no architecture details, so the link to transformers rests on the GPT-3 paper.</p></li>
+<li><a class="t" href="https://transformer-circuits.pub/2022/in-context-learning-and-induction-heads/index.html">In-context Learning and Induction Heads<span class="ext" aria-hidden="true">↗</span></a>
+<span class="meta">Catherine Olsson, Nelson Elhage, and colleagues · Research article, Transformer Circuits Thread (Anthropic) · March 2022</span>
+<p>The authors trained many models and switched individual attention heads off to see what broke. Their strongest evidence comes from small models; they call the evidence for large models "preliminary and indirect."</p></li>
+<li><a class="t" href="https://aclanthology.org/N19-1357/">Attention is not Explanation<span class="ext" aria-hidden="true">↗</span></a>
+<span class="meta">Sarthak Jain and Byron C. Wallace · Long paper, NAACL 2019, Association for Computational Linguistics · June 2019</span>
+<p>A peer-reviewed test of whether attention weights agree with other measures of what drove a prediction. It studied older recurrent text classifiers, not transformer language models, so it is used only as a warning about reading attention pictures.</p></li>
+</ul>
+
+<h2>The answer</h2>
+<p class="lede">Attention lets every word in a passage pull in information from the other words, in proportions the model computes on the fly. For each position it scores how well that position's "query" vector matches every other position's "key" vector, turns the scores into weights that sum to 1, and outputs a weighted average of the other positions' "value" vectors. The whole operation is a few matrix multiplications.</p>
+<p>That last fact is why it mattered. Earlier language models read text one word at a time, so training could not be split across the many arithmetic units of a GPU, and information from far back in a passage had to survive many steps to be used. Attention connects any two positions in one step and computes all positions at once. That made it practical to train much larger models on far more text, and the 2020 measurements below show such models getting steadily better as they grew. ChatGPT is a model in that line, a large GPT model fine-tuned for conversation.</p>
+
+<h2>What a language model is doing</h2>
+<p>A language model is a program trained to predict the next piece of text. Text is first split into <em>tokens</em>, which are words or word fragments drawn from a fixed vocabulary; the tokenizer in OpenAI's 2020 scaling study has 50,257. Each token is looked up in a table that maps it to a list of numbers, a vector called an <em>embedding</em>. A short passage therefore becomes a matrix with one row per token.</p>
+<p>The model then transforms that matrix through a stack of layers and, at the end, turns the last row into a probability for every token in the vocabulary. Training shows the model billions of passages, compares its predicted probabilities with the token that actually came next, and nudges every number in the model (its <em>parameters</em>, also called weights) in the direction that would have made the right token more likely. That nudging, computed by calculus over the whole program, is gradient descent. Nobody writes rules into the model; the useful behaviour has to emerge from those adjustments.</p>
+<p>The difficulty is that predicting the next token often depends on tokens far back. In "The cat that the dog chased all afternoon finally sat down because it was tired," the word <em>it</em> refers to <em>cat</em>, eleven words earlier. A layer that only transforms each row on its own cannot use that. Something has to move information between rows. Attention is that something.</p>
+
+<h2>What attention computes</h2>
+<p>Attention starts from three matrices made from the same input. Multiply the token matrix <span class="mono">X</span> by three learned weight matrices and you get <span class="mono">Q = XW<sub>Q</sub></span>, <span class="mono">K = XW<sub>K</sub></span> and <span class="mono">V = XW<sub>V</sub></span>. Each token now has a <em>query</em> vector, a <em>key</em> vector and a <em>value</em> vector. The names describe their roles. A token's query is compared against every token's key; the better the match, the more of that token's value it receives. The paper defines it in one line:</p>
+<blockquote><p>"The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key." (Vaswani and colleagues, §3.2)</p></blockquote>
+<p>For all tokens at once, the computation is</p>
+<div class="eq" role="math" aria-label="Attention of Q, K, V equals softmax of Q times K transpose divided by the square root of d k, times V">Attention(Q, K, V) = softmax( QK<sup>T</sup> / √d<sub>k</sub> ) V</div>
+<p>Read it from the inside out. <span class="mono">QK<sup>T</sup></span> is an <em>n</em>×<em>n</em> matrix whose entry (<em>i</em>, <em>j</em>) is the dot product of token <em>i</em>'s query with token <em>j</em>'s key, one score for every pair of tokens. Dividing by √<span class="mono">d<sub>k</sub></span>, the square root of the key length, keeps the scores from growing just because the vectors are long. Softmax then works on each row separately. It exponentiates every score and divides by the row's total, so the row becomes positive weights that sum to 1 and large scores dominate. Multiplying those weights by <span class="mono">V</span> gives each token a new vector that is a blend of the value vectors it attended to.</p>
+
+<figure>
+<img src="assets/vaswani-fig2-attention.png" width="1236" height="714" alt="Two block diagrams. Left: Q and K enter a MatMul box, then Scale, Mask (optional), SoftMax, then a second MatMul with V. Right: V, K and Q each pass through h parallel Linear layers into Scaled Dot-Product Attention, then Concat, then Linear.">
+<figcaption>Figure 2 from <a href="https://arxiv.org/abs/1706.03762">Vaswani and colleagues (2017)<span class="ext" aria-hidden="true">↗</span></a>, reproduced with the attribution Google's notice requires. The left diagram is the formula above as a pipeline. The mask step is optional in general but always on in GPT-style models, as explained below. The right diagram is multi-head attention, covered in the next section.</figcaption>
+</figure>
+
+<p>The left diagram shows how little machinery is involved: two matrix multiplications with a scale, a mask and a softmax between them. Nothing here is specific to language. What makes it useful is that <span class="mono">W<sub>Q</sub></span>, <span class="mono">W<sub>K</sub></span> and <span class="mono">W<sub>V</sub></span> are learned. Gradient descent adjusts them so that the queries and keys of tokens that ought to share information end up pointing in similar directions.</p>
+
+<p>The paper gives a short reason for the √<span class="mono">d<sub>k</sub></span>. If the query and key entries are independent with mean 0 and variance 1, their dot product has variance <span class="mono">d<sub>k</sub></span>. With 64-number keys the raw scores would spread eight times wider than with 1-number keys, and softmax would put almost all weight on one token. The authors suspect that this pushes softmax "into regions where it has extremely small gradients," meaning training would barely adjust it. They offer this as a suspicion supported by the variance argument, not as a tested result.</p>
+
+<h3 style="margin-top:28px">One more rule for text generators: no looking ahead</h3>
+<p>A model trained to predict the next token must not see that token. GPT-style models enforce this with a <em>causal mask</em>. Before softmax, every score where token <em>i</em> would look at a later token <em>j</em> is set to −∞. Since <span class="mono">e<sup>−∞</sup> = 0</span>, those weights become exactly zero, and each token can only blend information from itself and earlier tokens. In the paper's words, the decoder works "by masking out (setting to −∞) all values in the input of the softmax which correspond to illegal connections." The mask also means that one pass over a training passage of <em>n</em> tokens produces <em>n</em> next-token predictions at once, one per position, each using only what came before it.</p>
+
+<div class="demo" id="demo">
+<h3>Work one attention row by hand</h3>
+<p style="margin-bottom:14px;font-size:.96rem">Five tokens with hand-picked two-number queries and keys and three-number values. Pick the token whose row you want to compute. The table shows its query dotted with each key, the scaled score, and the softmax weight.</p>
+<div class="controls">
+<div class="qpick" role="group" aria-label="Query token">
+<button type="button" data-q="0" aria-pressed="false">The</button>
+<button type="button" data-q="1" aria-pressed="false">cat</button>
+<button type="button" data-q="2" aria-pressed="false">sat</button>
+<button type="button" data-q="3" aria-pressed="false">because</button>
+<button type="button" data-q="4" aria-pressed="true">it</button>
+</div>
+<label><input type="checkbox" id="mask" checked> Causal mask</label>
+<label><input type="checkbox" id="scale" checked> Divide by √2</label>
+<button type="button" class="reset" id="reset">Reset</button>
+</div>
+<div class="scroll" tabindex="0" role="region" aria-label="Attention calculation table">
+<table>
+<thead><tr><th scope="col">Key token</th><th scope="col">key</th><th scope="col">q·k</th><th scope="col">score</th><th scope="col">weight</th><th scope="col" class="bar"><span class="sr" style="position:absolute;left:-9999px">weight bar</span></th></tr></thead>
+<tbody id="rows">
+<tr><td>The</td><td>[0, 0.2]</td><td>0.04</td><td>0.03</td><td>0.071</td><td class="bar"><span class="b" style="width:7.1%"></span></td></tr>
+<tr><td>cat</td><td>[2, 0.5]</td><td>3.10</td><td>2.19</td><td>0.616</td><td class="bar"><span class="b" style="width:61.6%"></span></td></tr>
+<tr><td>sat</td><td>[0.3, 1.5]</td><td>0.75</td><td>0.53</td><td>0.117</td><td class="bar"><span class="b" style="width:11.7%"></span></td></tr>
+<tr><td>because</td><td>[0, 0.5]</td><td>0.10</td><td>0.07</td><td>0.074</td><td class="bar"><span class="b" style="width:7.4%"></span></td></tr>
+<tr><td>it</td><td>[0.5, 0.3]</td><td>0.81</td><td>0.57</td><td>0.122</td><td class="bar"><span class="b" style="width:12.2%"></span></td></tr>
+</tbody>
+</table>
+</div>
+<p class="out" id="out" aria-live="polite">Query <b>it</b> = [1.5, 0.2]. Output = weighted sum of values = <b>[0.610, 0.207, 0.223]</b>; largest share from <b>cat</b>, value [0.9, 0.1, 0.2].</p>
+<p class="note">Numbers are invented so that the query for <em>it</em> matches the key for <em>cat</em>; a trained model learns its own, with 64 to 128 numbers per query and key. Values: The [0.1, 0, 0], cat [0.9, 0.1, 0.2], sat [0.1, 0.8, 0.1], because [0, 0.2, 0.7], it [0.3, 0.3, 0.3].</p>
+</div>
+
+<p>Try three things. With <em>it</em> selected, about 62% of the weight lands on <em>cat</em>, because those two vectors point the same way, so the output vector is mostly <em>cat</em>'s value. That output is how information about the cat reaches the position of <em>it</em>. Select <em>cat</em> with the mask on and only <em>The</em> and <em>cat</em> get any weight; turn the mask off and the later tokens join in, which is what a text generator must not allow. Turn off the scaling and the weights become more lopsided, a small version of the effect √<span class="mono">d<sub>k</sub></span> is there to limit.</p>
+
+<h2>Many heads, many layers</h2>
+<p>One attention computation can only produce one blend per token, but a token often needs several kinds of information at once: what a pronoun refers to, which verb a noun belongs to, what the previous word was. The Transformer therefore runs several attention computations side by side, called <em>heads</em>, each with its own <span class="mono">W<sub>Q</sub></span>, <span class="mono">W<sub>K</sub></span> and <span class="mono">W<sub>V</sub></span>. Their outputs are joined end to end and multiplied by one more learned matrix (the right half of Figure 2). The original model used 8 heads with 64-number keys; GPT-3's largest model uses 96 heads with 128-number keys in each of its 96 layers (Brown and colleagues, Table 2.1). In the original paper, cutting to a single head lowered translation quality by 0.9 BLEU points against the best setting, a modest but real loss.</p>
+<p>Each layer pairs attention with a small feed-forward network applied to every token separately, and layers are stacked. Later layers attend over vectors that already contain information gathered by earlier layers, so the model can build up combinations step by step.</p>
+<p>Attention has a blind spot that the design has to patch. The weighted sum gives the same result if you shuffle the tokens, because nothing in <span class="mono">QK<sup>T</sup></span> knows which row came first. The Transformer adds a <em>positional encoding</em>, a vector that depends on the token's position, to each embedding before the first layer, so that word order can affect queries and keys.</p>
+
+<p>What do trained heads actually do? The original paper printed examples from its translation model.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Figure 3, scrollable">
+<img class="mw" src="assets/vaswani-fig3-making-more-difficult.png" width="1236" height="816" alt="The sentence 'It is in this spirit that a majority of American governments have passed new laws since 2009 making the registration or voting process more difficult' written twice. Coloured lines from 'making' in the top copy run mostly to 'more' and 'difficult' in the bottom copy; colours mark different heads.">
+</div>
+<figcaption>Figure 3 from <a href="https://arxiv.org/abs/1706.03762">Vaswani and colleagues (2017)<span class="ext" aria-hidden="true">↗</span></a>, encoder layer 5 of 6, attention from the single word "making." Reproduced with attribution under Google's notice. <a href="assets/vaswani-fig3-making-more-difficult.png">Full size</a>.</figcaption>
+</figure>
+<p>Follow the lines out of <em>making</em>. Several heads, shown in different colours, put their weight on <em>more</em> and <em>difficult</em>, six and seven tokens later, which completes the phrase "making … more difficult." A recurrent model would have had to carry that link through six sequential updates; here it is one weighted sum. The limit is that the authors picked this sentence, and it comes from a translation model that can see the whole sentence rather than a GPT-style model.</p>
+<p>A more systematic study found a specific two-head pattern in GPT-style models. Olsson and colleagues describe <em>induction heads</em>, which look back for an earlier occurrence of the current token and copy whatever followed it, completing a pattern <span class="mono">[A][B] … [A]</span> with <span class="mono">[B]</span>. Given "The cat sat on the mat. The cat …," induction heads "will promote the continuation 'sat on the mat'." The authors connect these heads to <em>in-context learning</em>, a model's ability to pick up a pattern from examples in its prompt without any retraining, the ability GPT-3 showed on few-shot tasks. In small models, switching the heads off greatly reduced in-context learning; for large models the authors call their evidence indirect.</p>
+<p>These pictures need care. Jain and Wallace found that in the recurrent classifiers they tested, attention weights were "frequently uncorrelated with gradient-based measures of feature importance," and that very different weight patterns could produce the same prediction. An attention map shows where information was drawn from, not proof of why the model produced its answer.</p>
+
+<h2>Why attention made models like ChatGPT possible</h2>
+<p>Before 2017 the best language models were <em>recurrent neural networks</em>, usually a kind called LSTM. A recurrent network keeps one running vector and updates it token by token: the state after token <em>t</em> is a function of the state after token <em>t</em>−1 and token <em>t</em>. Vaswani and colleagues spell out the cost: "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths." A GPU is fast because it does thousands of multiplications at the same time, and a loop where each step waits for the previous one leaves most of it idle.</p>
+
+<figure>
+<div class="scroll" tabindex="0" role="region" aria-label="Table 1, scrollable">
+<img class="mw" src="assets/vaswani-table1-complexity.png" width="1236" height="384" alt="Table 1. Self-Attention: complexity per layer O(n squared times d), sequential operations O(1), maximum path length O(1). Recurrent: O(n times d squared), O(n), O(n). Convolutional: O(k times n times d squared), O(1), O(log base k of n). Self-Attention restricted: O(r times n times d), O(1), O(n over r).">
+</div>
+<figcaption>Table 1 from <a href="https://arxiv.org/abs/1706.03762">Vaswani and colleagues (2017)<span class="ext" aria-hidden="true">↗</span></a>. <em>n</em> is the number of tokens and <em>d</em> the vector length. Reproduced with attribution under Google's notice.</figcaption>
+</figure>
+<p>Compare the first two rows. A recurrent layer needs <em>n</em> sequential operations for <em>n</em> tokens, while self-attention needs a constant number no matter how long the text is. The last column says the same thing about information. In a recurrent layer, a signal from the first token must pass through up to <em>n</em> updates to reach the last one, and long chains are hard to train. In self-attention every token is one step from every other. The table is a mathematical estimate rather than a stopwatch measurement, but the paper's own training times bear it out: its base translation model beat earlier published results after 12 hours on 8 GPUs. Attention is also cheap per operation because, as the authors note, dot-product attention "can be implemented using highly optimized matrix multiplication code," the operation GPUs are designed for.</p>
+
+<p>Faster training would matter less if transformers did no better with the extra scale. Kaplan and colleagues at OpenAI trained transformers and LSTMs on the same web text with the same 1,024-token context and compared them.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Figure 7 from Kaplan and colleagues, scrollable">
+<img class="mw" src="assets/kaplan-fig7-lstm-vs-transformer.png" width="2437" height="779" alt="Two charts. Left, titled 'Transformers asymptotically outperform LSTMs due to improved use of long contexts': test loss against non-embedding parameters from 10^5 to 10^9; the blue Transformer line lies below red LSTM lines for 1, 2 and 4 layers at every size. Right, titled 'LSTM plateaus after less than 100 tokens, Transformer improves through the whole context': per-token test loss against token position from 1 to 1000; red LSTM lines flatten early while blue Transformer lines keep falling.">
+</div>
+<figcaption>Figure 7 from <a href="https://arxiv.org/abs/2001.08361">Kaplan and colleagues (2020)<span class="ext" aria-hidden="true">↗</span></a>, from the authors' figure file; reuse terms not stated, shown with attribution. Lower loss means better next-token prediction. The right panel's tick labels 4 and 5 appear swapped in the original; the curves are unaffected. <a href="assets/kaplan-fig7-lstm-vs-transformer.png">Full size</a>.</figcaption>
+</figure>
+<p>In the left panel the transformer line sits below every LSTM line at every size, and the gap widens as models grow. The right panel explains why. For the first few tokens of a passage the two kinds of model predict equally well, but LSTM loss stops falling after fewer than 100 tokens, while transformer loss keeps falling all the way to token 1,000. A transformer keeps using text far back in its context, because attention reaches it in one step. The limits are that these models reach about a billion parameters, far smaller than GPT-3, and loss measures prediction error, not how helpful a chatbot is.</p>
+<p>The same paper found that transformer loss improves in a predictable way: "The loss scales as a power-law with model size, dataset size, and the amount of compute used for training, with some trends spanning more than seven orders of magnitude." A predictable curve means the gain from a bigger model can be estimated before paying to train it. Later work by Hoffmann and colleagues revised the best split between model size and training data, concluding they "should be scaled equally."</p>
+
+<p>GPT-3, published a few months later, applied this at scale. It is "an autoregressive language model with 175 billion parameters," built from the same transformer design as GPT-2 with alternating full and locally restricted attention patterns, and it could do tasks from a few examples written into the prompt. ChatGPT came next. OpenAI's announcement says that "ChatGPT is fine-tuned from a model in the GPT-3.5 series, which finished training in early 2022," using human-written example conversations and then reinforcement learning from human feedback, in which people ranked model replies and the model was trained to produce higher-ranked ones. OpenAI has not published GPT-3.5's architecture, so its transformer design is an inference from the series name and the GPT-3 paper rather than a published fact.</p>
+<p>So attention did not make ChatGPT by itself. Huge datasets, GPU clusters and the conversational fine-tuning were all needed. What attention supplied was an architecture that could absorb all of that compute in parallel, use long stretches of text, and get reliably better as it grew.</p>
+
+<h2>What attention costs and what it does not explain</h2>
+<p>The <em>n</em><sup>2</sup> in the first cell of Table 1 is attention's price. Every token is scored against every other, so doubling the length of a passage quadruples the size of the score matrix. This is a large part of why long contexts are expensive to run. GPT-3's sparse layers and the paper's "restricted" row are both ways of scoring only some pairs to cut that cost.</p>
+<p>Attention is also only part of each layer. In the standard sizing Kaplan and colleagues describe, the feed-forward networks hold two thirds of each layer's parameters and attention one third. Attention decides which earlier tokens feed into each position; it does not by itself account for what the model does with that information.</p>
+</main>
+<script>
+(function(){
+var T=["The","cat","sat","because","it"],
+Q=[[0.2,1],[0.3,1.2],[1.2,0.3],[0.5,1],[1.5,0.2]],
+K=[[0,0.2],[2,0.5],[0.3,1.5],[0,0.5],[0.5,0.3]],
+V=[[0.1,0,0],[0.9,0.1,0.2],[0.1,0.8,0.1],[0,0.2,0.7],[0.3,0.3,0.3]];
+var qi=4,rows=document.getElementById('rows'),out=document.getElementById('out'),
+mask=document.getElementById('mask'),scale=document.getElementById('scale'),
+btns=[].slice.call(document.querySelectorAll('.qpick button'));
+function f(x,n){return x.toFixed(n)}
+function vec(v){return '['+v.join(', ')+']'}
+function render(){
+ var q=Q[qi],s=[],sc=[],allowed=[],e=[],Z=0,i,j;
+ for(j=0;j<5;j++){s[j]=q[0]*K[j][0]+q[1]*K[j][1];sc[j]=scale.checked?s[j]/Math.SQRT2:s[j];allowed[j]=!mask.checked||j<=qi;e[j]=allowed[j]?Math.exp(sc[j]):0;Z+=e[j];}
+ var w=e.map(function(x){return x/Z}),o=[0,0,0];
+ for(j=0;j<5;j++)for(i=0;i<3;i++)o[i]+=w[j]*V[j][i];
+ var html='',top=0;
+ for(j=0;j<5;j++){if(w[j]>w[top])top=j;
+  html+='<tr'+(allowed[j]?'':' class="masked"')+'><td>'+T[j]+'</td><td>'+vec(K[j])+'</td><td>'+f(s[j],2)+'</td><td>'+(allowed[j]?f(sc[j],2):'−∞')+'</td><td>'+f(w[j],3)+'</td><td class="bar"><span class="b" style="width:'+(w[j]*100).toFixed(1)+'%"></span>'+(allowed[j]?'':'masked')+'</td></tr>';}
+ rows.innerHTML=html;
+ out.innerHTML='Query <b>'+T[qi]+'</b> = '+vec(Q[qi])+'. Output = weighted sum of values = <b>['+o.map(function(x){return f(x,3)}).join(', ')+']</b>; largest share from <b>'+T[top]+'</b>, value '+vec(V[top])+'.';
+ btns.forEach(function(b){b.setAttribute('aria-pressed',String(+b.dataset.q===qi))});
+}
+btns.forEach(function(b){b.addEventListener('click',function(){qi=+b.dataset.q;render()})});
+mask.addEventListener('change',render);scale.addEventListener('change',render);
+document.getElementById('reset').addEventListener('click',function(){qi=4;mask.checked=true;scale.checked=true;render()});
+render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+diff -r baseline/break-it-down/SKILL.md budget/break-it-down/SKILL.md
+8a9,10
+> Keep the reading text (prose, headings, and exhibit discussion; not source metadata lines, quoted captions, or code) to about 1,000–1,200 words unless the user asks for more, roughly half a thorough report. Meet the budget by choosing what matters most, not by compressing sentences into jargon.
+> 

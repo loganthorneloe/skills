@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Application Evals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{
+  --canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;
+  --blue:#2f6c9e;--green:#46734d;--red:#bf3030;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);
+  font:400 17px/1.75 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{padding:56px 24px 96px}
+.prose{max-width:720px;margin:0 auto}
+.wide{max-width:1000px;margin:32px auto}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.2}
+h1{font-size:2.4rem;margin:0 0 40px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.5rem;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.05rem;margin:0 0 10px;letter-spacing:-0.01em}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.arrow{color:var(--red);font-size:.8em;margin-left:2px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+.answer{font-size:1.1rem;line-height:1.7}
+/* source audit tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);background:var(--surface);max-width:1000px;margin:0 auto}
+.tile{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tile:last-child:nth-child(odd){grid-column:1 / -1}
+.tile .src{font-weight:500;line-height:1.45;margin:0 0 6px}
+.tile .meta{font-style:italic;color:var(--muted);font-size:.9rem;line-height:1.5;margin:0 0 12px}
+.tile p:last-child{margin:0;font-size:.95rem;line-height:1.65}
+.audit-head{max-width:1000px;margin:0 auto 14px}
+.audit-head h2{border-top:none;padding-top:0;margin-top:0}
+/* figures */
+figure{margin:0}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+figcaption{max-width:720px;margin:12px auto 0;font-size:.9rem;line-height:1.6;color:var(--muted)}
+.scroll{overflow-x:auto}
+@media (max-width:640px){.scroll img{min-width:640px}}
+/* code */
+pre{background:var(--surface);border:1px solid var(--border);padding:20px;overflow-x:auto;font-size:.82rem;line-height:1.55;margin:0 0 18px}
+ol{padding-left:1.3em;margin:0 0 18px}
+li{margin-bottom:8px}
+@media (max-width:640px){
+  main{padding:36px 20px 72px}
+  body{font-size:16px}
+  h1{font-size:1.9rem}
+  .tiles{grid-template-columns:1fr}
+  .tile:last-child:nth-child(odd){grid-column:auto}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main>
+<div class="prose">
+<h1>AI application evals, from first principles<span class="dot">.</span></h1>
+</div>
+
+<section class="audit-head" aria-labelledby="sources">
+  <h2 id="sources">Sources and how far to trust them</h2>
+</section>
+<div class="tiles">
+  <div class="tile">
+    <p class="src"><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents<span class="arrow" aria-hidden="true">↗</span></a></p>
+    <p class="meta">Mikaela Grace, Jeremy Hadfield, Rodrigo Olivares, and Jiri De Jonghe · Engineering blog post, Anthropic · January 2026</p>
+    <p>Engineers who build and grade agents in production describe what works for them. It is experience, not a controlled study.</p>
+  </div>
+  <div class="tile">
+    <p class="src"><a href="https://arxiv.org/abs/2406.12045">τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains<span class="arrow" aria-hidden="true">↗</span></a></p>
+    <p class="meta">Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan · Research paper, arXiv preprint (ICLR 2025) · June 2024</p>
+    <p>The authors built simulated retail and airline support desks and measured repeated runs of the same requests. The models are from 2024, the customers are simulated, and the authors have since corrected the original tasks, so read its numbers as a pattern, not current scores.</p>
+  </div>
+  <div class="tile">
+    <p class="src"><a href="https://arxiv.org/abs/2306.05685">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena<span class="arrow" aria-hidden="true">↗</span></a></p>
+    <p class="meta">Lianmin Zheng, Wei-Lin Chiang, and colleagues · Research paper, NeurIPS 2023 Datasets and Benchmarks · June 2023</p>
+    <p>An experiment comparing model verdicts with about 3,000 expert votes, plus tests for bias. It used 2023 models on general chat questions, so it shows judges can be useful and biased, not how one will grade your bot.</p>
+  </div>
+  <div class="tile">
+    <p class="src"><a href="https://hamel.dev/blog/posts/evals/">Your AI Product Needs Evals<span class="arrow" aria-hidden="true">↗</span></a></p>
+    <p class="meta">Hamel Husain · Practitioner blog post, hamel.dev · March 2024</p>
+    <p>The engineer who built the eval system for a deployed assistant describes it with real checks. It is one self-reported case, and the author sells an evals course.</p>
+  </div>
+</div>
+
+<div class="prose">
+<h2 id="answer">The short answer</h2>
+<p class="answer">A model can answer the same question differently each time, and a prompt change that fixes one conversation can quietly break another, so “I tried it and it looked fine” tells you little. An eval is a repeatable test set: realistic inputs, each with a rule for success, run several times and scored automatically. For a support assistant, start with 20 to 50 real conversations that went wrong, write down what should have happened, and check outcomes with code wherever you can.</p>
+
+<h2 id="why">Why ordinary testing is not enough</h2>
+<p>A model’s reply is sampled: it picks each next word with some randomness, so the same input can produce different wording, decisions, or tool calls. Ordinary tests assume the same input gives the same output.</p>
+<p>The prompt also couples everything. One instruction governs every conversation, so an edit for angry customers can change how refunds go. Husain saw this on a real assistant: fixing one failure “led to the emergence of others,” with no view of quality “beyond vibe checks.” Without fixed tests, you cannot tell a regression from random variation.</p>
+<p>A running example: a customer writes “My mug arrived cracked, order 1042, I want my money back.” Your assistant can look up orders and issue refunds. It should refund the $18, say what happens next, and promise nothing your policy forbids.</p>
+
+<h2 id="what">What an eval is made of</h2>
+<p>Anthropic’s vocabulary separates the decisions. A <em>task</em> is one test case: an input plus success criteria, such as the mug message plus “refund of $18 issued.” A <em>trial</em> is one run of it; you run several because outputs vary. A <em>grader</em> scores a trial. The <em>transcript</em> records every message and tool call, and the <em>outcome</em> is the state afterward, such as whether a refund row exists in your database. A <em>suite</em> is a set of tasks, for example refunds, cancellations, and escalations.</p>
+</div>
+
+<div class="wide">
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Evaluation components diagram, scrollable on narrow screens">
+  <a href="assets/eval-components.png"><img src="assets/eval-components.png" width="1920" height="1081" alt="Diagram: an evaluation harness contains a suite of tasks. Each task lists graders (deterministic tests, LLM rubric, state check, tool calls), tracked metrics, and several trials with trajectories. Trials produce an outcome, the final environment state, which a grader evaluates along with the trajectory to produce scores."></a>
+  </div>
+  <figcaption>“Components of evaluations for agents.” From Anthropic, <a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents<span class="arrow" aria-hidden="true">↗</span></a>. Rights unstated; reproduced with attribution. Click for full size.</figcaption>
+</figure>
+</div>
+
+<div class="prose">
+<p>Grading reads both the transcript and the outcome, because a bot can say “your refund is on its way” when no refund exists. The diagram’s task is a coding fix, but the mug task has the same shape.</p>
+
+<h2 id="graders">Three ways to grade, cheapest first</h2>
+<p>Code graders are ordinary assertions. Was the refund tool called with $18 or less? Did the reply leak internal IDs? Husain’s team enforced one prompt rule with a regex that fails any reply containing a database UUID. Such checks are fast, free, and exact, but cannot judge tone or clarity.</p>
+<p>For those, a second model grades the reply against a narrow rubric; this is an LLM judge. Anthropic suggests one question per quality and letting the judge answer “unknown” rather than guess. A judge is flexible, but it is a model whose accuracy you must measure.</p>
+</div>
+
+<div class="wide">
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Position bias table, scrollable on narrow screens">
+    <a href="assets/llm-judge-position-bias.png"><img src="assets/llm-judge-position-bias.png" width="1431" height="501" style="max-width:min(100%,860px)" alt="Table 2 from Zheng et al. Consistency when answer order is swapped: Claude-v1 23.8% default and 56.2% renamed; GPT-3.5 46.2% and 51.2%; GPT-4 65.0% and 66.2%. Biased toward first answer: Claude-v1 75.0% and 11.2%; GPT-3.5 50.0% and 38.8%; GPT-4 30.0% and 28.7%."></a>
+  </div>
+  <figcaption>Table 2 from Zheng and colleagues, <a href="https://arxiv.org/abs/2306.05685">Judging LLM-as-a-Judge<span class="arrow" aria-hidden="true">↗</span></a>, page 5. Rights unstated under arXiv’s distribution license; reproduced with attribution.</figcaption>
+</figure>
+</div>
+
+<div class="prose">
+<p>Zheng and colleagues showed judges two similar answers, then the same pair in reverse order. In the Consistency column, the best 2023 judge, GPT-4, kept its verdict only 65% of the time, and Claude-v1 with the default prompt favored the first answer in 75% of cases. The pairs were deliberately near-identical, so real cases flip less. The same study found GPT-4 agreed with expert graders 85% of the time, slightly above the 81% at which the experts agreed with each other. A judge can match a person and still have systematic quirks, so Husain has a domain expert label 25 to 50 examples and revises the judge’s prompt until its labels match.</p>
+<p>Human review is the third grader and the reference for the other two; it is too slow to grade every run.</p>
+
+<h2 id="trials">Why you run each task more than once</h2>
+<p>If the mug task passes 75% of the time, the chance that three customers in a row are served correctly is 0.75³, about 42%. This is <em>pass^k</em>: the chance that all k tries succeed. It fits a support bot, where each customer gets one try. Its mirror, pass@k, asks whether at least one of k tries succeeds, which suits tools where you can retry.</p>
+</div>
+
+<div class="wide">
+<figure>
+  <a href="assets/tau-bench-pass-hat-k.png"><img src="assets/tau-bench-pass-hat-k.png" width="2000" height="1000" style="max-width:min(100%,900px)" alt="Line chart from τ-bench retail. Vertical axis is task success percent, horizontal axis is number of trials k, from 1 to beyond 32. Dotted pass@k lines rise toward 90 to 95 percent. Solid pass^k lines fall: gpt-4o from about 61 at k=1 to about 25 at k=8; gpt-4-turbo to about 5 at its largest k; gpt-3.5-turbo from about 20 to about 3."></a>
+  <figcaption>“pass^k (solid) and pass@k (dotted) in retail.” The vertical axis, unlabeled in the original, is task success in percent. From Yao and colleagues, <a href="https://arxiv.org/abs/2406.12045">τ-bench<span class="arrow" aria-hidden="true">↗</span></a>, CC BY 4.0.</figcaption>
+</figure>
+</div>
+
+<div class="prose">
+<p>Each model’s two lines start at its average success, then split. Solid lines fall because the same model on the same tasks passes some runs and fails others, with only sampling randomness changing. gpt-4o succeeded on more than 60% of retail tasks on average, but its pass^8 fell below 25%: the chance of succeeding in all eight runs was under one in four. One test run would have hidden that. Today’s models score differently; the method carries over.</p>
+
+<h2 id="start">Starting with your support assistant</h2>
+<p>Anthropic’s advice is that “20-50 simple tasks drawn from real failures is a great start,” because early changes have large effects a small set can detect.</p>
+<ol>
+  <li>Pull conversations that went wrong from your support queue, bug reports, and manual testing. Each becomes a task.</li>
+  <li>Write each task’s starting account state and what must be true at the end, precisely enough that two support staff would agree on pass or fail.</li>
+  <li>Include cases where the bot should refuse, such as a refund outside the return window.</li>
+  <li>Check outcomes with code; add a judge only for what code cannot see.</li>
+  <li>Run each task several times on fresh test data and read the failed transcripts.</li>
+</ol>
+<p>In plain Python, with <code>run_assistant</code> and <code>call_model</code> standing for your application and API wrapper:</p>
+</div>
+
+<div class="wide" style="max-width:800px">
+<pre tabindex="0" aria-label="Example eval script in Python"><code>from math import comb
+
+TASKS = [
+    {"id": "refund-damaged-mug",
+     "message": "My mug arrived cracked. Order 1042. I want my money back.",
+     "start": {"orders": {"1042": {"status": "delivered", "total": 18.00, "days_ago": 6}}},
+     "expect": {"refund_issued": True, "refund_amount": 18.00}},
+    {"id": "refund-outside-window",
+     "message": "I'd like a refund for order 0877.",
+     "start": {"orders": {"0877": {"status": "delivered", "total": 40.00, "days_ago": 400}}},
+     "expect": {"refund_issued": False}},
+]
+
+def code_checks(task, result):
+    """Exact checks on the final state and the reply. Cheap; run on every change."""
+    problems = []
+    for key, want in task["expect"].items():
+        got = result["final_state"].get(key)
+        if got != want:
+            problems.append(f"{key}: expected {want}, got {got}")
+    if "internal note" in result["reply"].lower():
+        problems.append("leaked internal note")
+    return problems
+
+def judge(task, result):
+    """One narrow question a second model answers: pass, fail, or unknown."""
+    prompt = ("Grade this customer-support reply. Answer only pass, fail, or unknown.\n"
+              "Pass only if it tells the customer clearly what happens next.\n\n"
+              f"Customer: {task['message']}\nReply: {result['reply']}")
+    return call_model(prompt).strip().lower()
+
+def pass_hat_k(n, c, k):
+    """Chance that k fresh runs all pass, given c passes out of n (τ-bench estimator)."""
+    return comb(c, k) / comb(n, k)
+
+N = 5
+for task in TASKS:
+    passes = 0
+    for _ in range(N):
+        result = run_assistant(task["message"], task["start"])   # fresh test data each run
+        if not code_checks(task, result) and judge(task, result) == "pass":
+            passes += 1
+    print(task["id"], f"{passes}/{N} passed", "pass^3 =", round(pass_hat_k(N, passes, 3), 2))</code></pre>
+</div>
+
+<div class="prose">
+<p>Reading failures is where you learn most. Of 40 failed gpt-4o retail conversations in τ-bench, 4 were the test’s fault, a typo or ambiguous instruction. The other 36 sorted into a few kinds.</p>
+</div>
+
+<div class="wide">
+<figure>
+  <a href="assets/tau-bench-failure-breakdown.png"><img src="assets/tau-bench-failure-breakdown.png" width="1925" height="1442" style="max-width:min(100%,520px)" alt="Donut chart of 36 failed gpt-4o retail conversations: wrong argument 33.3 percent, wrong decision 25.0 percent, wrong info 22.2 percent, partially resolve 19.4 percent."></a>
+  <figcaption>“Breakdown of 36 failed gpt-4o FC agent trajectories in retail.” From Yao and colleagues, <a href="https://arxiv.org/abs/2406.12045">τ-bench<span class="arrow" aria-hidden="true">↗</span></a>, CC BY 4.0.</figcaption>
+</figure>
+</div>
+
+<div class="prose">
+<p>“Wrong argument” is the right action with a wrong detail, such as the wrong product option. “Wrong info” gives the customer a wrong or missing fact, such as a wrong total. “Wrong decision” misapplies a store rule. “Partially resolve” stops early, fixing one order’s address when the customer asked for all. Each kind points to a different fix and new tasks. This is one model in one simulated store, but the practice transfers: label failures, count them, fix the largest group first.</p>
+
+<h2 id="limits">What evals cannot tell you</h2>
+<p>An eval measures only the cases you wrote, so Anthropic pairs it with production monitoring and transcript reading. The eval can be wrong too: graders reject valid answers, and τ-bench’s own authors later replaced its tasks with fixed versions. The pass rate you require is a product decision about which failures you tolerate. What evals buy is the ability to change a prompt or model and know what improved and what broke before customers find out.</p>
+</div>
+</main>
+</body>
+</html>

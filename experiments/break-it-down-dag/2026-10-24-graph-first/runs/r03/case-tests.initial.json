@@ -1,0 +1,53 @@
+{
+  "time": "2026-10-24T20:44:08.622201+00:00",
+  "method": "Exact rational arithmetic in Python; original constructed examples, no empirical observations. Manual graph-only replay identifies conceptual gaps below.",
+  "base_rate_cases": [
+    {
+      "prior": 0.0,
+      "posterior": 0.0
+    },
+    {
+      "prior": 0.001,
+      "posterior": 0.008928571428571428
+    },
+    {
+      "prior": 0.01,
+      "posterior": 0.08333333333333333
+    },
+    {
+      "prior": 0.1,
+      "posterior": 0.5
+    },
+    {
+      "prior": 0.5,
+      "posterior": 0.9
+    },
+    {
+      "prior": 1.0,
+      "posterior": 1.0
+    }
+  ],
+  "unfamiliar_case": {
+    "inputs": "p=20%; A appears in 40% spam and 10% legitimate; B appears in 75% spam and 20% legitimate; observe A present, B absent; assume conditional independence.",
+    "spam_pattern_likelihood": "1/10",
+    "legitimate_pattern_likelihood": "2/25",
+    "posterior": "5/21",
+    "posterior_percent": 23.80952380952381,
+    "graph_replay": "Graph says to include absent features but fails to explicitly explain deriving their probabilities. Requires complement rule within a class; add atomic feature-value node."
+  },
+  "counterexample": {
+    "inputs": "p=1%; A occurs in 50% spam and 10% legitimate; B occurs exactly when A does within both classes. Observe both.",
+    "true_posterior": "5/104",
+    "naive_posterior": "25/124",
+    "true_percent": 4.8076923076923075,
+    "naive_percent": 20.161290322580644,
+    "graph_replay": "Joint node needs chain-rule explanation of retained dependence. Dependence node lacks worked outcome; scores bundles unnormalized support and normalized probability. Split them and show counterexample."
+  },
+  "boundary_checks": [
+    "p=0 -> 0; p=1 -> 1 for stipulated nonzero filter rates",
+    "Equal nonzero clue rates leave prior unchanged",
+    "Zero false positives and positive prior/detection -> posterior 1",
+    "A clue absent in both classes has zero denominator and cannot be conditioned on in this model"
+  ],
+  "result": "Arithmetic passed; conceptual repair required before completion."
+}

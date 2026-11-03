@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "node_count": 15,
+  "edge_count": 23,
+  "checks": [
+    "Required fields and allowed statuses",
+    "Unique node IDs and edge pairs",
+    "Valid endpoints and edge justifications",
+    "Acyclicity via topological sort",
+    "Every node reaches target",
+    "Explanatory evidence entries for every supported node",
+    "Initial snapshot preserved unchanged",
+    "Count reconstruction agrees with base-rate formula",
+    "Monotonic tested base rates and 0/100 percent boundaries",
+    "Two independent hypothetical clues yield 45 percent"
+  ],
+  "topological_order": [
+    "percent",
+    "conditional",
+    "prior",
+    "rates",
+    "words",
+    "counts",
+    "learn",
+    "joint",
+    "total",
+    "independence",
+    "posterior",
+    "basechange",
+    "scores",
+    "limits",
+    "target"
+  ],
+  "not_checked": [
+    "Rendered graph layout (shared renderer)",
+    "Real-world calibration or performance"
+  ]
+}

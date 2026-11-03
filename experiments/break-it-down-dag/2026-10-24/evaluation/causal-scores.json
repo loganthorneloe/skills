@@ -1,0 +1,32 @@
+{
+  "topic": "causal",
+  "A": {
+    "scores": {
+      "prerequisites": 4,
+      "continuity": 5,
+      "mechanism": 5,
+      "foundation_evidence": 5,
+      "accuracy": 5,
+      "transfer": 5,
+      "exhibits": 5,
+      "readability": 4,
+      "presentation": 4
+    }
+  },
+  "B": {
+    "scores": {
+      "prerequisites": 5,
+      "continuity": 5,
+      "mechanism": 5,
+      "foundation_evidence": 5,
+      "accuracy": 5,
+      "transfer": 5,
+      "exhibits": 5,
+      "readability": 4,
+      "presentation": 5
+    }
+  },
+  "winner": "B",
+  "rationale": "B explicitly teaches random assignment versus representative sampling, while A leaves that distinction inferable from context limits. B also preserves the original chart aspect ratio; A renders it stretched on desktop and squeezed on mobile. Both explain confounding and causal study design well; A\u2019s independently adjustable selection and benefit simulation is a strength.",
+  "major_issues": []
+}

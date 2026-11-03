@@ -1,0 +1,584 @@
+{
+  "title": "Bayesian spam classification: prerequisite research graph",
+  "mode": "graph-only",
+  "reader_assumptions": [
+    "Understands percentages, counts, multiplication, and division.",
+    "Has not studied probability; introduce conditioning before formulas."
+  ],
+  "target_id": "target",
+  "nodes": [
+    {
+      "id": "percentages",
+      "question": "How do I turn a percentage into a count?",
+      "answer": "Multiply the group size by the percentage divided by 100; divide a count by its group size to recover a proportion.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "partition",
+      "question": "What are the possible actual message classes?",
+      "answer": "For this model each message is either spam or legitimate, never both; the two groups cover all messages.",
+      "status": "assumed",
+      "evidence": [],
+      "assumption_basis": "Requested spam-versus-legitimate model; supported mathematical partition rule is used by all_flags."
+    },
+    {
+      "id": "prior",
+      "question": "What does a 1% spam base rate describe?",
+      "answer": "Before using the flag or words, 1% of the relevant message population is spam and 99% legitimate. These are starting class proportions, or priors.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "\u00a71.4.0 lines 25\u201327",
+          "exact_claim": "Prior denotes probability before the new information.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "kind": "user-stipulation",
+          "locator": "Assigned request",
+          "exact_claim": "Spam prevalence is 1%; legitimate is the complementary 99% in this binary model."
+        }
+      ]
+    },
+    {
+      "id": "conditional",
+      "question": "What does a probability given information mean?",
+      "answer": "Restrict attention to cases meeting the information, then find the fraction also meeting the outcome. The eligible group is the denominator; it must have positive probability.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "\u00a71.4.0 lines 33\u201342",
+          "exact_claim": "Conditioning restricts eligible outcomes and divides joint probability by positive evidence probability.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "flag_rates",
+      "question": "Which groups do the 90% and 10% flag rates count?",
+      "answer": "90% is the share of actual spam flagged; 10% is the share of actual legitimate mail flagged. Neither percentage counts spam among all flagged messages.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Recall, FPR, Precision; lines 92\u2013117",
+          "exact_claim": "Recall conditions on actual positives; FPR on actual negatives; precision on predicted positives.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "kind": "user-stipulation",
+          "locator": "Assigned request",
+          "exact_claim": "90% of spam and 10% of legitimate messages are flagged."
+        }
+      ]
+    },
+    {
+      "id": "joint_counts",
+      "question": "How many flagged messages come from each actual class?",
+      "answer": "For each class, multiply its population count by its within-class flag rate. In a constructed 10,000-message population: 100 spam \u00d7 0.9 = 90 true flags; 9,900 legitimate \u00d7 0.1 = 990 false flags. These are expected counts under the stipulated rates.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "\u00a71.4.0 Equation 1.5, lines 110\u2013112",
+          "exact_claim": "Joint probability is prior probability times conditional probability.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Equation 1.5 applied to user inputs; checks.json counts",
+          "exact_claim": "Original calculation: 10,000\u00d70.01\u00d70.9=90; 10,000\u00d70.99\u00d70.1=990.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "all_flags",
+      "question": "How many messages belong to the flagged group?",
+      "answer": "Total flags are true flags plus false flags because the two actual classes are disjoint and exhaustive. Here: 90 + 990 = 1,080.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "\u00a71.4.2 two-event formula, lines 27\u201330",
+          "exact_claim": "Total evidence probability sums the contributions from each complementary class.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event formula applied to joint_counts; checks.json",
+          "exact_claim": "Original arithmetic: 90+990=1,080.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "posterior",
+      "question": "What fraction of flagged messages is actually spam?",
+      "answer": "The desired fraction is flagged spam divided by all flags: 90/1,080 = 1/12, about 8.33%. The large legitimate population contributes eleven false flags for each true flag.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Precision, lines 111\u2013117",
+          "exact_claim": "Precision divides true positives by all positive predictions.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Precision formula applied to user inputs; checks.json",
+          "exact_claim": "Original arithmetic: 90/1,080=1/12\u22488.33%; false-to-true flag ratio is 990/90=11.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "update_rule",
+      "question": "What general rule reverses the direction of the given probabilities?",
+      "answer": "Let p be the starting spam fraction, a the fraction of spam showing the evidence, and b the fraction of legitimate messages showing it. The spam fraction after observing that evidence is ap / (ap + b(1-p)), provided the denominator is positive. Numerator counts spam with evidence; denominator counts every source of that evidence. This is Bayes\u2019 rule for two classes.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional definition, lines 38\u201342",
+          "exact_claim": "Divide joint spam-and-evidence probability by evidence probability.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event partition formula, line 27",
+          "exact_claim": "Evidence probability is the sum of its two class contributions.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Bayes theorem, lines 75\u201377",
+          "exact_claim": "Posterior class probability equals prior times conditional evidence probability divided by overall evidence probability.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "base_rate_change",
+      "question": "How does a different spam base rate change that answer?",
+      "answer": "With fixed flag rates and spam fraction p, the spam fraction among flags is 0.9p / (0.9p + 0.1(1-p)). Illustrative values: p=0.1% gives about 0.89%; 1% gives 8.33%; 10% gives 50%; 50% gives 90%. Changing population composition alone changes the fraction of flags that are correct.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event weighted sum, line 27; combined with conditional definition",
+          "exact_claim": "With a=0.9 and b=0.1, Bayes fraction is 0.9p/(0.9p+0.1(1-p)); evaluations in checks.json are original calculations.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "word_clue",
+      "question": "How can a word act like a flag?",
+      "answer": "Use word presence as evidence: a is its frequency among spam, b its frequency among legitimate messages. Apply the same update rule. When 0<p<1 and a>b, observing the word increases the spam fraction; equal positive a and b leave it unchanged. These follow by comparing ap/(ap+b(1-p)) with p.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Bayes theorem lines 75\u201377; Bernoulli word occurrence lines 141\u2013148",
+          "exact_claim": "Binary word presence can be an observed feature in a class-probability update.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Weighted two-class sum, line 27; combined with Bayes theorem",
+          "exact_claim": "Direction of update follows algebraically from comparing the derived posterior with p; checks.json tests illustrative cases.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "question": "Where do the word frequencies and priors come from?",
+      "answer": "Use labeled messages, whose actual class is known. Class shares estimate the prior; within each class, the share of messages containing a word estimates that word\u2019s presence probability. These are training-sample estimates.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Prior estimation line 89; Bernoulli word occurrence lines 141\u2013148",
+          "exact_claim": "Labeled class frequencies estimate priors; a binary word-occurrence model is fit to training examples.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional definition lines 38\u201341",
+          "exact_claim": "Within-class word occurrence is a fraction with that class as denominator.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "independence",
+      "question": "Why can naive Bayes multiply separate word-clue probabilities?",
+      "answer": "It assumes that once the class is fixed, learning the other feature values does not change the probability of a feature value. This conditional independence assumption lets the within-class probability of the observed features become a product. It is not an assertion that words in language are independent.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Conditional-independence identity lines 78\u201384",
+          "exact_claim": "The assumed feature probability given the class and other features equals the probability given only the class.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "word_scores",
+      "question": "How does naive Bayes combine several clues with a base rate?",
+      "answer": "For each class, multiply its prior by its within-class feature probabilities. Divide a class score by the sum of both scores to obtain its model probability. In a presence/absence word model, every chosen word feature contributes its presence probability if present, or one minus that probability if absent.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Factorized Bayes rule lines 82\u201387; Bernoulli formula lines 143\u2013148",
+          "exact_claim": "Class scores multiply prior and feature factors; binary features include absence.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event total-probability formula line 27",
+          "exact_claim": "Sum both joint class-and-feature scores to normalize the model.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "probability_limit",
+      "question": "Why might a naive Bayes score fail to describe real-world confidence?",
+      "answer": "Classifying usefully does not ensure reliable probabilities. Calibration compares predicted probabilities with observed class fractions among similarly scored messages. The 8.33% result is exact for the stipulated population rates; an estimated word-model probability needs empirical checking and does not guarantee an individual outcome.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Probability-estimation warning, line 94",
+          "exact_claim": "Naive Bayes classification performance does not ensure good probability estimates.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://scikit-learn.org/stable/modules/calibration.html",
+          "locator": "Opening calibration definition and curves, lines 74\u201383",
+          "exact_claim": "Calibration checks agreement of model probabilities with observed class frequencies in prediction groups.",
+          "kind": "source",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditioning interpretation lines 38\u201342",
+          "exact_claim": "The stipulated 8.33% refers to the fraction in the eligible flagged group.",
+          "kind": "derived",
+          "access": "Relevant full HTML passage opened 2026-10-24",
+          "claim_format": "Paraphrase or explicit derivation; not a verbatim quotation"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why is a flag not almost certainly spam, and how do base rates and words determine the answer?",
+      "answer": "The flag rates describe separate actual classes. At 1% spam, far more legitimate messages are available to make false flags, yielding only about 8.33% spam among flags. A different base rate changes the weighted contributions. Words provide evidence by the same conditioning rule; naive Bayes estimates word-feature rates within each class and combines them under conditional independence. Its model probabilities require empirical validation.",
+      "status": "supported",
+      "evidence": [
+        {
+          "kind": "synthesis",
+          "locator": "posterior, base_rate_change, word_scores, probability_limit",
+          "exact_claim": "Target answer combines the supported prerequisite answers and their explicit evidence; numerical claims are original calculations in checks.json."
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "percentages",
+      "to": "prior",
+      "why": "Without percentages as group shares, 1% cannot specify the starting class sizes."
+    },
+    {
+      "from": "partition",
+      "to": "prior",
+      "why": "Without complementary classes, 1% spam would not establish 99% legitimate."
+    },
+    {
+      "from": "percentages",
+      "to": "conditional",
+      "why": "Without ratios within a group, the conditioned fraction has no denominator interpretation."
+    },
+    {
+      "from": "conditional",
+      "to": "flag_rates",
+      "why": "Without identifying the conditioned group, the two given rates can be mistaken for the requested reversed rate."
+    },
+    {
+      "from": "prior",
+      "to": "joint_counts",
+      "why": "Without class sizes, within-class flag rates cannot produce population contributions."
+    },
+    {
+      "from": "flag_rates",
+      "to": "joint_counts",
+      "why": "Without the separate within-class rates, class counts cannot determine true and false flags."
+    },
+    {
+      "from": "partition",
+      "to": "all_flags",
+      "why": "Without disjoint exhaustive classes, adding the two contributions could double count or omit flags."
+    },
+    {
+      "from": "joint_counts",
+      "to": "all_flags",
+      "why": "Without both contributions, the total flag denominator is missing."
+    },
+    {
+      "from": "all_flags",
+      "to": "posterior",
+      "why": "Without the total flagged group, dividing true flags produces the wrong denominator."
+    },
+    {
+      "from": "conditional",
+      "to": "posterior",
+      "why": "Without conditioning on the observed flag, the requested fraction cannot be identified."
+    },
+    {
+      "from": "conditional",
+      "to": "training",
+      "why": "Without within-class conditioning, one might count overall word frequency instead of class-specific frequencies."
+    },
+    {
+      "from": "conditional",
+      "to": "independence",
+      "why": "Without conditioning, independence within a fixed class is easily confused with unconditional word independence."
+    },
+    {
+      "from": "word_clue",
+      "to": "word_scores",
+      "why": "Without the single-clue class update, multiplying class evidence scores and then normalizing lacks its inference meaning."
+    },
+    {
+      "from": "independence",
+      "to": "word_scores",
+      "why": "Without conditional independence, the joint feature probability cannot generally be replaced by separate factors."
+    },
+    {
+      "from": "training",
+      "to": "word_scores",
+      "why": "Without learned class-specific feature probabilities and priors, the score factors have no operational values."
+    },
+    {
+      "from": "word_scores",
+      "to": "probability_limit",
+      "why": "Without knowing the score is produced by an assumed factorization, its distinction from empirically calibrated confidence is unexplained."
+    },
+    {
+      "from": "base_rate_change",
+      "to": "target",
+      "why": "Without base-rate dependence, the answer cannot explain why the same 90% detection rate gives different confidence."
+    },
+    {
+      "from": "word_scores",
+      "to": "target",
+      "why": "Without combined word-feature scores, the answer cannot connect the flag example to naive Bayes spam classification."
+    },
+    {
+      "from": "probability_limit",
+      "to": "target",
+      "why": "Without the model-versus-observed confidence limit, the answer could incorrectly treat all computed scores as reliable probabilities."
+    },
+    {
+      "from": "conditional",
+      "to": "update_rule",
+      "why": "The reversed question requires selecting the evidence-bearing group as the denominator."
+    },
+    {
+      "from": "joint_counts",
+      "to": "update_rule",
+      "why": "The numerator requires multiplying the prior by the within-class evidence rate."
+    },
+    {
+      "from": "all_flags",
+      "to": "update_rule",
+      "why": "The denominator must include evidence from both mutually exclusive classes."
+    },
+    {
+      "from": "update_rule",
+      "to": "base_rate_change",
+      "why": "The dependence on p follows from the weighted and normalized two-class relationship."
+    },
+    {
+      "from": "update_rule",
+      "to": "word_clue",
+      "why": "The word is an instance of evidence; without the update rule, within-class word rates cannot be reversed to a spam fraction."
+    },
+    {
+      "from": "prior",
+      "to": "training",
+      "why": "Without a starting class proportion, the class-frequency estimate has no role in the model."
+    },
+    {
+      "from": "posterior",
+      "to": "target",
+      "why": "The target asks for the numerical answer at the stipulated 1% base rate."
+    }
+  ],
+  "scope": {
+    "included": [
+      "Conditional versus reversed probability",
+      "Worked 1% base-rate example",
+      "Changing prevalence with fixed flag rates",
+      "Word presence as evidence",
+      "Naive Bayes combination and probability limits"
+    ],
+    "optional_not_prerequisites": [
+      "Odds and likelihood-ratio notation",
+      "Multinomial word-count alternative",
+      "Classification thresholds and error costs",
+      "Accuracy metric",
+      "History of Bayes theorem",
+      "Smoothing for unseen training features; verified in naive-Bayes guide lines 119\u2013124, but not required to understand the update mechanism."
+    ],
+    "example_assumptions": [
+      "10,000 messages is a constructed counting population.",
+      "Spam and legitimate are exhaustive mutually exclusive classes.",
+      "Flag rates are stipulated and held fixed when changing base rates.",
+      "Word-model probabilities are model estimates, not guaranteed calibrated values."
+    ]
+  },
+  "revisions": [
+    {
+      "round": 0,
+      "action": "Initial graph saved before supplemental research",
+      "source_basis": "Assigned source packet only",
+      "gaps": [
+        "Verify all relevant full source passages",
+        "Verify arithmetic and dependence on base rate",
+        "Locate evidence for word training estimates, smoothing, and probability limitations"
+      ],
+      "changes": "Initial nodes and edges as saved in history/00-initial.json"
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "Direct passage verification",
+        "Arithmetic",
+        "Training and probability limits"
+      ],
+      "searches": [],
+      "opens": [
+        "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+        "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+        "https://scikit-learn.org/stable/modules/naive_bayes.html",
+        "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall"
+      ],
+      "evidence": "history/01-research.md",
+      "changes": "None; graph identical to initial."
+    },
+    {
+      "round": 2,
+      "gaps": [
+        "Remaining source sections",
+        "Calibration definition",
+        "Edge necessity"
+      ],
+      "searches": [],
+      "opens": [
+        "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php (line 94)",
+        "https://scikit-learn.org/stable/modules/naive_bayes.html (line 107)",
+        "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall (line 111)"
+      ],
+      "evidence": "history/02-research.md",
+      "changes": "None; source reconciliation identified edits for next round."
+    },
+    {
+      "round": 3,
+      "gaps": [
+        "Calibration definition",
+        "Arithmetic",
+        "Dependency reconciliation"
+      ],
+      "searches": [],
+      "opens": [
+        "https://scikit-learn.org/stable/modules/calibration.html"
+      ],
+      "evidence": "history/03-research.md",
+      "changes": "Added update_rule; replaced posterior\u2192base_rate_change and base_rate_change\u2192word_clue with semantic rule edges; added posterior\u2192target and prior\u2192training. Marked binary partition assumed. Replaced packet-only evidence with directly located passages and explicit original derivations. Removed smoothing from training answer to optional scope. Resolved partial/gap nodes. Full resulting snapshot: history/03-supported.json."
+    }
+  ],
+  "source_audit": [
+    {
+      "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+      "used_sections": "\u00a71.4.0 definition, prior, Equation 1.5",
+      "role": "Author textbook: probability identities and group interpretation."
+    },
+    {
+      "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+      "used_sections": "\u00a71.4.2 two-event partition and total-probability formula",
+      "role": "Author textbook: adding disjoint weighted contributions."
+    },
+    {
+      "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+      "used_sections": "Recall, FPR, Precision",
+      "role": "Google course: distinct metric denominators."
+    },
+    {
+      "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+      "used_sections": "Opening Bayes/independence equations; Bernoulli; probability warning",
+      "role": "Official implementation guide: word-feature model and assumptions."
+    },
+    {
+      "url": "https://scikit-learn.org/stable/modules/calibration.html",
+      "used_sections": "Calibration definition and calibration curves",
+      "role": "Official guide: empirical interpretation of probability confidence."
+    }
+  ],
+  "verification": {
+    "artifact": "checks.json",
+    "result": "PASS",
+    "scope": "Structural validation, exact arithmetic, manual edge/evidence review. No empirical mail data or rendered report."
+  }
+}

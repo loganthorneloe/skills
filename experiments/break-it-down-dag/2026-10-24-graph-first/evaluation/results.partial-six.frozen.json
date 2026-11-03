@@ -1,0 +1,2930 @@
+{
+  "rubric_version": "1.0-frozen",
+  "status": "partial; six released graphs evaluated",
+  "benchmark_sha256": "1966aff2603c1a9853ed3bcfe344ce81dc6ae06b76f854e09d6a19d06edbe127",
+  "rubric_sha256": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f",
+  "blindness_limits": [
+    "Schemas/narratives reveal workflow differences.",
+    "isolation-A and backpropagation-A run-notes explicitly expose an old-snapshot label. Packages were not changed; no identities guessed."
+  ],
+  "method": "Frozen independent artifact audit. No assignments, skill snapshots, original runs, other evaluator output, prior experiments or design instructions read. All judgments use actual question/answer route. No causal/human-learning conclusions.",
+  "graphs": [
+    {
+      "label": "evals-B",
+      "topic": "evals",
+      "hashes": {
+        "final_blind_sha256": "2a7cab89e007b03e327172480176cd1138b47abb962fdd74b4810ac0bf1f26f7",
+        "final_original_sha256": "2a7cab89e007b03e327172480176cd1138b47abb962fdd74b4810ac0bf1f26f7",
+        "all_manifest_files_match": true,
+        "candidate_instruction_hash": "withheld from blind judge"
+      },
+      "dimensions": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "score_rationale": {
+        "reader_fit": "Arithmetic/SQL/Python baseline checked against node answers; see coverage and findings.",
+        "prerequisite_coverage": "All frozen obligations mapped below; no omitted core is treated as optional merely because scope excludes it.",
+        "edge_validity": "Every edge inspected against actual child question and answer; classifications below.",
+        "granularity": "Material bundling identified in findings; no reward for node count.",
+        "evidence_alignment": "Packet passage entailment and supplemental primary sections checked; derivations separated.",
+        "research_record_authenticity": "Observed states agree with revisions; retrieval narratives are not independent tool transcripts.",
+        "application_utility": "Transfer reasoning restricted to graph lessons plus declared baseline; probes below."
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "validated_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural": {
+        "parse": true,
+        "unique_ids": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "orientation": "from prerequisite to dependent, explicit or unambiguous from edge reasons",
+        "target": "target",
+        "nodes": 18,
+        "edges": 29,
+        "roots": [
+          "python",
+          "system",
+          "variation"
+        ],
+        "nodes_without_target_path": [],
+        "transitively_redundant_edges": [
+          [
+            "system",
+            "run"
+          ],
+          [
+            "system",
+            "outcome"
+          ],
+          [
+            "grade",
+            "summary"
+          ],
+          [
+            "cases",
+            "summary"
+          ],
+          [
+            "summary",
+            "compare"
+          ],
+          [
+            "variation",
+            "target"
+          ],
+          [
+            "summary",
+            "target"
+          ],
+          [
+            "calibrate",
+            "start"
+          ]
+        ],
+        "rendering": "Common rendering unscored; not independently visually inspected."
+      },
+      "coverage": [
+        {
+          "id": "E1",
+          "nodes": [
+            "intent",
+            "reference",
+            "start"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E2",
+          "nodes": [
+            "system",
+            "reference",
+            "run"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E3",
+          "nodes": [
+            "grade",
+            "calibrate"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E4",
+          "nodes": [
+            "run",
+            "variation"
+          ],
+          "status": "partial",
+          "rationale": "Records configuration and outputs; lacks controlled initial action state for its included action branch."
+        },
+        {
+          "id": "E5",
+          "nodes": [
+            "repeat",
+            "cases"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E6",
+          "nodes": [
+            "summary",
+            "slices",
+            "repeat"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E7",
+          "nodes": [
+            "compare",
+            "holdout",
+            "improve"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E8",
+          "nodes": [
+            "outcome"
+          ],
+          "status": "partial",
+          "rationale": "Transcript/tool calls and final state present; initial state and authorized expected transition absent."
+        }
+      ],
+      "edge_audit": [
+        {
+          "source": "python",
+          "target": "run",
+          "classification": "defensible prerequisite",
+          "rationale": "An evaluation loop is composed of familiar records, API calls and stored outputs."
+        },
+        {
+          "source": "system",
+          "target": "intent",
+          "classification": "defensible prerequisite",
+          "rationale": "Acceptable behavior must be defined for the application being evaluated."
+        },
+        {
+          "source": "intent",
+          "target": "reference",
+          "classification": "defensible prerequisite",
+          "rationale": "Case expectations must express the task\u2019s intended behavior."
+        },
+        {
+          "source": "intent",
+          "target": "cases",
+          "classification": "defensible prerequisite",
+          "rationale": "The task determines which situations a dataset must cover."
+        },
+        {
+          "source": "cases",
+          "target": "run",
+          "classification": "defensible prerequisite",
+          "rationale": "The run needs saved inputs to exercise the application."
+        },
+        {
+          "source": "system",
+          "target": "run",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The configuration identifies which application produced the outputs."
+        },
+        {
+          "source": "reference",
+          "target": "grade",
+          "classification": "defensible prerequisite",
+          "rationale": "Judgments need the relevant expectations for each case."
+        },
+        {
+          "source": "run",
+          "target": "grade",
+          "classification": "motivation/reading-order/example mislabeled as prerequisite",
+          "rationale": "Need observed response, not knowledge of how the Python evaluation run executes and records it."
+        },
+        {
+          "source": "grade",
+          "target": "calibrate",
+          "classification": "defensible prerequisite",
+          "rationale": "To judge whether automation measures quality, first understand its rule."
+        },
+        {
+          "source": "system",
+          "target": "outcome",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The system boundary determines whether actions and turns are part of behavior."
+        },
+        {
+          "source": "intent",
+          "target": "outcome",
+          "classification": "defensible prerequisite",
+          "rationale": "Expected outcomes determine what action or conversation evidence is needed."
+        },
+        {
+          "source": "grade",
+          "target": "summary",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. A numerical summary inherits the meaning of its individual judgments."
+        },
+        {
+          "source": "cases",
+          "target": "summary",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The sampled situations limit what the summary represents."
+        },
+        {
+          "source": "calibrate",
+          "target": "summary",
+          "classification": "defensible prerequisite",
+          "rationale": "A score is meaningful only to the extent that grading tracks intent."
+        },
+        {
+          "source": "summary",
+          "target": "compare",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Comparing numbers requires knowing what they measure."
+        },
+        {
+          "source": "compare",
+          "target": "improve",
+          "classification": "defensible prerequisite",
+          "rationale": "Evidence of gain and regression is needed to assess a proposed improvement."
+        },
+        {
+          "source": "improve",
+          "target": "start",
+          "classification": "defensible prerequisite",
+          "rationale": "A starter workflow should close the loop from failures to evaluated changes."
+        },
+        {
+          "source": "start",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The target explicitly asks how to begin."
+        },
+        {
+          "source": "variation",
+          "target": "target",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Variation explains why informal spot checking is insufficient."
+        },
+        {
+          "source": "summary",
+          "target": "target",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Knowing what scores establish explains the value and limits of evals."
+        },
+        {
+          "source": "outcome",
+          "target": "run",
+          "classification": "invalid for the stated scope",
+          "rationale": "Conditional action-specific knowledge made mandatory for generic case execution."
+        },
+        {
+          "source": "variation",
+          "target": "repeat",
+          "classification": "defensible prerequisite",
+          "rationale": "Repeated attempts matter because identical inputs can yield different outputs."
+        },
+        {
+          "source": "run",
+          "target": "repeat",
+          "classification": "defensible prerequisite",
+          "rationale": "A trial repeats the defined execution of a case."
+        },
+        {
+          "source": "repeat",
+          "target": "compare",
+          "classification": "defensible prerequisite",
+          "rationale": "Score differences must be interpreted alongside within-case variability."
+        },
+        {
+          "source": "cases",
+          "target": "holdout",
+          "classification": "defensible prerequisite",
+          "rationale": "Withholding cases requires understanding the test collection and its coverage."
+        },
+        {
+          "source": "holdout",
+          "target": "compare",
+          "classification": "defensible prerequisite",
+          "rationale": "Unused examples check whether gains extend beyond the examples used to tune."
+        },
+        {
+          "source": "summary",
+          "target": "slices",
+          "classification": "defensible prerequisite",
+          "rationale": "Subgroup rates partition the same numerator and denominator used by the overall rate."
+        },
+        {
+          "source": "slices",
+          "target": "compare",
+          "classification": "defensible prerequisite",
+          "rationale": "An overall gain can conceal worsening behavior in a required support scenario."
+        },
+        {
+          "source": "calibrate",
+          "target": "start",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Automating the starter workflow requires checking that judgments match expert expectations."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "system",
+            "variation",
+            "intent",
+            "cases",
+            "reference",
+            "run",
+            "grade",
+            "calibrate",
+            "summary",
+            "improve",
+            "start",
+            "target"
+          ],
+          "source": "source-packet.json: four OpenAI guides",
+          "locator": "Named sections in node evidence",
+          "status": "supported",
+          "rationale": "Packet entails conceptual method; support-policy examples and 16/20=80% are declared synthesis/arithmetic."
+        },
+        {
+          "nodes": [
+            "outcome",
+            "repeat"
+          ],
+          "source": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Structure lines 61-68; conversational agents",
+          "status": "supported",
+          "rationale": "Primary page confirms trials, transcripts and final-state distinction; does not cure omitted initial-state lesson."
+        },
+        {
+          "nodes": [
+            "holdout",
+            "slices",
+            "compare"
+          ],
+          "source": "https://developers.openai.com/cookbook/examples/realtime_eval_guide",
+          "locator": "4.2-4.3; 6",
+          "status": "supported",
+          "rationale": "Directly inspected coverage, tags, untouched examples and controlled-loop guidance. 18/20=90% illustrative arithmetic checked."
+        }
+      ],
+      "history_audit": {
+        "observations": [
+          {
+            "time": "2026-10-24T20:26:48.013715+00:00",
+            "snapshot": "observed/dag.initial-df0ee33a1941.json",
+            "sha256": "df0ee33a194121cb65a2691c8bd4b777dfb37759602b14d86ee77f8e5bf81e57",
+            "observed_original_hash_matches": true,
+            "node_count": 15,
+            "edge_count": 22
+          },
+          {
+            "time": "2026-10-24T20:26:48.014032+00:00",
+            "snapshot": "observed/dag-90f43ce2c9dd.json",
+            "sha256": "90f43ce2c9ddd64386def122d811916456b516f5a99b2fec379bbcb4b8c05354",
+            "observed_original_hash_matches": true,
+            "node_count": 15,
+            "edge_count": 22,
+            "added_nodes": [],
+            "answer_edits": [],
+            "added_edges": [],
+            "removed_edges": []
+          },
+          {
+            "time": "2026-10-24T20:28:06.229911+00:00",
+            "snapshot": "observed/dag-2a7cab89e007.json",
+            "sha256": "2a7cab89e007b03e327172480176cd1138b47abb962fdd74b4810ac0bf1f26f7",
+            "observed_original_hash_matches": true,
+            "node_count": 18,
+            "edge_count": 29,
+            "added_nodes": [
+              "holdout",
+              "repeat",
+              "slices"
+            ],
+            "answer_edits": [
+              "compare",
+              "grade",
+              "intent",
+              "outcome",
+              "reference",
+              "run",
+              "start",
+              "summary",
+              "system",
+              "target"
+            ],
+            "added_edges": [
+              [
+                "calibrate",
+                "start"
+              ],
+              [
+                "cases",
+                "holdout"
+              ],
+              [
+                "holdout",
+                "compare"
+              ],
+              [
+                "outcome",
+                "run"
+              ],
+              [
+                "repeat",
+                "compare"
+              ],
+              [
+                "run",
+                "repeat"
+              ],
+              [
+                "slices",
+                "compare"
+              ],
+              [
+                "summary",
+                "slices"
+              ],
+              [
+                "variation",
+                "repeat"
+              ]
+            ],
+            "removed_edges": [
+              [
+                "outcome",
+                "start"
+              ],
+              [
+                "variation",
+                "compare"
+              ]
+            ]
+          }
+        ],
+        "assessment": "Observed 15-node/22-edge initial and 18-node/29-edge final substantiate repeat/holdout/slices additions and outcome->run move. Initial duplicate observations are not separate iterations.",
+        "limits": "Observed events prove saved states only. Raw browsing/tool transcripts unavailable in blind package; exact retrieval timing and thought chronology not independently established. No evidence of fabricated history."
+      },
+      "probes": [
+        {
+          "id": "EA1",
+          "status": "pass",
+          "reasoning": "repeat explicitly says repetitions do not add customer situations; cases and summary bound coverage. Therefore 100 password-reset trials cannot establish 99% across support."
+        },
+        {
+          "id": "EA2",
+          "status": "partial",
+          "reasoning": "outcome rejects success text and asks for conversation/tool calls/resulting state. It does not teach checking preexisting refund, requested/authorized identity/amount, or starting-state transition; evaluator must add that lesson."
+        },
+        {
+          "id": "EA3",
+          "status": "pass",
+          "reasoning": "compare requires same case/grader versions, per-case results, repeated trials; calibrate checks grader validity. The two scores do not isolate a version effect."
+        },
+        {
+          "id": "EA4",
+          "status": "pass",
+          "reasoning": "start + reference + run + grade provide reviewed policy questions, expected facts, saved configuration/output and manual judgments before any change. Later comparison is an additional step, despite unnecessary action ancestor."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "EB1",
+          "kind": "missing_core_bridge",
+          "location": "outcome; E8/EA2",
+          "finding": "Final state plus a transcript does not establish a requested authorized transition. A preexisting/wrong refund can still pass the stated checks.",
+          "smallest_repair": "Add controlled initial state, expected authorized changes, identity/amount and relevant history comparison."
+        },
+        {
+          "id": "EB2",
+          "kind": "invalid_prerequisite",
+          "location": "outcome -> run",
+          "finding": "run covers general case execution and conditionally records relevant action results; unconditional prerequisite imports action/conversation-specific knowledge into every answer-only run.",
+          "smallest_repair": "Split generic observable output from conditional action evidence; attach action prerequisites only to action runs."
+        },
+        {
+          "id": "EB3",
+          "kind": "invalid_prerequisite",
+          "location": "run -> grade",
+          "finding": "grade defines comparing an already available output to a rule. Python execution/configuration/recording machinery in run is not needed to understand that judgment.",
+          "smallest_repair": "Use generic observed output/case evidence as prerequisite, or mark run-to-grade as workflow sequence."
+        }
+      ],
+      "minor_findings": [
+        "summary defines case pass rate but repeated-attempt aggregation is unspecified; repeat at least explicitly prevents counting repeats as new situations."
+      ]
+    },
+    {
+      "label": "backpropagation-B",
+      "topic": "backpropagation",
+      "hashes": {
+        "final_blind_sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818",
+        "final_original_sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818",
+        "all_manifest_files_match": true,
+        "candidate_instruction_hash": "withheld from blind judge"
+      },
+      "dimensions": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 4,
+        "granularity": 5,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "score_rationale": {
+        "reader_fit": "Arithmetic/SQL/Python baseline checked against node answers; see coverage and findings.",
+        "prerequisite_coverage": "All frozen obligations mapped below; no omitted core is treated as optional merely because scope excludes it.",
+        "edge_validity": "Every edge inspected against actual child question and answer; classifications below.",
+        "granularity": "Material bundling identified in findings; no reward for node count.",
+        "evidence_alignment": "Packet passage entailment and supplemental primary sections checked; derivations separated.",
+        "research_record_authenticity": "Observed states agree with revisions; retrieval narratives are not independent tool transcripts.",
+        "application_utility": "Transfer reasoning restricted to graph lessons plus declared baseline; probes below."
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "pass",
+        "process_evidence": "validated_with_limits",
+        "overall": "accepted"
+      },
+      "structural": {
+        "parse": true,
+        "unique_ids": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "orientation": "from prerequisite to dependent, explicit or unambiguous from edge reasons",
+        "target": "target",
+        "nodes": 19,
+        "edges": 27,
+        "roots": [
+          "arithmetic",
+          "functions",
+          "label"
+        ],
+        "nodes_without_target_path": [],
+        "transitively_redundant_edges": [],
+        "rendering": "Common rendering unscored; not independently visually inspected."
+      },
+      "coverage": [
+        {
+          "id": "B1",
+          "nodes": [
+            "weighted_sum",
+            "hidden",
+            "prediction",
+            "tiny-example"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B2",
+          "nodes": [
+            "loss",
+            "tiny-example"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B3",
+          "nodes": [
+            "sensitivity",
+            "add_rule",
+            "multiply_rule",
+            "relu_rule"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B4",
+          "nodes": [
+            "chain",
+            "tiny-example"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B5",
+          "nodes": [
+            "reverse",
+            "tiny-example"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B6",
+          "nodes": [
+            "accumulate",
+            "tiny-example"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B7",
+          "nodes": [
+            "gradient",
+            "update",
+            "training"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B8",
+          "nodes": [
+            "sensitivity",
+            "gradient",
+            "scope.limits",
+            "tiny-example.interpretation"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        }
+      ],
+      "edge_audit": [
+        {
+          "source": "arithmetic",
+          "target": "weighted_sum",
+          "classification": "defensible prerequisite",
+          "rationale": "Products and sums must be understood to say what the parameters do."
+        },
+        {
+          "source": "weighted_sum",
+          "target": "hidden",
+          "classification": "defensible prerequisite",
+          "rationale": "Hidden neurons in this chosen network perform weighted sums."
+        },
+        {
+          "source": "functions",
+          "target": "hidden",
+          "classification": "defensible prerequisite",
+          "rationale": "Intermediate values require understanding that later computations reuse earlier results."
+        },
+        {
+          "source": "hidden",
+          "target": "prediction",
+          "classification": "defensible prerequisite",
+          "rationale": "The forward prediction depends on evaluating the intermediate layer first."
+        },
+        {
+          "source": "activation",
+          "target": "prediction",
+          "classification": "explicitly conditional prerequisite",
+          "rationale": "Required by the declared worked architecture: This network\u2019s forward evaluation includes ReLU; omitting its rule leaves predictions undetermined."
+        },
+        {
+          "source": "label",
+          "target": "loss",
+          "classification": "defensible prerequisite",
+          "rationale": "Loss cannot quantify the requested mismatch without a desired output."
+        },
+        {
+          "source": "prediction",
+          "target": "loss",
+          "classification": "defensible prerequisite",
+          "rationale": "Loss compares the actual computed prediction with that desired output."
+        },
+        {
+          "source": "arithmetic",
+          "target": "sensitivity",
+          "classification": "defensible prerequisite",
+          "rationale": "Small differences and ratios supply the non-calculus definition."
+        },
+        {
+          "source": "sensitivity",
+          "target": "add_rule",
+          "classification": "defensible prerequisite",
+          "rationale": "The numerical factor 1 only has meaning after defining a sensitivity."
+        },
+        {
+          "source": "sensitivity",
+          "target": "multiply_rule",
+          "classification": "defensible prerequisite",
+          "rationale": "The other-input factor must be interpreted as a local change ratio."
+        },
+        {
+          "source": "sensitivity",
+          "target": "relu_rule",
+          "classification": "defensible prerequisite",
+          "rationale": "The factors 0 and 1 describe local change ratios."
+        },
+        {
+          "source": "activation",
+          "target": "relu_rule",
+          "classification": "defensible prerequisite",
+          "rationale": "ReLU\u2019s piecewise function must be known to determine its local response."
+        },
+        {
+          "source": "sensitivity",
+          "target": "chain",
+          "classification": "defensible prerequisite",
+          "rationale": "Multiplying change ratios is unintelligible without defining those ratios."
+        },
+        {
+          "source": "add_rule",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "Backward propagation through weighted addition needs its local rule."
+        },
+        {
+          "source": "multiply_rule",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "Backward propagation through weighting and squared error needs its product rule."
+        },
+        {
+          "source": "relu_rule",
+          "target": "reverse",
+          "classification": "explicitly conditional prerequisite",
+          "rationale": "Required by the declared worked architecture: This chosen network includes a ReLU requiring its backward rule."
+        },
+        {
+          "source": "accumulate",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "Repeated uses require summing returned contributions, including the error used twice in its square."
+        },
+        {
+          "source": "loss",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "A scalar objective anchors what all returned sensitivities refer to."
+        },
+        {
+          "source": "gradient",
+          "target": "update",
+          "classification": "defensible prerequisite",
+          "rationale": "Update direction and amount use each parameter\u2019s sensitivity."
+        },
+        {
+          "source": "update",
+          "target": "training",
+          "classification": "defensible prerequisite",
+          "rationale": "Learning requires an actual parameter change between successive calculations."
+        },
+        {
+          "source": "reverse",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The answer needs the mechanism that computes parameter sensitivities."
+        },
+        {
+          "source": "training",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The answer needs the repeated update procedure that uses those sensitivities."
+        },
+        {
+          "source": "arithmetic",
+          "target": "activation",
+          "classification": "defensible prerequisite",
+          "rationale": "The max comparison and zero define this piecewise operation."
+        },
+        {
+          "source": "sensitivity",
+          "target": "accumulate",
+          "classification": "defensible prerequisite",
+          "rationale": "Returned effects must be understood as small-change sensitivities before their sum has meaning."
+        },
+        {
+          "source": "loss",
+          "target": "gradient",
+          "classification": "defensible prerequisite",
+          "rationale": "A loss gradient must identify which scalar objective its components refer to."
+        },
+        {
+          "source": "sensitivity",
+          "target": "gradient",
+          "classification": "defensible prerequisite",
+          "rationale": "The collection consists of individual partial sensitivities."
+        },
+        {
+          "source": "chain",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "The backward step multiplies each incoming sensitivity by a local sensitivity."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "weighted_sum",
+            "hidden",
+            "prediction",
+            "label",
+            "loss",
+            "sensitivity",
+            "add_rule",
+            "multiply_rule",
+            "chain",
+            "accumulate",
+            "reverse",
+            "gradient",
+            "training",
+            "target"
+          ],
+          "source": "source-packet.json: Google, CS231n, Sanderson, PyTorch",
+          "locator": "Node-specific named sections",
+          "status": "supported",
+          "rationale": "Packet supports operations, local rates, path products, branch sums, caching, loss and parameter update separation."
+        },
+        {
+          "nodes": [
+            "activation",
+            "relu_rule"
+          ],
+          "source": "https://developers.google.com/machine-learning/crash-course/neural-networks/activation-functions",
+          "locator": "ReLU lines 106-116",
+          "status": "inference/derivation checked",
+          "rationale": "Definition verified directly; factors 0/1 and undefined ordinary derivative at zero follow from two linear pieces."
+        },
+        {
+          "nodes": [
+            "update",
+            "tiny-example"
+          ],
+          "source": "dag.json examples[0]",
+          "locator": "forward_equations, backward_trace, update_rule",
+          "status": "inference/derivation checked",
+          "rationale": "Recomputed prediction .5, loss .5, gradient (-2,-1,1,.5,-1,-1,-1), updated prediction 1.45 and loss .00125. Sum-of-squares descent is explicit local algebra."
+        }
+      ],
+      "history_audit": {
+        "observations": [
+          {
+            "time": "2026-10-24T20:27:16.085219+00:00",
+            "snapshot": "observed/dag-36d8b2738eda.json",
+            "sha256": "36d8b2738eda7c3dea5b1590dfff7cc7473d22f5dd44e0dc424b52eac16e68af",
+            "observed_original_hash_matches": true,
+            "node_count": 19,
+            "edge_count": 27
+          },
+          {
+            "time": "2026-10-24T20:27:34.128145+00:00",
+            "snapshot": "observed/dag-adbe28cb9ec1.json",
+            "sha256": "adbe28cb9ec1288ec701839147d133a63740d94179f6814dbaeda98700a03914",
+            "observed_original_hash_matches": true,
+            "node_count": 19,
+            "edge_count": 27,
+            "added_nodes": [],
+            "answer_edits": [
+              "gradient"
+            ],
+            "added_edges": [],
+            "removed_edges": []
+          },
+          {
+            "time": "2026-10-24T20:27:50.181440+00:00",
+            "snapshot": "observed/dag-0c22384f6ae7.json",
+            "sha256": "0c22384f6ae76b8a71219b13005144abb3f17cdd8e989f7077cd95f989e09b4d",
+            "observed_original_hash_matches": true,
+            "node_count": 19,
+            "edge_count": 27,
+            "added_nodes": [],
+            "answer_edits": [
+              "relu_rule"
+            ],
+            "added_edges": [],
+            "removed_edges": []
+          },
+          {
+            "time": "2026-10-24T20:27:56.198250+00:00",
+            "snapshot": "observed/dag-d9fd84e2b808.json",
+            "sha256": "d9fd84e2b80821ece2e5b11d03aef0a62fde2dd4fadaaec824b5ba515ee85296",
+            "observed_original_hash_matches": true,
+            "node_count": 19,
+            "edge_count": 27,
+            "added_nodes": [],
+            "answer_edits": [],
+            "added_edges": [],
+            "removed_edges": []
+          },
+          {
+            "time": "2026-10-24T20:28:52.387468+00:00",
+            "snapshot": "observed/dag-f869d004106d.json",
+            "sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818",
+            "observed_original_hash_matches": true,
+            "node_count": 19,
+            "edge_count": 27,
+            "added_nodes": [],
+            "answer_edits": [
+              "activation",
+              "prediction",
+              "training",
+              "update"
+            ],
+            "added_edges": [
+              [
+                "arithmetic",
+                "activation"
+              ],
+              [
+                "loss",
+                "gradient"
+              ],
+              [
+                "sensitivity",
+                "accumulate"
+              ],
+              [
+                "sensitivity",
+                "gradient"
+              ]
+            ],
+            "removed_edges": [
+              [
+                "accumulate",
+                "training"
+              ],
+              [
+                "chain",
+                "accumulate"
+              ],
+              [
+                "reverse",
+                "gradient"
+              ],
+              [
+                "weighted_sum",
+                "activation"
+              ]
+            ]
+          }
+        ],
+        "assessment": "Five observed saved states support answer/evidence edits, no-answer-change round, and four edge replacements in final review. No-change round correctly not presented as conceptual discovery.",
+        "limits": "Observed events prove saved states only. Raw browsing/tool transcripts unavailable in blind package; exact retrieval timing and thought chronology not independently established. No evidence of fabricated history."
+      },
+      "probes": [
+        {
+          "id": "BA1",
+          "status": "pass",
+          "reasoning": "loss uses half square; multiply_rule plus accumulate gives dL/dprediction=6-4=2; product factor x=3 yields 6. prediction=6 and loss=2."
+        },
+        {
+          "id": "BA2",
+          "status": "pass",
+          "reasoning": "update gives w=2-0.1*6=1.4; loss recomputation yields prediction=4.2 and loss=.02. Local-step/finite-step distinction forbids universal step-size success."
+        },
+        {
+          "id": "BA3",
+          "status": "pass",
+          "reasoning": "accumulate explicitly adds returned effects for repeated uses; multiply_rule/add_rule give 2*3+2*1=8, analogous to two e slots in tiny-example."
+        },
+        {
+          "id": "BA4",
+          "status": "pass",
+          "reasoning": "sensitivity holds others fixed locally; scope disclaims historical attribution and generalization; example limits unseen data. Zero establishes neither future quality nor global irrelevance."
+        }
+      ],
+      "material_findings": [],
+      "minor_findings": [
+        "training refers to backward calculation but has only update as immediate parent; reverse->training would make that already-explained dependency explicit. Both required lessons already meet at target; no missing material lesson.",
+        "weighted_sum->hidden is defensible in this declared network because it supplies adjustable-parameter meaning, although hidden could be phrased more generically."
+      ]
+    },
+    {
+      "label": "isolation-A",
+      "topic": "isolation",
+      "hashes": {
+        "final_blind_sha256": "3cd1c988a24f0d3cedae903ab931bbb2470736c5514612d1c92ea8531bc70a60",
+        "final_original_sha256": "3cd1c988a24f0d3cedae903ab931bbb2470736c5514612d1c92ea8531bc70a60",
+        "all_manifest_files_match": true,
+        "candidate_instruction_hash": "withheld from blind judge"
+      },
+      "dimensions": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "score_rationale": {
+        "reader_fit": "Arithmetic/SQL/Python baseline checked against node answers; see coverage and findings.",
+        "prerequisite_coverage": "All frozen obligations mapped below; no omitted core is treated as optional merely because scope excludes it.",
+        "edge_validity": "Every edge inspected against actual child question and answer; classifications below.",
+        "granularity": "Material bundling identified in findings; no reward for node count.",
+        "evidence_alignment": "Packet passage entailment and supplemental primary sections checked; derivations separated.",
+        "research_record_authenticity": "Observed states agree with revisions; retrieval narratives are not independent tool transcripts.",
+        "application_utility": "Transfer reasoning restricted to graph lessons plus declared baseline; probes below."
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "validated_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural": {
+        "parse": true,
+        "unique_ids": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "orientation": "from prerequisite to dependent, explicit or unambiguous from edge reasons",
+        "target": "target",
+        "nodes": 18,
+        "edges": 31,
+        "roots": [
+          "sql_state"
+        ],
+        "nodes_without_target_path": [],
+        "transitively_redundant_edges": [
+          [
+            "overlap",
+            "mechanisms"
+          ],
+          [
+            "serializable",
+            "choice"
+          ],
+          [
+            "interference",
+            "target"
+          ]
+        ],
+        "rendering": "Common rendering unscored; not independently visually inspected."
+      },
+      "coverage": [
+        {
+          "id": "I1",
+          "nodes": [
+            "transaction",
+            "atomicity"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "I2",
+          "nodes": [
+            "overlap",
+            "interference"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "I3",
+          "nodes": [
+            "correctness",
+            "interference"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "I4",
+          "nodes": [
+            "serial",
+            "serializable"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "I5",
+          "nodes": [
+            "anomalies",
+            "levels",
+            "engine_details"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "I6",
+          "nodes": [
+            "snapshot",
+            "snapshot_limit",
+            "constructed_example"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "I7",
+          "nodes": [],
+          "status": "missing",
+          "rationale": "Practical choice/retry remedies are included, so the benchmark exemption for entirely excluded practical remedies does not apply; no guarded relative-update lesson."
+        },
+        {
+          "id": "I8",
+          "nodes": [
+            "mechanisms",
+            "retries",
+            "choice"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        }
+      ],
+      "edge_audit": [
+        {
+          "source": "sql_state",
+          "target": "transaction",
+          "classification": "defensible prerequisite",
+          "rationale": "A transaction groups the SQL operations the reader already understands."
+        },
+        {
+          "source": "transaction",
+          "target": "atomicity",
+          "classification": "defensible prerequisite",
+          "rationale": "All-or-nothing applies to the grouped unit."
+        },
+        {
+          "source": "transaction",
+          "target": "overlap",
+          "classification": "defensible prerequisite",
+          "rationale": "Overlap concerns the steps of distinct transaction units."
+        },
+        {
+          "source": "transaction",
+          "target": "serial",
+          "classification": "defensible prerequisite",
+          "rationale": "Serial order is an order of whole transactions."
+        },
+        {
+          "source": "overlap",
+          "target": "interference",
+          "classification": "defensible prerequisite",
+          "rationale": "The rule-breaking example requires interleaved decisions."
+        },
+        {
+          "source": "atomicity",
+          "target": "interference",
+          "classification": "motivation/reading-order/example mislabeled as prerequisite",
+          "rationale": "All-or-nothing is a useful contrast, but actual write-skew answer needs overlap and invariant, already supplied."
+        },
+        {
+          "source": "overlap",
+          "target": "visibility",
+          "classification": "defensible prerequisite",
+          "rationale": "Overlapping work raises which concurrent changes a reader can see."
+        },
+        {
+          "source": "visibility",
+          "target": "anomalies",
+          "classification": "defensible prerequisite",
+          "rationale": "Read anomalies are distinctions among observed versions and row sets."
+        },
+        {
+          "source": "serial",
+          "target": "anomalies",
+          "classification": "defensible prerequisite",
+          "rationale": "Serialization anomalies are defined relative to serial outcomes."
+        },
+        {
+          "source": "visibility",
+          "target": "snapshot",
+          "classification": "defensible prerequisite",
+          "rationale": "A snapshot restricts visible versions to a particular database state."
+        },
+        {
+          "source": "anomalies",
+          "target": "levels",
+          "classification": "defensible prerequisite",
+          "rationale": "Levels are described by the anomalies they exclude."
+        },
+        {
+          "source": "snapshot",
+          "target": "levels",
+          "classification": "motivation/reading-order/example mislabeled as prerequisite",
+          "rationale": "The guarantee table does not use snapshot machinery/timing."
+        },
+        {
+          "source": "snapshot",
+          "target": "snapshot_limit",
+          "classification": "defensible prerequisite",
+          "rationale": "The failure concerns transactions using stable snapshots."
+        },
+        {
+          "source": "interference",
+          "target": "snapshot_limit",
+          "classification": "defensible prerequisite",
+          "rationale": "The limit must be shown by a concrete rule-breaking combination."
+        },
+        {
+          "source": "serial",
+          "target": "snapshot_limit",
+          "classification": "defensible prerequisite",
+          "rationale": "The outcome must be compared with possible serial executions."
+        },
+        {
+          "source": "snapshot",
+          "target": "mechanisms",
+          "classification": "defensible prerequisite",
+          "rationale": "Versions provide one way of implementing read consistency."
+        },
+        {
+          "source": "overlap",
+          "target": "mechanisms",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Locks and checks control interference from overlapping work."
+        },
+        {
+          "source": "mechanisms",
+          "target": "engine_details",
+          "classification": "defensible prerequisite",
+          "rationale": "Product differences concern concrete concurrency-control implementations."
+        },
+        {
+          "source": "levels",
+          "target": "engine_details",
+          "classification": "defensible prerequisite",
+          "rationale": "Level labels must be separated from actual product guarantees."
+        },
+        {
+          "source": "serializable",
+          "target": "retries",
+          "classification": "defensible prerequisite",
+          "rationale": "Preserving serial outcomes can require rejecting conflicting work."
+        },
+        {
+          "source": "engine_details",
+          "target": "choice",
+          "classification": "defensible prerequisite",
+          "rationale": "Correct selection requires the specific engine and statements."
+        },
+        {
+          "source": "retries",
+          "target": "choice",
+          "classification": "defensible prerequisite",
+          "rationale": "Correct transaction handling includes failure recovery."
+        },
+        {
+          "source": "serializable",
+          "target": "choice",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The intended invariant determines required guarantees."
+        },
+        {
+          "source": "interference",
+          "target": "target",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Explains how concurrency invalidates separately sound decisions."
+        },
+        {
+          "source": "choice",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "Explains how isolation helps and how to apply it."
+        },
+        {
+          "source": "sql_state",
+          "target": "correctness",
+          "classification": "defensible prerequisite",
+          "rationale": "A rule refers to the rows and values the reader already recognizes."
+        },
+        {
+          "source": "correctness",
+          "target": "serial",
+          "classification": "defensible prerequisite",
+          "rationale": "The preservation argument needs a definition of individually correct operations."
+        },
+        {
+          "source": "correctness",
+          "target": "interference",
+          "classification": "defensible prerequisite",
+          "rationale": "Calling the combined outcome wrong requires the shared rule."
+        },
+        {
+          "source": "serial",
+          "target": "serializable",
+          "classification": "defensible prerequisite",
+          "rationale": "Serializable is defined by equivalence to a serial order."
+        },
+        {
+          "source": "snapshot_limit",
+          "target": "choice",
+          "classification": "defensible prerequisite",
+          "rationale": "A safe choice must account for failures that stable reads alone do not exclude."
+        },
+        {
+          "source": "serial",
+          "target": "mechanisms",
+          "classification": "defensible prerequisite",
+          "rationale": "Conflict-checking explanations refer to compatibility with a serial order."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "transaction",
+            "atomicity",
+            "correctness"
+          ],
+          "source": "source-packet.json: PostgreSQL Transactions",
+          "locator": "3.4 transfer and transaction boundaries",
+          "status": "supported",
+          "rationale": "Grouping and correctness contrast supported; invariant preservation is transparent synthesis."
+        },
+        {
+          "nodes": [
+            "overlap",
+            "serial",
+            "interference",
+            "visibility",
+            "anomalies",
+            "levels",
+            "snapshot_limit",
+            "serializable",
+            "retries",
+            "choice",
+            "target"
+          ],
+          "source": "source-packet.json: PostgreSQL isolation",
+          "locator": "13.2.1-13.2.3",
+          "status": "supported",
+          "rationale": "Named engine and ordinary SELECT/own-write qualifications preserved. Constructed disjoint-write schedule follows documented Repeatable Read semantics."
+        },
+        {
+          "nodes": [
+            "mechanisms",
+            "engine_details"
+          ],
+          "source": "source-packet.json: MySQL/SQLite",
+          "locator": "InnoDB 17.7.2.1; SQLite Isolation and Concurrency",
+          "status": "supported",
+          "rationale": "Locking reads, range protection, autocommit condition, one writer and stale snapshot rejection aligned."
+        },
+        {
+          "nodes": [
+            "snapshot"
+          ],
+          "source": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+          "locator": "13.1 lines 19-22",
+          "status": "supported",
+          "rationale": "Directly checked MVCC version-reading explanation."
+        },
+        {
+          "nodes": [
+            "constructed_example"
+          ],
+          "source": "dag.json",
+          "locator": "on-call transactions and outcomes",
+          "status": "inference/derivation checked",
+          "rationale": "Serial A-B=(false,true), B-A=(true,false); both-read-first concurrent=(false,false). Deduction rather than live database claim."
+        }
+      ],
+      "history_audit": {
+        "observations": [
+          {
+            "time": "2026-10-24T20:26:44.001884+00:00",
+            "snapshot": "observed/dag-53ba6d0e5ed9.json",
+            "sha256": "53ba6d0e5ed99205dca6197ba2e857f800956bca5f3e3690198d702f837fb50f",
+            "observed_original_hash_matches": true,
+            "node_count": 17,
+            "edge_count": 28
+          },
+          {
+            "time": "2026-10-24T20:28:48.374389+00:00",
+            "snapshot": "observed/dag-3cd1c988a24f.json",
+            "sha256": "3cd1c988a24f0d3cedae903ab931bbb2470736c5514612d1c92ea8531bc70a60",
+            "observed_original_hash_matches": true,
+            "node_count": 18,
+            "edge_count": 31,
+            "added_nodes": [
+              "correctness"
+            ],
+            "answer_edits": [
+              "anomalies",
+              "atomicity",
+              "choice",
+              "engine_details",
+              "interference",
+              "levels",
+              "mechanisms",
+              "overlap",
+              "retries",
+              "serial",
+              "serializable",
+              "snapshot",
+              "snapshot_limit",
+              "sql_state",
+              "target",
+              "transaction",
+              "visibility"
+            ],
+            "added_edges": [
+              [
+                "correctness",
+                "interference"
+              ],
+              [
+                "correctness",
+                "serial"
+              ],
+              [
+                "serial",
+                "mechanisms"
+              ],
+              [
+                "serial",
+                "serializable"
+              ],
+              [
+                "snapshot_limit",
+                "choice"
+              ],
+              [
+                "sql_state",
+                "correctness"
+              ]
+            ],
+            "removed_edges": [
+              [
+                "levels",
+                "serializable"
+              ],
+              [
+                "snapshot_limit",
+                "serializable"
+              ],
+              [
+                "sql_state",
+                "interference"
+              ]
+            ]
+          }
+        ],
+        "assessment": "Two observed states substantiate initial 17/28 to final 18/31 and correctness addition/edge repairs. Intermediate saved file exists but is not separately observed; precise browse chronology remains narrative.",
+        "limits": "Observed events prove saved states only. Raw browsing/tool transcripts unavailable in blind package; exact retrieval timing and thought chronology not independently established. No evidence of fabricated history."
+      },
+      "probes": [
+        {
+          "id": "IA1",
+          "status": "pass",
+          "reasoning": "interference and snapshot_limit explicitly trace both-read-first and different-row writes; serial schedules keep one on call."
+        },
+        {
+          "id": "IA2",
+          "status": "pass",
+          "reasoning": "serializable explicitly permits overlap and cannot repair incorrect operations; mechanisms adds conflict rejection."
+        },
+        {
+          "id": "IA3",
+          "status": "fail",
+          "reasoning": "No answer contrasts stale absolute writes with guarded relative UPDATE or affected-row handling. SQL literacy alone does not establish engine wait/recheck semantics."
+        },
+        {
+          "id": "IA4",
+          "status": "pass",
+          "reasoning": "retries explicitly redoes whole reads/decisions from fresh state and warns that replaying final write repeats the invalid decision."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "IA1",
+          "kind": "invalid_prerequisite",
+          "location": "snapshot -> levels",
+          "finding": "levels actually answers a guarantee/minimum-anomaly table, including product exceptions, without using snapshot timing. Snapshot implementation is not necessary for that answer.",
+          "smallest_repair": "Remove edge or mark implementation explanation as optional; keep snapshot dependency where actual snapshot behavior is explained."
+        },
+        {
+          "id": "IA2",
+          "kind": "invalid_prerequisite",
+          "location": "atomicity -> interference",
+          "finding": "interference explains a shared-rule violation from two reads followed by disjoint writes. Transaction grouping is already available through overlap; atomic all-or-nothing completion adds no information needed for this actual answer.",
+          "smallest_repair": "Remove edge or add a separately scoped atomicity-versus-isolation comparison question."
+        },
+        {
+          "id": "IA3",
+          "kind": "missing_core_bridge",
+          "location": "I7/IA3; scope and choice",
+          "finding": "Practical isolation selection and retry are in scope, but guarded relative updates, stale absolute-write contrast and affected-row handling are absent. Frozen I7 permits omission only when practical remedies are entirely excluded.",
+          "smallest_repair": "Add a bounded PostgreSQL Read Committed guarded-update example and result checking; verify relevant engine semantics."
+        }
+      ],
+      "minor_findings": [
+        "Accidental blinding exposure: run-notes explicitly identifies its assigned snapshot as old. Retained package unchanged; no condition mapping inferred for other labels."
+      ]
+    },
+    {
+      "label": "bayesian_spam-A",
+      "topic": "bayesian_spam",
+      "hashes": {
+        "final_blind_sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6",
+        "final_original_sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6",
+        "all_manifest_files_match": true,
+        "candidate_instruction_hash": "withheld from blind judge"
+      },
+      "dimensions": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "score_rationale": {
+        "reader_fit": "Arithmetic/SQL/Python baseline checked against node answers; see coverage and findings.",
+        "prerequisite_coverage": "All frozen obligations mapped below; no omitted core is treated as optional merely because scope excludes it.",
+        "edge_validity": "Every edge inspected against actual child question and answer; classifications below.",
+        "granularity": "Material bundling identified in findings; no reward for node count.",
+        "evidence_alignment": "Packet passage entailment and supplemental primary sections checked; derivations separated.",
+        "research_record_authenticity": "Observed states agree with revisions; retrieval narratives are not independent tool transcripts.",
+        "application_utility": "Transfer reasoning restricted to graph lessons plus declared baseline; probes below."
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "validated_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural": {
+        "parse": true,
+        "unique_ids": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "orientation": "from prerequisite to dependent, explicit or unambiguous from edge reasons",
+        "target": "target",
+        "nodes": 16,
+        "edges": 26,
+        "roots": [
+          "partition",
+          "percentages"
+        ],
+        "nodes_without_target_path": [],
+        "transitively_redundant_edges": [
+          [
+            "partition",
+            "all_flags"
+          ],
+          [
+            "conditional",
+            "posterior"
+          ],
+          [
+            "word_scores",
+            "target"
+          ],
+          [
+            "conditional",
+            "update_rule"
+          ],
+          [
+            "joint_counts",
+            "update_rule"
+          ]
+        ],
+        "rendering": "Common rendering unscored; not independently visually inspected."
+      },
+      "coverage": [
+        {
+          "id": "P1",
+          "nodes": [
+            "conditional",
+            "flag_rates"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "P2",
+          "nodes": [
+            "partition",
+            "prior",
+            "joint_counts"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "P3",
+          "nodes": [
+            "joint_counts"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "P4",
+          "nodes": [
+            "all_flags",
+            "posterior",
+            "update_rule"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "P5",
+          "nodes": [
+            "base_rate_change"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "P6",
+          "nodes": [
+            "word_clue"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "P7",
+          "nodes": [
+            "independence",
+            "word_scores"
+          ],
+          "status": "adequate",
+          "rationale": "Within-class independence explicit; always-cooccurring nonconstant clues violate the stated condition, although no worked duplicate-clue example."
+        },
+        {
+          "id": "P8",
+          "nodes": [
+            "probability_limit"
+          ],
+          "status": "partial",
+          "rationale": "Calibration and individual uncertainty taught; decision thresholds/error costs explicitly excluded despite being core."
+        }
+      ],
+      "edge_audit": [
+        {
+          "source": "percentages",
+          "target": "prior",
+          "classification": "defensible prerequisite",
+          "rationale": "Without percentages as group shares, 1% cannot specify the starting class sizes."
+        },
+        {
+          "source": "partition",
+          "target": "prior",
+          "classification": "defensible prerequisite",
+          "rationale": "Without complementary classes, 1% spam would not establish 99% legitimate."
+        },
+        {
+          "source": "percentages",
+          "target": "conditional",
+          "classification": "defensible prerequisite",
+          "rationale": "Without ratios within a group, the conditioned fraction has no denominator interpretation."
+        },
+        {
+          "source": "conditional",
+          "target": "flag_rates",
+          "classification": "defensible prerequisite",
+          "rationale": "Without identifying the conditioned group, the two given rates can be mistaken for the requested reversed rate."
+        },
+        {
+          "source": "prior",
+          "target": "joint_counts",
+          "classification": "defensible prerequisite",
+          "rationale": "Without class sizes, within-class flag rates cannot produce population contributions."
+        },
+        {
+          "source": "flag_rates",
+          "target": "joint_counts",
+          "classification": "defensible prerequisite",
+          "rationale": "Without the separate within-class rates, class counts cannot determine true and false flags."
+        },
+        {
+          "source": "partition",
+          "target": "all_flags",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Without disjoint exhaustive classes, adding the two contributions could double count or omit flags."
+        },
+        {
+          "source": "joint_counts",
+          "target": "all_flags",
+          "classification": "defensible prerequisite",
+          "rationale": "Without both contributions, the total flag denominator is missing."
+        },
+        {
+          "source": "all_flags",
+          "target": "posterior",
+          "classification": "defensible prerequisite",
+          "rationale": "Without the total flagged group, dividing true flags produces the wrong denominator."
+        },
+        {
+          "source": "conditional",
+          "target": "posterior",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Without conditioning on the observed flag, the requested fraction cannot be identified."
+        },
+        {
+          "source": "conditional",
+          "target": "training",
+          "classification": "defensible prerequisite",
+          "rationale": "Without within-class conditioning, one might count overall word frequency instead of class-specific frequencies."
+        },
+        {
+          "source": "conditional",
+          "target": "independence",
+          "classification": "defensible prerequisite",
+          "rationale": "Without conditioning, independence within a fixed class is easily confused with unconditional word independence."
+        },
+        {
+          "source": "word_clue",
+          "target": "word_scores",
+          "classification": "defensible prerequisite",
+          "rationale": "Without the single-clue class update, multiplying class evidence scores and then normalizing lacks its inference meaning."
+        },
+        {
+          "source": "independence",
+          "target": "word_scores",
+          "classification": "defensible prerequisite",
+          "rationale": "Without conditional independence, the joint feature probability cannot generally be replaced by separate factors."
+        },
+        {
+          "source": "training",
+          "target": "word_scores",
+          "classification": "motivation/reading-order/example mislabeled as prerequisite",
+          "rationale": "Origin/estimation of probabilities is not required to combine known probabilities."
+        },
+        {
+          "source": "word_scores",
+          "target": "probability_limit",
+          "classification": "defensible prerequisite",
+          "rationale": "Without knowing the score is produced by an assumed factorization, its distinction from empirically calibrated confidence is unexplained."
+        },
+        {
+          "source": "base_rate_change",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "Without base-rate dependence, the answer cannot explain why the same 90% detection rate gives different confidence."
+        },
+        {
+          "source": "word_scores",
+          "target": "target",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Without combined word-feature scores, the answer cannot connect the flag example to naive Bayes spam classification."
+        },
+        {
+          "source": "probability_limit",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "Without the model-versus-observed confidence limit, the answer could incorrectly treat all computed scores as reliable probabilities."
+        },
+        {
+          "source": "conditional",
+          "target": "update_rule",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The reversed question requires selecting the evidence-bearing group as the denominator."
+        },
+        {
+          "source": "joint_counts",
+          "target": "update_rule",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The numerator requires multiplying the prior by the within-class evidence rate."
+        },
+        {
+          "source": "all_flags",
+          "target": "update_rule",
+          "classification": "defensible prerequisite",
+          "rationale": "The denominator must include evidence from both mutually exclusive classes."
+        },
+        {
+          "source": "update_rule",
+          "target": "base_rate_change",
+          "classification": "defensible prerequisite",
+          "rationale": "The dependence on p follows from the weighted and normalized two-class relationship."
+        },
+        {
+          "source": "update_rule",
+          "target": "word_clue",
+          "classification": "defensible prerequisite",
+          "rationale": "The word is an instance of evidence; without the update rule, within-class word rates cannot be reversed to a spam fraction."
+        },
+        {
+          "source": "prior",
+          "target": "training",
+          "classification": "defensible prerequisite",
+          "rationale": "Without a starting class proportion, the class-frequency estimate has no role in the model."
+        },
+        {
+          "source": "posterior",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The target asks for the numerical answer at the stipulated 1% base rate."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "prior",
+            "conditional",
+            "joint_counts",
+            "all_flags",
+            "posterior",
+            "update_rule",
+            "base_rate_change"
+          ],
+          "source": "source-packet.json: probability textbook and Google metrics",
+          "locator": "Conditional definition/Equation 1.5; two-event partition; precision",
+          "status": "supported",
+          "rationale": "Denominators and Bayes construction supported; no reversed conditional claims."
+        },
+        {
+          "nodes": [
+            "word_clue",
+            "training",
+            "independence",
+            "word_scores"
+          ],
+          "source": "source-packet.json: scikit-learn Naive Bayes",
+          "locator": "Opening factorization and Bernoulli section",
+          "status": "supported",
+          "rationale": "Binary presence/absence, class frequencies, conditional assumption and normalization supported."
+        },
+        {
+          "nodes": [
+            "probability_limit"
+          ],
+          "source": "https://scikit-learn.org/stable/modules/calibration.html",
+          "locator": "Opening definition and calibration curves lines 74-83",
+          "status": "supported",
+          "rationale": "Directly checked empirical-score interpretation; calibration does not supply action costs."
+        },
+        {
+          "nodes": [
+            "joint_counts",
+            "posterior",
+            "base_rate_change",
+            "word_clue"
+          ],
+          "source": "dag.json",
+          "locator": "Numerical answers and general update formula",
+          "status": "inference/derivation checked",
+          "rationale": "Recomputed 1/12, 11:1 false:true, .00892857/.0833333/.5/.9 at stated priors; equal positive likelihoods cancel to p."
+        }
+      ],
+      "history_audit": {
+        "observations": [
+          {
+            "time": "2026-10-24T20:30:24.693856+00:00",
+            "snapshot": "observed/dag-f31ffef18580.json",
+            "sha256": "f31ffef185805683c247a5886dc8595340b5a1b4de6680ae2554deeda25d9c44",
+            "observed_original_hash_matches": true,
+            "node_count": 15,
+            "edge_count": 21
+          },
+          {
+            "time": "2026-10-24T20:32:13.090261+00:00",
+            "snapshot": "observed/dag-9b927d78ff3e.json",
+            "sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6",
+            "observed_original_hash_matches": true,
+            "node_count": 16,
+            "edge_count": 26,
+            "added_nodes": [
+              "update_rule"
+            ],
+            "answer_edits": [
+              "all_flags",
+              "joint_counts",
+              "probability_limit",
+              "training",
+              "word_clue",
+              "word_scores"
+            ],
+            "added_edges": [
+              [
+                "all_flags",
+                "update_rule"
+              ],
+              [
+                "conditional",
+                "update_rule"
+              ],
+              [
+                "joint_counts",
+                "update_rule"
+              ],
+              [
+                "posterior",
+                "target"
+              ],
+              [
+                "prior",
+                "training"
+              ],
+              [
+                "update_rule",
+                "base_rate_change"
+              ],
+              [
+                "update_rule",
+                "word_clue"
+              ]
+            ],
+            "removed_edges": [
+              [
+                "base_rate_change",
+                "word_clue"
+              ],
+              [
+                "posterior",
+                "base_rate_change"
+              ]
+            ]
+          }
+        ],
+        "assessment": "Two observed states show 15/21 to 16/26, update_rule addition and listed edge replacements. First two research notes honestly claim no changes; no independent observation of their browsing chronology.",
+        "limits": "Observed events prove saved states only. Raw browsing/tool transcripts unavailable in blind package; exact retrieval timing and thought chronology not independently established. No evidence of fabricated history."
+      },
+      "probes": [
+        {
+          "id": "PA1",
+          "status": "pass",
+          "reasoning": "joint_counts, all_flags and posterior calculate 100/9900; 90/990 flags; 90/1080=1/12. conditional/flag_rates distinguish denominators."
+        },
+        {
+          "id": "PA2",
+          "status": "pass",
+          "reasoning": "base_rate_change and update_rule hold .9/.1 fixed and change p=.5: .45/(.45+.05)=.9."
+        },
+        {
+          "id": "PA3",
+          "status": "pass",
+          "reasoning": "word_clue explicitly says equal positive class frequencies leave p unchanged. independence says other features must not alter probability within class; always-cooccurring clues violate this, so word_scores product is unjustified."
+        },
+        {
+          "id": "PA4",
+          "status": "partial",
+          "reasoning": "probability_limit says no individual certainty, but nothing relates action thresholds to deletion-versus-missed-spam costs. The evaluator must supply the missing decision lesson."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "PA1",
+          "kind": "missing_core_bridge",
+          "location": "scope.optional_not_prerequisites; probability_limit; P8/PA4",
+          "finding": "Thresholds and error costs are excluded; lack of certainty/calibration is not the decision-policy distinction. Reader cannot derive why 60% need not imply deletion or compare error costs.",
+          "smallest_repair": "Add a short probability-versus-action explanation using deletion and review thresholds/error consequences."
+        },
+        {
+          "id": "PA2",
+          "kind": "invalid_prerequisite",
+          "location": "training -> word_scores",
+          "finding": "word_scores describes multiplying given prior/feature probabilities. Learning those values from labeled data is not required to understand this arithmetic; supplied or stipulated values work equally.",
+          "smallest_repair": "Make training an optional estimation branch or scope child to estimating-and-using learned scores."
+        }
+      ],
+      "minor_findings": [
+        "Real deployment class-conditional rates can change; fixed-rate scope is clear but a deployment caveat would improve P5."
+      ]
+    },
+    {
+      "label": "evals-A",
+      "topic": "evals",
+      "hashes": {
+        "final_blind_sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a",
+        "final_original_sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a",
+        "all_manifest_files_match": true,
+        "candidate_instruction_hash": "withheld from blind judge"
+      },
+      "dimensions": {
+        "reader_fit": 4,
+        "prerequisite_coverage": 3,
+        "edge_validity": 5,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "score_rationale": {
+        "reader_fit": "Arithmetic/SQL/Python baseline checked against node answers; see coverage and findings.",
+        "prerequisite_coverage": "All frozen obligations mapped below; no omitted core is treated as optional merely because scope excludes it.",
+        "edge_validity": "Every edge inspected against actual child question and answer; classifications below.",
+        "granularity": "Material bundling identified in findings; no reward for node count.",
+        "evidence_alignment": "Packet passage entailment and supplemental primary sections checked; derivations separated.",
+        "research_record_authenticity": "Observed states agree with revisions; retrieval narratives are not independent tool transcripts.",
+        "application_utility": "Transfer reasoning restricted to graph lessons plus declared baseline; probes below."
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "validated_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural": {
+        "parse": true,
+        "unique_ids": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "orientation": "from prerequisite to dependent, explicit or unambiguous from edge reasons",
+        "target": "target",
+        "nodes": 20,
+        "edges": 29,
+        "roots": [
+          "api",
+          "arithmetic",
+          "input_output"
+        ],
+        "nodes_without_target_path": [],
+        "transitively_redundant_edges": [
+          [
+            "input_output",
+            "case"
+          ],
+          [
+            "objective",
+            "calibration"
+          ],
+          [
+            "summary",
+            "limits"
+          ],
+          [
+            "run",
+            "uncertainty"
+          ]
+        ],
+        "rendering": "Common rendering unscored; not independently visually inspected."
+      },
+      "coverage": [
+        {
+          "id": "E1",
+          "nodes": [
+            "objective",
+            "scope.optional_examples"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E2",
+          "nodes": [
+            "case",
+            "run"
+          ],
+          "status": "partial",
+          "rationale": "Case context defined; application configuration remains unnamed/undefined rather than identifying prompt/model/settings and relevant tools or retrieval."
+        },
+        {
+          "id": "E3",
+          "nodes": [
+            "grader",
+            "choice",
+            "calibration"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E4",
+          "nodes": [
+            "run",
+            "compare",
+            "variation"
+          ],
+          "status": "partial",
+          "rationale": "Output retention and controlled reruns explicit; first-run configuration details/recording not taught."
+        },
+        {
+          "id": "E5",
+          "nodes": [
+            "uncertainty",
+            "dataset",
+            "coverage"
+          ],
+          "status": "partial",
+          "rationale": "Mentions repeated attempts and diverse cases but never explicitly distinguishes a repeated case from a new sampled task."
+        },
+        {
+          "id": "E6",
+          "nodes": [
+            "summary",
+            "coverage",
+            "limits"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "E7",
+          "nodes": [
+            "improve",
+            "compare"
+          ],
+          "status": "partial",
+          "rationale": "Regression reruns present; fresh/untouched situations and overfitting caveat are explicitly scoped out."
+        },
+        {
+          "id": "E8",
+          "nodes": [
+            "objective",
+            "case",
+            "scope.optional_examples"
+          ],
+          "status": "scoped extension",
+          "rationale": "Initial task and constructed refund case concern support answers, with no action-success claim; action-taking evaluation is outside this chosen starter example."
+        }
+      ],
+      "edge_audit": [
+        {
+          "source": "input_output",
+          "target": "behavior",
+          "classification": "defensible prerequisite",
+          "rationale": "Without input/output behavior, the object being tested is undefined."
+        },
+        {
+          "source": "api",
+          "target": "variation",
+          "classification": "defensible prerequisite",
+          "rationale": "Without knowing that the API generates a response, variation has no identified source."
+        },
+        {
+          "source": "behavior",
+          "target": "objective",
+          "classification": "defensible prerequisite",
+          "rationale": "The intended application task is needed to define task-specific success."
+        },
+        {
+          "source": "objective",
+          "target": "reference",
+          "classification": "defensible prerequisite",
+          "rationale": "Without defined success, an annotation cannot express the intended judgment for a case."
+        },
+        {
+          "source": "input_output",
+          "target": "case",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The reader must identify the input being recorded and the output later judged."
+        },
+        {
+          "source": "reference",
+          "target": "case",
+          "classification": "defensible prerequisite",
+          "rationale": "A runnable input alone lacks the case information needed to establish acceptable behavior."
+        },
+        {
+          "source": "case",
+          "target": "dataset",
+          "classification": "defensible prerequisite",
+          "rationale": "A reusable collection cannot be specified before its individual case is understood."
+        },
+        {
+          "source": "grader",
+          "target": "choice",
+          "classification": "defensible prerequisite",
+          "rationale": "Without knowing a grader\u2019s function, different checking rules have no common purpose."
+        },
+        {
+          "source": "grader",
+          "target": "calibration",
+          "classification": "defensible prerequisite",
+          "rationale": "Agreement with human judgments is a check on the automated grading judgment itself."
+        },
+        {
+          "source": "objective",
+          "target": "calibration",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Human agreement matters only relative to what the application is intended to achieve."
+        },
+        {
+          "source": "dataset",
+          "target": "run",
+          "classification": "defensible prerequisite",
+          "rationale": "A run needs an identified collection of input cases."
+        },
+        {
+          "source": "grader",
+          "target": "run",
+          "classification": "defensible prerequisite",
+          "rationale": "An evaluation run requires a rule to convert outputs into assessments."
+        },
+        {
+          "source": "api",
+          "target": "run",
+          "classification": "defensible prerequisite",
+          "rationale": "Producing the application output requires the reader\u2019s existing ability to call the model."
+        },
+        {
+          "source": "run",
+          "target": "summary",
+          "classification": "defensible prerequisite",
+          "rationale": "An aggregate score needs the individual assessments produced by a run."
+        },
+        {
+          "source": "run",
+          "target": "compare",
+          "classification": "defensible prerequisite",
+          "rationale": "Comparison needs two executions with specified configurations and shared evaluation conditions."
+        },
+        {
+          "source": "summary",
+          "target": "limits",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. To interpret an aggregate score\u2019s limitations, the reader must know what it summarizes."
+        },
+        {
+          "source": "calibration",
+          "target": "limits",
+          "classification": "defensible prerequisite",
+          "rationale": "Without grader checking, the possibility that a score measures the wrong quality is unexplained."
+        },
+        {
+          "source": "compare",
+          "target": "improve",
+          "classification": "defensible prerequisite",
+          "rationale": "Without rerunning comparisons, a proposed fix has no evaluation evidence of improvement or regression."
+        },
+        {
+          "source": "choice",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "Starting requires selecting checks suited to the support requirements."
+        },
+        {
+          "source": "improve",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The requested purpose includes using evaluation evidence to improve the assistant."
+        },
+        {
+          "source": "limits",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "Explaining why to use evals requires stating what their evidence does and does not establish."
+        },
+        {
+          "source": "objective",
+          "target": "grader",
+          "classification": "defensible prerequisite",
+          "rationale": "A grading rule needs a definition of success; a reference answer is optional for rules such as format checks."
+        },
+        {
+          "source": "arithmetic",
+          "target": "summary",
+          "classification": "defensible prerequisite",
+          "rationale": "A pass rate requires understanding a fraction of observed cases."
+        },
+        {
+          "source": "dataset",
+          "target": "coverage",
+          "classification": "defensible prerequisite",
+          "rationale": "Representation concerns which cases the collection includes."
+        },
+        {
+          "source": "variation",
+          "target": "uncertainty",
+          "classification": "defensible prerequisite",
+          "rationale": "Without output variation, differing results across identical attempts have no explained source."
+        },
+        {
+          "source": "run",
+          "target": "uncertainty",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Repeated attempts require an identified execution of cases and grading."
+        },
+        {
+          "source": "summary",
+          "target": "uncertainty",
+          "classification": "defensible prerequisite",
+          "rationale": "A reported score difference requires understanding the scores being compared."
+        },
+        {
+          "source": "uncertainty",
+          "target": "limits",
+          "classification": "defensible prerequisite",
+          "rationale": "Sampling and repeated-attempt limits explain why observed differences may not settle a decision."
+        },
+        {
+          "source": "coverage",
+          "target": "limits",
+          "classification": "defensible prerequisite",
+          "rationale": "Extrapolating to production requires knowing which production situations were represented."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "behavior",
+            "variation",
+            "objective",
+            "reference",
+            "case",
+            "dataset",
+            "grader",
+            "choice",
+            "calibration",
+            "run",
+            "limits",
+            "improve",
+            "target",
+            "coverage"
+          ],
+          "source": "source-packet.json: OpenAI guides",
+          "locator": "Node-specific supplied locators",
+          "status": "supported",
+          "rationale": "Claims stated are supported; omissions concern what the graph does not teach, not false quotations."
+        },
+        {
+          "nodes": [
+            "uncertainty",
+            "compare"
+          ],
+          "source": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Structure; Step 4 stable environment",
+          "status": "supported",
+          "rationale": "Attempts and isolated mutable state support modest claims. No unsupported confidence interval is imported."
+        },
+        {
+          "nodes": [
+            "summary"
+          ],
+          "source": "dag.json and source-packet.json",
+          "locator": "Pass-count definition",
+          "status": "inference/derivation checked",
+          "rationale": "Elementary fraction arithmetic; NIST reference is not needed for this derivation."
+        }
+      ],
+      "history_audit": {
+        "observations": [
+          {
+            "time": "2026-10-24T20:30:40.741835+00:00",
+            "snapshot": "observed/dag-4ad69d09853d.json",
+            "sha256": "4ad69d09853d2a79a83c2f604694c2ee91d75c88b19bc6fa5ba885fb7eb3d9fe",
+            "observed_original_hash_matches": true,
+            "node_count": 17,
+            "edge_count": 25
+          },
+          {
+            "time": "2026-10-24T20:31:12.863567+00:00",
+            "snapshot": "observed/dag-ccebe1f57b0b.json",
+            "sha256": "ccebe1f57b0b68dcec5cd24528bff32e87d00d116ff5955baee0a8f31fd4ebb5",
+            "observed_original_hash_matches": true,
+            "node_count": 17,
+            "edge_count": 25,
+            "added_nodes": [],
+            "answer_edits": [
+              "case",
+              "objective"
+            ],
+            "added_edges": [],
+            "removed_edges": []
+          },
+          {
+            "time": "2026-10-24T20:32:21.113482+00:00",
+            "snapshot": "observed/dag-b10645906953.json",
+            "sha256": "b106459069536f6c49572b95dd9ad95e83706d29c025fdfe401d3f453513822a",
+            "observed_original_hash_matches": true,
+            "node_count": 20,
+            "edge_count": 29,
+            "added_nodes": [
+              "arithmetic",
+              "coverage",
+              "uncertainty"
+            ],
+            "answer_edits": [
+              "compare",
+              "limits",
+              "summary",
+              "target"
+            ],
+            "added_edges": [
+              [
+                "arithmetic",
+                "summary"
+              ],
+              [
+                "coverage",
+                "limits"
+              ],
+              [
+                "dataset",
+                "coverage"
+              ],
+              [
+                "objective",
+                "grader"
+              ],
+              [
+                "run",
+                "uncertainty"
+              ],
+              [
+                "summary",
+                "uncertainty"
+              ],
+              [
+                "uncertainty",
+                "limits"
+              ],
+              [
+                "variation",
+                "uncertainty"
+              ]
+            ],
+            "removed_edges": [
+              [
+                "dataset",
+                "limits"
+              ],
+              [
+                "objective",
+                "target"
+              ],
+              [
+                "reference",
+                "grader"
+              ],
+              [
+                "variation",
+                "limits"
+              ]
+            ]
+          }
+        ],
+        "assessment": "Observed initial/intermediate/final states will be checked in generated observations; claimed added arithmetic/coverage/uncertainty and removed reference->grader are visible. No fabricated-history evidence.",
+        "limits": "Observed events prove saved states only. Raw browsing/tool transcripts unavailable in blind package; exact retrieval timing and thought chronology not independently established. No evidence of fabricated history."
+      },
+      "probes": [
+        {
+          "id": "EA1",
+          "status": "partial",
+          "reasoning": "coverage rejects unrepresentative datasets, but uncertainty calls for repeats without teaching that 100 attempts on one case remain one situation. The explicit cases-versus-attempts bridge is missing."
+        },
+        {
+          "id": "EA2",
+          "status": "scoped extension",
+          "reasoning": "Answer-focused starter never claims to establish a real refund action. No credit for action evaluation; would need initial/expected state/history before expanding."
+        },
+        {
+          "id": "EA3",
+          "status": "pass",
+          "reasoning": "compare requires same cases/graders and controlled settings; calibration and uncertainty warn about grader validity and variation. Unequal conditions do not isolate improvement."
+        },
+        {
+          "id": "EA4",
+          "status": "partial",
+          "reasoning": "target says run baseline and inspect failures without previous version. However chosen application configuration lacks what to preserve (prompt/model/settings/context); evaluator must add E2/E4 boundary lesson."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "EA1",
+          "kind": "missing_core_bridge",
+          "location": "run; behavior; E2/E4/EA4",
+          "finding": "Application configuration is named but its components and preservation are not explained. A novice can compare a model name while changing prompt/context/settings without understanding the tested system.",
+          "smallest_repair": "State the prompt, model, settings and relevant retrieval/tools/state boundary; save these alongside outputs."
+        },
+        {
+          "id": "EA2",
+          "kind": "missing_core_bridge",
+          "location": "uncertainty; E5/EA1",
+          "finding": "Repeated attempts are prescribed without stating that repeats probe one case while different cases probe different situations. This leaves the benchmark one-question/100-runs inference without its explicit bridge.",
+          "smallest_repair": "Add one sentence contrasting attempts with distinct cases and their separate coverage limits."
+        },
+        {
+          "id": "EA3",
+          "kind": "missing_core_bridge",
+          "location": "scope.limits; improve; E7",
+          "finding": "Test-set overfitting controls are explicitly excluded, but the frozen core requires explaining why tuning familiar cases does not establish improvement on new situations.",
+          "smallest_repair": "Add a novice caveat and fresh/untouched-case check; no formal statistics needed."
+        }
+      ],
+      "minor_findings": [
+        "E8 extension interpretation relies on the consistently answer-focused starter. An explicit answer-only scope sentence would remove ambiguity.",
+        "choice->target is defensible because target actually includes selecting graders; compare->improve concerns evaluating a change, not prerequisite to first execution."
+      ]
+    },
+    {
+      "label": "backpropagation-A",
+      "topic": "backpropagation",
+      "hashes": {
+        "final_blind_sha256": "d8a14289bafbf437479a0e78a39ccad585eb147e9b023624ac04817c0c807777",
+        "final_original_sha256": "d8a14289bafbf437479a0e78a39ccad585eb147e9b023624ac04817c0c807777",
+        "all_manifest_files_match": true,
+        "candidate_instruction_hash": "withheld from blind judge"
+      },
+      "dimensions": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "score_rationale": {
+        "reader_fit": "Arithmetic/SQL/Python baseline checked against node answers; see coverage and findings.",
+        "prerequisite_coverage": "All frozen obligations mapped below; no omitted core is treated as optional merely because scope excludes it.",
+        "edge_validity": "Every edge inspected against actual child question and answer; classifications below.",
+        "granularity": "Material bundling identified in findings; no reward for node count.",
+        "evidence_alignment": "Packet passage entailment and supplemental primary sections checked; derivations separated.",
+        "research_record_authenticity": "Observed states agree with revisions; retrieval narratives are not independent tool transcripts.",
+        "application_utility": "Transfer reasoning restricted to graph lessons plus declared baseline; probes below."
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "validated_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural": {
+        "parse": true,
+        "unique_ids": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "orientation": "from prerequisite to dependent, explicit or unambiguous from edge reasons",
+        "target": "target",
+        "nodes": 16,
+        "edges": 24,
+        "roots": [
+          "arithmetic"
+        ],
+        "nodes_without_target_path": [],
+        "transitively_redundant_edges": [
+          [
+            "parameters",
+            "reverse"
+          ],
+          [
+            "loss",
+            "reverse"
+          ]
+        ],
+        "rendering": "Common rendering unscored; not independently visually inspected."
+      },
+      "coverage": [
+        {
+          "id": "B1",
+          "nodes": [
+            "parameters",
+            "trace_forward"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B2",
+          "nodes": [
+            "loss",
+            "trace_forward"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B3",
+          "nodes": [
+            "sensitivity",
+            "local_rules"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B4",
+          "nodes": [
+            "chain",
+            "trace_backward"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B5",
+          "nodes": [
+            "reverse",
+            "trace_backward"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B6",
+          "nodes": [
+            "branch",
+            "trace_backward"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B7",
+          "nodes": [
+            "update",
+            "trace_update",
+            "limits"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        },
+        {
+          "id": "B8",
+          "nodes": [
+            "sensitivity",
+            "gradient",
+            "target",
+            "limits"
+          ],
+          "status": "adequate",
+          "rationale": "Concept and bridge explicit in these answers."
+        }
+      ],
+      "edge_audit": [
+        {
+          "source": "arithmetic",
+          "target": "parameters",
+          "classification": "defensible prerequisite",
+          "rationale": "Weighted sums require multiplication and addition."
+        },
+        {
+          "source": "parameters",
+          "target": "activation",
+          "classification": "explicitly conditional prerequisite",
+          "rationale": "Required by the declared worked architecture: An activation acts on the weighted sum whose role must be understood."
+        },
+        {
+          "source": "parameters",
+          "target": "loss",
+          "classification": "defensible prerequisite",
+          "rationale": "Loss compares network outputs to desired outputs."
+        },
+        {
+          "source": "arithmetic",
+          "target": "sensitivity",
+          "classification": "defensible prerequisite",
+          "rationale": "A ratio of changes and signed scaling use known arithmetic."
+        },
+        {
+          "source": "sensitivity",
+          "target": "local_rules",
+          "classification": "defensible prerequisite",
+          "rationale": "Local rules quantify the tiny-change effect just defined."
+        },
+        {
+          "source": "activation",
+          "target": "local_rules",
+          "classification": "explicitly conditional prerequisite",
+          "rationale": "Required by the declared worked architecture: The ReLU sensitivity requires its piecewise forward rule."
+        },
+        {
+          "source": "local_rules",
+          "target": "chain",
+          "classification": "motivation/reading-order/example mislabeled as prerequisite",
+          "rationale": "The child uses abstract factors already explained by sensitivity, not the specific square/ReLU bundle."
+        },
+        {
+          "source": "sensitivity",
+          "target": "branch",
+          "classification": "defensible prerequisite",
+          "rationale": "Combining contributions requires understanding what each sensitivity measures."
+        },
+        {
+          "source": "chain",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "Backward multiplication is the chain rule applied locally."
+        },
+        {
+          "source": "branch",
+          "target": "reverse",
+          "classification": "defensible prerequisite",
+          "rationale": "The backward algorithm must accumulate every use of shared values."
+        },
+        {
+          "source": "parameters",
+          "target": "reverse",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. Saved intermediate values come from evaluating the network."
+        },
+        {
+          "source": "loss",
+          "target": "reverse",
+          "classification": "redundant but valid",
+          "rationale": "True information dependence with another prerequisite path. The scalar loss is the backward starting point."
+        },
+        {
+          "source": "reverse",
+          "target": "gradient",
+          "classification": "defensible prerequisite",
+          "rationale": "Collecting the backward results at parameters yields the gradient."
+        },
+        {
+          "source": "gradient",
+          "target": "update",
+          "classification": "defensible prerequisite",
+          "rationale": "Parameter updates need the corresponding signed sensitivities."
+        },
+        {
+          "source": "update",
+          "target": "limits",
+          "classification": "defensible prerequisite",
+          "rationale": "Step-size limitations and repeated training qualify the learning rule."
+        },
+        {
+          "source": "activation",
+          "target": "trace_forward",
+          "classification": "explicitly conditional prerequisite",
+          "rationale": "Required by the declared worked architecture: The trace needs the exact hidden activation calculation."
+        },
+        {
+          "source": "loss",
+          "target": "trace_forward",
+          "classification": "defensible prerequisite",
+          "rationale": "The trace needs an explicit scalar error formula."
+        },
+        {
+          "source": "trace_forward",
+          "target": "trace_backward",
+          "classification": "defensible prerequisite",
+          "rationale": "Local backward factors depend on the numerical forward values."
+        },
+        {
+          "source": "reverse",
+          "target": "trace_backward",
+          "classification": "defensible prerequisite",
+          "rationale": "The numerical trace needs the backward multiplication and accumulation procedure."
+        },
+        {
+          "source": "trace_backward",
+          "target": "trace_update",
+          "classification": "defensible prerequisite",
+          "rationale": "Parameter changes need the computed parameter sensitivities."
+        },
+        {
+          "source": "update",
+          "target": "trace_update",
+          "classification": "defensible prerequisite",
+          "rationale": "The numerical changes instantiate the chosen update rule."
+        },
+        {
+          "source": "trace_update",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The full numerical example makes the learning mechanism traceable."
+        },
+        {
+          "source": "limits",
+          "target": "target",
+          "classification": "defensible prerequisite",
+          "rationale": "The answer must distinguish local sensitivity and training progress from stronger guarantees."
+        },
+        {
+          "source": "loss",
+          "target": "local_rules",
+          "classification": "explicitly conditional prerequisite",
+          "rationale": "Required by the declared worked architecture: Deriving p-y requires the selected half-squared loss and a fixed target y."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "parameters",
+            "loss",
+            "sensitivity",
+            "chain",
+            "branch",
+            "reverse",
+            "gradient",
+            "update",
+            "limits",
+            "target"
+          ],
+          "source": "source-packet.json: Google, CS231n, Sanderson, PyTorch",
+          "locator": "Node-specific named sections",
+          "status": "supported",
+          "rationale": "Core mechanism, scalar loss, branch accumulation and optimizer distinction supported."
+        },
+        {
+          "nodes": [
+            "activation",
+            "local_rules"
+          ],
+          "source": "https://developers.google.com/machine-learning/crash-course/neural-networks/activation-functions",
+          "locator": "ReLU lines 106-116",
+          "status": "inference/derivation checked",
+          "rationale": "Forward definition checked directly; derivative away from zero and square expansion checked as elementary deductions."
+        },
+        {
+          "nodes": [
+            "limits"
+          ],
+          "source": "https://docs.pytorch.org/docs/2.14/notes/autograd.html",
+          "locator": "Gradients for non-differentiable functions",
+          "status": "supported",
+          "rationale": "Explicit convention permitted at kinks; no universal mathematical derivative claimed."
+        },
+        {
+          "nodes": [
+            "trace_forward",
+            "trace_backward",
+            "trace_update"
+          ],
+          "source": "dag.json",
+          "locator": "Trace answers",
+          "status": "inference/derivation checked",
+          "rationale": "Recomputed p=(2,1),L=1, gradients (1,.5,2,-2), updated p=(1.4,1.225),L=.3803125; predicted change -.925 differs correctly from actual -.6196875."
+        }
+      ],
+      "history_audit": {
+        "observations": [
+          {
+            "time": "2026-10-24T20:31:02.820604+00:00",
+            "snapshot": "observed/dag.initial-63d7490ea090.json",
+            "sha256": "63d7490ea090d44dafd86775a6d8c6d22187d87ef4fdff6d2e077911121236db",
+            "observed_original_hash_matches": true,
+            "node_count": 16,
+            "edge_count": 23
+          },
+          {
+            "time": "2026-10-24T20:31:02.820976+00:00",
+            "snapshot": "observed/dag-63d7490ea090.json",
+            "sha256": "63d7490ea090d44dafd86775a6d8c6d22187d87ef4fdff6d2e077911121236db",
+            "observed_original_hash_matches": true,
+            "node_count": 16,
+            "edge_count": 23,
+            "added_nodes": [],
+            "answer_edits": [],
+            "added_edges": [],
+            "removed_edges": []
+          },
+          {
+            "time": "2026-10-24T20:32:17.104596+00:00",
+            "snapshot": "observed/dag-d8a14289bafb.json",
+            "sha256": "d8a14289bafbf437479a0e78a39ccad585eb147e9b023624ac04817c0c807777",
+            "observed_original_hash_matches": true,
+            "node_count": 16,
+            "edge_count": 24,
+            "added_nodes": [],
+            "answer_edits": [
+              "activation",
+              "limits",
+              "local_rules",
+              "target",
+              "trace_backward",
+              "trace_update"
+            ],
+            "added_edges": [
+              [
+                "loss",
+                "local_rules"
+              ]
+            ],
+            "removed_edges": []
+          }
+        ],
+        "assessment": "Observed 16/23 initial to 16/24 final supports loss->local_rules addition and completed arithmetic/evidence. Duplicate initial saved files are not extra iterations.",
+        "limits": "Observed events prove saved states only. Raw browsing/tool transcripts unavailable in blind package; exact retrieval timing and thought chronology not independently established. No evidence of fabricated history."
+      },
+      "probes": [
+        {
+          "id": "BA1",
+          "status": "pass",
+          "reasoning": "local_rules derives half-square sensitivity p-y; product factor x then gives 2*3=6. parameters/loss compute p=6,L=2."
+        },
+        {
+          "id": "BA2",
+          "status": "pass",
+          "reasoning": "update formula yields w=1.4; loss recomputation .02. limits and trace_update distinguish local estimate and actual finite change."
+        },
+        {
+          "id": "BA3",
+          "status": "pass",
+          "reasoning": "branch and trace_backward explicitly add separate shared-value contributions; product factor 3 and direct factor 1 give 6+2=8."
+        },
+        {
+          "id": "BA4",
+          "status": "pass",
+          "reasoning": "gradient holds others fixed locally; target rejects historical blame/global success, limits bounds single example. Zero cannot prove future quality or global irrelevance."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "BA1",
+          "kind": "invalid_prerequisite_bundle",
+          "location": "local_rules -> chain",
+          "finding": "chain explains generic multiplication of factors a and b using only the sensitivity meaning and arithmetic. Requiring the bundled addition/product/square/ReLU rules imports chosen loss and activation into this generic concept.",
+          "smallest_repair": "Use sensitivity->chain; connect local_rules directly to reverse or trace_backward where these operations are actually used."
+        }
+      ],
+      "minor_findings": [
+        "Accidental blinding exposure: run-notes explicitly identifies assigned snapshot as old. No other identities inferred.",
+        "reverse->gradient is defensible here: question explicitly asks what the completed backward pass provides, unlike a generic gradient definition."
+      ]
+    }
+  ]
+}

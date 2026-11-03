@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How noise-cancelling headphones cancel noise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{--canvas:#f5f4f0;--surface:#fff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font:400 17px/1.75 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:768px;margin:0 auto;padding:48px 24px 80px}
+@media (max-width:600px){main{padding:32px 20px 64px}body{font-size:16px}}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.25;margin:0}
+h1{font-size:2.1rem;margin-bottom:28px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.4rem;margin:56px 0 14px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.05rem;margin:0 0 4px}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,button:focus-visible,input:focus-visible,.scroll:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+.sources{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);margin:8px 0 0}
+.sources>div{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.sources>div:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:700px){.sources{grid-template-columns:1fr}}
+.src-title{font-family:Sora,system-ui,sans-serif;font-weight:600;font-size:1rem;line-height:1.4;margin:0 0 4px;letter-spacing:-0.01em}
+.src-meta{font-style:italic;color:var(--muted);font-size:.9rem;line-height:1.55;margin:0 0 10px}
+.sources p:last-child{margin:0;font-size:.95rem;line-height:1.65}
+.answer{font-size:1.08rem}
+figure{margin:28px 0 30px}
+figure.wide{margin-left:calc(50% - min(50vw - 24px, 480px));margin-right:calc(50% - min(50vw - 24px, 480px))}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;border:1px solid var(--border);background:#fff}
+figcaption{font-size:.9rem;line-height:1.6;color:var(--muted);margin-top:10px}
+figcaption a{color:var(--muted)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:600px){.scroll img{max-width:none;width:640px}}
+.math{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface);border:1px solid var(--border);padding:1px 6px}
+/* interactive */
+.lab{background:var(--surface);border:1px solid var(--border);padding:24px;margin:28px 0}
+.lab h3{margin-bottom:12px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;margin-bottom:16px}
+@media (max-width:600px){.controls{grid-template-columns:1fr}}
+.controls label{display:block;font-weight:500;font-size:.92rem;margin-bottom:4px}
+.controls output{font-family:Sora,system-ui,sans-serif;font-weight:600}
+input[type=range]{width:100%;accent-color:var(--blue)}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+button{font:500 .88rem/1 Inter,system-ui,sans-serif;color:var(--text);background:var(--canvas);border:1px solid var(--border);padding:9px 12px;cursor:pointer}
+button:hover{border-color:var(--text)}
+.readout{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-left:1px solid var(--border);margin:0 0 16px}
+.readout>div{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 14px}
+.readout .k{font-size:.8rem;color:var(--muted);font-weight:500;line-height:1.3}
+.readout .v{font-family:Sora,system-ui,sans-serif;font-weight:600;font-size:1.3rem;line-height:1.3}
+@media (max-width:480px){.readout{grid-template-columns:1fr}}
+canvas{display:block;width:100%;height:auto;background:#fff}
+.legend{font-size:.85rem;color:var(--muted);margin:6px 0 14px;line-height:1.6}
+.sw{display:inline-block;width:18px;height:0;border-top:3px solid;vertical-align:middle;margin:0 5px 0 10px}
+.sw.dash{border-top-style:dashed}
+.note{font-size:.88rem;color:var(--muted);line-height:1.6;margin:12px 0 0}
+</style>
+</head>
+<body>
+<main>
+<h1>How noise-cancelling headphones cancel noise<span class="dot">.</span></h1>
+
+<section aria-labelledby="src-h">
+<h2 id="src-h" style="margin-top:0;border-top:0;padding-top:0">Sources</h2>
+<div class="sources">
+<div>
+<p class="src-title"><a href="https://arxiv.org/abs/2306.01425v2">Active Noise Control in The New Century: The Role and Prospect of Signal Processing</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="src-meta">Dongyuan Shi, Bhan Lam, and colleagues · conference paper preprint, arXiv (submitted to Inter-Noise 2023) · June 2023</p>
+<p>Written by active noise control researchers at Nanyang Technological University and the University of Southampton, one of whom co-wrote the field's standard tutorial. A short review of others' results, so its numbers come from ducts and aircraft, not headphones.</p>
+</div>
+<div>
+<p class="src-title"><a href="https://audioxpress.com/article/development-design-the-impact-of-microphone-specifications-on-active-noise-cancellation-performance">The Impact of Microphone Specifications on Active Noise Cancellation Performance</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="src-meta">Nikolay Skovorodnikov, Knowles · engineering article, audioXpress · November 2023</p>
+<p>An applications engineer at a maker of earbud microphones, working through real tuning steps. His figures are design examples, not tests of a product, and his employer has a stake in microphone specifications.</p>
+</div>
+<div>
+<p class="src-title"><a href="https://www.rtings.com/headphones/learn/research/noise-isolation">ANC Headphones vs Earmuffs: How We Used Both To Improve Our Noise Isolation Tests</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="src-meta">Nicholas Lim · lab methodology article, RTINGS.com · April 2024, updated September 2025</p>
+<p>An independent lab that buys headphones and measures them on an artificial head with a documented method. It covers a few products on one rig, so exact numbers shift with fit and model.</p>
+</div>
+<div>
+<p class="src-title"><a href="https://doi.org/10.3389/fpsyg.2014.00587">The perceptual significance of high-frequency energy in the human voice</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="src-meta">Brian B. Monson, Eric J. Hunter, Andrew J. Lotto, and Brad H. Story · review article, Frontiers in Psychology · June 2014</p>
+<p>Speech scientists reviewing a century of acoustic measurements of the voice, peer reviewed. Used here only to locate a voice's energy; its spectrogram is one male talker.</p>
+</div>
+</div>
+</section>
+
+<h2>The short answer</h2>
+<p class="answer">Two sounds at the same spot add, so a speaker playing the exact mirror image of the noise leaves almost nothing at your ear. The mirror image must land within a few degrees of the right point in the wave's cycle. Any delay left in the electronics is a tiny slice of a slow wave's cycle but a large slice of a fast one's, so headphones that remove 20–30 dB of a low engine hum do almost nothing above about 1 kHz. A hum also repeats steadily; a voice carries much of its meaning in the range from 1 kHz up to about 4 kHz and changes every syllable, so the ear cups have to block it physically.</p>
+
+<h2>Sound adds up, so it can also subtract</h2>
+<p>Sound is a rise and fall in air pressure travelling at about 343 metres per second; the rises per second are its frequency in hertz (Hz). Where two sounds meet, the pressures add, which is called superposition. Shift one wave by half a cycle so its peaks fall on the other's troughs, and equal waves cancel. That shift is measured as phase, 0° to 360° per cycle, so a perfect mirror image is 180° out of phase. The added sound is anti-noise, and the cancelling is destructive interference.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Figure 1, scrollable">
+<a href="assets/shi2023-fig1-full.jpg"><img src="assets/shi2023-fig1.jpg" width="1600" height="792" alt="Patent drawing: in a duct, microphone M picks up sound S1 from source A; circuit V drives loudspeaker L, which emits wave S2, drawn dashed as the mirror image of S1. Panel b shows a waveform and its inverted copy."></a>
+</div>
+<figcaption>Paul Lueg's 1936 patent already had the whole idea: microphone M hears noise S1 in a duct, circuit V inverts it, and loudspeaker L launches the mirror-image wave S2 (dashed) so the two cancel; panel (b) shows a waveform and its inverted copy. A drawing, not a measurement. Shi et al. 2023, Figure 1 (CC BY-NC-SA 4.0). <a href="assets/shi2023-fig1-full.jpg">Full-size image</a>.</figcaption>
+</figure>
+
+<h2>What is inside the headphone</h2>
+<p>Microphones hear the noise, a chip inverts it, and the music speaker plays the anti-noise. A <strong>feedforward</strong> microphone outside the cup hears noise early, giving the chip a head start; a <strong>feedback</strong> microphone inside hears what is left and pushes it toward zero. Hybrid designs use both. The cups also block sound physically (passive isolation); active noise cancellation (ANC) is the electronic part on top.</p>
+<figure>
+<a href="assets/rtings-hybrid-illustration-large.jpg"><img src="assets/rtings-hybrid-800.jpg" width="800" height="800" alt="Diagram of an ear cup over an ear, showing a feedback mic inside the cup near the ear, a speaker, a feedforward mic on the outside of the cup, and an ANC circuit that also receives the music or call input." style="width:min(100%,420px)"></a>
+<figcaption>One speaker plays music and anti-noise; the outside mic hears noise early, the inside mic hears what reaches the ear. Earbuds place the mics differently. Drawing credited to Creative, in Lim, RTINGS.com, 2025; reuse terms not stated.</figcaption>
+</figure>
+
+<h2>The anti-noise must be almost perfect</h2>
+<p>Anti-noise slightly too quiet or slightly late lets part of the noise survive. Skovorodnikov's chart shows how much, as it misses on loudness (horizontal) and phase (vertical).</p>
+<figure>
+<a href="assets/ax-20231225085347_Figure3.jpg"><img src="assets/ax-20231225085347_Figure3.jpg" width="1200" height="983" alt="Heat map titled Sinewave cancellation, dB. Horizontal axis magnitude difference 0 to 10 dB; vertical axis phase difference 135 to 180 degrees. Only the top-left corner near 180 degrees and 0 dB is black, meaning about 30 dB of cancellation; most of the map is yellow to white, meaning little cancellation or an increase." style="width:min(100%,560px)"></a>
+<figcaption>Only the black corner, within a few degrees and a fraction of a decibel of a perfect match, reaches 25–30 dB. About 45° or 6 dB off, the reduction is gone; further out the sum is louder than the noise. A calculation for a pure tone, not a measurement. Skovorodnikov, audioXpress 2023, Figure 3; reuse terms not stated.</figcaption>
+</figure>
+<p>A decibel (dB) is a log scale: −10 dB is a tenth of the sound power, heard as roughly half as loud. A clearly audible 10 dB reduction, Skovorodnikov writes, needs "a magnitude mismatch of up to 2dB and phase deviation from the ideal of 180° up to 20°." Adding two waves shows why: correctly sized anti-noise that misses by φ leaves <span class="math">2 − 2·cos φ</span> of the power, −29 dB at 2°, −15 dB at 10°, 0 dB at 60°.</p>
+
+<h2>Why the same delay hurts high pitches more</h2>
+<p>Microphone, chip and speaker each take time; Skovorodnikov's example microphone alone adds 24 microseconds (µs). The feedforward head start offsets some of it, but a headphone is so small that the head start is tiny, "limiting the available processing time window," as Shi and colleagues note. A remaining timing error τ becomes a phase error of <span class="math">360° × f × τ</span>, growing with frequency f.</p>
+<p>Suppose 50 µs of error remains. For a 100 Hz hum, whose cycle lasts 10,000 µs, that is 1.8°, and about 30 dB is still removed. For a 2 kHz consonant, with a 500 µs cycle, it is 36°, and only about 4 dB goes. At 3.3 kHz it reaches 60° and cancellation stops. Hence "lower system latency improves the high-frequency limit," in Skovorodnikov's words; halving the delay doubles the ceiling but keeps the pattern.</p>
+<div class="lab" id="lab">
+<h3>Try it: one delay, many frequencies</h3>
+<p style="font-size:.95rem">Pick a tone and the timing error left after the electronics do their best. The top plot shows noise, anti-noise and what reaches your ear; the bottom plot shows what this same error does at every frequency.</p>
+<div class="presets" role="group" aria-label="Presets">
+<button type="button" data-f="100" data-t="50">Engine hum, 100 Hz</button>
+<button type="button" data-f="2000" data-t="50">Consonant, 2 kHz</button>
+<button type="button" data-f="100" data-t="50" data-reset="1">Reset</button>
+</div>
+<div class="controls">
+<div><label for="freq">Noise frequency: <output id="freqOut" for="freq">100 Hz</output></label>
+<input id="freq" type="range" min="0" max="1000" step="1" value="0" aria-describedby="freqHelp"><div id="freqHelp" class="note" style="margin:0">50 Hz to 5 kHz, logarithmic</div></div>
+<div><label for="tau">Remaining timing error: <output id="tauOut" for="tau">50 µs</output></label>
+<input id="tau" type="range" min="0" max="100" step="1" value="50" aria-describedby="tauHelp"><div id="tauHelp" class="note" style="margin:0">0 to 100 microseconds</div></div>
+</div>
+<div class="readout" aria-live="polite">
+<div><div class="k">Phase error</div><div class="v" id="phOut">1.8°</div></div>
+<div><div class="k">Change at your ear</div><div class="v" id="dbOut">−30.1 dB</div></div>
+<div><div class="k">Sound power left</div><div class="v" id="pctOut">under 0.1%</div></div>
+</div>
+<canvas id="wave" width="1400" height="420" role="img" aria-label="Waveforms of noise, anti-noise and their sum"></canvas>
+<div class="legend"><span class="sw" style="border-color:#646c77"></span>noise<span class="sw dash" style="border-color:#2f6c9e"></span>anti-noise<span class="sw" style="border-color:#bf3030"></span>what reaches the ear</div>
+<canvas id="curve" width="1400" height="460" role="img" aria-label="Cancellation versus frequency for the current timing error"></canvas>
+<noscript><p class="note">The interactive plots need JavaScript. With a 50 µs timing error, the model gives about −30 dB at 100 Hz, −10 dB at 1 kHz, −4 dB at 2 kHz, 0 dB at 3.3 kHz and +3 dB at 5 kHz.</p></noscript>
+<p class="note">Model: a pure tone, anti-noise of exactly the right loudness, and a timing error that the system has not corrected. Real headphones also miss on loudness and face the limits below, so this is the best case for a given delay. The 50 µs default is illustrative, matching the tens of microseconds of converter and processing delay Skovorodnikov discusses. The plot clips below −40 dB.</p>
+</div>
+
+
+<h2>The feedback loop has to back off at high frequencies</h2>
+<p>The feedback microphone's signal runs through the chip and speaker back into the same microphone, a loop. With delay in the loop, too much strength reinforces the sound instead of correcting it, and the headphone can howl. So the controller cuts its strength at high frequencies and slightly amplifies noise in the hand-over band, the waterbed effect.</p>
+<figure>
+<a href="assets/ax-20231225085613_Figure8.jpg"><img src="assets/ax-20231225085613_Figure8.jpg" width="1200" height="992" alt="Line chart titled Feed Back ANC: cancellation in dB versus frequency from 10 Hz to 20 kHz. The curve dips to about minus 17 dB between 80 and 250 Hz, rises above zero around 600 Hz, peaks near plus 7 dB at about 800 Hz and plus 8 dB near 3 kHz, then settles at zero above 5 kHz." style="width:min(100%,560px)"></a>
+<figcaption>A tuned feedback controller removes about 15–17 dB between roughly 80 and 250 Hz, then adds up to 7–8 dB between about 600 Hz and 3 kHz, the waterbed; above 5 kHz it does nothing. One design example, not a product; the peak near 25 Hz comes from the filter's low edge. Passive isolation is strong exactly where the waterbed sits, which hides it. Skovorodnikov, audioXpress 2023, Figure 8; reuse terms not stated.</figcaption>
+</figure>
+
+<h2>What measurements of real headphones show</h2>
+<p>RTINGS measured three flagship headphones on an artificial head with ANC on and off, using pink noise, a steady hiss of every frequency. Lower is quieter.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Figure: measured noise isolation, scrollable">
+<a href="assets/rtings-noise-isolation-anc-on-and-off-2025-large.jpg"><img src="assets/rtings-anc-on-off-1600.jpg" width="1600" height="1167" alt="Noise isolation graph from 20 Hz to 20 kHz for Sony WH-1000XM6, Bose QuietComfort Ultra and Apple AirPods Max, each with ANC on and ANC off. Below 1 kHz, ANC-on curves sit 20 to 35 decibels below ANC-off curves; the pairs merge near 1 kHz and stay together, around minus 25 to minus 35 decibels, up to 20 kHz."></a>
+</div>
+<figcaption>Dark lines are ANC off (cups alone), light lines ANC on. Below about 200 Hz the cups alone do almost nothing; from about 50 to 400 Hz, ANC adds roughly 15–35 dB. The pairs merge near 1 kHz, and above that passive isolation alone gives −25 to −35 dB. Three products on one test head; fit changes the numbers. Lim, RTINGS.com, 2025; reuse terms not stated. <a href="assets/rtings-noise-isolation-anc-on-and-off-2025-large.jpg">Full-size image</a>.</figcaption>
+</figure>
+<p>Electronics own the bass, where long waves pass through cup materials easily; cups own the treble. In RTINGS's words, "ANC doesn't improve upper-mid and treble range attenuation over passive isolation."</p>
+
+<h2>Why an engine hum is the easy case</h2>
+<p>A hum is low, and it repeats. Engines, propellers and fans turn at a steady rate, so their sound is a few steady tones; Shi and colleagues describe aircraft cabin noise at "the fundamental and harmonics of the blade passing frequency," and report about 30 dB of adaptive cancellation of such tones in a duct. Each cycle looks like the last, so the system only has to keep its inverted copy lined up, and at 100 Hz that copy tolerates 50 µs of error.</p>
+
+<h2>Why voices get through</h2>
+<p>A voice fails on both counts. Much of it sits too high, and it never holds still.</p>
+<figure>
+<a href="assets/monson2014-fig1.jpg"><img src="assets/monson2014-fig1.jpg" width="767" height="554" alt="Spectrogram of a male talker over 3 seconds, frequency on a log scale from about 30 Hz to 20 kHz. Stacked red bands, the voice's harmonics, start near 100 Hz and reach up to about 4 kHz; they bend as pitch changes and stop and start with each syllable. Bursts of energy above 3 kHz mark consonants. A dashed line near 5.7 kHz marks the start of the high-frequency region." style="width:min(100%,560px)"></a>
+<figcaption>Three seconds of one man speaking: time left to right, frequency bottom to top, loudness as colour. The red bands, the voice's harmonics, start near 100 Hz, inside ANC's range, but stack up to about 4 kHz, curve as pitch moves and stop and start with each syllable; bright bursts above 3 kHz are consonants. Women's and children's voices sit higher. Monson et al. 2014, Frontiers in Psychology, Figure 1 (CC BY).</figcaption>
+</figure>
+<p>Monson and colleagues recount that early telephone research found about 95% of speech understood with everything above 4 kHz removed, which is why phone lines carried 300 Hz to 3.4 kHz. Most of that band lies above the measured 1 kHz ceiling, where delay, the waterbed and the ear's own resonance around 2–3 kHz, which Skovorodnikov names as a limit on filter fit, all work against cancellation. The cancelled region also shrinks as frequency rises, as Shi and colleagues note for car cabins; at 2 kHz, with a 17 cm wavelength, the gap between microphone and eardrum starts to matter.</p>
+<p>The lowest harmonics do fall in the cancelled band but shift too fast to track. RTINGS found one popular model took "around three full seconds to reach their maximum attenuation" of a steady tone, and Shi and colleagues note most headphones use fixed filters because their chips cannot run better adaptive methods fast enough. Speech comes through muffled by the cups, not cancelled.</p>
+
+<h2>What this means when you wear them</h2>
+<p>The headphones are two systems: electronics remove steady low sounds such as engines and air conditioning, and the cups' seal blocks most of speech, so a poor seal lets voices in however good the electronics are. Faster parts raise the ceiling, but no delay is zero and a changing sound cannot be predicted like a hum. Wind on the outside microphones is a further limit: RTINGS found it can make some headphones louder with ANC on.</p>
+</main>
+<script>
+(function(){
+  var C={text:'#101527',muted:'#646c77',border:'#cbd0d3',blue:'#2f6c9e',red:'#bf3030',green:'#46734d'};
+  var fEl=document.getElementById('freq'),tEl=document.getElementById('tau');
+  var fOut=document.getElementById('freqOut'),tOut=document.getElementById('tauOut');
+  var ph=document.getElementById('phOut'),db=document.getElementById('dbOut'),pct=document.getElementById('pctOut');
+  var wave=document.getElementById('wave'),curve=document.getElementById('curve');
+  var FMIN=50,FMAX=5000,exactF=100;
+  function s2f(v){return FMIN*Math.pow(FMAX/FMIN,v/1000);}
+  function f2s(f){return Math.round(1000*Math.log(f/FMIN)/Math.log(FMAX/FMIN));}
+  function fmtF(f){return f>=1000?(f/1000).toFixed(f>=2000?1:2).replace(/\.?0+$/,'')+' kHz':Math.round(f)+' Hz';}
+  function resid(f,tau){var p=2*Math.PI*f*tau*1e-6;return 2-2*Math.cos(p);}
+  function toDb(r){return r<=0?-Infinity:10*Math.log10(r);}
+  function fmtDb(d){if(d===-Infinity||d<-60)return 'below −60 dB';var s=d.toFixed(1);if(s==='-0.0'||s==='0.0')return '0.0 dB (no change)';return (d>0?'+':'−')+Math.abs(d).toFixed(1)+' dB'+(d>0?' (louder)':'');}
+  function setup(cv){var r=cv.getBoundingClientRect(),dpr=window.devicePixelRatio||1;var w=Math.max(280,r.width);var h=w*(cv===wave?0.3:0.33);if(w<500)h=w*(cv===wave?0.5:0.55);cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.height=h+'px';var x=cv.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);return {x:x,w:w,h:h};}
+  function font(x,sz,wt){x.font=(wt||400)+' '+sz+'px Inter, system-ui, sans-serif';}
+  function drawWave(f,tau){
+    var g=setup(wave),x=g.x,w=g.w,h=g.h,L=40,R=12,T=14,B=26;
+    x.clearRect(0,0,w,h);
+    var pw=w-L-R,phh=h-T-B,mid=T+phh/2,amp=phh*0.38;
+    x.strokeStyle=C.border;x.lineWidth=1;x.beginPath();x.moveTo(L,mid);x.lineTo(w-R,mid);x.stroke();
+    var cycles=3,period=1/f,span=cycles*period; // seconds
+    function y(v){return mid-v*amp/1.0;}
+    function plot(fn,col,dash,lw){x.save();x.strokeStyle=col;x.lineWidth=lw;x.setLineDash(dash||[]);x.beginPath();for(var i=0;i<=pw;i++){var t=i/pw*span;var v=fn(t);var yy=Math.max(T,Math.min(h-B,y(v)));if(i===0)x.moveTo(L+i,yy);else x.lineTo(L+i,yy);}x.stroke();x.restore();}
+    var p=2*Math.PI*f*tau*1e-6;
+    var n=function(t){return Math.sin(2*Math.PI*f*t);};
+    var a=function(t){return -Math.sin(2*Math.PI*f*t-p);};
+    plot(n,C.muted,[],2);plot(a,C.blue,[7,5],2);plot(function(t){return n(t)+a(t);},C.red,[],3);
+    font(x,12,500);x.fillStyle=C.muted;x.textAlign='left';
+    var ms=span*1000;x.fillText('0',L,h-8);x.textAlign='right';x.fillText((ms<1?(ms*1000).toFixed(0)+' µs':ms.toFixed(ms<10?1:0)+' ms'),w-R,h-8);
+    x.textAlign='center';x.fillText('time (3 cycles)',L+pw/2,h-8);
+    x.save();x.translate(14,mid);x.rotate(-Math.PI/2);x.fillText('pressure',0,0);x.restore();
+  }
+  function drawCurve(f,tau){
+    var g=setup(curve),x=g.x,w=g.w,h=g.h,L=48,R=14,T=14,B=40;
+    x.clearRect(0,0,w,h);
+    var pw=w-L-R,phh=h-T-B,DMIN=-40,DMAX=10;
+    function X(fr){return L+pw*Math.log(fr/FMIN)/Math.log(FMAX/FMIN);}
+    function Y(d){d=Math.max(DMIN,Math.min(DMAX,d));return T+phh*(DMAX-d)/(DMAX-DMIN);}
+    font(x,11,500);x.fillStyle=C.muted;x.strokeStyle=C.border;x.lineWidth=1;
+    [10,0,-10,-20,-30,-40].forEach(function(d){x.beginPath();x.moveTo(L,Y(d));x.lineTo(w-R,Y(d));x.stroke();x.textAlign='right';x.fillText((d>0?'+':d<0?'−':'')+Math.abs(d),L-6,Y(d)+4);});
+    var ticks=w<500?[100,1000,5000]:[50,100,200,500,1000,2000,5000];
+    ticks.forEach(function(fr){x.beginPath();x.moveTo(X(fr),T);x.lineTo(X(fr),T+phh);x.stroke();x.textAlign='center';x.fillText(fmtF(fr),X(fr),T+phh+16);});
+    x.fillText('frequency',L+pw/2,h-4);
+    x.save();x.translate(12,T+phh/2);x.rotate(-Math.PI/2);x.fillText('change at ear (dB)',0,0);x.restore();
+    x.strokeStyle=C.text;x.lineWidth=1.5;x.beginPath();x.moveTo(L,Y(0));x.lineTo(w-R,Y(0));x.stroke();
+    x.strokeStyle=C.blue;x.lineWidth=2.5;x.beginPath();
+    for(var i=0;i<=pw;i++){var fr=FMIN*Math.pow(FMAX/FMIN,i/pw);var d=toDb(resid(fr,tau));if(!isFinite(d))d=DMIN;var yy=Y(d);if(i===0)x.moveTo(L+i,yy);else x.lineTo(L+i,yy);}x.stroke();
+    var d0=toDb(resid(f,tau));if(!isFinite(d0))d0=DMIN;
+    x.fillStyle=C.red;x.beginPath();x.arc(X(f),Y(d0),6,0,2*Math.PI);x.fill();
+    x.strokeStyle='#fff';x.lineWidth=2;x.stroke();
+  }
+  function update(){
+    var f=exactF!==null?exactF:s2f(+fEl.value),tau=+tEl.value;
+    fOut.textContent=fmtF(f);tOut.textContent=tau+' µs';
+    var p=360*f*tau*1e-6;ph.textContent=(p<10?p.toFixed(1):Math.round(p))+'°';
+    var r=resid(f,tau),d=toDb(r);db.textContent=fmtDb(d);
+    var pc=r*100;pct.textContent=r===0?'0%':(pc<0.1?'under 0.1%':pc<10?pc.toFixed(1)+'%':Math.round(pc)+'%');
+    fEl.setAttribute('aria-valuetext',fmtF(f));tEl.setAttribute('aria-valuetext',tau+' microseconds');
+    drawWave(f,tau);drawCurve(f,tau);
+  }
+  fEl.value=f2s(100);
+  fEl.addEventListener('input',function(){exactF=null;update();});tEl.addEventListener('input',update);
+  document.querySelectorAll('.presets button').forEach(function(b){b.addEventListener('click',function(){exactF=+b.dataset.f;fEl.value=f2s(exactF);tEl.value=b.dataset.t;update();});});
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(update,100);});
+  update();
+})();
+</script>
+</body>
+</html>

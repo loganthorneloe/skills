@@ -1,0 +1,375 @@
+{
+  "timestamp": "2026-10-24T20:45:46.232317+00:00",
+  "graph_shape": {
+    "unique_ids": "PASS",
+    "endpoints": "PASS",
+    "acyclicity": "PASS",
+    "all_nodes_reach_target": "PASS",
+    "node_schema_and_supported_evidence": "PASS",
+    "node_count": 23,
+    "edge_count": 43,
+    "topological_order": [
+      "rule",
+      "transaction",
+      "atomicity",
+      "concurrency",
+      "serial",
+      "dirty",
+      "snapshot",
+      "read_decision",
+      "nonrepeatable",
+      "phantom",
+      "locks",
+      "serializable",
+      "read_committed",
+      "repeatable_read",
+      "wrong_result",
+      "levels",
+      "mechanisms",
+      "retry",
+      "correctness_limit",
+      "statement_kind",
+      "stable_not_serial",
+      "engine",
+      "target"
+    ]
+  },
+  "substantive_tests": [
+    {
+      "name": "unfamiliar capacity reservation",
+      "given_inputs": {
+        "capacity": 10,
+        "initial_row_values": [
+          0,
+          0
+        ],
+        "each_request": 6,
+        "decision": "Read both rows; increase only own row if total plus six is at most ten.",
+        "assumptions": "Separate full transactions; ordinary reads; no extra constraint or coordinating lock."
+      },
+      "graph_nodes_used": [
+        "rule",
+        "read_decision",
+        "wrong_result",
+        "repeatable_read",
+        "stable_not_serial",
+        "serializable",
+        "correctness_limit"
+      ],
+      "overlap_outcome": [
+        6,
+        6
+      ],
+      "serial_outcomes": [
+        [
+          6,
+          0
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "conclusion": "Overlapping old views permit twelve reserved units, exceeding capacity. Either serial order reserves only six. Serializable must prevent both successful conflicting decisions.",
+      "gap_found": false
+    },
+    {
+      "name": "relative UPDATE versus stale replacement",
+      "given_inputs": "PostgreSQL Read Committed; one row n=100; two separate full transactions; both commit; no trigger or other writer.",
+      "graph_nodes_used": [
+        "read_decision",
+        "read_committed",
+        "statement_kind",
+        "locks"
+      ],
+      "relative_update": "Both run UPDATE SET n=n+1; a waiting writer applies to the newer row, so final n=102.",
+      "stale_replacement": "Both first SELECT 100 and later issue UPDATE SET n=101; row locking orders the writes but both chosen constants are 101, so final n=101.",
+      "conclusion": "Concurrent does not automatically mean incorrect; SQL expression and transaction decision matter.",
+      "gap_found": false
+    },
+    {
+      "name": "serializable cannot repair split operation boundaries",
+      "given_inputs": "Capacity ten; two callers each read zero in its own committed transaction, then each updates its own reservation row to six in a separate serializable transaction.",
+      "graph_nodes_used": [
+        "transaction",
+        "serial",
+        "correctness_limit"
+      ],
+      "allowed_serial_order": [
+        "read A",
+        "read B",
+        "write A",
+        "write B"
+      ],
+      "result": "Total twelve; SQL transactions are serially ordered but the complete application decision was split.",
+      "conclusion": "Serializable composition requires each whole decision to be in its transaction.",
+      "gap_found": false
+    }
+  ],
+  "edge_audit": [
+    {
+      "to": "atomicity",
+      "why": "The all-or-nothing unit is the transaction and its grouped writes.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "concurrency",
+      "why": "Overlap refers to whole transactions that have begun and not yet ended.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "read_decision",
+      "why": "A decision can become outdated because another unfinished transaction can act between the read and update.",
+      "from": "concurrency",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "serial",
+      "why": "Serial order orders complete transactions rather than individual SQL statements.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "serializable",
+      "why": "The guarantee is defined by comparison to an allowed serial execution.",
+      "from": "serial",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "wrong_result",
+      "why": "Wrong means breaking the explicitly supplied at-least-one-on-call rule.",
+      "from": "rule",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "wrong_result",
+      "why": "Both updates are based on earlier observations that the other staff member remains on call.",
+      "from": "read_decision",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "dirty",
+      "why": "Uncommitted means the other transaction has not successfully ended with COMMIT.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "nonrepeatable",
+      "why": "The value can change because another transaction commits between reads.",
+      "from": "concurrency",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "phantom",
+      "why": "Matching membership can change because another transaction commits between queries.",
+      "from": "concurrency",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "snapshot",
+      "why": "Visibility includes the transaction\u2019s own changes and excludes changes based on transaction completion.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "read_committed",
+      "why": "Statement-start reference points determine what each read can see.",
+      "from": "snapshot",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "repeatable_read",
+      "why": "A fixed transaction reference point explains why later reads retain earlier row versions.",
+      "from": "snapshot",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "levels",
+      "why": "The first minimum protection boundary forbids reading uncommitted work.",
+      "from": "dirty",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "levels",
+      "why": "The next minimum protection forbids changed values in repeated reads.",
+      "from": "nonrepeatable",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "levels",
+      "why": "Phantom protection differs across minimum rules and engine implementations.",
+      "from": "phantom",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "levels",
+      "why": "The strongest listed guarantee requires a serial-equivalent committed result.",
+      "from": "serializable",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "locks",
+      "why": "Incompatible access arises when overlapping transactions request conflicting use of protected data.",
+      "from": "concurrency",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "mechanisms",
+      "why": "Snapshots demonstrate how version selection implements read visibility.",
+      "from": "snapshot",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "mechanisms",
+      "why": "Locks demonstrate how waiting implements access coordination.",
+      "from": "locks",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "mechanisms",
+      "why": "Serializable is an outcome constraint whose implementations can differ.",
+      "from": "serializable",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "statement_kind",
+      "why": "Plain reads can return data selected by a past visibility point.",
+      "from": "snapshot",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "statement_kind",
+      "why": "Locking statements coordinate access beyond merely selecting a visible version.",
+      "from": "locks",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "engine",
+      "why": "Names have minimum protections rather than one universal implementation.",
+      "from": "levels",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "engine",
+      "why": "An engine\u2019s guarantees must be qualified by the operation being executed.",
+      "from": "statement_kind",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "retry",
+      "why": "Retrying whole work requires restoring the complete transaction, including reads and decisions.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "retry",
+      "why": "Rejecting an attempt can be necessary to preserve a serial-equivalent committed outcome.",
+      "from": "serializable",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "Grouping changes atomically does not alone settle which concurrent observations are allowed.",
+      "from": "atomicity",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "The question asks how two individually correct operations can collectively break an application rule.",
+      "from": "wrong_result",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "The answer must explain how named guarantee strengths constrain anomalies.",
+      "from": "levels",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "The answer must distinguish outcome promises from how the database enforces them.",
+      "from": "mechanisms",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "Practical interpretation requires engine and statement qualifications.",
+      "from": "engine",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "Preventing an unsafe commit can require application retry behavior rather than automatic success.",
+      "from": "retry",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "stable_not_serial",
+      "why": "The distinction concerns the stable per-transaction view this level supplies.",
+      "from": "repeatable_read",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "stable_not_serial",
+      "why": "A serialization anomaly means failure of the serial-order outcome criterion.",
+      "from": "serializable",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "stable_not_serial",
+      "why": "Read-dependent writes can encode incompatible decisions despite each fixed view.",
+      "from": "read_decision",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "The answer must explain why stable reads do not yet provide the strongest outcome guarantee.",
+      "from": "stable_not_serial",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "correctness_limit",
+      "why": "Preservation is proved using an equivalent serial ordering of committed transactions.",
+      "from": "serializable",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "correctness_limit",
+      "why": "The invariant to preserve must be supplied independently of isolation.",
+      "from": "rule",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "correctness_limit",
+      "why": "The full decision and its writes must be inside the unit ordered by serializability.",
+      "from": "transaction",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "target",
+      "why": "The stated protection depends on valid transaction boundaries and correct serial logic.",
+      "from": "correctness_limit",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "to": "retry",
+      "why": "Whole-transaction retries must recompute the decisions that chose the writes.",
+      "from": "read_decision",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    },
+    {
+      "from": "read_committed",
+      "to": "statement_kind",
+      "why": "The comparison starts from PostgreSQL Read Committed\u2019s plain-SELECT snapshot rule before showing how UPDATE can use a newer row.",
+      "counterfactual": "Without this prerequisite, the named dependent claim lacks the concept or condition identified in why; no edge retained solely for example ordering."
+    }
+  ],
+  "limits": [
+    "Constructed reasoning checks only; no PostgreSQL/MySQL/SQLite live execution.",
+    "No report, HTML, SVG, browser rendering, or controls requested from this worker.",
+    "No universal performance or best-level conclusion.",
+    "Source packet provided initial evidence; official HTML supplied gap research."
+  ]
+}

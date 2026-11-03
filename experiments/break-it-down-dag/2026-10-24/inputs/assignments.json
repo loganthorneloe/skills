@@ -1,0 +1,42 @@
+[
+  {
+    "id": "e01",
+    "topic": "evals",
+    "skill": "baseline"
+  },
+  {
+    "id": "e02",
+    "topic": "encryption",
+    "skill": "variant"
+  },
+  {
+    "id": "e03",
+    "topic": "causal",
+    "skill": "baseline"
+  },
+  {
+    "id": "e04",
+    "topic": "isolation",
+    "skill": "variant"
+  },
+  {
+    "id": "e05",
+    "topic": "evals",
+    "skill": "variant"
+  },
+  {
+    "id": "e06",
+    "topic": "encryption",
+    "skill": "baseline"
+  },
+  {
+    "id": "e07",
+    "topic": "causal",
+    "skill": "variant"
+  },
+  {
+    "id": "e08",
+    "topic": "isolation",
+    "skill": "baseline"
+  }
+]

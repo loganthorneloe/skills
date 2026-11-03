@@ -1,0 +1,1 @@
+Break down causal inference from first principles. I understand averages and percentages but have never studied statistics. If people who use a learning app score higher on an exam, why does that not prove the app helped, and how could we find out whether it did?

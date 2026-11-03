@@ -1,0 +1,342 @@
+{
+  "title": "Bayesian spam classification: prerequisite research graph",
+  "mode": "graph-only",
+  "reader_assumptions": [
+    "Understands percentages, counts, multiplication, and division.",
+    "Has not studied probability; introduce conditioning before formulas."
+  ],
+  "target_id": "target",
+  "nodes": [
+    {
+      "id": "percentages",
+      "question": "How do I turn a percentage into a count?",
+      "answer": "Multiply the group size by the percentage divided by 100; divide a count by its group size to recover a proportion.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "partition",
+      "question": "What are the possible actual message classes?",
+      "answer": "For this model each message is either spam or legitimate, never both; the two groups cover all messages.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event partition formula",
+          "exact_claim": "Disjoint exhaustive groups permit adding their contributions.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "prior",
+      "question": "What does a 1% spam base rate describe?",
+      "answer": "Before using the flag or words, 1% of the relevant message population is spam and 99% legitimate. These are starting class proportions, or priors.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional-probability definition and intuition",
+          "exact_claim": "An unconditional probability before additional information is a prior.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "conditional",
+      "question": "What does a probability given information mean?",
+      "answer": "Restrict attention to cases meeting the information, then find the fraction also meeting the outcome. The eligible group is the denominator; it must have positive probability.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional-probability definition",
+          "exact_claim": "P(A given B) is P(A and B) divided by P(B), for P(B)>0.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "flag_rates",
+      "question": "Which groups do the 90% and 10% flag rates count?",
+      "answer": "90% is the share of actual spam flagged; 10% is the share of actual legitimate mail flagged. Neither percentage counts spam among all flagged messages.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Recall; False positive rate; Precision",
+          "exact_claim": "Recall, false positive rate, and precision use different conditioning groups.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "joint_counts",
+      "question": "How many flagged messages come from each actual class?",
+      "answer": "In an illustrative 10,000-message population, the 1% base rate gives 100 spam and 9,900 legitimate messages; the stated flag rates give 90 flagged spam and 990 flagged legitimate messages. These are expected counts under fixed rates, not a measured inbox.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Chain rule, Equation 1.5",
+          "exact_claim": "A joint probability is a group probability multiplied by the conditional probability inside that group.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "all_flags",
+      "question": "How many messages belong to the flagged group?",
+      "answer": "Add flagged spam and flagged legitimate messages: 90 + 990 = 1,080. Every flag is in exactly one of these groups.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Law of Total Probability",
+          "exact_claim": "Sum weighted contributions from disjoint exhaustive groups to obtain total evidence probability.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "posterior",
+      "question": "What fraction of flagged messages is actually spam?",
+      "answer": "The desired fraction is flagged spam divided by all flags: 90/1,080 = 1/12, about 8.33%. The large legitimate population contributes eleven false flags for each true flag.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Precision",
+          "exact_claim": "Precision is the fraction of positive predictions that are true positives.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "base_rate_change",
+      "question": "How does a different spam base rate change that answer?",
+      "answer": "With fixed flag rates and spam fraction p, the spam fraction among flags is 0.9p / (0.9p + 0.1(1-p)). Illustrative values: p=0.1% gives about 0.89%; 1% gives 8.33%; 10% gives 50%; 50% gives 90%. Changing population composition alone changes the fraction of flags that are correct.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "word_clue",
+      "question": "How can a word act like a flag?",
+      "answer": "Treat observing a word as evidence. Compare its frequency within spam with its frequency within legitimate messages, multiply each by the class prior, then normalize across the two classes as with a flag. A word is informative about spam when those within-class frequencies differ.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening Bayes theorem",
+          "exact_claim": "Posterior class probability is prior times within-class evidence probability divided by evidence probability.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "question": "Where do the word frequencies and priors come from?",
+      "answer": "Estimate priors from class shares in labeled training messages. For presence/absence word features, estimate how often the word occurs in messages of each class; finite samples may omit possible events, so smoothing prevents an unseen feature from forcing a class score to zero.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening estimation paragraph; 1.9.2; 1.9.4",
+          "exact_claim": "Class priors and feature distributions are learned; smoothing addresses zero sample counts; Bernoulli models use binary features.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "independence",
+      "question": "Why can naive Bayes multiply separate word-clue probabilities?",
+      "answer": "It assumes that once the class is fixed, learning the other feature values does not change the probability of a feature value. This conditional independence assumption lets the within-class probability of the observed features become a product. It is not an assertion that words in language are independent.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening conditional-independence equation",
+          "exact_claim": "P(x_i given class and other features) is replaced by P(x_i given class).",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "word_scores",
+      "question": "How does naive Bayes combine several clues with a base rate?",
+      "answer": "For each class, multiply its prior by the product of the within-class probabilities for the observed feature values. Normalize the two resulting scores to obtain model probabilities. For a Bernoulli word model, an absent word is also a feature value and contributes its class-specific absence probability.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening classification rule; 1.9.4 Bernoulli Naive Bayes",
+          "exact_claim": "Class score is prior times conditional-feature products; Bernoulli explicitly penalizes non-occurrence.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "probability_limit",
+      "question": "Why might a naive Bayes score fail to describe real-world confidence?",
+      "answer": "A useful classifier can still give unreliable probability estimates. The model assumptions and estimates need evaluation on the relevant population; the stated 8.33% is a group-level calculation under stipulated rates, not a guarantee about an individual message.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening warning before model sections",
+          "exact_claim": "Naive Bayes may classify well while its probability outputs are poor estimates.",
+          "access": "supplied primary-source packet paraphrase; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why is a flag not almost certainly spam, and how do base rates and words determine the answer?",
+      "answer": "The flag rates describe separate actual classes. At 1% spam, far more legitimate messages are available to make false flags, yielding only about 8.33% spam among flags. A different base rate changes the weighted contributions. Words provide evidence by the same conditioning rule; naive Bayes estimates word-feature rates within each class and combines them under conditional independence. Its model probabilities require empirical validation.",
+      "status": "partial",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "percentages",
+      "to": "prior",
+      "why": "Without percentages as group shares, 1% cannot specify the starting class sizes."
+    },
+    {
+      "from": "partition",
+      "to": "prior",
+      "why": "Without complementary classes, 1% spam would not establish 99% legitimate."
+    },
+    {
+      "from": "percentages",
+      "to": "conditional",
+      "why": "Without ratios within a group, the conditioned fraction has no denominator interpretation."
+    },
+    {
+      "from": "conditional",
+      "to": "flag_rates",
+      "why": "Without identifying the conditioned group, the two given rates can be mistaken for the requested reversed rate."
+    },
+    {
+      "from": "prior",
+      "to": "joint_counts",
+      "why": "Without class sizes, within-class flag rates cannot produce population contributions."
+    },
+    {
+      "from": "flag_rates",
+      "to": "joint_counts",
+      "why": "Without the separate within-class rates, class counts cannot determine true and false flags."
+    },
+    {
+      "from": "partition",
+      "to": "all_flags",
+      "why": "Without disjoint exhaustive classes, adding the two contributions could double count or omit flags."
+    },
+    {
+      "from": "joint_counts",
+      "to": "all_flags",
+      "why": "Without both contributions, the total flag denominator is missing."
+    },
+    {
+      "from": "all_flags",
+      "to": "posterior",
+      "why": "Without the total flagged group, dividing true flags produces the wrong denominator."
+    },
+    {
+      "from": "conditional",
+      "to": "posterior",
+      "why": "Without conditioning on the observed flag, the requested fraction cannot be identified."
+    },
+    {
+      "from": "posterior",
+      "to": "base_rate_change",
+      "why": "Without the normalized true-flag share, there is no relationship whose response to the prior can be compared."
+    },
+    {
+      "from": "base_rate_change",
+      "to": "word_clue",
+      "why": "The weighted and normalized relationship is reused with word presence replacing a flag; without it the role of prior and both class likelihoods is missing."
+    },
+    {
+      "from": "conditional",
+      "to": "training",
+      "why": "Without within-class conditioning, one might count overall word frequency instead of class-specific frequencies."
+    },
+    {
+      "from": "conditional",
+      "to": "independence",
+      "why": "Without conditioning, independence within a fixed class is easily confused with unconditional word independence."
+    },
+    {
+      "from": "word_clue",
+      "to": "word_scores",
+      "why": "Without the single-clue class update, multiplying class evidence scores and then normalizing lacks its inference meaning."
+    },
+    {
+      "from": "independence",
+      "to": "word_scores",
+      "why": "Without conditional independence, the joint feature probability cannot generally be replaced by separate factors."
+    },
+    {
+      "from": "training",
+      "to": "word_scores",
+      "why": "Without learned class-specific feature probabilities and priors, the score factors have no operational values."
+    },
+    {
+      "from": "word_scores",
+      "to": "probability_limit",
+      "why": "Without knowing the score is produced by an assumed factorization, its distinction from empirically calibrated confidence is unexplained."
+    },
+    {
+      "from": "base_rate_change",
+      "to": "target",
+      "why": "Without base-rate dependence, the answer cannot explain why the same 90% detection rate gives different confidence."
+    },
+    {
+      "from": "word_scores",
+      "to": "target",
+      "why": "Without combined word-feature scores, the answer cannot connect the flag example to naive Bayes spam classification."
+    },
+    {
+      "from": "probability_limit",
+      "to": "target",
+      "why": "Without the model-versus-observed confidence limit, the answer could incorrectly treat all computed scores as reliable probabilities."
+    }
+  ],
+  "scope": {
+    "included": [
+      "Conditional versus reversed probability",
+      "Worked 1% base-rate example",
+      "Changing prevalence with fixed flag rates",
+      "Word presence as evidence",
+      "Naive Bayes combination and probability limits"
+    ],
+    "optional_not_prerequisites": [
+      "Odds and likelihood-ratio notation",
+      "Multinomial word-count alternative",
+      "Classification thresholds and error costs",
+      "Accuracy metric",
+      "History of Bayes theorem"
+    ],
+    "example_assumptions": [
+      "10,000 messages is a constructed counting population.",
+      "Spam and legitimate are exhaustive mutually exclusive classes.",
+      "Flag rates are stipulated and held fixed when changing base rates.",
+      "Word-model probabilities are model estimates, not guaranteed calibrated values."
+    ]
+  },
+  "revisions": [
+    {
+      "round": 0,
+      "action": "Initial graph saved before supplemental research",
+      "source_basis": "Assigned source packet only",
+      "gaps": [
+        "Verify all relevant full source passages",
+        "Verify arithmetic and dependence on base rate",
+        "Locate evidence for word training estimates, smoothing, and probability limitations"
+      ],
+      "changes": "Initial nodes and edges as saved in history/00-initial.json"
+    }
+  ]
+}

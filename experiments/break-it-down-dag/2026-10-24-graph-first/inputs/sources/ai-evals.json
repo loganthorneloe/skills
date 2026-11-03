@@ -1,0 +1,45 @@
+{
+  "topic": "Evaluating an AI application",
+  "reader_baseline": "Comfortable with basic Python, function inputs and outputs, and calling an API; new to AI application evaluation.",
+  "scope": "Explain what an application eval measures, how examples and grading rules produce evidence, and how that evidence supports comparisons and improvements.",
+  "retrieved_on": "2026-10-24",
+  "packet_notes": "Four official documentation pages. Paraphrases preserve conceptual explanations; no live API call was made. Source listing is bibliographic, not a proposed teaching order. These excerpts concern application behavior, not general intelligence rankings. Further research may be needed for implementation details or statistically rigorous comparison of close scores.",
+  "sources": [
+    {
+      "id": "eval-best-practices",
+      "title": "Evaluation best practices",
+      "publisher": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+      "section_locator": "What are evals?; Types of evals; How to read evals; Evals tips; Design your eval process",
+      "paraphrase": "An application eval is a structured test of behavior that matters for a particular use case. It differs from a broad benchmark comparing models in isolation. Generative models can return different answers to the same input, so a few impressive outputs do not establish reliability. An eval process specifies the objective, gathers relevant examples, chooses measurements of success, runs the application, and compares results. Data can come from real usage, expert-created examples, historical logs, or synthetic cases. Cases should represent the situations the application will encounter, including failures and unusual inputs. A score is evidence about the measured behavior; human judgment remains necessary to decide whether the measurement captures the intended quality. Automated assessments should be checked against human assessments. Recording real failures supplies additional test cases. Repeating evaluations when prompts, models, or other application components change can reveal regressions as well as gains. A generic metric or an unrepresentative dataset can reward performance that does not correspond to useful behavior in production.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "eval-datasets",
+      "title": "Getting started with datasets",
+      "publisher": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+      "section_locator": "Create a dataset; What annotation does; Annotation starting points; Incorporate expert annotations; Add graders",
+      "paraphrase": "A dataset makes multiple examples available for repeated evaluation. Human annotations can describe the desired output, judge whether an answer is good, explain what went wrong, or identify a property such as tone. Such annotations supply context about intended behavior rather than merely collecting model-generated text. Domain expertise matters when deciding what a correct or useful answer looks like. Graders provide automated assessments that can be applied across examples. Different grader types check exact strings, similarity to references, categories, numerical qualities, or custom rules expressed in Python. A reference column can hold the answer against which a generated answer is checked. Once a dataset and graders are saved, the same assessments can be rerun after changing the prompt or model settings. This allows comparisons across prompt variants and makes newly discovered edge cases reusable. Human feedback and automated grades serve different functions: feedback records informed judgments and helps align grading with intent, while automation makes repeated checking practical across a larger collection of examples.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "eval-graders",
+      "title": "Graders",
+      "publisher": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/graders",
+      "section_locator": "Overview; String check graders; Text similarity graders; Model graders > Score model graders; Python graders",
+      "paraphrase": "A grader turns an output and relevant reference information into a judgment or score. A simple string comparison can produce a binary result, such as whether an application returned exactly the required category. Other graders allow partial credit. Exact matching is appropriate when the required output has one precise form; it may penalize answers that express the same meaning with a different spelling or representation. Text similarity provides a numerical comparison with a reference answer. A model grader instead receives instructions describing what to assess and produces a score within a specified range. Python grading supports a programmed criterion when a custom calculation is needed. Grader inputs can refer to both the test item and the generated sample, so the assessment can compare the actual response with the appropriate reference for that example. Multiple simple checks can be combined into one result. The choice of check changes what a passing result means; string identity, semantic similarity, and satisfaction of a qualitative criterion are distinct measurements.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "eval-working-example",
+      "title": "Working with evals",
+      "publisher": "OpenAI",
+      "url": "https://developers.openai.com/api/docs/guides/evals",
+      "section_locator": "Create an eval for a task; Test a prompt with your eval > Uploading test data; Creating an eval run; Analyze the results",
+      "paraphrase": "The worked example evaluates an application that assigns support tickets to Hardware, Software, or Other. Each test item includes the ticket text and a correct label. The application receives instructions and the ticket text; its generated category is compared with the reference label. An evaluation definition identifies the structure of the test data and the grading criteria. A particular run supplies the data and the configuration that generates answers. This separates the reusable question about acceptable behavior from one execution of a chosen prompt and model. The example stores records in JSONL, with one object per line, and uses a string-check grader for category equality. Running the evaluation produces outputs and grading results that can be analyzed before revising the prompt. The tutorial illustrates how familiar programmatic ingredients—records, an API call, a comparison, and a run result—can implement an application-level test.",
+      "access_notes": "Public HTML retrieved. Legacy platform: read-only October 31, 2026; shutdown scheduled November 30, 2026. Conceptual evidence, not implementation guidance."
+    }
+  ]
+}

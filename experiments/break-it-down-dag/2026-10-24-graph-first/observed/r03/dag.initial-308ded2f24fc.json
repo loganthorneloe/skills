@@ -1,0 +1,427 @@
+{
+  "target": "target",
+  "reader_assumptions": [
+    "Understands percentages, counts, multiplication, and division.",
+    "No probability notation or machine learning background."
+  ],
+  "scope": {
+    "included": [
+      "Reverse conditional denominators",
+      "Expected-count calculation",
+      "Base-rate sensitivity with fixed conditional rates",
+      "Words as binary clues",
+      "Origin of class and feature estimates",
+      "Conditional independence and probability limitations"
+    ],
+    "excluded": [
+      "Implementing a classifier",
+      "Smoothing algorithms",
+      "Threshold optimization",
+      "Current real-world spam prevalence"
+    ],
+    "given_inputs": "The three filter rates are user-supplied mathematical assumptions, not measurements."
+  },
+  "nodes": [
+    {
+      "id": "chance",
+      "question": "What does a probability describe here?",
+      "answer": "A fraction of a stated population or modeled set of cases; 1% means 1 in every 100 on average, not a guarantee for any particular next 100.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Conditional-probability definition and intuition",
+          "claim": "Probabilities describe proportions within specified eligible outcomes.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "condition",
+      "question": "What changes when a percentage is conditional?",
+      "answer": "Restrict the counted population to cases meeting the condition. Spam among flagged mail uses all flagged mail as its denominator; flagged among spam uses all spam. Reversing those groups changes the question.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Definition of conditional probability",
+          "claim": "P(A given B) counts A within B; B must have positive probability.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "given",
+      "question": "What exactly do the three supplied rates say?",
+      "answer": "Out of actual spam, 90% are flagged; out of legitimate messages, 10% are flagged; out of all incoming mail, 1% is spam. These are supplied population rates, not measured here. Spam and legitimate exhaust the population.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Recall; False positive rate; Precision",
+          "claim": "Recall and false-positive rate condition on actual classes; precision conditions on flags.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        },
+        {
+          "url": null,
+          "locator": "Assigned user request",
+          "claim": "Detection 90%, false-positive rate 10%, spam prevalence 1%."
+        }
+      ]
+    },
+    {
+      "id": "prior",
+      "question": "What is a base rate or prior?",
+      "answer": "The spam fraction before considering the current clue. If that fraction is p, the legitimate fraction is 1\u2212p. This population assumption must match the incoming messages for the calculation to apply.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Opening conditional probability examples",
+          "claim": "An unconditional probability is the starting probability before added information.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "counts",
+      "question": "How many messages of each kind get flagged?",
+      "answer": "In a constructed population of 10,000, 100 are spam and 9,900 legitimate. The rates give 90 flagged spam and 990 flagged legitimate messages. These are expected counts, not observed data.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Chain rule, Equation 1.5",
+          "claim": "Joint frequency is class frequency times within-class flag rate.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "total",
+      "question": "What is the entire flagged population?",
+      "answer": "Flagged spam and flagged legitimate mail are disjoint groups and cover all flagged mail, so add 90+990=1,080.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Two-event partition formula",
+          "claim": "Total evidence frequency sums contributions from complementary classes.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "answer",
+      "question": "What fraction of flagged messages is actually spam?",
+      "answer": "90/1,080=1/12, about 8.33%. The 90% rate answers a different denominator question. Numerous legitimate messages generate eleven times as many false flags as spam generates true flags.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/classification/accuracy-precision-recall",
+          "locator": "Precision",
+          "claim": "Precision is true positives divided by all positives.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "bayes",
+      "question": "How does the counting rule become Bayes\u2019 rule?",
+      "answer": "For a clue E and spam S, spam among clue-bearing messages equals p\u00b7P(E|S)/[p\u00b7P(E|S)+(1\u2212p)\u00b7P(E|legitimate)]. Here P(E|S) means the clue fraction within spam. Multiply to count each contribution, add for all clue cases, then divide for the spam fraction. Denominator must be positive.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening Bayes theorem",
+          "claim": "Posterior is prior times likelihood divided by evidence probability.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        },
+        {
+          "url": "https://probabilitycourse.com/chapter1/1_4_2_total_probability.php",
+          "locator": "Law of Total Probability",
+          "claim": "Evidence denominator combines both class contributions.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "vary",
+      "question": "How does changing the base rate change this filter\u2019s answer?",
+      "answer": "Holding 90% detection and 10% false positives fixed: spam among flags = 0.9p/(0.9p+0.1(1\u2212p)). At p=0.001, 0.01, 0.10, 0.50 the answers are approximately 0.8929%, 8.3333%, 50%, 90%. More than half the flagged messages are spam only when p>10%. These comparisons assume the two within-class rates stay fixed.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening Bayes theorem",
+          "claim": "Posterior depends on prior and likelihood, not just detection rate.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "word",
+      "question": "How can a word serve as a clue?",
+      "answer": "Replace \u201cflagged\u201d with \u201ccontains a chosen word.\u201d Its occurrence rate within spam and within legitimate mail are two different inputs. A word that appears more often within spam increases the spam fraction relative to the prior; it does not itself imply that most messages containing it are spam.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening theorem; Bernoulli Naive Bayes",
+          "claim": "Observed features serve as evidence; binary features can encode word occurrence.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "features",
+      "question": "What does the model record about the message?",
+      "answer": "Choose a representation explicitly. This graph uses binary word features: for each selected word, record present or absent. A count model instead records how many times words occur; its probabilities have a different meaning.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "1.9.2 Multinomial; 1.9.4 Bernoulli",
+          "claim": "Multinomial uses counts; Bernoulli uses binary features and includes absence.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "estimate",
+      "question": "Where do the starting rate and word-clue rates come from?",
+      "answer": "Given labeled example messages, the class share estimates the prior. For a binary word feature, its occurrence fraction separately within spam and legitimate examples estimates its class-conditioned rate. Applying those estimates to new mail requires relevant data; the user\u2019s filter rates were already supplied and need no training calculation.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening classification rule; Bernoulli Naive Bayes",
+          "claim": "Class priors and feature likelihoods are estimated from labeled training data.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "joint",
+      "question": "What probability is needed for several clues together?",
+      "answer": "For each class, need the fraction of messages having the full observed pattern together. Individual word rates alone do not determine this fraction because word occurrences can depend on one another.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "independence",
+      "question": "What does the naive independence assumption add?",
+      "answer": "Within each fixed class, assume one feature\u2019s observed value does not change the probabilities of the others. Then estimate the full-pattern likelihood by multiplying the probabilities of all observed feature values, including absent features in a Bernoulli model. This is not a claim that words are independent across all mail.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening conditional independence assumption; Bernoulli Naive Bayes",
+          "claim": "Naive Bayes factorizes likelihood conditional on class; Bernoulli includes absent features.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "scores",
+      "question": "How are several word clues combined into a prediction?",
+      "answer": "Compute one score per class: class prior \u00d7 product of observed feature-value probabilities within that class. Compare the two scores for a class choice. To obtain the model\u2019s spam probability, divide its score by the sum of both scores, provided that sum is positive.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening classification rule",
+          "claim": "Shared evidence denominator can be omitted for classification; Bayes normalizes class scores.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "dependence",
+      "question": "What goes wrong when two clues repeat the same information?",
+      "answer": "If two binary clues always occur together within each class, seeing both is no rarer than seeing one. Multiplying their separate probabilities counts repeated information as additional evidence and can exaggerate the spam probability. A numerical counterexample is pending.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "calibration",
+      "question": "Does the model\u2019s calculated probability guarantee the true spam fraction?",
+      "answer": "No. It follows the assumed prior, feature probabilities, and independence model. Check predictions on relevant labeled mail. Naive Bayes may classify usefully while giving unreliable probability estimates; the calculated number should not be treated as measured certainty.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "Opening discussion of probability estimation",
+          "claim": "Naive Bayes is a bad estimator; probability outputs should not be taken too seriously.",
+          "basis": "supplied verified source packet; direct passage verification pending"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why is a flag not almost certain spam, how do base rates change the answer, and how do words supply evidence?",
+      "answer": "At a 1% spam base rate the stated filter yields only about 8.33% spam among flags. Population sizes determine how many true and false flags enter the flagged group. Varying the prior changes this fraction even with fixed detection and false-positive rates. Words supply class-conditioned clues through the same counting rule; combining words with naive Bayes additionally assumes independence within each class, which can make its numerical confidence unreliable.",
+      "status": "partial",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "chance",
+      "to": "condition",
+      "why": "Restricting a probability requires knowing which population a fraction describes."
+    },
+    {
+      "from": "condition",
+      "to": "given",
+      "why": "The 90% and 10% inputs require distinct conditional denominators."
+    },
+    {
+      "from": "chance",
+      "to": "prior",
+      "why": "The starting spam fraction requires the population meaning of probability."
+    },
+    {
+      "from": "given",
+      "to": "counts",
+      "why": "Expected true and false flag counts need the supplied within-class rates and 1% prevalence."
+    },
+    {
+      "from": "counts",
+      "to": "total",
+      "why": "The total flagged count needs contributions from both true and false flags."
+    },
+    {
+      "from": "total",
+      "to": "answer",
+      "why": "The spam fraction among flags needs the complete flagged denominator."
+    },
+    {
+      "from": "counts",
+      "to": "answer",
+      "why": "The spam fraction among flags needs the true-flag numerator of 90."
+    },
+    {
+      "from": "condition",
+      "to": "answer",
+      "why": "Interpreting 90/1080 as spam among flags requires restricting to flagged mail."
+    },
+    {
+      "from": "prior",
+      "to": "bayes",
+      "why": "The general formula needs p and its legitimate complement 1\u2212p."
+    },
+    {
+      "from": "condition",
+      "to": "bayes",
+      "why": "The likelihood and posterior terms require distinguishing conditional populations."
+    },
+    {
+      "from": "total",
+      "to": "bayes",
+      "why": "The evidence denominator is explained by the same sum of disjoint class contributions."
+    },
+    {
+      "from": "bayes",
+      "to": "vary",
+      "why": "Changing the prior requires the posterior formula containing p."
+    },
+    {
+      "from": "given",
+      "to": "vary",
+      "why": "The numerical base-rate comparison fixes the supplied 90% and 10% rates."
+    },
+    {
+      "from": "bayes",
+      "to": "word",
+      "why": "Interpreting word occurrence as evidence requires the general clue update rule."
+    },
+    {
+      "from": "features",
+      "to": "estimate",
+      "why": "Estimating a word occurrence rate requires specifying binary feature representation."
+    },
+    {
+      "from": "condition",
+      "to": "estimate",
+      "why": "Per-class word rates require restricting counts to each labeled class."
+    },
+    {
+      "from": "features",
+      "to": "joint",
+      "why": "The full message pattern requires defined present/absent feature values."
+    },
+    {
+      "from": "condition",
+      "to": "joint",
+      "why": "The required joint likelihood is a pattern frequency within a fixed class."
+    },
+    {
+      "from": "joint",
+      "to": "independence",
+      "why": "The multiplication assumption answers how to estimate the otherwise undetermined full-pattern likelihood."
+    },
+    {
+      "from": "independence",
+      "to": "scores",
+      "why": "Multiplying individual feature probabilities in a class score requires conditional independence."
+    },
+    {
+      "from": "estimate",
+      "to": "scores",
+      "why": "Class scores need input priors and feature probabilities, with an account of their origin."
+    },
+    {
+      "from": "bayes",
+      "to": "scores",
+      "why": "Prior-weighted likelihood scores and their normalization use Bayes\u2019 rule."
+    },
+    {
+      "from": "independence",
+      "to": "dependence",
+      "why": "The repeated-clue failure arises from violating the stated within-class independence."
+    },
+    {
+      "from": "scores",
+      "to": "calibration",
+      "why": "Distinguishing a computed model probability from a real frequency requires knowing how the score was produced."
+    },
+    {
+      "from": "dependence",
+      "to": "calibration",
+      "why": "The reliability warning requires a concrete failure mechanism for the model assumptions."
+    },
+    {
+      "from": "answer",
+      "to": "target",
+      "why": "The requested answer needs the 8.33% flagged-spam calculation and denominator distinction."
+    },
+    {
+      "from": "vary",
+      "to": "target",
+      "why": "The requested answer explicitly needs the effect of changing base rate."
+    },
+    {
+      "from": "word",
+      "to": "target",
+      "why": "The requested answer explicitly connects flag evidence to word evidence."
+    },
+    {
+      "from": "scores",
+      "to": "target",
+      "why": "The requested word-classification connection includes how word clues combine."
+    },
+    {
+      "from": "calibration",
+      "to": "target",
+      "why": "The target qualifies naive Bayes confidence and therefore needs the model-versus-frequency distinction."
+    }
+  ],
+  "revisions": [
+    {
+      "time": "2026-10-24T20:43:19.958272+00:00",
+      "round": "initial",
+      "changes": "Initial graph from assigned request and verified source packet; calculations not yet independently checked. Joint dependence and numerical counterexample require research/checks."
+    }
+  ]
+}

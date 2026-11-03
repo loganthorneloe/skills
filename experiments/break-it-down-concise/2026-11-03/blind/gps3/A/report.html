@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How GPS Finds You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{
+  --canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;
+  --blue:#2f6c9e;--green:#46734d;--red:#bf3030;
+}
+*{box-sizing:border-box}
+html{background:var(--canvas)}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.75;font-weight:400}
+main{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.2}
+h1{font-size:2.3rem;margin:0 0 32px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.45rem;margin:56px 0 12px;padding-top:24px;border-top:1px solid var(--border)}
+h3{font-size:1.05rem;margin:28px 0 8px}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+.sources{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);margin:0 0 8px}
+.src{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.src:last-child:nth-child(odd){grid-column:1 / -1}
+.src .t{margin:0 0 4px;line-height:1.4}
+.src .m{margin:0 0 10px;font-style:italic;color:var(--muted);font-size:.9rem;line-height:1.5}
+.src p:last-child{margin:0;font-size:.95rem;line-height:1.65}
+.answer{font-size:1.1rem}
+figure{margin:28px 0 32px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+figcaption{font-size:.92rem;line-height:1.6;color:var(--muted);margin-top:10px}
+figcaption a{color:var(--muted)}
+.wide{width:min(960px,calc(100vw - 48px));position:relative;left:50%;transform:translateX(-50%)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);background:#fff}
+.pair > div{padding:16px;display:flex;align-items:center;justify-content:center}
+.pair > div + div{border-left:1px solid var(--border)}
+.pair img{border:0}
+.eq{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.95rem;background:var(--surface);border:1px solid var(--border);padding:14px 18px;overflow-x:auto;margin:0 0 18px;line-height:1.6}
+blockquote{margin:0 0 18px;padding-left:18px;border-left:2px solid var(--red)}
+/* interactive */
+.lab{background:var(--surface);border:1px solid var(--border);margin:28px 0 32px}
+.lab h3{margin:0;padding:20px 24px 0}
+.lab .intro{padding:0 24px;font-size:.95rem;color:var(--muted);margin:6px 0 0}
+.lab-grid{display:grid;grid-template-columns:1fr;border-top:1px solid var(--border);margin-top:16px}
+.lab svg{display:block;width:100%;height:auto;background:#fff}
+.views{display:grid;grid-template-columns:1fr 1fr}
+.views #zoom{border-left:1px solid var(--border)}
+.lab-controls{padding:20px 24px;border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+.lab-controls .btns,.lab-controls .result{grid-column:1 / -1}
+.ctrl{margin:0 0 18px}
+.ctrl label{display:block;font-weight:500;font-size:.92rem;line-height:1.4}
+.ctrl output{font-family:Sora,system-ui,sans-serif;font-weight:600}
+.ctrl input[type=range]{width:100%;margin:8px 0 0;accent-color:var(--blue)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+button{font:500 .9rem Inter,system-ui,sans-serif;padding:8px 14px;border:1px solid var(--text);background:var(--surface);color:var(--text);cursor:pointer;border-radius:0}
+button.primary{background:var(--text);color:var(--surface)}
+.result{font-size:.93rem;line-height:1.6;margin:0}
+.result strong{font-family:Sora,system-ui,sans-serif;font-weight:600}
+.lab .note{font-size:.85rem;color:var(--muted);padding:14px 24px;border-top:1px solid var(--border);margin:0}
+.scroll{overflow-x:auto}
+@media (max-width:640px){
+  .scroll img.minw{min-width:600px}
+  main{padding:32px 20px 64px}
+  h1{font-size:1.85rem}
+  .sources{grid-template-columns:1fr}
+  .src:last-child:nth-child(odd){grid-column:auto}
+  .views{grid-template-columns:1fr}
+  .views #zoom{border-left:0;border-top:1px solid var(--border)}
+  .lab-controls{grid-template-columns:1fr}
+  .pair{grid-template-columns:1fr}
+  .pair > div + div{border-left:0;border-top:1px solid var(--border)}
+  .wide{width:100%;left:0;transform:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>How GPS finds your phone<span class="dot">.</span></h1>
+
+<h2 style="border-top:0;padding-top:0;margin-top:0">Sources</h2>
+<div class="sources">
+  <div class="src">
+    <p class="t"><a href="https://www.gsc-europa.eu/sites/default/files/sites/all/files/gnss_raw_measurement_web_0.pdf">Using GNSS Raw Measurements on Android Devices</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">GSA GNSS Raw Measurements Task Force · White paper · European GNSS Agency · 2017</p>
+    <p>The EU's satellite navigation agency, with receiver makers and Google reviewing, explains how phone chips turn signals into a position. Its basics chapter summarizes textbooks, and its error sizes are typical ranges, not phone measurements.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5253894/">Relativity in the Global Positioning System</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Neil Ashby · Review article · Living Reviews in Relativity · January 2003, revised 2007</p>
+    <p>A University of Colorado physicist derives each relativistic clock effect GPS corrects and compares the predictions with clocks measured in orbit. Its constellation details date from 2003.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://physicstoday.aip.org/features/relativity-and-the-global-positioning-system">Relativity and the Global Positioning System</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Neil Ashby · Feature article · Physics Today, American Institute of Physics · May 2002</p>
+    <p>The same author's magazine version, used only for the cost of ignoring relativity. Its net correction differs from the specification's in the last digit, so the specification's value is used.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://archive.gps.gov/technical/icwg/IS-GPS-200N.pdf">IS-GPS-200N: Navstar GPS Space Segment / Navigation User Segment Interfaces</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Space Systems Command, U.S. Space Force · Interface specification · GPS.gov · August 2022</p>
+    <p>The official specification every GPS receiver is built against, so it settles what satellites transmit and how their clocks are set. It covers the original civil signal; newer signals use other message formats.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://archive.gps.gov/systems/gps/space/">GPS.gov: Space Segment</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">National Coordination Office for Space-Based PNT · Government web page · GPS.gov · last modified June 2022</p>
+    <p>The U.S. government's official GPS information site, read from its archive. Its satellite count dates from July 2023 and changes as satellites launch and retire.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://archive.gps.gov/systems/gps/performance/accuracy/">GPS.gov: GPS Accuracy</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">National Coordination Office for Space-Based PNT · Government web page · GPS.gov · last modified March 2022</p>
+    <p>States the government's accuracy commitments and common causes of error. Its 4.9 m smartphone figure comes from one cited open-sky study, so treat it as typical, not guaranteed.</p>
+  </div>
+</div>
+
+<h2>The short answer</h2>
+<p class="answer">Your phone only listens. Each GPS satellite broadcasts where it is and what time its clock reads. The phone times how long each signal took to arrive, and since radio travels at the speed of light, each delay gives a distance. Distances to four satellites fix the phone's position and also the error in its own cheap clock. The satellites' clocks have no such fix, and light covers 30 cm in a billionth of a second, so they must be atomic clocks accurate to nanoseconds and corrected even for relativity.</p>
+
+<h2>What the satellites send</h2>
+<p>About 31 GPS satellites (as of July 2023) circle the Earth twice a day at about 20,200 km, spread over six tilted orbits so that at least four are visible "from virtually any point on the planet," according to GPS.gov.</p>
+
+<figure>
+  <a href="assets/gps-constellation-large.jpg"><img src="assets/gps-constellation-large.jpg" width="1700" height="1450" alt="Diagram of Earth surrounded by six tilted, interlocking orbital rings, each carrying several GPS satellites" style="max-width:520px;width:100%"></a>
+  <figcaption>The baseline 24-slot GPS constellation. The rings' different tilts put several satellites above any horizon at once. Not to scale, and showing only the core slots. Source: <a href="https://archive.gps.gov/systems/gps/space/">GPS.gov, Space Segment</a>, U.S. government work. Select to enlarge.</figcaption>
+</figure>
+
+<p>Each satellite sends a repeating pattern of bits unique to it, called a pseudo-random noise (PRN) code, which on the civil signal repeats every millisecond. On top of it rides the navigation message, a 50 bit-per-second stream that the GPS specification says "includes SV ephemerides, system time, SV clock behavior data". SV means satellite. The ephemeris is a set of orbit parameters giving the satellite's position at any moment, and the clock data says how far its clock is from GPS time. Together they tell the phone where each signal came from and when it left.</p>
+
+<h2>Time becomes distance</h2>
+<p>The phone keeps its own copy of each PRN code and slides it until it lines up with the incoming signal. The slide is the delay, and delay times the speed of light is the <em>pseudorange</em>:</p>
+<div class="eq">ρ = (t<sub>Rx</sub> − t<sub>Tx</sub>) · c</div>
+<p>t<sub>Tx</sub> is the satellite's transmit time stamp, t<sub>Rx</sub> the phone's receive time, and c is 299,792,458 m/s. For a satellite 20,200 km overhead, the delay is about 67 milliseconds. Every nanosecond of clock error shifts the answer by about 0.3 m; Ashby puts it as "Timing errors of one ns will lead to positioning errors of the order of 30 cm." It is a <em>pseudo</em>range because it equals the true distance only if the two clocks agree, and the phone's never does.</p>
+
+<h2>Spheres, and the fourth unknown</h2>
+<p>One distance puts the phone somewhere on a sphere around the satellite. Two spheres meet in a circle, and a third cuts that circle at two points, one of them far out in space.</p>
+
+<figure>
+  <a href="assets/gsa-fig1-spheres.png"><img src="assets/gsa-fig1-spheres.png" width="796" height="688" alt="Three satellites with circles of radius equal to their measured range, all meeting at a single point r" style="max-width:398px;width:100%"></a>
+  <figcaption>Three ranges drawn as circles meeting at the receiver r. This is the ideal case with perfect clocks. Source: White Paper on using GNSS Raw Measurements on Android devices, copyright © European GNSS Agency, 2017, Figure 1. Select to enlarge.</figcaption>
+</figure>
+
+<p>Real phones use quartz clocks. If one reads 1 millisecond fast, every pseudorange comes out about 300 km too long, by the same amount for every satellite, because all are timed against the same clock. As the European GNSS Agency's paper notes, "the three spheres do not intersect at a common point." So the phone treats its clock error b as an unknown alongside its position (x, y, z). For each satellite i at its known position:</p>
+<div class="eq">ρ<sub>i</sub> = √[(x − x<sub>i</sub>)² + (y − y<sub>i</sub>)² + (z − z<sub>i</sub>)²] + c·b</div>
+<p>Four unknowns need four equations, which is why GPS needs four satellites, not three. Because of the square root, receivers solve by starting from a guess, linearizing, and repeating until the answer settles. With more than four satellites, a least-squares fit uses all of them and averages down each one's noise. Solving for b also sets the phone's clock, which is why GPS doubles as a time service.</p>
+
+<section class="lab" aria-labelledby="lab-title">
+  <h3 id="lab-title">Find the clock error that makes the circles meet</h3>
+  <p class="intro">A flat, two-dimensional version of the problem. In two dimensions there are three unknowns (x, y and the clock error), so three satellites are enough; in three dimensions the same logic needs four.</p>
+  <div class="lab-grid">
+    <div class="views">
+    <svg id="scene" viewBox="-115 0 230 200" role="img" aria-labelledby="scene-desc">
+      <desc id="scene-desc">Three satellites above a phone. Each circle is drawn with the radius the receiver computes from its measured delay minus its current clock correction. Black dots mark where each pair of circles crosses near the phone; the shaded triangle between them shrinks to the true position only when the correction equals the actual clock error.</desc>
+      <defs><clipPath id="clip"><rect x="-115" y="0" width="230" height="200"/></clipPath></defs>
+      <g clip-path="url(#clip)">
+        <g id="world">
+          <circle id="c0" cx="-60" cy="50" r="120.158" fill="none" stroke="#2f6c9e" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+          <circle id="c1" cx="10" cy="30" r="122.445" fill="none" stroke="#46734d" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+          <circle id="c2" cx="80" cy="55" r="128.718" fill="none" stroke="#bf3030" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+          <polygon id="tri" points="3.11,152.25 -5.18,151.50 -1.26,154.82" fill="#bf3030" fill-opacity="0.15" stroke="none"/>
+          <circle id="p0" cx="3.11" cy="152.25" r="0.9" fill="#101527"/>
+          <circle id="p1" cx="-5.18" cy="151.50" r="0.9" fill="#101527"/>
+          <circle id="p2" cx="-1.26" cy="154.82" r="0.9" fill="#101527"/>
+          <line x1="-3" y1="140" x2="3" y2="140" stroke="#101527" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+          <line x1="0" y1="137" x2="0" y2="143" stroke="#101527" stroke-width="1.2" vector-effect="non-scaling-stroke"/>
+        </g>
+      </g>
+      <rect x="-25" y="115" width="50" height="50" fill="none" stroke="#646c77" stroke-width="0.6" stroke-dasharray="2 2"/>
+      <g font-family="Inter,system-ui,sans-serif" font-size="7" fill="#101527">
+        <rect x="-64" y="46" width="8" height="8" fill="#2f6c9e"/><text x="-52" y="47">Sat 1</text>
+        <rect x="6" y="26" width="8" height="8" fill="#46734d"/><text x="18" y="27">Sat 2</text>
+        <rect x="76" y="51" width="8" height="8" fill="#bf3030"/><text x="88" y="52">Sat 3</text>
+        <text x="-27" y="172" fill="#646c77" text-anchor="start">close-up area</text>
+      </g>
+    </svg>
+    <svg id="zoom" viewBox="-25 115 50 50" role="img" aria-label="Close-up of the 50 by 50 km area around the true phone position, showing the three crossing points and the triangle between them">
+      <rect x="-25" y="115" width="50" height="50" fill="#fff"/>
+      <use href="#world"/>
+      <g font-family="Inter,system-ui,sans-serif" font-size="2.2" fill="#646c77">
+        <text x="1.5" y="143.5">true position</text>
+        <text x="-24" y="118">close-up, 50 km across</text>
+      </g>
+    </svg>
+    </div>
+    <div class="lab-controls">
+      <div class="ctrl">
+        <label for="bias">Phone clock error (unknown to the phone): <output id="bias-out" for="bias">40 µs</output></label>
+        <input id="bias" type="range" min="-100" max="100" step="1" value="40">
+      </div>
+      <div class="ctrl">
+        <label for="guess">Clock correction the solver tries: <output id="guess-out" for="guess">0 µs</output></label>
+        <input id="guess" type="range" min="-100" max="100" step="1" value="0">
+      </div>
+      <div class="btns">
+        <button type="button" id="solve" class="primary">Solve for the error</button>
+        <button type="button" id="reset">Reset</button>
+      </div>
+      <p class="result" id="result" aria-live="polite">Every circle is <strong>12.0 km</strong> too large (40 µs × 0.2998 km/µs), so the crossing points spread over <strong>8.3 km</strong> instead of meeting at one point.</p>
+    </div>
+  </div>
+  <p class="note">The geometry is simplified. Satellites are placed about 110 km away instead of 20,200 km so the circles fit, and the ranges have no noise. The one real relationship is the conversion 1 µs of clock error = 0.2998 km of range error. Without JavaScript the picture shows the default state: a 40 µs error with no correction.</p>
+</section>
+
+<p>One number fixes every circle at once, which is what makes the clock error solvable: it adds the same length to every range, while moving the position changes each range differently.</p>
+
+<h2>Why the satellite clocks must be so precise</h2>
+<p>The phone cannot solve for errors in a satellite's clock, because that satellite's time stamp is the reference. If it is 10 ns off, that range is 3 m wrong and nothing in the equations reveals it. So the satellites carry atomic clocks, which count vibrations of cesium or rubidium atoms.</p>
+
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Clock stability figure, scroll sideways on small screens"><a href="assets/ashby-fig1-allan.jpg"><img class="minw" src="assets/ashby-fig1-allan.jpg" width="634" height="374" alt="Log-log plot of Allan deviation versus averaging time for quartz and cesium clocks; quartz rises steeply after about 100 seconds while cesium stays near ten to the minus 13.5 over a day" style="max-width:634px;width:100%"></a></div>
+  <figcaption>Frequency wander (vertical, log scale; −13 is one part in ten trillion) against averaging time in seconds (horizontal, log; 5 is about a day). Quartz is good for seconds and then drifts; cesium holds for a day, correct "to within about 5 parts in 10<sup>14</sup>, or 4 nanoseconds," per Ashby. These are typical curves; real clocks vary. Source: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5253894/">Ashby 2003</a>, Figure 1; reuse rights not stated, shown with attribution.</figcaption>
+</figure>
+
+<p>Quartz is enough for the phone because it re-solves its clock error with every fix. Ground stations monitor the satellite clocks and upload the small corrections carried in the navigation message.</p>
+
+<h2>Relativity is large enough to matter</h2>
+<p>At nanosecond precision, Einstein matters. A moving clock runs slow (special relativity), and a clock in weaker gravity runs fast (general relativity). At GPS altitude, gravity wins.</p>
+
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Relativistic frequency shift figure, scroll sideways on small screens"><a href="assets/ashby-fig2-offset.jpg"><img class="minw" src="assets/ashby-fig2-offset.jpg" width="684" height="421" alt="Curve of fractional frequency shift times ten to the twelfth versus orbital radius in kilometers; the Shuttle is near minus 330, GPS and GLONASS near plus 440, geostationary near plus 540" style="max-width:684px;width:100%"></a></div>
+  <figcaption>How much faster an orbiting clock runs than one on the ground, by orbit radius from Earth's center. The low, fast Shuttle sits below zero; GPS, about 26,600 km from the center, sits near +440 parts per trillion. Circular orbits only. Source: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5253894/">Ashby 2003</a>, Figure 2; reuse rights not stated, shown with attribution.</figcaption>
+</figure>
+
+<p>The specification gives the net offset as "Δf/f = -4.4647E-10". Over 86,400 seconds that is about 38.6 microseconds a day, or 11.6 km of light travel; Ashby writes that uncorrected, a single day's drift "would cause navigational errors of more than 11 km." So each clock is set before launch to 10.2299999954326 MHz, so it ticks at exactly 10.23 MHz as seen from the ground. This was measured, not assumed: the first orbiting cesium clock, on NTS-2 in 1977, ran fast by 442.5 parts in 10<sup>12</sup> against a predicted 446.5. A small leftover term from the slightly elliptical orbits is applied by the receiver.</p>
+
+<h2>What still limits accuracy</h2>
+<p>With the clocks handled, the main errors come from the signal's path and the phone's surroundings.</p>
+
+<figure class="wide">
+  <div class="scroll" tabindex="0" role="region" aria-label="Error budget figure, scroll sideways on small screens"><a href="assets/gsa-fig8-errors.png"><img class="minw" src="assets/gsa-fig8-errors.png" width="1345" height="1162" alt="Diagram of a signal path from a satellite to a ground antenna, labeled with error sources and typical sizes: satellite clock offset up to hundreds of km, relativistic clock correction under 13 m, satellite instrumental delay about a meter, geometric range about 20,000 km, ionospheric delay 2 to 30 m, tropospheric delay 2 to 30 m, receiver clock offset under 300 km, receiver instrumental delay about a meter" style="max-width:640px;width:100%"></a></div>
+  <figcaption>Pieces of a pseudorange, with typical sizes before correction. The two clock terms, hundreds of kilometers, dwarf everything else; once they are removed, the atmosphere's 2–30 m delays lead. The "&lt; 13 m" relativistic entry appears to be the elliptical-orbit term, not the 38 µs/day offset already built into the clock. Generic ranges, not phone measurements. Source: White Paper on using GNSS Raw Measurements on Android devices, copyright © European GNSS Agency, 2017, Figure 8. Select to enlarge.</figcaption>
+</figure>
+
+<p>The ionosphere and lower atmosphere delay the signal; receivers subtract a model, and two-frequency receivers can measure the ionospheric part. Buildings block signals or reflect them into longer paths, called multipath. Geometry matters too: satellites spread across the sky fix a position better than bunched ones.</p>
+
+<figure>
+  <div class="pair">
+    <div><img src="assets/gps-URE-vs-user-accuracy.jpg" width="300" height="200" alt="Cartoon of four satellites with dashed range lines to a user; user range error is labeled on the lines and user accuracy as a circle around the user"></div>
+    <div><img src="assets/gps-urban-canyon.jpg" width="300" height="275" alt="Cartoon of one satellite signal blocked by a tall building and another reflected off a second building before reaching a person"></div>
+  </div>
+  <figcaption>On the left, per-satellite range errors combine into an error circle around the user. On the right, buildings block some signals and reflect others. Simplified cartoons at their original small size. Source: <a href="https://archive.gps.gov/systems/gps/performance/accuracy/">GPS.gov, GPS Accuracy</a>, U.S. government work.</figcaption>
+</figure>
+
+<p>The government commits only to the signal: a global average range error of at most 2.0 m, 95% of the time (about 0.64 m on one reported day in 2021). GPS.gov says smartphones are typically accurate to within 4.9 m under open sky, and worse near buildings, bridges, and trees.</p>
+
+<h2>How your phone gets a fix in seconds</h2>
+<p>At 50 bits per second, one 1,500-bit message frame takes 30 seconds, so decoding each satellite's orbit and clock data from the sky is slow. Phones use assisted GNSS instead: they download that data, the time, a rough position from cell towers, and an ionosphere model over the network. The white paper states, "The main aim of A-GNSS is to reduce TTFF," the time to first fix.</p>
+
+<figure>
+  <a href="assets/gsa-fig15-agnss.png"><img src="assets/gsa-fig15-agnss.png" width="1375" height="648" alt="Diagram of a phone receiving satellite signals while also requesting and receiving assisted GNSS data from a server through a Wi-Fi or mobile network" style="max-width:640px;width:100%"></a>
+  <figcaption>Assisted GNSS. The satellite signals still go straight to the phone for timing; the network carries only the assistance data. Source: White Paper on using GNSS Raw Measurements on Android devices, copyright © European GNSS Agency, 2017, Figure 15. Select to enlarge.</figcaption>
+</figure>
+
+<p>Phones also use Galileo, GLONASS, and BeiDou, which work the same way. More satellites improve geometry, though each system adds one unknown, its clock offset from GPS time.</p>
+
+<h2>Limits</h2>
+<p>The satellite count is a 2023 figure, the error budget is generic, and the 4.9 m figure comes from open-sky tests that city streets will not match. Phones also blend GPS with Wi-Fi, cell towers, and motion sensors, so the dot on your map is not always a pure satellite fix.</p>
+</main>
+
+<script>
+(function(){
+  var C = 0.299792458; // km per microsecond
+  var sats = [{x:-60,y:90},{x:10,y:110},{x:80,y:85}];
+  var rx = {x:0,y:0};
+  var bias = document.getElementById('bias'), guess = document.getElementById('guess');
+  var bo = document.getElementById('bias-out'), go = document.getElementById('guess-out');
+  var res = document.getElementById('result');
+  function inter(a, ra, b, rb){
+    var dx=b.x-a.x, dy=b.y-a.y, dd=Math.hypot(dx,dy);
+    if (dd>ra+rb || dd<Math.abs(ra-rb)) return null;
+    var l=(ra*ra-rb*rb+dd*dd)/(2*dd), hh=Math.sqrt(Math.max(ra*ra-l*l,0));
+    var mx=a.x+l*dx/dd, my=a.y+l*dy/dd;
+    var p1={x:mx+hh*dy/dd,y:my-hh*dx/dd}, p2={x:mx-hh*dy/dd,y:my+hh*dx/dd};
+    return Math.hypot(p1.x,p1.y) < Math.hypot(p2.x,p2.y) ? p1 : p2;
+  }
+  function upd(){
+    var b = +bias.value, g = +guess.value, d = C*(b-g);
+    bo.textContent = b + ' µs'; go.textContent = g + ' µs';
+    sats.forEach(function(s,i){
+      var r = Math.hypot(s.x-rx.x, s.y-rx.y) + d;
+      document.getElementById('c'+i).setAttribute('r', Math.max(r,0.1).toFixed(3));
+    });
+    var R = sats.map(function(s){ return Math.hypot(s.x-rx.x, s.y-rx.y) + d; });
+    var pairs = [[0,1],[1,2],[0,2]], pts = [];
+    pairs.forEach(function(pr,k){
+      var p = inter(sats[pr[0]], R[pr[0]], sats[pr[1]], R[pr[1]]);
+      var el = document.getElementById('p'+k);
+      if (p) { el.setAttribute('cx', p.x.toFixed(2)); el.setAttribute('cy', (140-p.y).toFixed(2)); el.style.display=''; pts.push(p); }
+      else { el.style.display='none'; }
+    });
+    var tri = document.getElementById('tri');
+    tri.setAttribute('points', pts.map(function(p){ return p.x.toFixed(2)+','+(140-p.y).toFixed(2); }).join(' '));
+    var spread = 0;
+    for (var i=0;i<pts.length;i++) for (var j=i+1;j<pts.length;j++) spread = Math.max(spread, Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y));
+    var off = Math.abs(d);
+    var msg;
+    if (b === g) {
+      msg = 'Correction matches the error. All three circles pass through the true position: <strong>0.0 km</strong> mismatch. The phone now knows both where it is and what time it is.';
+    } else {
+      msg = 'Every circle is <strong>' + off.toFixed(1) + ' km</strong> too ' + (d>0 ? 'large' : 'small') + ' (' + Math.abs(b-g) + ' µs × 0.2998 km/µs), so the crossing points spread over <strong>' + spread.toFixed(1) + ' km</strong> instead of meeting at one point.';
+    }
+    res.innerHTML = msg;
+  }
+  bias.addEventListener('input', upd);
+  guess.addEventListener('input', upd);
+  document.getElementById('solve').addEventListener('click', function(){ guess.value = bias.value; upd(); });
+  document.getElementById('reset').addEventListener('click', function(){ bias.value = 40; guess.value = 0; upd(); });
+  upd();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en" class="lb-root" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Break It Down concision study</title>
+<link rel="stylesheet" href="vendor/logan-brand/tokens.css">
+<link rel="stylesheet" href="vendor/logan-brand/fonts.css">
+<link rel="stylesheet" href="vendor/logan-brand/brand.css">
+<script src="vendor/logan-brand/controls.js"></script>
+<style>
+  main { padding-bottom: 64px; }
+  .lb-section { margin-top: 48px; }
+  .lead { font-size: 18px; }
+  .metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .metric-grid .lb-tile h3 { font-family: var(--lb-font-body); font-weight: 500; font-size: 15px; margin: 0 0 8px; }
+  .metric-grid .lb-metric { font-size: 40px; line-height: 1.1; }
+  .metric-grid p { margin: 8px 0 0; }
+  figure { margin: 24px 0; }
+  figcaption { color: var(--lb-muted); font-size: 14px; margin-top: 8px; line-height: 1.6; }
+  .chart { width: 100%; max-width: 760px; height: auto; display: block; background: var(--lb-surface); border: 1px solid var(--lb-border); }
+  .chart .grid { stroke: var(--lb-border); stroke-width: 1; }
+  .chart .grid.base { stroke: var(--lb-muted); stroke-dasharray: 4 3; }
+  .chart .tick { fill: var(--lb-muted); font: 12px var(--lb-font-body); }
+  .chart .axis { fill: var(--lb-ink); font: 500 13px var(--lb-font-body); }
+  .mk { stroke: var(--lb-surface); stroke-width: 1.5; }
+  .mk.baseline { fill: #8a929b; }
+  .mk.budget { fill: #efa12d; }
+  .mk.select { fill: #8a52c6; }
+  .mk.combined { fill: #26afae; }
+  .mk.distill { fill: #347fd1; }
+  .mk.hybrid { fill: var(--lb-red); }
+  :root[data-theme="dark"] .mk.budget { fill: #ffb84d; }
+  :root[data-theme="dark"] .mk.select { fill: #ac7ce3; }
+  :root[data-theme="dark"] .mk.combined { fill: #4ad0cb; }
+  :root[data-theme="dark"] .mk.distill { fill: #579fe9; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 12px 0 0; padding: 0; list-style: none; font-size: 14px; }
+  .legend li { display: flex; align-items: center; gap: 8px; }
+  .legend svg { width: 14px; height: 14px; }
+  .lb-table td.num, .lb-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .lb-table tr.win td { font-weight: 600; }
+  .lb-table caption { text-align: left; color: var(--lb-muted); font-size: 14px; padding-bottom: 8px; }
+  code { font-size: 0.92em; }
+  .lb-table td:first-child { white-space: nowrap; }
+  blockquote { margin: 16px 0; padding-left: 16px; border-left: 2px solid var(--lb-border); }
+  @media (max-width: 720px) { .metric-grid { grid-template-columns: 1fr; } .lb-table-wrap .lb-table { min-width: 620px; } }
+</style>
+</head>
+<body>
+<a class="lb-skip" href="#main">Skip to content</a>
+<header class="lb-header lb-shell">
+  <a class="lb-wordmark" href="#main">Concision study<span class="lb-period">.</span></a>
+  <nav class="lb-nav" id="primary-nav" aria-label="Sections">
+    <a class="lb-nav-link" href="#design">Design</a>
+    <a class="lb-nav-link" href="#results">Results</a>
+    <a class="lb-nav-link" href="#topics">Topics</a>
+    <a class="lb-nav-link" href="#change">Change</a>
+  </nav>
+  <button type="button" class="lb-icon-button lb-menu-toggle" data-lb-menu-toggle aria-controls="primary-nav" aria-expanded="false" aria-label="Open menu" hidden>
+    <svg class="lb-theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+  </button>
+  <button type="button" class="lb-icon-button" data-lb-theme-toggle aria-label="Switch to dark mode" hidden>
+    <svg class="lb-theme-icon lb-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.5A8.7 8.7 0 0 1 8.5 3.8 8.8 8.8 0 1 0 20.2 15.5Z"/></svg>
+    <svg class="lb-theme-icon lb-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+  </button>
+</header>
+
+<main id="main" class="lb-shell" tabindex="-1">
+<section class="lb-section lb-prose" aria-labelledby="title">
+  <h1 id="title">Halving Break It Down without losing understanding<span class="lb-period">.</span></h1>
+  <p class="lead">Yes. Across eight topics, the recommended version produced reports 43% shorter on average that scored the same as the current skill in blind judging (58.6 vs 57.8 of 65 on five new topics), and never dropped a figure, diagram, or interactive while cutting. The change has the agent write and check the full report, then cut that draft to about half while following explicit rules for what to keep. Shortened reports still lose about one point of coverage per topic, mostly on applying the idea to a new case, and on one topic a writer chose to link charts rather than embed them.</p>
+</section>
+
+<section class="lb-section" aria-label="Headline numbers">
+  <div class="lb-grid metric-grid">
+    <article class="lb-tile"><h3>Baseline reading length</h3><div class="lb-metric">3,600–5,300</div><p>words, 16–23 minutes at 230 words per minute</p></article>
+    <article class="lb-tile lb-tile--featured"><h3>Recommended version, five new topics</h3><div class="lb-metric">−43%</div><p>words; blind score 58.6 vs 57.8 of 65</p></article>
+    <article class="lb-tile"><h3>Visuals lost in the cut</h3><div class="lb-metric">0</div><p>in 10 of 10 runs with the visuals rule; up to half without it</p></article>
+  </div>
+</section>
+
+<section class="lb-section lb-prose" id="design" aria-labelledby="design-title">
+  <h2 id="design-title">What was done<span class="lb-period">.</span></h2>
+  <p>A report's length depends on two things: how much the research finds, and how the writer turns it into prose. To separate these, the study ran in three stages, with every agent in its own context so that no writer saw another writer's output and no evaluator knew which variant produced which report.</p>
+  <p>In the first stage, one research agent per topic followed the current skill's steps 1 and 2 (claims, <code>source-audit</code>, <code>find-evidence</code>) and saved a frozen research pack: 17 claims and 20 exhibits for database isolation, 11 claims and 16 exhibits for causal inference. Both prompts come from last month's experiment, so their questions were already fixed.</p>
+  <p>In the second stage, twelve writer agents each started at step 3 from the same pack, one per variant per topic. Baseline ran twice per topic to show how much two identical runs differ. Because the research was identical, any difference in length or quality came from the writing instructions.</p>
+  <p>In the third stage, three full runs on a held-out topic (AI evals) did their own research, to check that a shorter variant does not also thin out the research. They were compared with a baseline full run on the same topic.</p>
+  <div class="lb-table-wrap" tabindex="0" role="region" aria-label="Variants tested">
+  <table class="lb-table">
+    <caption>Variants. Exact diffs are in <code>inputs/diff-*.txt</code>.</caption>
+    <thead><tr><th>Variant</th><th>Change to the current skill</th></tr></thead>
+    <tbody>
+      <tr><td>baseline</td><td>None. Current skill bytes.</td></tr>
+      <tr><td>budget</td><td>One paragraph: about 1,000–1,200 reading words, met by choosing what matters, not by compressing sentences.</td></tr>
+      <tr><td>select</td><td>No number. "Not short" becomes "not padded". Rank claims and spend words by importance, carry one worked example, give each exhibit 1–3 sentences, open sections with their point, no recaps or quizzes. The voice skill gains a pass that cuts repetition, previews, and things the reader already knows.</td></tr>
+      <tr><td>combined</td><td>budget + select + one-to-two-sentence source entries + a direct answer of at most three sentences.</td></tr>
+      <tr><td>distill</td><td>Current skill plus a final step: write and check the full draft, then cut it to about half by ranking paragraphs by how much the reader would lose without them. The full draft was also saved, so each distill run gives a long and short version of the same content.</td></tr>
+      <tr><td>hybrid</td><td>Built after the second stage: distill + select's rules + short source entries + "keep the field's standard name for each key concept". No word number.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>Each report was scored in two separate ways. First, a coverage grader in its own context answered eight questions per topic, written before any report existed, from the report alone, scoring 0–2 each. Second, one blind judge per topic compared all of that topic's reports against the research pack. It used last month's nine-dimension rubric plus "signal density" and "time to answer", for 55 points (60 in the third stage, which added research quality). It was told not to reward or punish length itself. All reports are HTML; none were made as Claude Docs.</p>
+</section>
+
+<section class="lb-section lb-prose" id="results" aria-labelledby="results-title">
+  <h2 id="results-title">Results<span class="lb-period">.</span></h2>
+  <p>The chart puts every report on two axes: how long it is compared with its topic's baseline, and how the blind judge scored it compared with that baseline. A report that is shorter and at least as good sits up and to the left of the dashed line.</p>
+  <figure>
+    <svg viewBox="0 0 680 360" role="img" aria-labelledby="chart-title chart-desc" class="chart">
+<title id="chart-title">Report length against judged quality</title>
+<desc id="chart-desc">Each mark is one report. Horizontal position is reading length as a percentage of the same topic's baseline; vertical position is the blind judge total divided by the baseline total. Distill and hybrid sit up and to the left of the baselines; budget alone sits lowest among short reports on isolation.</desc>
+<line x1="64" x2="656" y1="304.0" y2="304.0" class="grid"/><text x="56" y="308.0" class="tick" text-anchor="end">0.9×</text>
+<line x1="64" x2="656" y1="209.3" y2="209.3" class="grid base"/><text x="56" y="213.3" class="tick" text-anchor="end">1.0×</text>
+<line x1="64" x2="656" y1="114.7" y2="114.7" class="grid"/><text x="56" y="118.7" class="tick" text-anchor="end">1.1×</text>
+<line x1="64" x2="656" y1="20.0" y2="20.0" class="grid"/><text x="56" y="24.0" class="tick" text-anchor="end">1.2×</text>
+<line x1="64.0" x2="64.0" y1="20" y2="304" class="grid"/><text x="64.0" y="322" class="tick" text-anchor="middle">0%</text>
+<line x1="192.7" x2="192.7" y1="20" y2="304" class="grid"/><text x="192.7" y="322" class="tick" text-anchor="middle">25%</text>
+<line x1="321.4" x2="321.4" y1="20" y2="304" class="grid"/><text x="321.4" y="322" class="tick" text-anchor="middle">50%</text>
+<line x1="450.1" x2="450.1" y1="20" y2="304" class="grid"/><text x="450.1" y="322" class="tick" text-anchor="middle">75%</text>
+<line x1="578.8" x2="578.8" y1="20" y2="304" class="grid"/><text x="578.8" y="322" class="tick" text-anchor="middle">100%</text>
+<text x="360.0" y="348" class="axis" text-anchor="middle">Reading length, % of baseline</text>
+<text transform="translate(16 162.0) rotate(-90)" class="axis" text-anchor="middle">Judge score vs baseline</text>
+<circle cx="583.9" cy="209.3" r="6" class="mk baseline"/>
+<circle cx="573.6" cy="209.3" r="6" class="mk baseline"/>
+<rect x="532.1" y="214.2" width="11" height="11" class="mk baseline"/>
+<rect x="614.5" y="193.4" width="11" height="11" class="mk baseline"/>
+<path d="M578.8 202.3 L585.3 214.3 L572.3 214.3 Z" class="mk baseline"/>
+<circle cx="218.4" cy="267.1" r="6" class="mk budget"/>
+<rect x="223.2" y="172.6" width="11" height="11" class="mk budget"/>
+<circle cx="352.3" cy="190.4" r="6" class="mk select"/>
+<rect x="388.0" y="151.8" width="11" height="11" class="mk select"/>
+<circle cx="213.3" cy="209.3" r="6" class="mk combined"/>
+<rect x="228.4" y="89.3" width="11" height="11" class="mk combined"/>
+<path d="M295.7 202.3 L302.2 214.3 L289.2 214.3 Z" class="mk combined"/>
+<circle cx="285.4" cy="112.8" r="6" class="mk distill"/>
+<rect x="300.4" y="47.6" width="11" height="11" class="mk distill"/>
+<path d="M254.5 220.3 L261.0 232.3 L248.0 232.3 Z" class="mk distill"/>
+<path d="M336.8 113.3 L343.3 125.3 L330.3 125.3 Z" class="mk hybrid"/>
+</svg>
+    <ul class="legend" aria-label="Legend">
+      <li><svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" class="mk baseline"/></svg>baseline</li>
+      <li><svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" class="mk budget"/></svg>budget</li>
+      <li><svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" class="mk select"/></svg>select</li>
+      <li><svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" class="mk combined"/></svg>combined</li>
+      <li><svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" class="mk distill"/></svg>distill</li>
+      <li><svg viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" class="mk hybrid"/></svg>hybrid</li>
+      <li>● isolation · ■ causal inference · ▲ evals (own research)</li>
+    </ul>
+    <figcaption>Judge totals are out of 55 (stage two) or 60 (stage three), divided by the mean of that topic's baseline runs. Each judge scored all of one topic's reports together, so scores compare within a topic, not across topics.</figcaption>
+  </figure>
+
+  <h3>Same research, different writing</h3>
+  <div class="lb-table-wrap" tabindex="0" role="region" aria-label="Stage two results">
+  <table class="lb-table">
+    <thead><tr><th>Variant</th><th class="num">Isolation words</th><th class="num">Judge /55</th><th class="num">Coverage /16</th><th class="num">Causal words</th><th class="num">Judge /55</th><th class="num">Coverage /16</th></tr></thead>
+    <tbody>
+      <tr><td>baseline (2 runs)</td><td class="num">4,866 · 4,780</td><td class="num">49 · 49</td><td class="num">15 · 16</td><td class="num">4,586 · 5,356</td><td class="num">45 · 46</td><td class="num">15 · 15</td></tr>
+      <tr><td>budget</td><td class="num">1,444</td><td class="num">46</td><td class="num">15</td><td class="num">1,581</td><td class="num">47</td><td class="num">14</td></tr>
+      <tr><td>select</td><td class="num">2,703</td><td class="num">50</td><td class="num">16</td><td class="num">3,182</td><td class="num">48</td><td class="num">14</td></tr>
+      <tr><td>combined</td><td class="num">1,403</td><td class="num">49</td><td class="num">15</td><td class="num">1,652</td><td class="num">51</td><td class="num">13</td></tr>
+      <tr class="win"><td>distill</td><td class="num">2,074</td><td class="num">54</td><td class="num">16</td><td class="num">2,334</td><td class="num">53</td><td class="num">14</td></tr>
+      <tr><td>distill's own full draft</td><td class="num">4,101</td><td class="num">not judged</td><td class="num">16</td><td class="num">4,282</td><td class="num">not judged</td><td class="num">14</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>The two topics produced nearly the same ranking: distill first, combined or select next, and both baselines at or near the bottom. Distill's paired draft is the cleanest evidence in the study. The same writer, with the same content, cut 4,101 words to 2,074 and 4,282 to 2,334 with no loss of coverage, and the cut version beat both full-length baselines by 4–8 points.</p>
+  <p>A word target on its own was not enough. On isolation, budget hit almost the same length as combined (1,444 vs 1,403 words) but scored lowest of all six, because it dropped the step-by-step explanation of why the outcome matches no one-at-a-time order. Combined applied the same target together with select's rules and kept that mechanism. The rules for what to keep make the difference; the number only sets how hard to cut.</p>
+  <p>Combined, the most aggressive variant (about 70% shorter), did best on causal inference. It also had the lowest coverage score in the study (13/16 against the baselines' 15): it never names the term "confounder", and it says nothing about whether study results generalize beyond the sample. It was the only variant to miss this criterion in the plan, which allowed coverage to fall at most one point below baseline.</p>
+
+  <h3>Doing its own research (evals topic)</h3>
+  <div class="lb-table-wrap" tabindex="0" role="region" aria-label="Stage three results">
+  <table class="lb-table">
+    <thead><tr><th>Variant</th><th class="num">Words</th><th class="num">vs baseline</th><th class="num">Sources</th><th class="num">Judge /60</th><th class="num">Probes /16</th></tr></thead>
+    <tbody>
+      <tr><td>baseline</td><td class="num">3,623</td><td class="num">—</td><td class="num">7</td><td class="num">53</td><td class="num">16</td></tr>
+      <tr><td>combined</td><td class="num">1,639</td><td class="num">−55%</td><td class="num">4</td><td class="num">53</td><td class="num">15</td></tr>
+      <tr><td>distill</td><td class="num">1,354</td><td class="num">−63%</td><td class="num">5</td><td class="num">52</td><td class="num">16</td></tr>
+      <tr class="win"><td>hybrid</td><td class="num">1,936</td><td class="num">−47%</td><td class="num">5</td><td class="num">58</td><td class="num">16</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>When writers did their own research, every shortened variant also researched less. The baseline audited seven sources, the others four or five. Distill's draft was only 2,462 words before cutting, against the baseline's 3,623 final, so it ended up thinnest: the judge marked it down for mechanism and for reading key sources only through fetch-tool summaries. Hybrid, with five sources, scored highest on both writing and research. Its judge noted that it caught a mismatch inside the τ-bench paper between the text ("~55%") and the paper's own figure (22.2%). A concision instruction can leak backward into research, so the skill should say plainly that shortening applies to the report, not to the research.</p>
+</section>
+
+<section class="lb-section lb-prose" id="topics" aria-labelledby="topics-title">
+  <h2 id="topics-title">Five more topics, and the visuals<span class="lb-period">.</span></h2>
+  <p>The first rounds left two open questions: whether the result holds beyond three topics, and whether cutting removes graphics. It did remove them. In the shared-research stage, distilling cut causal inference from 7 images in the draft to 4 and isolation from 9 to 4. So two versions were tested on five new topics, chosen across biology, physics, economics, machine learning, and signal processing, with several mechanisms that need pictures: mRNA vaccines, GPS, central-bank rates and inflation, transformer attention, and active noise cancellation. Every run did its own research. Each was judged blind against a baseline run on the same topic, on the 12 earlier dimensions plus a 13th for visual explanation, out of 65.</p>
+  <p>Hybrid v2 added one rule to the cut: "Cut words, not visuals: keep every source figure, table, diagram, and interactive the draft used, and remove one only when another visual in the report shows the same data, never to save words." Version 3 added one more sentence, placed in the research step: research for the full draft, because the cut removes words, never sources, exhibits, or figures.</p>
+  <div class="lb-table-wrap" tabindex="0" role="region" aria-label="Five-topic results">
+  <table class="lb-table">
+    <caption>Judge totals out of 65. Each version 3 report was judged in a fresh pair against the same baseline report, so each baseline has two scores.</caption>
+    <thead><tr><th>Topic</th><th class="num">Baseline words</th><th class="num">Baseline</th><th class="num">v2 words</th><th class="num">v2</th><th class="num">v3 words</th><th class="num">v3</th></tr></thead>
+    <tbody>
+      <tr><td>Rates and inflation</td><td class="num">3,457</td><td class="num">59 · 60</td><td class="num">1,362</td><td class="num">58</td><td class="num">1,570</td><td class="num">54</td></tr>
+      <tr><td>GPS</td><td class="num">3,112</td><td class="num">61 · 58</td><td class="num">1,420</td><td class="num">55</td><td class="num">1,995</td><td class="num">62</td></tr>
+      <tr><td>Attention</td><td class="num">3,469</td><td class="num">58 · 59</td><td class="num">1,836</td><td class="num">58</td><td class="num">1,950</td><td class="num">59</td></tr>
+      <tr><td>mRNA vaccines</td><td class="num">3,111</td><td class="num">57 · 54</td><td class="num">1,702</td><td class="num">57</td><td class="num">1,856</td><td class="num">57</td></tr>
+      <tr><td>Noise cancellation</td><td class="num">2,884</td><td class="num">54 · 58</td><td class="num">1,696</td><td class="num">56</td><td class="num">1,815</td><td class="num">61</td></tr>
+      <tr class="win"><td>Mean</td><td class="num">3,207</td><td class="num">57.8 · 57.8</td><td class="num">1,603 (−50%)</td><td class="num">56.8</td><td class="num">1,837 (−43%)</td><td class="num">58.6</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>The visuals rule held without exception. In all ten hybrid runs, the final report kept every image, diagram, and interactive its draft had. Version 3 had 33 visuals across the five topics, against 30 for baseline and 26 for v2.</p>
+  <p>Where v2 still had fewer visuals than baseline, the gap came from research, not the cut. On GPS it audited 3 sources where baseline audited 7, and lost 55 to 61; the judge said the missing atmosphere, satellite-geometry, and reflection content cost it two probe questions. On rates it lacked the baseline's mortgage and daily-spending charts. Moving the research sentence to the research step fixed most of this. Version 3 audited 28 sources across the five topics, the same as baseline. V2 audited 29, but unevenly: 8 on noise cancellation and only 3 on GPS. Version 3 won GPS 62 to 58 with 10 visuals, and won noise cancellation 61 to 58.</p>
+  <p>Version 3's one clear loss was rates, 54 to 60, with a visual score of 3 against 5. Its writer found the two best timing charts carried "reuse requires permission" terms, so it linked them and drew a timeline from their stated numbers instead. The baseline writer embedded similar Bank of England charts under the bank's non-commercial terms. That is a difference in how the two writers read reuse terms, not a cut. The same report also never defines inflation and never names the cost of higher rates in jobs and output.</p>
+  <p>Shorter reports still trade a little coverage for time. Across the five topics, baseline scored 76 of 80 probe points, v2 scored 73, and v3 scored 71. The lost points were mostly transfer questions, such as the urban-canyon GPS error or what still takes time when designing a vaccine for a new virus, plus an occasional foundation such as innate versus adaptive immunity. Every judge still said the shorter report gave real understanding faster, and no judge found a consequential factual error in any report.</p>
+  <p>Scores from a single judge vary. Each baseline report was judged twice, in separate pairs, and its two scores differed by up to 4 points (noise cancellation 54 and 58). The per-topic wins and losses above are therefore noisy. The averages and the visual counts are the reliable part.</p>
+</section>
+
+<section class="lb-section lb-prose" aria-labelledby="words-title">
+  <h2 id="words-title">Where baseline words go<span class="lb-period">.</span></h2>
+  <p>All three judges found the same wasted words in the baselines, independently and with quotes. In order of size:</p>
+  <ol>
+    <li>The source list before the answer, at 300–830 words. In the isolation baselines the entries push the answer about 4,300px down a phone screen, and they preview facts the body then repeats ("within about 7%" appears in the source entry, a figure caption, and the body text).</li>
+    <li>The same lesson taught several ways. One causal baseline shows two textbook tables, a six-student table, and a simulator, all of the same split; one isolation baseline shows one lost update four times and three exhibits of the same isolation-level ladder.</li>
+    <li>Captions that retell the prose, rather than saying what to look at.</li>
+    <li>Caveats repeated in several places. One baseline states "2024 models" four times.</li>
+    <li>Recap endings that restate the direct answer.</li>
+  </ol>
+  <p>The words that earned their place were consistent too. A step table with a stored-value column replaces paragraphs of narration. A one-line distinction blocks a misconception ("A p-value addresses luck, not bias"). An interactive that reveals a hidden quantity, such as a bias tile or a level switch, does real work, unlike one that replays the example. Exhibit notes that say where to look ("Read the last column") also earn their space. Distillation kept these and cut the waste because it ranks paragraphs by what the reader loses without them, which a word target does not ask.</p>
+</section>
+
+<section class="lb-section lb-prose" id="change" aria-labelledby="change-title">
+  <h2 id="change-title">Recommended change<span class="lb-period">.</span></h2>
+  <p>Adopt version 3. Its full text is in <code>variants/hybrid3/</code>, with the diff against the current skill in <code>inputs/diff-hybrid3*.txt</code> and <code>inputs/diff-hybrid2.txt</code>. It adds about 300 words across the two skills:</p>
+  <ol>
+    <li>"Simple means understandable, not short" becomes "not padded: include what the reader needs to follow the answer and nothing else", in both skills. The old wording invited length.</li>
+    <li>In step 2, research for the full draft: the cut removes words, never sources, exhibits, or figures.</li>
+    <li>In step 3, a paragraph on what to keep: rank claims and spend words by importance, teach each prerequisite in the fewest sentences that make it usable, carry one worked example, give each exhibit one to three sentences on what to notice and its limit, open each section with its point, and add no recaps, quizzes, or next-steps lists unless asked.</li>
+    <li>Source entries become one or two sentences: why to trust the source for its use here, and the one limit that most changes how to read it.</li>
+    <li>A new first check in step 6: write and check the full draft, then cut it to about half by ranking paragraphs by how much the reader's understanding would suffer without them. Cut words, not visuals. Keep every claim the answer depends on, its mechanism, the evidence and caveats that bound it, and the field's standard name for each key concept.</li>
+    <li>In <code>voice</code>, a revision step that cuts sentences that repeat a point, preview what comes next, or explain what the reader already knows.</li>
+  </ol>
+  <p>Two problems are left, and neither change below has been tested. First, writers disagree on reuse terms. One linked charts marked "permission required" while another embedded charts with similar non-commercial terms. A single rule in <code>find-evidence</code> would make reports consistent, but which rule is right depends on how and where reports are shared, so that one is your call. Second, the cut tends to drop the transfer step. Adding "keep one application of the idea to a case the reader has not seen" to the distill step may recover the lost probe point. Separately, every judge named the full source list before the answer as the biggest cost to time-to-answer. Its position was your design choice; the short entries already recover most of that length.</p>
+  <p>The cost is time. Writing a full draft and then cutting it is slower: version 3 writers took 11–17 minutes with their own research, against 8–11 for baseline writers.</p>
+</section>
+
+<section class="lb-section lb-prose" aria-labelledby="limits-title">
+  <h2 id="limits-title">How far to trust this<span class="lb-period">.</span></h2>
+  <p>Each variant ran once per topic, apart from the duplicated baseline. The two baseline runs scored within one point of each other, and the gaps that decide this study are 4–9 points. Even so, this is a pilot, not a statistical result. Version 3 ran once on each of five topics, and hybrid v2 once on each of six, so the recommendation rests on single runs per topic. The earlier hybrid also had a broken sentence in its cut step, fixed in v2 and v3.</p>
+  <p>The judges and graders are language models of the same family as the writers, not human readers. The coverage questions turned out easy: almost every report scored 15 or 16 on isolation. On causal inference every report lost a point on Q6 (random assignment versus representative sampling), because the research pack had no claim for it; that point reflects the pack, not the writing. The judges' qualitative comparisons carry more weight than the coverage numbers here.</p>
+  <p>Writers sharing the session scratch folder overwrote one another's check scripts at times. The writers who noticed reran their checks in separate folders, and every report lives in its own run folder, so no report was affected.</p>
+  <p>One factual slip appeared in several variants, the shortened ones included. Three causal reports call a 0.23 standard-deviation gain "large", which is stronger than the source's own description. Two say an example treatment "changed nobody's outcome" when only its average effect was zero. No judge found a consequential error in any report.</p>
+</section>
+
+<section class="lb-section lb-prose" aria-labelledby="files-title">
+  <h2 id="files-title">Files<span class="lb-period">.</span></h2>
+  <p>Everything is in <code>~/src/skills/experiments/break-it-down-concise/2026-11-03/</code>, still untracked like the earlier experiments. <code>protocol.md</code> was fixed before any report existed.</p>
+  <ul>
+    <li><a class="lb-link" href="../runs/i-distill/report.html">Isolation, distill</a> and <a class="lb-link" href="../runs/i-distill/draft.html">its full draft</a>; <a class="lb-link" href="../runs/i-base1/report.html">isolation baseline</a></li>
+    <li><a class="lb-link" href="../runs/c-distill/report.html">Causal, distill</a>, <a class="lb-link" href="../runs/c-combined/report.html">causal, combined</a>, <a class="lb-link" href="../runs/c-base2/report.html">causal baseline</a></li>
+    <li><a class="lb-link" href="../runs/t-gps-hyb3/report.html">GPS, version 3</a> and <a class="lb-link" href="../runs/t-gps-base/report.html">GPS baseline</a>; <a class="lb-link" href="../runs/t-anc-hyb3/report.html">noise cancellation, version 3</a>; <a class="lb-link" href="../runs/t-rates-hyb3/report.html">rates, version 3</a> and <a class="lb-link" href="../runs/t-rates-base/report.html">rates baseline</a></li>
+    <li><a class="lb-link" href="../runs/e-hybrid/report.html">Evals, hybrid</a> and <a class="lb-link" href="../runs/e-base1/report.html">evals baseline</a></li>
+    <li>Judge reports in <code>evaluation/judge-*.md</code>, coverage grades in <code>evaluation/coverage/</code>, the anonymization key in <code>inputs/blind-key.json</code>, word counts in <code>evaluation/metrics.json</code></li>
+  </ul>
+</section>
+</main>
+</body>
+</html>

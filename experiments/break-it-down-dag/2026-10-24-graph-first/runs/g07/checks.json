@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "node_count": 21,
+  "edge_count": 35,
+  "checks": [
+    "Unique node IDs",
+    "All edge endpoints exist and have rationale",
+    "Acyclic graph",
+    "Every prerequisite has a path to target",
+    "Required node fields and status values",
+    "Evidence URL, locator, exact claim present for all supported nodes",
+    "Constructed withdrawal arithmetic and both serial orders",
+    "Initial snapshot preserved and distinct from final"
+  ],
+  "topological_order": [
+    "sql",
+    "arithmetic",
+    "transaction",
+    "dependency",
+    "invariant",
+    "atomicity",
+    "concurrency",
+    "snapshot",
+    "dirty",
+    "serial",
+    "nonrepeatable",
+    "phantom",
+    "read_committed",
+    "mechanisms",
+    "anomaly",
+    "serializable",
+    "atomicity_limit",
+    "repeatable_read",
+    "retry",
+    "levels",
+    "target"
+  ],
+  "not_checked": [
+    "Live database execution",
+    "HTML or SVG rendering (shared renderer responsibility)",
+    "Formal proof that every pedagogical edge is necessary"
+  ],
+  "manual_review": "Read each answer and edge against located passages. Removed invariant-to-atomicity motivation, concurrency-to-serial order, level-to-implementation dependencies, and optional choice branch. Product-specific semantics retain labels; snapshot example explicitly assumes distinct-row updates and no extra enforcement."
+}

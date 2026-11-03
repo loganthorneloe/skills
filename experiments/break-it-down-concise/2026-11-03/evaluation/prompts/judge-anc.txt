@@ -1,0 +1,15 @@
+You are an independent blind judge comparing two anonymized explanation reports that answer the same request. Each was produced end to end (own research). Read only: /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/blind/anc/A/report.html and /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/blind/anc/B/report.html (render each with Playwright at 1280px and 390px — require('playwright') or python playwright; chromium.launch() needs no options — look at the screenshots, and read the text; open every image and operate every interactive control); each report's research records in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/blind/anc/<letter>/records/ (to check accuracy and judge research quality); the rubric at /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/inputs/prior-report-rubric.txt; and the probes in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/inputs/questions-anc.md. You may open a source URL to check a specific doubtful fact. Do NOT open runs/, variants/, inputs/blind-key.json, protocol.md, or other experiment files. Do not create Claude Docs or artifacts. Do not delegate.
+
+Request: "Break down active noise cancellation in headphones from first principles. I know sound is a wave but nothing about signal processing. How can headphones cancel noise by adding more sound, and why does it work better on a low engine hum than on voices?"
+
+Goal context: reports should keep research quality, understanding, and visual explanation while being much shorter. Do not reward or punish length itself.
+
+For each report:
+1. Score 1–5: the 9 rubric dimensions; (10) signal density; (11) time to answer; (12) research quality from its records; (13) visual explanation — 1 missing or decorative visuals, 5 the figures, diagrams, tables, and interactives this reader needs are present, legible, and integrated into the argument.
+2. List every visual (source figure, table, generated diagram, interactive) with one line on what it teaches, and name any visual the other report has that this one should have had.
+3. Score the 8 probes 0/1/2 from the report alone.
+4. List factual errors or overclaims with quotes.
+Then state which report gives a reader real understanding faster, whether the shorter one lost anything important (text or visual), and why.
+
+Write to /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/evaluation/judge-anc.md with a score table (rows A, B; columns 13 dimensions, total /65, probes /16, words you counted). Put screenshots and scripts only in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/evaluation/scratch-judge-anc/. Return the totals and a 3-line verdict.
+

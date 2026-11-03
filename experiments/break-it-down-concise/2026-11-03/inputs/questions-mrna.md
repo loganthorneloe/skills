@@ -1,0 +1,10 @@
+# Coverage questions — mRNA vaccines (frozen before generation)
+Score each 0/1/2 from the report alone. 2 = a novice reading only this report could answer correctly; 1 = partial, implicit, or needs inference the report does not support; 0 = missing or wrong.
+Q1. What is mRNA's normal job in a cell? Key: a temporary copy of a gene's instructions that ribosomes read to build a protein.
+Q2. What does the vaccine's mRNA encode and what happens after injection? Key: a viral protein (e.g. SARS-CoV-2 spike); cells take up lipid-nanoparticle-wrapped mRNA, ribosomes make the protein, which is displayed/released.
+Q3. How does making that protein train the immune system? Key: immune cells recognize the foreign protein; B cells make antibodies, T cells are activated; memory cells persist for faster response to the real virus.
+Q4. Why is the mRNA packaged in lipid nanoparticles and chemically modified? Key: naked mRNA is fragile and is broken down/triggers innate sensing; lipids protect and deliver it into cells; modified nucleosides (pseudouridine) reduce unwanted inflammation and increase protein output.
+Q5. Why can't it change your DNA? Key: mRNA stays in the cytoplasm and never enters the nucleus; cells lack the machinery (reverse transcriptase / integration) to write it into DNA in this setting; it degrades within days.
+Q6. How long do the mRNA and protein last? Key: mRNA is degraded in days; the protein is temporary; protection comes from immune memory, not persistent vaccine material.
+Q7. What evidence shows it works and what are its limits? Key: large randomized trials (~95% efficacy against symptomatic COVID-19 in 2020 trials); protection wanes and variants reduce it; side effects such as rare myocarditis.
+Q8 (transfer). A new virus appears whose surface protein is known. Why could an mRNA vaccine be designed quickly, and what would still take time? Key: only the protein's genetic sequence needs to change in the same platform; manufacturing, safety and efficacy trials and approval still take time.

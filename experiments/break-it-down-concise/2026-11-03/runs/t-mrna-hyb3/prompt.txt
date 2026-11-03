@@ -1,0 +1,15 @@
+You are one writer in a controlled experiment. Execute the user request below with the supplied skill files, which are the ONLY explanation skill you use.
+
+- Skill: read /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/variants/hybrid3/break-it-down/SKILL.md directly and follow ALL of it, including your own research (steps 1–2). Its companions are the sibling files /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/variants/hybrid3/voice/SKILL.md, /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/variants/hybrid3/source-audit/SKILL.md and /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/variants/hybrid3/find-evidence/SKILL.md; read them from there when the skill says to load them. Do NOT invoke the Skill tool for break-it-down, voice, source-audit, find-evidence, logan-brand, or any artifact/design skill; use the house style in the supplied SKILL.md.
+- Research with web tools (WebSearch/WebFetch; load them via ToolSearch if deferred). Playwright is installed for the rendering checks (require('playwright') in node or python's playwright; chromium.launch() needs no options).
+- Save your audit and evidence records in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/records/ and embedded exhibits in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/assets/, referenced relatively.
+- Write /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/report.html. Keep it free of skill names, experiment labels, or test commentary. Put decisions, sources read, verification outcomes, gaps, and approximate elapsed time in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/run-notes.md.
+- After the full draft is complete and checked, save it as /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/draft.html before distilling, so both versions exist.
+- Deliver an HTML file only. Do NOT create Claude Docs, artifacts, or publish anything; do not open the built-in browser pane. Do not inspect other runs, assignments, protocol, research packets, or evaluation files. Do not delegate. Do not edit any skill or repository file.
+- Return the report path and concrete verification results.
+
+User request:
+Break down how mRNA vaccines work from first principles. I took high-school biology but nothing since. How does injecting mRNA teach my immune system to fight a virus, and why doesn't it change my DNA?
+
+- After the full draft is complete and checked, save it as /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/draft.html before distilling, so both versions exist.
+- Put any check scripts or screenshots only in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/runs/t-mrna-hyb3/scratch/, never in a shared scratchpad.

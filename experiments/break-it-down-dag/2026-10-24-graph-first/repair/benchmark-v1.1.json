@@ -1,0 +1,512 @@
+{
+  "benchmark_version": "1.1-prospective-repair",
+  "purpose": "Independent graph-only evaluation of prerequisite reasoning, evidence, and research records; no generated explanations or graphs are scored during benchmark design.",
+  "design_inputs": [
+    "experiments/break-it-down-dag/2026-10-24/evaluation/graph-evaluation.md",
+    "experiments/break-it-down-dag/2026-10-24/inputs/topics.json"
+  ],
+  "independence": {
+    "candidate_instructions_seen": false,
+    "generated_graphs_seen": false,
+    "historical_graph_audit_seen": true,
+    "held_out_topic_ids": [
+      "backpropagation",
+      "bayesian_spam"
+    ],
+    "holdout_rule": "Do not disclose held-out requests, concepts, traps, or applications to the instruction designer before the candidate instructions are frozen. This complete file belongs to the run coordinator/evaluator.",
+    "freeze_rule": "Hash this file and rubric.md before graph generation. Evaluate that exact version. Later amendments must be versioned and reported as post-freeze deviations."
+  },
+  "representation_policy": {
+    "node_labels": "No exact labels, fixed node counts, canonical topology, or canonical source list required.",
+    "edge_meaning": "For prerequisite edges, A -> B means the stated reader needs A to understand B's actual question and answer at the requested depth. Apply the candidate's documented arrow orientation when parsing; explicit opposite orientation is acceptable.",
+    "alternative_relations": "Motivation, sequence, evidence, examples, and scope conditions may be represented separately, but must not be silently counted as prerequisite edges.",
+    "coverage": "Accept separate nodes, clear internal bridges, or reader assumptions actually licensed by the request. A combined node must not conceal a material prerequisite, falsely require its entire bundle, or prevent support from being assessed."
+  },
+  "topics": [
+    {
+      "id": "evals",
+      "role": "regression",
+      "reader": "Can write a small Python program and call a model API; no machine-learning, AI-engineering, or statistics background assumed.",
+      "request": "Break down AI application evals from first principles. I can write a small Python program and call a model API, but I have no machine-learning or AI-engineering background. Why do I need evals, how do they work, and how would I start evaluating a customer-support assistant?",
+      "essential_questions": [
+        {
+          "id": "E1",
+          "question": "What behavior counts as success or failure for this application?",
+          "minimum": "Connect a concrete user task and intended result to criteria; distinguish fluent/plausible text from correctness and policy compliance.",
+          "alternatives": "A task-contract node, worked support case, or explicit target decomposition can supply this."
+        },
+        {
+          "id": "E2",
+          "question": "What is one test case, and what is the application being tested?",
+          "minimum": "A case has inputs/context and expected behavior or a judging rule. The tested system includes relevant prompt, model and configuration and, if present, retrieval/tools/state; not merely a model name.",
+          "alternatives": "Case and system boundary can be separate or integrated if each is clear."
+        },
+        {
+          "id": "E3",
+          "question": "How can a grader judge the observed result, and how can it be wrong?",
+          "minimum": "An observable result is compared with criteria. Reference answers, rules, human judgment or model grading have different limits; the grader itself needs checking against known or reviewed cases.",
+          "alternatives": "Do not require an inventory of all grader types; one appropriate method plus its limits suffices."
+        },
+        {
+          "id": "E4",
+          "question": "How is an initial evaluation run made repeatable enough to interpret?",
+          "minimum": "Run cases, preserve inputs/outputs and configuration, compute results, inspect failures, and control relevant starting conditions. Random outputs may differ despite controlled configuration.",
+          "alternatives": "Execution can precede maintenance/comparison; first execution does not require an existing version comparison."
+        },
+        {
+          "id": "E5",
+          "question": "How do a case and an attempt differ?",
+          "minimum": "Repeated attempts on one case probe variation for that case; diverse cases probe different situations. Neither automatically establishes production coverage.",
+          "alternatives": "May be taught through a concrete repeated support question rather than statistical terminology."
+        },
+        {
+          "id": "E6",
+          "question": "What can and cannot be inferred from a score?",
+          "minimum": "Specify which cases, their mixture, scoring and attempts produced the score. Curated/easy cases, finite coverage and grader error limit generalization. A perfect small test is not proof of zero real-world failures.",
+          "alternatives": "An intuitive sampling explanation suffices. Confidence-interval formulas are optional; if used, supply the necessary probability bridge and assumptions."
+        },
+        {
+          "id": "E7",
+          "question": "How do failures guide a change and a fair comparison?",
+          "minimum": "Inspect failure categories; compare versions using consistent relevant conditions/cases and account for variation. Explain keeping useful regression cases and checking new situations without claiming that tuning to the same set proves general improvement.",
+          "alternatives": "A separate maintenance branch or a clearly staged workflow is acceptable."
+        },
+        {
+          "id": "E8",
+          "question": "If the assistant takes actions, what would count as evidence that the right action happened?",
+          "minimum": "Conditional branch: compare controlled initial and expected final state and relevant action/permission history. A success message or final record alone does not prove the requested, authorized change occurred.",
+          "alternatives": "May explicitly scope the initial assistant to answer-only and mark action evaluation as an extension. Do not require action-specific prerequisites for all answer grading."
+        }
+      ],
+      "scope_distinctions": [
+        "Generic observable evidence versus action-specific state/history checks.",
+        "First run versus version comparison and continuing maintenance.",
+        "Distinct cases versus repeated attempts; score on a set versus reliability in a defined deployment population.",
+        "Controlled conditions versus guaranteed deterministic outputs.",
+        "Grader agreement versus correctness; source-supported method versus the author's numerical application of that method."
+      ],
+      "dependency_probes": [
+        {
+          "type": "plausible_invalid",
+          "relation": "Action history/state mutations -> every grader",
+          "reason": "An answer-only rubric does not require tool-action knowledge; narrow the edge to the action branch or replace its source with generic observable evidence."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Version comparison -> initial execution",
+          "reason": "One can run and understand an initial test without a previous version."
+        },
+        {
+          "type": "plausible_missing",
+          "relation": "Cases/attempts distinction -> interpretation of repeated-run scores",
+          "reason": "A hundred attempts on one case cannot silently become a hundred distinct sampled tasks; an internal explanation can discharge this bridge."
+        },
+        {
+          "type": "plausible_missing",
+          "relation": "Initial/expected state -> action-outcome judgment",
+          "reason": "An unchanged preexisting record can otherwise be mistaken for an accomplished action."
+        },
+        {
+          "type": "bundling",
+          "relation": "One sample node covers population selection, independence, binary intervals and grader error",
+          "reason": "Accept a clear novice explanation; fail when the bundle assumes unfamiliar inference machinery or hides unsupported subclaims."
+        }
+      ],
+      "application_questions": [
+        {
+          "id": "EA1",
+          "question": "An assistant answers one password-reset question correctly in 100 repeated runs. Can we say it handles 99% of customer-support requests correctly?",
+          "expected": "No: repeated performance on one case does not establish task diversity or deployment population coverage; explain what new cases and definition of success are needed.",
+          "prerequisite_use": "E1, E5, E6"
+        },
+        {
+          "id": "EA2",
+          "question": "The assistant says 'Refund complete' and a refund record exists after the run. What extra information is needed to score an action-taking case?",
+          "expected": "Starting state, requested and authorized expected changes, relevant history and resulting state; record may have existed already or be for the wrong amount/person.",
+          "prerequisite_use": "E2, E3, E8; conditional extension if explicitly out of initial scope"
+        },
+        {
+          "id": "EA3",
+          "question": "Version B scores 90% and A scores 80%, but B saw easier cases and a different grader. What does that comparison establish?",
+          "expected": "It does not isolate improvement due to the version. Align the evaluation conditions and inspect variation, errors and grader validity.",
+          "prerequisite_use": "E2-E7"
+        },
+        {
+          "id": "EA4",
+          "question": "With no earlier version to compare against, what is the smallest useful first evaluation?",
+          "expected": "A few explicit support tasks and criteria, controlled application configuration, one run with recorded outputs, a justified grader and failure inspection; no prior comparison required.",
+          "prerequisite_use": "E1-E4"
+        }
+      ]
+    },
+    {
+      "id": "isolation",
+      "role": "regression",
+      "reader": "Can read basic SQL SELECT and UPDATE statements; no database internals assumed.",
+      "request": "Break down database transaction isolation from first principles. I can read basic SQL SELECT and UPDATE statements but have never studied database internals. Why can two individually correct operations produce a wrong result when they run at the same time, and how do isolation levels help?",
+      "essential_questions": [
+        {
+          "id": "I1",
+          "question": "What is a transaction, and what does its grouping promise?",
+          "minimum": "Group related reads/writes with commit or rollback; distinguish atomic grouping from isolation from concurrent work.",
+          "alternatives": "Atomicity may be a short internal contrast, not necessarily its own node."
+        },
+        {
+          "id": "I2",
+          "question": "How can concurrent operations interleave?",
+          "minimum": "Show a short schedule with reads, decisions and writes from two transactions, including a stale observation or conflicting decision; overlap does not mean every statement executes simultaneously.",
+          "alternatives": "Any concrete inventory, balance, booking, or on-call example is acceptable."
+        },
+        {
+          "id": "I3",
+          "question": "What application rule should stay true?",
+          "minimum": "State an invariant and show that each transaction preserves it when run alone yet a particular overlap can violate it. The rule itself does not depend on knowing transaction syntax.",
+          "alternatives": "The rule can be embedded in the example rather than named invariant."
+        },
+        {
+          "id": "I4",
+          "question": "What is serial execution and what does serializable mean?",
+          "minimum": "Serial means one transaction after another; serializable outcomes are consistent with some serial ordering of those transactions. Real execution may overlap, and the guarantee does not repair logically wrong transactions.",
+          "alternatives": "Definition can be in the central target or its own node; enforcement should not be silently conflated with the definition."
+        },
+        {
+          "id": "I5",
+          "question": "What changes between weaker isolation and serializability?",
+          "minimum": "Explain restrictions on observations/outcomes with enough concrete anomalies to distinguish repeated-read stability from serial equivalence. Avoid a universal implementation table; label engine-specific behavior.",
+          "alternatives": "A small accurate level comparison is enough; every standardized anomaly need not get its own node."
+        },
+        {
+          "id": "I6",
+          "question": "How can stable snapshots still permit incompatible decisions?",
+          "minimum": "Explain a snapshot as a visibility model, then a two-transaction disjoint-write example violating a shared rule if that behavior is discussed. Commit visibility and own writes need appropriate qualification.",
+          "alternatives": "Write skew can be taught without naming MVCC; a carefully scoped abstract snapshot model or a verified named engine is acceptable.",
+          "applicability": "Conditional on snapshot/write-skew explanatory route or claims whose validity requires it; alternative concurrency examples allowed."
+        },
+        {
+          "id": "I7",
+          "question": "When can a guarded relative UPDATE avoid a stale read-then-write mistake?",
+          "minimum": "Distinguish writing a previously calculated absolute value from testing/updating current state in one statement. Explain failure/no-row handling and limit a single-row remedy to its applicable rule. If claiming wait/recheck semantics, name and verify the engine/level.",
+          "alternatives": "May omit guarded-update technique. If included, explain affected-row/result handling, stale absolute-write contrast, and one-row/engine limits.",
+          "applicability": "Conditional on offering guarded/relative UPDATE as a remedy; serialization retry explanation alone does not make this separate technique mandatory."
+        },
+        {
+          "id": "I8",
+          "question": "What are locking and abort/retry doing, and where do they apply?",
+          "minimum": "Distinguish protecting relevant decisions/data from detecting an unsafe overlap and aborting. A retry recomputes the whole transaction's relevant reads/decisions; merely replaying a stale final write can preserve the error.",
+          "alternatives": "Detailed lock implementation is optional. Definitions, one bounded remedy and tradeoffs suffice; all remedies must not inherit every other remedy's prerequisites."
+        }
+      ],
+      "scope_distinctions": [
+        "Atomicity versus isolation; serial execution versus serial equivalence versus a mechanism enforcing it.",
+        "An application invariant versus database enforcement of that invariant.",
+        "Stable snapshot versus absence of every anomaly; own writes versus visibility of other transactions' writes.",
+        "A single-row guarded update versus a cross-row invariant; waiting/rechecking is engine- and level-specific.",
+        "Transaction retry versus replaying one stale statement; protection can require relevant data beyond rows actually written."
+      ],
+      "dependency_probes": [
+        {
+          "type": "plausible_reversed",
+          "relation": "A comparison that already invokes serializability -> definition of serial equivalence",
+          "reason": "Understanding the comparison's guarantee requires the definition; separate comparison/enforcement from definition if their order differs."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Snapshot implementation -> understanding every dirty/nonrepeatable read",
+          "reason": "These phenomena can be explained through observed reads and writes without an MVCC implementation."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Write-skew example -> definition of serializability",
+          "reason": "A motivating failure is not necessary to understand serial equivalence."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Transaction grouping -> stating the business rule",
+          "reason": "A rule such as at least one doctor on call is meaningful independently."
+        },
+        {
+          "type": "plausible_missing",
+          "relation": "Interleaving and rule -> explanation of write skew",
+          "reason": "The incompatible decisions must be reconstructable, including what each transaction sees and writes."
+        },
+        {
+          "type": "bundling",
+          "relation": "Retry -> all practical remedies",
+          "reason": "A guarded single statement does not require prior understanding of every whole-transaction retry mechanism."
+        }
+      ],
+      "application_questions": [
+        {
+          "id": "IA1",
+          "question": "Two doctors each see the other on call and independently mark themselves off call. Each writes a different row. Why can a stable snapshot and no same-row write conflict still leave nobody on call?",
+          "expected": "Reconstruct overlapping reads/decisions and disjoint writes against the shared rule; contrast with a serial order in which the second would see the first leave.",
+          "prerequisite_use": "I2-I6",
+          "applicability": "Conditional on snapshot/write-skew explanatory route or claims whose validity requires it; alternative concurrency examples allowed."
+        },
+        {
+          "id": "IA2",
+          "question": "Does serializable mean every transaction literally runs alone? Can it fix a transaction that never checks the required rule?",
+          "expected": "No to both; it constrains outcomes to serial equivalence, potentially through overlapping execution and aborts, and serially wrong application logic remains wrong.",
+          "prerequisite_use": "I1, I3, I4, I8"
+        },
+        {
+          "id": "IA3",
+          "question": "Both buyers read stock=1 and later write stock=0. How does UPDATE items SET stock = stock - 1 WHERE id=7 AND stock>0 differ, and what must the application check?",
+          "expected": "The stale absolute write loses the relationship between old observation and current state. A correctly supported guarded relative update can condition and change one row atomically, with affected-row/result handling. Do not generalize to all engines/levels or multi-row rules without qualifications.",
+          "prerequisite_use": "I2, I3, I7; extension if practical remedies explicitly excluded",
+          "applicability": "Conditional on offering guarded/relative UPDATE as a remedy; serialization retry explanation alone does not make this separate technique mandatory."
+        },
+        {
+          "id": "IA4",
+          "question": "After a serialization failure, why might retrying only the previously calculated UPDATE repeat the bad decision?",
+          "expected": "Its input decision came from stale reads; retry the relevant transaction with fresh reads and recomputation, observing applicable side-effect/retry constraints without needing an exhaustive distributed-systems lesson.",
+          "prerequisite_use": "I1, I2, I8"
+        }
+      ]
+    },
+    {
+      "id": "backpropagation",
+      "role": "held_out",
+      "reader": "Comfortable with arithmetic, variables, functions and basic Python; has not studied calculus.",
+      "request": "Break down backpropagation from first principles. I am comfortable with arithmetic and basic Python, but I have never studied calculus. How does a small neural network figure out how each weight contributed to its prediction error, and how does that help it learn? Please make the arithmetic traceable in a tiny example.",
+      "essential_questions": [
+        {
+          "id": "B1",
+          "question": "What does the network compute, and what is a weight?",
+          "minimum": "Distinguish inputs, adjustable parameters and intermediate values in a composition of simple operations; compute a forward prediction for fixed input/weights.",
+          "alternatives": "Scalar computation graph, tiny neuron or short Python-like expression all acceptable. A survey of architectures is unnecessary."
+        },
+        {
+          "id": "B2",
+          "question": "How does a loss turn a prediction and target into a number?",
+          "minimum": "Define a concrete scalar mismatch measure and evaluate it. Keep prediction error, loss value and sensitivity of loss distinct.",
+          "alternatives": "Squared error or half squared error is convenient but not mandatory; another differentiable illustrative loss is acceptable."
+        },
+        {
+          "id": "B3",
+          "question": "What does a local rate of change mean without prior calculus?",
+          "minimum": "Explain a small input change and resulting output change, sign/magnitude and the local approximation. Introduce derivative/slope terminology through this meaning, not unexplained notation; show local rates for operations used in the example.",
+          "alternatives": "Finite differences can motivate/check the rate. A rigorous limit proof or general symbolic differentiation course is not required."
+        },
+        {
+          "id": "B4",
+          "question": "How does a change propagate through composed steps?",
+          "minimum": "Explain why local sensitivities multiply along a path (chain rule) using the actual intermediate values; connect this to sensitivity of the final loss to an earlier value.",
+          "alternatives": "Verbal tiny-change arithmetic, symbolic chain rule with definitions, or a numerical worked chain are all acceptable."
+        },
+        {
+          "id": "B5",
+          "question": "What does the backward pass calculate and reuse?",
+          "minimum": "Start from loss sensitivity, carry sensitivities backward through operations using forward values, and obtain parameter gradients without independently recomputing every whole-network perturbation. Distinguish forward values from backward sensitivities.",
+          "alternatives": "Reverse accumulation can be shown in a table or local update rules; formal autodiff terminology is optional."
+        },
+        {
+          "id": "B6",
+          "question": "What happens when a value or weight affects the loss through more than one path?",
+          "minimum": "Contributions from those paths add. This matters for shared values/weights and fan-out; multiplication along a path must not replace addition across paths.",
+          "alternatives": "May be a small branch extension to a simple chain example rather than the main graph. Do not require complex network examples."
+        },
+        {
+          "id": "B7",
+          "question": "How is a gradient used to change a weight?",
+          "minimum": "An optimizer such as gradient descent moves a parameter opposite its loss gradient with a step size. Backprop computes gradients; it is not itself the update rule. A local direction is not a promise that every finite step lowers loss.",
+          "alternatives": "One scalar update suffices; advanced optimizers and convergence theory are outside scope."
+        },
+        {
+          "id": "B8",
+          "question": "In what sense does a gradient describe a weight's contribution?",
+          "minimum": "It describes local sensitivity of this chosen loss at the current input/parameters, holding other independent parameters fixed; not a unique historical blame score, global feature importance, or guaranteed improvement/generalization.",
+          "alternatives": "A short qualification in the target answer is enough; it need not be a foundation for the forward-pass definition."
+        }
+      ],
+      "scope_distinctions": [
+        "Prediction versus loss versus derivative of loss; weight versus activation/intermediate value.",
+        "A local small-change approximation versus exact finite-change behavior.",
+        "Multiplication along one dependency path versus summation over multiple paths.",
+        "Backpropagation/gradient computation versus optimizer/parameter update.",
+        "Illustrative scalar graph versus universal architecture assumptions; differentiability or stated handling of kinks only where relevant.",
+        "Training loss reduction versus test performance; sensitivity versus blame/causal explanation."
+      ],
+      "dependency_probes": [
+        {
+          "type": "plausible_missing",
+          "relation": "Local rate meaning -> chain-rule explanation",
+          "reason": "An arithmetic-only reader cannot be assumed to understand derivative notation merely because it appears in an answer."
+        },
+        {
+          "type": "plausible_missing",
+          "relation": "Composition and local rate -> backwards loss sensitivity",
+          "reason": "Stating multiply derivatives without showing what each rate refers to leaves the essential mechanism unexplained."
+        },
+        {
+          "type": "plausible_reversed",
+          "relation": "Weight update rule -> definition/calculation of gradient",
+          "reason": "The update formula uses the gradient; optimization motivates gradients but is not required to calculate one."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Matrix algebra or a particular activation function -> every explanation of backpropagation",
+          "reason": "A scalar arithmetic graph can establish the mechanism; application-specific math is conditional."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Finite-difference algorithm -> all gradient computation",
+          "reason": "Perturbation is one introductory explanation/check, not a necessary algorithmic component of analytic reverse accumulation."
+        },
+        {
+          "type": "plausible_missing",
+          "relation": "Multiple dependency paths -> summing sensitivity contributions",
+          "reason": "A general explanation that mentions reuse or fan-out cannot silently carry over a single-chain multiplication rule."
+        }
+      ],
+      "application_questions": [
+        {
+          "id": "BA1",
+          "question": "Let x=3, w=2, prediction=w*x, target=4, and loss=(prediction-target)^2/2. What are prediction, loss and the local sensitivity of loss to w?",
+          "expected": "Prediction 6; loss 2; dLoss/dPrediction=2 and dPrediction/dw=3, so dLoss/dw=6. Explain each factor's meaning without assuming calculus.",
+          "prerequisite_use": "B1-B5"
+        },
+        {
+          "id": "BA2",
+          "question": "Using that sensitivity and step size 0.1, what new w does gradient descent choose, and what happens to loss? Would every step size work?",
+          "expected": "w=1.4, prediction=4.2 and loss=0.02. No: a large step can overshoot; backprop supplied the gradient and the optimizer chose the step.",
+          "prerequisite_use": "B2-B5, B7"
+        },
+        {
+          "id": "BA3",
+          "question": "A shared w enters z=w*x+w with x=3. If the loss sensitivity to z is 2, what is its sensitivity to w, and why?",
+          "expected": "Two paths contribute 2*3 and 2*1, totaling 8. Do not multiply the two path contributions together or retain only one.",
+          "prerequisite_use": "B3-B6"
+        },
+        {
+          "id": "BA4",
+          "question": "If a gradient is zero at the current weights, does that prove the model is good on future examples or that this weight never matters?",
+          "expected": "No: it is local to the current objective/input/point; zero may reflect this point or path behavior, and says nothing by itself about future-example quality or global importance.",
+          "prerequisite_use": "B3, B7, B8"
+        }
+      ]
+    },
+    {
+      "id": "bayesian_spam",
+      "role": "held_out",
+      "reader": "Understands percentages and arithmetic; has never studied probability.",
+      "request": "Break down Bayesian spam classification from first principles. I understand percentages but have never studied probability. A filter flags 90% of spam but also flags 10% of legitimate messages. If only 1% of my messages are spam, why isn't a flagged message almost certainly spam? Show how the base rate changes the answer and how this relates to using words as clues.",
+      "essential_questions": [
+        {
+          "id": "P1",
+          "question": "What group is the denominator of each percentage?",
+          "minimum": "Distinguish percentage of spam flagged, percentage of legitimate mail flagged, percentage of all messages that are spam, and percentage of flagged messages that are spam.",
+          "alternatives": "Natural-frequency groups, a two-way table or explicitly named sets can supply the bridge without probability notation."
+        },
+        {
+          "id": "P2",
+          "question": "How does a base rate determine the starting group sizes?",
+          "minimum": "Use an explicit population and partition into spam/nonspam; 1% spam means the legitimate group is much larger before looking at flags.",
+          "alternatives": "A count of 10,000 is convenient, not required; any consistent scale suffices."
+        },
+        {
+          "id": "P3",
+          "question": "How do flagging rates produce true and false alarms?",
+          "minimum": "Apply each percentage to its own starting group; keep false-positive rate separate from the fraction of flags that are false.",
+          "alternatives": "Multiply group counts, draw a frequency tree, or explain equivalent probability products with terms defined."
+        },
+        {
+          "id": "P4",
+          "question": "How do we reverse the conditional question after seeing a flag?",
+          "minimum": "Divide flagged spam by all flagged messages, accounting for both spam and legitimate routes to a flag. Explain normalization/denominator meaning; do not just recite Bayes' formula.",
+          "alternatives": "Count-based answer, normalized prior-times-likelihood weights, or prior odds times likelihood ratio are valid if prerequisites are introduced."
+        },
+        {
+          "id": "P5",
+          "question": "Why can the same filter yield a different fraction of spam among flags?",
+          "minimum": "Change the base rate while holding the stated class-conditional flagging rates fixed; explain false positives from the large legitimate group. In real deployment these rates also may change.",
+          "alternatives": "Compare two worked populations or reason qualitatively with correct direction."
+        },
+        {
+          "id": "P6",
+          "question": "How can a word act as evidence about spam?",
+          "minimum": "Compare how commonly the clue occurs in spam versus legitimate messages and combine it with a starting base rate; a common word is not informative merely because it occurs in many spam messages.",
+          "alternatives": "A single-word likelihood example is sufficient; a complete production text-classifier implementation is not required."
+        },
+        {
+          "id": "P7",
+          "question": "What changes if we combine several word clues?",
+          "minimum": "Conditional extension: if multiplying per-word likelihoods, state the conditional-independence assumption used by naive Bayes and the risk of correlated clues. Do not present naive Bayes as the only Bayesian approach.",
+          "alternatives": "May stop at one clue and label multi-clue modeling outside scope. No compulsory independence prerequisite for the basic flag/base-rate calculation."
+        },
+        {
+          "id": "P8",
+          "question": "What does the resulting probability justify doing?",
+          "minimum": "Core: posterior estimate is not certainty and depends on applicable premises/rates. Conditional extension: if giving action policy, distinguish inference from action and explain relevant mistake costs/thresholds. A request limited to conditional/base-rate reasoning and word clues may omit action policy.",
+          "alternatives": "A brief probability/premise limit suffices for this request. Action policy is optional unless actually recommended."
+        }
+      ],
+      "scope_distinctions": [
+        "P(flag|spam) versus P(spam|flag); false-positive rate versus fraction of flags that are wrong.",
+        "Prior/base rate versus likelihood of a clue within a class versus posterior after observing a clue.",
+        "Fixed class-conditional rates in a hypothetical comparison versus population-dependent rates in a real deployment.",
+        "One clue/Bayes updating versus a particular naive Bayes independence model for multiple clues.",
+        "Estimated probability versus guaranteed truth or a decision threshold; error types have different consequences."
+      ],
+      "dependency_probes": [
+        {
+          "type": "plausible_missing",
+          "relation": "Denominator groups and base counts -> posterior calculation",
+          "reason": "A formula that uses unexplained conditionals does not teach a percentages-only reader why legitimate flags enter the denominator."
+        },
+        {
+          "type": "plausible_reversed",
+          "relation": "Posterior identity -> understanding which group a rate is measured within",
+          "reason": "The notation already depends on the distinction; a preview formula is acceptable, but not as a replacement for the prerequisite meaning."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Conditional independence -> one-clue Bayesian update",
+          "reason": "The supplied binary flag problem needs no multiple-feature independence assumption."
+        },
+        {
+          "type": "plausible_invalid",
+          "relation": "Word tokenization/training pipeline -> understanding base-rate effect",
+          "reason": "These are implementation branches; natural frequencies explain the core inference independently."
+        },
+        {
+          "type": "plausible_missing",
+          "relation": "Class-conditional clue frequencies -> distinguishing useful from uninformative words",
+          "reason": "Frequency among spam alone cannot establish discrimination."
+        },
+        {
+          "type": "bundling",
+          "relation": "Bayes theorem, naive Bayes training, smoothing and deployment thresholds in one unexplained node",
+          "reason": "The bundle can conceal separate inference, model-assumption and decision questions; fine-grained steps are needed only where they resolve those gaps."
+        }
+      ],
+      "application_questions": [
+        {
+          "id": "PA1",
+          "question": "Among 10,000 messages with 1% spam, how many flagged messages are spam and how many are legitimate at 90% sensitivity and 10% false-positive rate? What fraction of flags are spam?",
+          "expected": "100 spam and 9,900 legitimate; 90 flagged spam and 990 flagged legitimate; 90/1,080=1/12, about 8.33%. Explain why 90% is not the requested answer.",
+          "prerequisite_use": "P1-P4"
+        },
+        {
+          "id": "PA2",
+          "question": "If half the messages are spam with those same class-conditional rates, what fraction of flags are spam? What assumption stayed fixed?",
+          "expected": "90%: equal starting groups produce flagged counts in a 9:1 ratio. Sensitivity and false-positive rates were assumed unchanged; the prior changed.",
+          "prerequisite_use": "P1-P5"
+        },
+        {
+          "id": "PA3",
+          "question": "The word 'meeting' occurs in 20% of spam and 20% of legitimate mail. Does seeing it increase the spam probability? What if two clues always occur together?",
+          "expected": "The equal-frequency clue alone leaves the prior unchanged under the stated model. Always co-occurring clues are not independent evidence; multiplying as if independent can double-count. Second part conditional if multi-clue modeling is included.",
+          "prerequisite_use": "P4, P6, P7"
+        },
+        {
+          "id": "PA4",
+          "question": "If the estimated spam probability is 60%, must the system delete the message?",
+          "expected": "No; a prediction is separate from action. The appropriate action/threshold depends on the costs of deleting legitimate mail versus letting spam through, and on the estimate's applicability.",
+          "prerequisite_use": "P8 decision-policy extension; scoped extension when no action policy is offered."
+        }
+      ]
+    }
+  ],
+  "amendment": "After independent prompt-only scope audit; original v1.0 results preserved. Frozen before repair generation. P8/PA4 and I6/IA1 applicability narrowed to prompt/used route; I7/IA3 conditional on actually offering the guarded-update remedy, not unrelated retry advice."
+}

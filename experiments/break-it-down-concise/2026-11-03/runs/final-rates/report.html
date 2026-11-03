@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Interest Rates Slow Inflation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{
+  --canvas:#f5f4f0; --surface:#ffffff; --text:#101527; --muted:#646c77; --border:#cbd0d3;
+  --blue:#2f6c9e; --green:#46734d; --red:#bf3030;
+}
+*{box-sizing:border-box}
+html{background:var(--canvas)}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:400;font-size:17px;line-height:1.75;-webkit-text-size-adjust:100%}
+main{max-width:720px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin:0}
+h1{font-size:2.3rem;margin-bottom:28px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.45rem;margin:56px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.05rem;margin:0 0 4px;letter-spacing:-0.01em}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,.scroll:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px;text-decoration:none;display:inline-block}
+.sources{margin:0;padding:0;list-style:none;border-top:1px solid var(--border)}
+.sources li{padding:18px 0;border-bottom:1px solid var(--border)}
+.sources .t{display:block;font-weight:500;line-height:1.45}
+.sources .m{display:block;font-style:italic;color:var(--muted);font-size:.9rem;line-height:1.5;margin:4px 0 8px}
+.sources p{margin:0;font-size:.95rem}
+.answer{font-size:1.08rem}
+figure{margin:32px 0 36px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff}
+figure img.narrow{width:520px}
+figure img.irf{width:672px}
+@media (max-width:640px){.scroll img.irf{min-width:600px}}
+figcaption{font-size:.9rem;line-height:1.6;color:var(--muted);margin-top:12px}
+figcaption strong{color:var(--text);font-weight:500}
+.wide{margin-left:calc(50% - min(480px, 50vw - 12px));margin-right:calc(50% - min(480px, 50vw - 12px))}
+.wide figcaption{max-width:720px;margin-left:auto;margin-right:auto;padding:0 24px}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll img.diagram{min-width:720px}
+.pair{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);background:#fff}
+.pair img{width:100%;max-width:410px;padding:16px}
+.pair > div + div{border-left:1px solid var(--border)}
+table{border-collapse:collapse;width:100%;font-size:.95rem;background:var(--surface)}
+th,td{border:1px solid var(--border);padding:8px 14px;text-align:left}
+th{font-family:Inter,sans-serif;font-weight:500}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.group td{font-style:italic;color:var(--muted);background:var(--canvas)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);margin:24px 0 32px}
+.tiles > div{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.tiles > div:last-child:nth-child(odd){grid-column:1 / -1}
+.tiles p{margin:0;font-size:.95rem;line-height:1.65}
+.tiles .when{font-family:Sora,sans-serif;font-weight:600;color:var(--blue);font-size:.95rem;margin-bottom:6px;display:block}
+@media (max-width:640px){
+  main{padding:36px 20px 72px}
+  h1{font-size:1.85rem}
+  body{font-size:16px}
+  .pair{grid-template-columns:1fr}
+  .pair > div + div{border-left:0;border-top:1px solid var(--border)}
+  .tiles{grid-template-columns:1fr}
+  .wide figcaption{padding:0 20px}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>How raising interest rates slows inflation<span class="dot">.</span></h1>
+
+<ol class="sources" aria-label="Sources">
+<li>
+<a class="t" href="https://www.bankofengland.co.uk/quarterly-bulletin/2024/2024/about-a-rate-of-general-interest-how-monetary-policy-transmits">About a rate of (general) interest: how monetary policy transmits<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Natalie Burr and Tim Willems · Staff article, Bank of England Quarterly Bulletin · July 2024</span>
+<p>Bank of England economists explain, channel by channel, how their rate changes reach prices and summarise UK estimates of size and speed. It is the staff view, and its numbers are 1997–2019 averages that may not hold in future.</p>
+</li>
+<li>
+<a class="t" href="https://www.bankofengland.co.uk/quarterly-bulletin/1999/q2/the-transmission-mechanism-of-monetary-policy">The transmission mechanism of monetary policy<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Bank of England staff for the Monetary Policy Committee · Report, Bank of England Quarterly Bulletin · May 1999</span>
+<p>The central bank's own explanation to Parliament of why effects arrive late, with a model simulation of a one-year rate rise. It describes the UK of 1999, when most mortgages were floating-rate, and the simulation is illustrative, not a measurement.</p>
+</li>
+<li>
+<a class="t" href="https://www.federalreserve.gov/monetarypolicy/monetary-policy-what-are-its-goals-how-does-it-work.htm">Monetary Policy: What Are Its Goals? How Does It Work?<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Board of Governors of the Federal Reserve System · Explainer page, federalreserve.gov · Updated July 2021</span>
+<p>The US central bank's description of the rate it targets and how it steers it; a plain-language page with no data.</p>
+</li>
+<li>
+<a class="t" href="https://www.aeaweb.org/articles?id=10.1257/0002828042002651">A New Measure of Monetary Shocks: Derivation and Implications<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Christina D. Romer and David H. Romer · Journal article, American Economic Review · September 2004</span>
+<p>The authors rebuilt the Fed's intended rate changes from meeting records and removed what the Fed's own forecasts predicted, so the remaining surprises show cause and effect. It covers the US in 1969–1996 using producer prices, and its effect sizes are at the high end.</p>
+</li>
+<li>
+<a class="t" href="https://www.ijcb.org/journal/v9n4/transmission-lags-monetary-policy-meta-analysis">Transmission Lags of Monetary Policy: A Meta-Analysis<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Tomas Havranek and Marek Rusnak · Journal article, International Journal of Central Banking · December 2013</span>
+<p>Czech central bank researchers pooled 198 estimates from 67 studies in 30 countries to measure how long prices take to bottom out after a rate rise, and why that varies. The studies vary in quality, and how lags are counted in about half of them pushes averages up.</p>
+</li>
+<li>
+<a class="t" href="https://www.aeaweb.org/articles?id=10.1257/mac.4.2.1">Are the Effects of Monetary Policy Shocks Big or Small?<span class="ext" aria-hidden="true">↗</span></a>
+<span class="m">Olivier Coibion · Journal article, American Economic Journal: Macroeconomics · April 2012</span>
+<p>Re-estimates the Romers' results and finds their large effects lean on two volatile episodes in 1980; used here only to show that effect sizes are uncertain. The working-paper version was read.</p>
+</li>
+</ol>
+
+<h2>The short answer</h2>
+<p class="answer">A central bank controls one very short-term interest rate. Raising it raises rates on loans and savings, so households and firms borrow less, save more and delay big purchases. With weaker spending, businesses cannot raise prices and wages as fast, and inflation slows. It takes long because each link waits on something slow: fixed-rate loans, plans already made, and prices and wages reset only every few months or once a year. Market rates move within days, output takes about a year to feel the full effect, and inflation commonly one to three years.</p>
+
+<h2>The one rate a central bank sets</h2>
+<p>A central bank does not set your mortgage rate. It sets the rate on overnight lending between banks. Banks hold accounts, called reserves, at the central bank, and the central bank chooses what those deposits earn. No bank lends overnight for less than it can earn there, so that rate becomes a floor. In the UK this is Bank Rate; the US Federal Reserve steers the <a href="https://www.federalreserve.gov/monetarypolicy/monetary-policy-what-are-its-goals-how-does-it-work.htm">federal funds rate<span class="ext" aria-hidden="true">↗</span></a> the same way, by changing the interest it pays on reserves.</p>
+<p>Lenders build other rates on that floor. A two-year fixed mortgage is priced off a two-year market rate, which depends on the overnight rate now and where markets expect it to go, plus a margin for risk; savings rates follow because banks compete for deposits. Suppose the central bank raises its rate from 4% to 5%: within days new and variable loan rates rise by about a point and savings pay more. The rest of this report follows that point through the economy.</p>
+
+<h2>From higher rates to less spending</h2>
+<p>Higher rates push spending down in several ways at once. Saving pays more and borrowing costs more, so some households wait, though the Bank of England finds this effect weak in the UK. The stronger effect is cash: a variable-rate borrower pays more each month and has less to spend. Savers gain what borrowers lose, but they do not spend it; a UK survey found borrowers cut spending by about £50 for every £100 rise in mortgage payments, while savers tend to keep extra interest. So total spending falls.</p>
+<p>Firms shelve projects that no longer earn more than they cost to finance, and purchases of long-lasting goods, from cars to equipment, are especially sensitive. Higher rates also lower the prices of shares, bonds and houses, leaving households feeling poorer and able to borrow less against their homes, and they lift the currency, making imports cheaper and exports harder to sell.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Bank of England diagram of transmission channels, scrollable">
+<img class="diagram" src="assets/boe2024-fig1-channels.jpeg" width="1232" height="720" alt="Bank of England flow diagram. Bank Rate feeds financial conditions, which feed six channels: inflation expectations, investment, wealth, interest rate, credit and exchange rate. These feed expected aggregate demand and real activity, which affect wages and production costs, then domestic prices. The exchange rate channel feeds import prices. Domestic and import prices combine into the consumer price level. Two bold outer arrows run directly from the expectations channel to domestic prices and from the exchange rate channel to import prices.">
+</div>
+<figcaption><strong>Every route starts at one rate and ends at the price level.</strong> Most channels reach prices only after changing demand, activity and wages; the two bold outer arrows, expectations and import prices, are the more direct routes. Only the major links are drawn. Figure 1, Burr and Willems, <a href="https://www.bankofengland.co.uk/quarterly-bulletin/2024/2024/about-a-rate-of-general-interest-how-monetary-policy-transmits">Bank of England Quarterly Bulletin, 2024<span class="ext" aria-hidden="true">↗</span></a>. © Bank of England, reproduced for non-commercial use with attribution. <a href="assets/boe2024-fig1-channels.jpeg">Full-size image</a>.</figcaption>
+</figure>
+<p>The cut spreads: a shop that sells less orders less, its suppliers cut hours and hiring, and those workers spend less even without a loan.</p>
+
+<h2>From less spending to slower inflation</h2>
+<p>Prices rise faster when buyers want more than the economy can comfortably produce, and slower when they want less. Economists call that comfortable maximum <em>potential output</em> and the distance from it the <em>output gap</em>. Above potential, firms compete for scarce workers, wages rise faster and firms pass the costs on. Below it, more people are looking for work, wage growth eases, and competition stops firms raising prices as fast. This link between slack and inflation is the Phillips curve. A rate rise works by pulling demand down relative to what the economy can supply; it does not make goods cheaper to produce, and both Bank of England papers state that in the long run monetary policy cannot change how much the economy produces.</p>
+<p>What matters for behaviour is the <em>real interest rate</em>, the nominal rate minus expected inflation. A 2% savings rate with 5% expected inflation shrinks savings' purchasing power by 3%, so it gives little reason to wait. Our rise from 4% to 5% tightens only if expected inflation does not rise by a point too, which is why central banks want expectations "anchored" at their target. Expectations can also shorten the chain: firms that expect demand and wages to cool raise prices by less now.</p>
+
+<h2>Why it takes so long</h2>
+<p>Every link after the first waits on something slow.</p>
+<div class="tiles">
+<div><span class="when">Days</span><p>Market rates, new loan rates, share prices and the exchange rate adjust almost at once.</p></div>
+<div><span class="when">Months</span><p>Borrowers on fixed-rate mortgages pay nothing extra until their deal ends. In the UK, the share of mortgages fixed for five years rose from about 20% in 2016 to over 50% in 2022.</p></div>
+<div><span class="when">Quarters</span><p>Lower sales first show up as unsold stock in shops. Only when inventories pile up do orders to suppliers fall, then production, then jobs and earnings, which then cut spending again.</p></div>
+<div><span class="when">A year or more</span><p>Prices and wages adjust last. Only about 20% of UK prices changed in any given month before the pandemic, so a typical price stood for about six months, and UK wages are usually reset once a year. Weaker demand reaches inflation only as these scheduled reviews come round.</p></div>
+</div>
+<p>The Bank of England's 1999 report put the evidence this way: up to about a year for the peak effect on demand and production, and up to a further year for the fullest effect on inflation. Its model simulation shows that sequence.</p>
+<figure class="wide">
+<div class="pair">
+<div><img src="assets/boe1999-chart1-gdp.png" width="813" height="740" alt="Chart 1: effect on real GDP of a 1 percentage point increase in the official rate maintained for one year. A shaded band falls from about zero in quarter 1 to a low between 0.24 and 0.34 percent below base at quarter 5, then rises back to about zero by quarter 12."></div>
+<div><img src="assets/boe1999-chart2-inflation.png" width="817" height="716" alt="Chart 2: effect on the inflation rate of the same policy. The band stays near zero, slightly above it, through quarter 5, then drops sharply to a low between 0.24 and 0.41 percentage points below base around quarter 9, and is still 0.17 to 0.37 points below base at quarter 12."></div>
+</div>
+<figcaption><strong>Output falls first; inflation waits about a year and bottoms out after about two.</strong> The one-point rise lasts four quarters, yet inflation is lowest around quarter 9 and still below base at quarter 12. Values below the line are negative (the source marks sign only with + and −), and each band spans two model runs, which the Bank calls "only illustrative." Charts 1 and 2, <a href="https://www.bankofengland.co.uk/quarterly-bulletin/1999/q2/the-transmission-mechanism-of-monetary-policy">Bank of England Quarterly Bulletin, May 1999<span class="ext" aria-hidden="true">↗</span></a>, p. 170. © Bank of England, reproduced for non-commercial use with attribution.</figcaption>
+</figure>
+<p>Measuring this in real data is hard, because central banks raise rates precisely when inflation is already climbing, which makes a naive comparison suggest hikes cause inflation. Researchers instead isolate surprises. The Bank of England's 2024 estimate uses market moves in the 30 minutes around each announcement.</p>
+<figure>
+<div class="scroll" tabindex="0" role="region" aria-label="Bank of England Chart 4, scrollable on narrow screens">
+<img class="irf" src="assets/boe2024-chart4-irfs.png" width="1049" height="1488" alt="Bank of England Chart 4: eight panels showing estimated responses over 36 months to a 1 percentage point Bank Rate increase. The one-year interest rate jumps about 1.3 points and fades within a year. The sterling exchange rate rises about 7 percent within two months. Mortgage spreads rise about 100 basis points by month 8. House prices dip below zero after about a year. The equity index falls about 6 percent by month 14. Unemployment rises steadily to about 0.5 points by month 20 to 24. GDP falls steadily to about 1.3 percent below by month 24. CPI falls to about 0.3 percent below around month 10 to 12, then slowly recovers.">
+</div>
+<figcaption><strong>Financial prices react within weeks; jobs and output take one to two years.</strong> UK data, 1997–2019: the one-year rate and exchange rate jump at once, unemployment rises for about 18 months and GDP falls for about two years. The CPI panel is the price level, about 0.3% lower at its deepest after roughly a year; bands show statistical uncertainty. Chart 4, Burr and Willems, <a href="https://www.bankofengland.co.uk/quarterly-bulletin/2024/2024/about-a-rate-of-general-interest-how-monetary-policy-transmits">Bank of England Quarterly Bulletin, 2024<span class="ext" aria-hidden="true">↗</span></a>, based on Cesa-Bianchi and colleagues (2020). © Bank of England, reproduced for non-commercial use with attribution. <a href="assets/boe2024-chart4-irfs.png">Full-size image</a>.</figcaption>
+</figure>
+<p>In the US, the Romers rebuilt the Fed's surprise rate changes from its meeting records. After a one-point shock, producer prices were "virtually zero for the first 22 months," then fell steadily, while industrial output bottomed out after about two years.</p>
+<figure>
+<img src="assets/romer2004-fig4-price-level.png" width="867" height="693" class="narrow" alt="Romer and Romer Figure 4: the effect of monetary policy on the price level over 48 months. The solid line stays within a few tenths of a percent of zero until about month 22, then falls steadily to about minus 5.8 percent at month 48. Dotted one-standard-error bands surround it.">
+<figcaption><strong>For almost two years, nothing; then a steady fall.</strong> Estimated change in US producer prices after a one-point Fed tightening, 1969–1996, with one-standard-error bands. The eventual size is at the high end: Coibion (2012) finds it leans on two volatile episodes in 1980. The blue frame is part of the published figure. Figure 4, Romer and Romer, <a href="https://www.aeaweb.org/articles?id=10.1257/0002828042002651">American Economic Review, 2004<span class="ext" aria-hidden="true">↗</span></a>, p. 1075, from the <a href="https://eml.berkeley.edu/~dromer/papers/AER_September04.pdf">authors' copy<span class="ext" aria-hidden="true">↗</span></a>; reuse rights unstated.</figcaption>
+</figure>
+
+<h2>How long, and how much</h2>
+<p>Economists describe these lags as "long and variable," a phrase Havranek and Rusnak trace to Milton Friedman. Pooling 198 estimates, they found prices bottom out after 29 months on average: 25 to 50 months in developed economies and 10 to 20 in the former planned economies of central Europe. Financial development explained most of the difference, because banks and firms that can hedge against rate surprises need not react at once.</p>
+<figure>
+<table>
+<caption style="caption-side:top;text-align:left;font-family:Sora,sans-serif;font-weight:600;padding-bottom:10px;letter-spacing:-0.01em">Average months until prices bottom out after a 1-point rate rise</caption>
+<thead><tr><th scope="col">Economy</th><th scope="col" style="text-align:right">Months</th></tr></thead>
+<tbody>
+<tr class="group"><td colspan="2">Developed economies</td></tr>
+<tr><td>United States</td><td class="n">42.2</td></tr>
+<tr><td>Euro Area</td><td class="n">48.4</td></tr>
+<tr><td>Japan</td><td class="n">51.3</td></tr>
+<tr><td>Germany</td><td class="n">33.4</td></tr>
+<tr><td>United Kingdom</td><td class="n">40.4</td></tr>
+<tr><td>France</td><td class="n">51.3</td></tr>
+<tr><td>Italy</td><td class="n">26.6</td></tr>
+<tr class="group"><td colspan="2">Post-transition economies</td></tr>
+<tr><td>Poland</td><td class="n">18.7</td></tr>
+<tr><td>Czech Republic</td><td class="n">14.8</td></tr>
+<tr><td>Hungary</td><td class="n">17.9</td></tr>
+<tr><td>Slovakia</td><td class="n">10.7</td></tr>
+<tr><td>Slovenia</td><td class="n">17.6</td></tr>
+</tbody>
+</table>
+<figcaption><strong>The same tool works on very different clocks.</strong> Each value averages all estimates reported for that economy. About half the estimates never show prices levelling off and are counted at their last reported month, which pushes these averages above the 29-month corrected figure. Transcribed exactly from Table 3, Havranek and Rusnak, <a href="https://www.ijcb.org/journal/v9n4/transmission-lags-monetary-policy-meta-analysis">International Journal of Central Banking, 2013<span class="ext" aria-hidden="true">↗</span></a>, p. 46; reuse rights unstated. <a href="assets/havranek2013-table3.png">Image of the original table</a>.</figcaption>
+</figure>
+<p>Timing differs within one country too: the 2024 UK estimate puts the deepest price effect near one year, the 1999 model near two, and the US and meta-analysis figures longer. The honest summary is some effect within a year, most of it over one to three. Size is uncertain as well. Across UK studies a surprise one-point rise lowered the price level by 0.3% to 1.0% at its peak and real GDP by 0.5% to 1.4%, and raised unemployment by about half a point. Slowing inflation this way costs output and jobs.</p>
+
+<h2>What this means, and its limits</h2>
+<p>Because effects arrive late, a central bank must set rates for the economy it forecasts a year or two ahead; otherwise, as Burr and Willems note, it reacts too late.</p>
+<p>The chain is not mechanical. The same rise lands differently depending on household debt, whether the economy is booming or weak, and how people read the move. More fixed-rate mortgages delay the hit to households but can strain banks, so Burr and Willems call it "too crude" to say they simply lengthen lags. And a central bank has little effect on prices set in world markets, such as energy: a rate rise cannot undo a jump in those costs, only weaken demand so the jump is less likely to spread into wages and other prices.</p>
+</main>
+</body>
+</html>

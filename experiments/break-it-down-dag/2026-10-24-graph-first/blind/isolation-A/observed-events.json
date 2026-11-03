@@ -1,0 +1,18 @@
+[
+  {
+    "time": "2026-10-24T20:26:44.001884+00:00",
+    "file": "isolation-A/dag.json",
+    "sha256": "53ba6d0e5ed99205dca6197ba2e857f800956bca5f3e3690198d702f837fb50f",
+    "snapshot": "observed/dag-53ba6d0e5ed9.json",
+    "nodes": 17,
+    "edges": 28
+  },
+  {
+    "time": "2026-10-24T20:28:48.374389+00:00",
+    "file": "isolation-A/dag.json",
+    "sha256": "3cd1c988a24f0d3cedae903ab931bbb2470736c5514612d1c92ea8531bc70a60",
+    "snapshot": "observed/dag-3cd1c988a24f.json",
+    "nodes": 18,
+    "edges": 31
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "time": "2026-10-24T20:43:21.580630+00:00",
+    "file": "runs/r03/dag.initial.json",
+    "sha256": "308ded2f24fc2d573c0f5610fa439bd6085f7e479780e27ec0b824434d88343b",
+    "snapshot": "observed/r03/dag.initial-308ded2f24fc.json",
+    "nodes": 18,
+    "edges": 30
+  },
+  {
+    "time": "2026-10-24T20:43:21.581424+00:00",
+    "file": "runs/r03/dag.json",
+    "sha256": "308ded2f24fc2d573c0f5610fa439bd6085f7e479780e27ec0b824434d88343b",
+    "snapshot": "observed/r03/dag-308ded2f24fc.json",
+    "nodes": 18,
+    "edges": 30
+  },
+  {
+    "time": "2026-10-24T20:45:18.157304+00:00",
+    "file": "runs/r03/dag.after-repair-1.json",
+    "sha256": "1019b0a8d94e58de8411af3a898ec443b0a4ace75823c6a66d619cbceb8b7438",
+    "snapshot": "observed/r03/dag.after-repair-1-1019b0a8d94e.json",
+    "nodes": 22,
+    "edges": 39
+  },
+  {
+    "time": "2026-10-24T20:45:18.158097+00:00",
+    "file": "runs/r03/dag.json",
+    "sha256": "1019b0a8d94e58de8411af3a898ec443b0a4ace75823c6a66d619cbceb8b7438",
+    "snapshot": "observed/r03/dag-1019b0a8d94e.json",
+    "nodes": 22,
+    "edges": 39
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "canonical_unchanged": true,
+  "dag_v1_unchanged": true,
+  "discovered_matches": [
+    {
+      "discovery_path": "/Users/loganthorneloe/.codex/skills/break-it-down-dag",
+      "source": "/Users/loganthorneloe/src/skills/skills/wip/break-it-down-dag"
+    }
+  ],
+  "one_discovered_variant": true,
+  "installed_skill_validator": "PASS",
+  "installed_creator_validation": "PASS",
+  "repair_candidate_validator": "PASS",
+  "repair_creator_validation": "PASS",
+  "git_diff_check": "PASS",
+  "semantic_promotion": "blocked_by_material_defects; see independent repair/results.json",
+  "note": "No installed or canonical skill bytes changed in this graph-first follow-up. All edits are experimental artifacts.",
+  "v2_validator": "PASS",
+  "v2_creator_validation": "PASS",
+  "all_non_dag_text_identical": true,
+  "estimated_tokens": {
+    "current": 2999.25,
+    "candidate": 2999.25,
+    "repair": 2999.0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "dag.round02.json": "53a3b5f4bb75ea6ff2be185507184cc59141aa441b3516ed0a3899f940b82ccb",
+  "dag.html": "145dfe4fe09ad4212e16d201ec2d96ac642bf13e12eac70b1503cdc1f9216988",
+  "dag.round03.json": "0f955c70ce110fda59c94f7acd1c6535dee94b9055d965749ced4459ccdc0b8e",
+  "dag.round04.json": "beae5cbb1f5e1a214881c85cc3251a1221ea7e26aad8e2a8bb07257fc0349d4d",
+  "edge-audit.md": "c083beb14cf7b136b1da32984bec83fdc59c99bde24b70040063f78d02dfe58c",
+  "dag.initial.json": "e76cbe8e29c75c0fd8e99eab446eefc1ca1a8106d0ce2d199ea6789ea5b726b3",
+  "finalize_graph.py": "45b26300cf9424aad2fba0f454448faf6d831d5772dceda475c478bf40d5ceba",
+  "dag.svg": "18b1fa2f9743be90267433c4cd420e68435083b93ebe020818a53a3307270669",
+  "coordinator-observed-states.json": "434c7f42fbfc697d3c572e12fe3392963b193d1946e3be411c344ed9be40a7f0",
+  "run-notes.md": "81f358f7f3eecd98510b64f45a9d8e38b92a82e262a94d017ca7340bff353aee",
+  "dag.round07.json": "ab7016571ed279e832701f3de7b9fb0e8a6e8562c19e4ad53ce154849970b9e7",
+  "request.txt": "b8a644e8860d493fe49920a48babfe20048615d67ed8acc612cbbd3250b9ab25",
+  "verification.json": "f9453c33858a23e13b41499bf212dc16c8a28623f6d9954bcbc2125a54b8d01c",
+  "verify_graph.py": "f3066cc061452cb5a5a7545c97d96f871441c3393b2a3c0ad8a8a3f6bc3ce32d",
+  "history.jsonl": "2a1e74c371e5bdca4dfbf5fedfe64feca213fbf73d3c916369a67a6d6dc452ab",
+  "dag.json": "4dcf58a1b81de84322eb2e9fac75f5702b39d4684cd4553d1a670530d32db6a3",
+  "dag.round01.json": "4a821889bcae32ed947b8a8807e96c6b2745f6a6fe67fe2e96d56ffee4ed3cf9"
+}

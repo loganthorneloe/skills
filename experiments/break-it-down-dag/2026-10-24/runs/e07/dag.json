@@ -1,0 +1,520 @@
+{
+  "reader_assumptions": [
+    "Understands averages and percentages.",
+    "No previous statistics study."
+  ],
+  "target_id": "target",
+  "nodes": [
+    {
+      "id": "compare",
+      "question": "What does a difference in group averages describe?",
+      "answer": "An association between group membership and observed scores.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a71.5, pp.10\u201312",
+          "claim": "Association compares observed groups."
+        }
+      ]
+    },
+    {
+      "id": "counterfactual",
+      "question": "What does it mean for the app to cause a score change?",
+      "answer": "Compare scores under defined app and no-app interventions for the same population; individual alternatives cannot both be observed.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a7\u00a71.1\u20131.2, pp.3\u20136",
+          "claim": "Potential outcomes define individual and average effects."
+        },
+        {
+          "url": "https://www.stats.ox.ac.uk/~evans/APTS/intro.html",
+          "locator": "\u00a71.2",
+          "claim": "Specify population, intervention, comparison, outcome, time."
+        }
+      ]
+    },
+    {
+      "id": "confounding",
+      "question": "Why can users differ even without an app effect?",
+      "answer": "Preexisting causes of both participation and scores make group differences insufficient.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a73.1, pp.27\u201328",
+          "claim": "Treatment assignment may reflect underlying outcome risk."
+        }
+      ]
+    },
+    {
+      "id": "random",
+      "question": "How does random assignment support a causal comparison?",
+      "answer": "Assignment does not systematically select students according to potential scores, so the other group estimates the missing average in expectation.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a72.1, pp.13\u201316",
+          "claim": "Randomization produces exchangeability in expectation."
+        }
+      ]
+    },
+    {
+      "id": "assignment",
+      "question": "What effect is estimated when some assigned students do not use the app?",
+      "answer": "The assigned-group comparison estimates an offer or programme effect; comparing actual users can reintroduce selection.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a72.1 p.14 and \u00a73.1 pp.27\u201328",
+          "claim": "Ideal treatment-effect identification requires adherence; observed treatment selection requires assumptions."
+        }
+      ]
+    },
+    {
+      "id": "missing",
+      "question": "Why do missing scores and shared learning matter?",
+      "answer": "Post-assignment selection or shared exposure can change the comparison; follow assigned participants and define the intervention.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "Fine Point 1.1 p.5",
+          "claim": "Interference changes the definition of the causal effect."
+        },
+        {
+          "url": "https://doi.org/10.1177/2332858416673968",
+          "locator": "Data Linking and Student-Level Attrition; Analytic Models",
+          "claim": "Missing students and clustered assignment were addressed."
+        },
+        {
+          "url": "https://ies.ed.gov/ncee/wwc/Study/86375",
+          "locator": "Review Details August 2026",
+          "claim": "Low attrition and nonresponse in reviewed trial."
+        }
+      ]
+    },
+    {
+      "id": "uncertainty",
+      "question": "Why does a randomized difference remain uncertain?",
+      "answer": "Finite assignment and sampling vary; uncertainty intervals quantify precision under assumptions and cannot correct confounding.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a71.4 pp.8\u201310; \u00a710.1 pp.132\u2013134; Fine Point 10.2 p.136",
+          "claim": "Random variability prevents certainty; confidence intervals require assumptions and do not capture systematic bias."
+        }
+      ]
+    },
+    {
+      "id": "observational",
+      "question": "What can be learned when random assignment is unavailable?",
+      "answer": "Measured adjustment requires comparable groups, well-defined interventions, and sufficient measured common causes.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a7\u00a73.1\u20133.2 pp.27\u201329",
+          "claim": "Consistency, exchangeability, positivity assumptions."
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why is the observed association insufficient, and how could we estimate whether the app helped?",
+      "answer": "Higher user scores can reflect selection; define a trial, randomize where feasible, preserve assignment, follow outcomes, quantify uncertainty, and limit conclusions to the intervention and population studied.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "Chapters 1\u20133",
+          "claim": "Overall causal framework"
+        },
+        {
+          "url": "https://doi.org/10.1177/2332858416673968",
+          "locator": "Research Design; Results; Discussion",
+          "claim": "A real education trial tests a specific app-plus-training package."
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "compare",
+      "to": "confounding",
+      "why": "Need to understand the observed contrast before asking why it may be misleading."
+    },
+    {
+      "from": "counterfactual",
+      "to": "confounding",
+      "why": "Need an effect definition to distinguish effect from selection."
+    },
+    {
+      "from": "confounding",
+      "to": "random",
+      "why": "Need the selection problem to understand what random assignment resolves."
+    },
+    {
+      "from": "random",
+      "to": "assignment",
+      "why": "Need the assignment comparison before distinguishing it from actual use."
+    },
+    {
+      "from": "random",
+      "to": "missing",
+      "why": "Need the intended randomized comparison before examining post-assignment changes."
+    },
+    {
+      "from": "random",
+      "to": "uncertainty",
+      "why": "Need random assignment before interpreting chance imbalance."
+    },
+    {
+      "from": "confounding",
+      "to": "observational",
+      "why": "Adjustment is an attempted solution to common causes, not a generic correlation procedure."
+    },
+    {
+      "from": "counterfactual",
+      "to": "target",
+      "why": "The question needs a defined causal contrast."
+    },
+    {
+      "from": "assignment",
+      "to": "target",
+      "why": "The estimated effect must match the offered or used intervention."
+    },
+    {
+      "from": "missing",
+      "to": "target",
+      "why": "Observed results must preserve the intended comparison."
+    },
+    {
+      "from": "uncertainty",
+      "to": "target",
+      "why": "Causal conclusions require calibrated precision."
+    },
+    {
+      "from": "observational",
+      "to": "target",
+      "why": "The answer should explain the alternative when a trial cannot be run."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "type": "initial",
+      "graph": {
+        "reader_assumptions": [
+          "Understands averages and percentages.",
+          "No previous statistics study."
+        ],
+        "target_id": "target",
+        "nodes": [
+          {
+            "id": "compare",
+            "question": "What can a difference in average scores tell us?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "counterfactual",
+            "question": "What does it mean for the app to cause a score change?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "confounding",
+            "question": "Why can users and nonusers differ even without an app effect?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "random",
+            "question": "How can random assignment make the comparison informative?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "implementation",
+            "question": "What can nonuse, missing scores, or chance do to an experiment?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "target",
+            "question": "Why is the observed association insufficient, and how could we estimate whether the app helped?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          }
+        ],
+        "edges": [
+          {
+            "from": "compare",
+            "to": "confounding",
+            "why": "A group comparison is the observation requiring explanation."
+          },
+          {
+            "from": "counterfactual",
+            "to": "confounding",
+            "why": "Distinguishing preexisting differences from treatment effects requires defining the effect."
+          },
+          {
+            "from": "confounding",
+            "to": "random",
+            "why": "Random assignment addresses the selection problem."
+          },
+          {
+            "from": "random",
+            "to": "implementation",
+            "why": "An ideal randomized comparison is needed before understanding departures and uncertainty."
+          },
+          {
+            "from": "counterfactual",
+            "to": "target",
+            "why": "The target needs a precise meaning of helped."
+          },
+          {
+            "from": "implementation",
+            "to": "target",
+            "why": "A credible answer depends on trial conduct and interpretation."
+          }
+        ]
+      },
+      "gaps": [
+        "compare",
+        "counterfactual",
+        "confounding",
+        "random",
+        "implementation",
+        "target"
+      ],
+      "searches": [],
+      "evidence": [],
+      "changes": [
+        "Initial backward prerequisite map before research."
+      ]
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "Effect definition",
+        "Group selection",
+        "Random assignment",
+        "Trial conduct"
+      ],
+      "searches": [
+        "Hernan Robins Causal Inference What If chapter 1 table 1.1 pdf",
+        "ASSISTments randomized trial 2769 students 43 schools PNAS 2016 online homework full text"
+      ],
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a7\u00a71.1\u20131.5, 2.1, 3.1\u20133.2",
+          "claim": "Individual missing outcomes; randomization and observational assumptions"
+        },
+        {
+          "url": "https://www.stats.ox.ac.uk/~evans/APTS/intro.html",
+          "locator": "\u00a7\u00a71.1\u20131.3",
+          "claim": "Precisely specify the intervention comparison"
+        }
+      ],
+      "changes": [
+        "Retained association and potential outcomes as separate prerequisites.",
+        "Detected that implementation question bundled nonuse, missingness, and random uncertainty; split these below.",
+        "Trial search corrected initial guessed venue/count to AERA Open and 2,850 students."
+      ]
+    },
+    {
+      "round": 2,
+      "gaps": [
+        "Concrete trial evidence",
+        "Subgroup exhibit accuracy",
+        "Asset access"
+      ],
+      "searches": [
+        "ASSISTments full published methods and results",
+        "Linked 2017 corrigendum",
+        "WWC study 86375 current review"
+      ],
+      "evidence": [
+        {
+          "url": "https://doi.org/10.1177/2332858416673968",
+          "locator": "Table 2 and Figure 2 p.9",
+          "claim": "Adjusted overall effect differs from unadjusted subgroup results."
+        },
+        {
+          "url": "https://doi.org/10.1177/2332858417707489",
+          "locator": "Corrected Table 4",
+          "claim": "Corrected effect sizes 0.29 and 0.12; subgroup means unchanged."
+        },
+        {
+          "url": "https://ies.ed.gov/ncee/wwc/Study/86375",
+          "locator": "August 2026 Findings",
+          "claim": "690.79 versus 681.95 adjusted means, 2,850 students."
+        }
+      ],
+      "changes": [
+        "Split implementation into assignment, missing, uncertainty.",
+        "Added observational alternative because randomized trials may not be feasible.",
+        "Extracted original figure from ERIC PDF after image CDN returned 403.",
+        "Omitted corrected effect-size column from report prose to avoid unnecessary statistical prerequisites; used corrected subgroup score differences.",
+        "No unsupported prerequisite nodes remain; actual unspecified app effect remains unknown by design."
+      ]
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "Effect definition",
+        "Group selection",
+        "Random assignment",
+        "Trial conduct"
+      ],
+      "searches": [
+        "Hernan Robins Causal Inference What If chapter 1 table 1.1 pdf",
+        "ASSISTments randomized trial 2769 students 43 schools PNAS 2016 online homework full text"
+      ],
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a7\u00a71.1\u20131.5, 2.1, 3.1\u20133.2",
+          "claim": "Individual missing outcomes; randomization and observational assumptions"
+        },
+        {
+          "url": "https://www.stats.ox.ac.uk/~evans/APTS/intro.html",
+          "locator": "\u00a7\u00a71.1\u20131.3",
+          "claim": "Precisely specify the intervention comparison"
+        }
+      ],
+      "changes": [
+        "Retained association and potential outcomes as separate prerequisites.",
+        "Detected that implementation question bundled nonuse, missingness, and random uncertainty; split these below.",
+        "Trial search corrected initial guessed venue/count to AERA Open and 2,850 students."
+      ]
+    },
+    {
+      "round": 2,
+      "gaps": [
+        "Concrete trial evidence",
+        "Subgroup exhibit accuracy",
+        "Asset access"
+      ],
+      "searches": [
+        "ASSISTments full published methods and results",
+        "Linked 2017 corrigendum",
+        "WWC study 86375 current review"
+      ],
+      "evidence": [
+        {
+          "url": "https://doi.org/10.1177/2332858416673968",
+          "locator": "Table 2 and Figure 2 p.9",
+          "claim": "Adjusted overall effect differs from unadjusted subgroup results."
+        },
+        {
+          "url": "https://doi.org/10.1177/2332858417707489",
+          "locator": "Corrected Table 4",
+          "claim": "Corrected effect sizes 0.29 and 0.12; subgroup means unchanged."
+        },
+        {
+          "url": "https://ies.ed.gov/ncee/wwc/Study/86375",
+          "locator": "August 2026 Findings",
+          "claim": "690.79 versus 681.95 adjusted means, 2,850 students."
+        }
+      ],
+      "changes": [
+        "Split implementation into assignment, missing, uncertainty.",
+        "Added observational alternative because randomized trials may not be feasible.",
+        "Extracted original figure from ERIC PDF after image CDN returned 403.",
+        "Omitted corrected effect-size column from report prose to avoid unnecessary statistical prerequisites; used corrected subgroup score differences.",
+        "No unsupported prerequisite nodes remain; actual unspecified app effect remains unknown by design."
+      ]
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "Effect definition",
+        "Group selection",
+        "Random assignment",
+        "Trial conduct"
+      ],
+      "searches": [
+        "Hernan Robins Causal Inference What If chapter 1 table 1.1 pdf",
+        "ASSISTments randomized trial 2769 students 43 schools PNAS 2016 online homework full text"
+      ],
+      "evidence": [
+        {
+          "url": "https://miguelhernan.org/s/hernanrobins_WhatIf_2jan25.pdf",
+          "locator": "\u00a7\u00a71.1\u20131.5, 2.1, 3.1\u20133.2",
+          "claim": "Individual missing outcomes; randomization and observational assumptions"
+        },
+        {
+          "url": "https://www.stats.ox.ac.uk/~evans/APTS/intro.html",
+          "locator": "\u00a7\u00a71.1\u20131.3",
+          "claim": "Precisely specify the intervention comparison"
+        }
+      ],
+      "changes": [
+        "Retained association and potential outcomes as separate prerequisites.",
+        "Detected that implementation question bundled nonuse, missingness, and random uncertainty; split these below.",
+        "Trial search corrected initial guessed venue/count to AERA Open and 2,850 students."
+      ]
+    },
+    {
+      "round": 2,
+      "gaps": [
+        "Concrete trial evidence",
+        "Subgroup exhibit accuracy",
+        "Asset access"
+      ],
+      "searches": [
+        "ASSISTments full published methods and results",
+        "Linked 2017 corrigendum",
+        "WWC study 86375 current review"
+      ],
+      "evidence": [
+        {
+          "url": "https://doi.org/10.1177/2332858416673968",
+          "locator": "Table 2 and Figure 2 p.9",
+          "claim": "Adjusted overall effect differs from unadjusted subgroup results."
+        },
+        {
+          "url": "https://doi.org/10.1177/2332858417707489",
+          "locator": "Corrected Table 4",
+          "claim": "Corrected effect sizes 0.29 and 0.12; subgroup means unchanged."
+        },
+        {
+          "url": "https://ies.ed.gov/ncee/wwc/Study/86375",
+          "locator": "August 2026 Findings",
+          "claim": "690.79 versus 681.95 adjusted means, 2,850 students."
+        }
+      ],
+      "changes": [
+        "Split implementation into assignment, missing, uncertainty.",
+        "Added observational alternative because randomized trials may not be feasible.",
+        "Extracted original figure from ERIC PDF after image CDN returned 403.",
+        "Omitted corrected effect-size column from report prose to avoid unnecessary statistical prerequisites; used corrected subgroup score differences.",
+        "No unsupported prerequisite nodes remain; actual unspecified app effect remains unknown by design."
+      ]
+    }
+  ],
+  "validation": {
+    "unique_ids": true,
+    "valid_endpoints": true,
+    "acyclic": true,
+    "all_nodes_reach_target": true,
+    "node_count": 9,
+    "edge_count": 12,
+    "semantic_review": "Each edge reviewed against report sequence; structural validity is not proof of prerequisite quality."
+  }
+}

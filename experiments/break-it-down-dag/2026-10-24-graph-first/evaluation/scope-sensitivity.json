@@ -1,0 +1,316 @@
+{
+  "version": "scope-sensitivity-1.1-not-original-scoring",
+  "created_at": "2026-10-24T20:40:19.707836+00:00",
+  "basis": "benchmark-scope-audit.md, graph-blind scope audit; only P8/PA4 and I6/IA1 adjustments authorized",
+  "scope_audit_sha256": "ef0bf9761707e073730b25e5df691adbda394834bc25f7f299730cbcf833464f",
+  "original_results_sha256": "493bd5c373221ced1764128074c109a38d82f5cb19cbc12c66dac23b167fdbdb",
+  "original_results_unchanged": true,
+  "changes": [
+    {
+      "label": "evals-B",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "removed_material_finding_ids": [],
+      "retained_material_finding_ids": [
+        "EB1",
+        "EB2",
+        "EB3"
+      ],
+      "coverage_changes": [],
+      "probe_changes": [],
+      "I6_IA1_applicability": "not applicable",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "backpropagation-B",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 4,
+        "granularity": 5,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 4,
+        "granularity": 5,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "removed_material_finding_ids": [],
+      "retained_material_finding_ids": [],
+      "coverage_changes": [],
+      "probe_changes": [],
+      "I6_IA1_applicability": "not applicable",
+      "overall_original": "accepted",
+      "overall_scope_sensitivity": "accepted",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "isolation-A",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "removed_material_finding_ids": [],
+      "retained_material_finding_ids": [
+        "IA1",
+        "IA2",
+        "IA3"
+      ],
+      "coverage_changes": [],
+      "probe_changes": [],
+      "I6_IA1_applicability": "Applicable and adequate/pass: both isolation graphs chose snapshots and disjoint-write explanations.",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "bayesian_spam-A",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 3,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "removed_material_finding_ids": [
+        "PA1"
+      ],
+      "retained_material_finding_ids": [
+        "PA2"
+      ],
+      "coverage_changes": [
+        {
+          "id": "P8",
+          "original": "partial",
+          "revised_core": "adequate",
+          "revised_extension": "scoped extension",
+          "reason": "Core interpretation/applicability limits present. No action recommendation is made; cost-sensitive thresholds are an omitted downstream extension."
+        }
+      ],
+      "probe_changes": [
+        {
+          "id": "PA4",
+          "original": "partial",
+          "revised": "scoped extension",
+          "reason": "No deletion or action-policy claim; decision policy is not a core obligation under authorized scope correction."
+        }
+      ],
+      "I6_IA1_applicability": "not applicable",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "evals-A",
+      "dimensions_original": {
+        "reader_fit": 4,
+        "prerequisite_coverage": 3,
+        "edge_validity": 5,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 4,
+        "prerequisite_coverage": 3,
+        "edge_validity": 5,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "removed_material_finding_ids": [],
+      "retained_material_finding_ids": [
+        "EA1",
+        "EA2",
+        "EA3"
+      ],
+      "coverage_changes": [],
+      "probe_changes": [],
+      "I6_IA1_applicability": "not applicable",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "backpropagation-A",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "removed_material_finding_ids": [],
+      "retained_material_finding_ids": [
+        "BA1"
+      ],
+      "coverage_changes": [],
+      "probe_changes": [],
+      "I6_IA1_applicability": "not applicable",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "bayesian_spam-B",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "removed_material_finding_ids": [
+        "PB1"
+      ],
+      "retained_material_finding_ids": [
+        "PB2"
+      ],
+      "coverage_changes": [
+        {
+          "id": "P8",
+          "original": "partial",
+          "revised_core": "adequate",
+          "revised_extension": "scoped extension",
+          "reason": "Core interpretation/applicability limits present. No action recommendation is made; cost-sensitive thresholds are an omitted downstream extension."
+        }
+      ],
+      "probe_changes": [
+        {
+          "id": "PA4",
+          "original": "partial",
+          "revised": "scoped extension",
+          "reason": "No deletion or action-policy claim; decision policy is not a core obligation under authorized scope correction."
+        }
+      ],
+      "I6_IA1_applicability": "not applicable",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    },
+    {
+      "label": "isolation-B",
+      "dimensions_original": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "dimensions_scope_sensitivity": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 3,
+        "edge_validity": 3,
+        "granularity": 3,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "removed_material_finding_ids": [],
+      "retained_material_finding_ids": [
+        "IB1",
+        "IB2",
+        "IB3"
+      ],
+      "coverage_changes": [],
+      "probe_changes": [],
+      "I6_IA1_applicability": "Applicable and adequate/pass: both isolation graphs chose snapshots and disjoint-write explanations.",
+      "overall_original": "needs_repair",
+      "overall_scope_sensitivity": "needs_repair",
+      "verdict_changed": false,
+      "other_score_adjustments": false
+    }
+  ],
+  "summary": {
+    "original_accepted": 1,
+    "sensitivity_accepted": 1,
+    "overall_verdict_changes": 0,
+    "removed_findings": [
+      "bayesian_spam-A:PA1",
+      "bayesian_spam-B:PB1"
+    ],
+    "unchanged_requirements": "I7 and every other obligation/finding remain as originally scored; no scope widening beyond authorized corrections."
+  }
+}

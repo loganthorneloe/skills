@@ -1,0 +1,15 @@
+{
+  "frozen_at": "2026-10-24T20:25:39.825639+00:00",
+  "files": {
+    "inputs/old-skill.txt": "95c79e5ba04b25e886a0278c86604567763c1e069393327709e861600b56c787",
+    "inputs/new-skill.txt": "65b3f6c6e269e6b19c775b5f59599c52dfe5a00d08887c4007530eb2bd4a4540",
+    "worker-instructions.txt": "f4e5bf9f59b7a74a9253861bda7817c1adb820c6a6525d43b68344bf51f67bf8",
+    "protocol.md": "d779994275e79bce346cd7d718b1ce1ddbfa7849e301b0128c63990867f3baee",
+    "design/benchmark/benchmark.json": "1966aff2603c1a9853ed3bcfe344ce81dc6ae06b76f854e09d6a19d06edbe127",
+    "design/benchmark/rubric.md": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f",
+    "inputs/sources/ai-evals.json": "a10509f23738a6727ff8af7cd477309d6e2aae4644f9ac109df5d562260139d7",
+    "inputs/sources/backpropagation.json": "ec620af2b86d517baf83b7002f65a5b819801b7ce540126c09090f42c573fbc8",
+    "inputs/sources/bayesian-spam.json": "db3cc3c0cc658f79181966af86da44eda7913abd54abf5f479b2a1febfedcaed",
+    "inputs/sources/transaction-isolation.json": "9dc4cc90964da2271fe20d4e88473da9bab4892160903454f446c5aed68e4dce"
+  }
+}

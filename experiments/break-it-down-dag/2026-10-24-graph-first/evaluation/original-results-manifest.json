@@ -1,0 +1,11 @@
+{
+  "frozen_at": "2026-10-24T20:39:43.364742+00:00",
+  "rubric": "1.0-frozen",
+  "scope_amendment_applied": false,
+  "artifacts": {
+    "results.json": "493bd5c373221ced1764128074c109a38d82f5cb19cbc12c66dac23b167fdbdb",
+    "blind-review.md": "3605770e81431efa1c1084c99fa7f12107b196d28188a7f2734006f1ba208e24",
+    "independent-checks.json": "fdec736ce1e6fdc76740b8e9de0be5a6610e6f3b0de08867746ac0fec1cc7277",
+    "results.partial-six.frozen.json": "88f0e5f7469d3f6e2f7fdb1685e0a1b84b26d16cc08669ae4d605a229b59e2d5"
+  }
+}

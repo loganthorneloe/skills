@@ -1,0 +1,12 @@
+# Agent working files: downloaded sources, virtualenvs, and screenshots
+scratch/
+scratch-*/
+venv/
+.venv/
+shot-*.png
+*.pdf
+*.tar
+# Private brand kit copy (reinstall with logan-style/scripts/install_web.py)
+vendor/
+# Captured third-party figures stay local; the public repo keeps the reports
+assets/

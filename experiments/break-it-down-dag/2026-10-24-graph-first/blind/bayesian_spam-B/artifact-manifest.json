@@ -1,0 +1,47 @@
+[
+  {
+    "file": "dag.html",
+    "original_sha256": "4a8347a32c063d235ac4d472a2a00d02854a539b9f35a9f58211ce163d6dab27",
+    "blind_sha256": "4a8347a32c063d235ac4d472a2a00d02854a539b9f35a9f58211ce163d6dab27"
+  },
+  {
+    "file": "calculations.json",
+    "original_sha256": "5bc7273714106341fce41b87dbaed8d6efbdc58066a72c9a94928bc39a3ff17a",
+    "blind_sha256": "5bc7273714106341fce41b87dbaed8d6efbdc58066a72c9a94928bc39a3ff17a"
+  },
+  {
+    "file": "checks.json",
+    "original_sha256": "aef971002279b3dbb02531426224619ca37b4ac6de0465012e775c9bb5b97c56",
+    "blind_sha256": "aef971002279b3dbb02531426224619ca37b4ac6de0465012e775c9bb5b97c56"
+  },
+  {
+    "file": "dag.svg",
+    "original_sha256": "b296fd93efda43e34b85f9d43641b4b9a1134d521f3f0680ae136f88a36b2a1d",
+    "blind_sha256": "b296fd93efda43e34b85f9d43641b4b9a1134d521f3f0680ae136f88a36b2a1d"
+  },
+  {
+    "file": "run-notes.md",
+    "original_sha256": "24334f89400e0e64a14ba21a231ddde822a273aeb20d82b406260e74a3df9648",
+    "blind_sha256": "24334f89400e0e64a14ba21a231ddde822a273aeb20d82b406260e74a3df9648"
+  },
+  {
+    "file": "request.txt",
+    "original_sha256": "20ff755263b8f428539b4aae6920284eb25ce798bcb206bbc6c0dd05b109f25b",
+    "blind_sha256": "20ff755263b8f428539b4aae6920284eb25ce798bcb206bbc6c0dd05b109f25b"
+  },
+  {
+    "file": "dag.json",
+    "original_sha256": "3c29bffa64fb59fc81205bd613829b84f026382755957be729bb6b2a5c1e60dc",
+    "blind_sha256": "3c29bffa64fb59fc81205bd613829b84f026382755957be729bb6b2a5c1e60dc"
+  },
+  {
+    "file": "history/round-1-dag.json",
+    "original_sha256": "3c29bffa64fb59fc81205bd613829b84f026382755957be729bb6b2a5c1e60dc",
+    "blind_sha256": "3c29bffa64fb59fc81205bd613829b84f026382755957be729bb6b2a5c1e60dc"
+  },
+  {
+    "file": "history/initial-dag.json",
+    "original_sha256": "51f762acfd46d6f74ae92794f87827aade77bfcba20eb8c88e0c921b40eff1b8",
+    "blind_sha256": "51f762acfd46d6f74ae92794f87827aade77bfcba20eb8c88e0c921b40eff1b8"
+  }
+]

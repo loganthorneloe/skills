@@ -1,0 +1,86 @@
+[
+  {
+    "id": "e01",
+    "topic": "evals",
+    "skill": "baseline",
+    "reading_words": 2507,
+    "report_bytes": 1006492,
+    "distinct_external_link_destinations": 5,
+    "image_elements": 1
+  },
+  {
+    "id": "e02",
+    "topic": "encryption",
+    "skill": "variant",
+    "reading_words": 1663,
+    "report_bytes": 969977,
+    "distinct_external_link_destinations": 4,
+    "image_elements": 1,
+    "graph_nodes": 11,
+    "graph_edges": 13,
+    "graph_revision_entries": 3
+  },
+  {
+    "id": "e03",
+    "topic": "causal",
+    "skill": "baseline",
+    "reading_words": 2198,
+    "report_bytes": 986182,
+    "distinct_external_link_destinations": 8,
+    "image_elements": 1
+  },
+  {
+    "id": "e04",
+    "topic": "isolation",
+    "skill": "variant",
+    "reading_words": 2154,
+    "report_bytes": 1010148,
+    "distinct_external_link_destinations": 9,
+    "image_elements": 1,
+    "graph_nodes": 13,
+    "graph_edges": 19,
+    "graph_revision_entries": 3
+  },
+  {
+    "id": "e05",
+    "topic": "evals",
+    "skill": "variant",
+    "reading_words": 2443,
+    "report_bytes": 1487077,
+    "distinct_external_link_destinations": 5,
+    "image_elements": 2,
+    "graph_nodes": 10,
+    "graph_edges": 11,
+    "graph_revision_entries": 3
+  },
+  {
+    "id": "e06",
+    "topic": "encryption",
+    "skill": "baseline",
+    "reading_words": 1651,
+    "report_bytes": 954895,
+    "distinct_external_link_destinations": 4,
+    "image_elements": 0
+  },
+  {
+    "id": "e07",
+    "topic": "causal",
+    "skill": "variant",
+    "reading_words": 2055,
+    "report_bytes": 1016471,
+    "distinct_external_link_destinations": 9,
+    "image_elements": 1,
+    "graph_nodes": 9,
+    "graph_edges": 12,
+    "graph_revision_entries": 7
+  },
+  {
+    "id": "e08",
+    "topic": "isolation",
+    "skill": "baseline",
+    "reading_words": 2509,
+    "report_bytes": 1008951,
+    "distinct_external_link_destinations": 8,
+    "image_elements": 1
+  }
+]

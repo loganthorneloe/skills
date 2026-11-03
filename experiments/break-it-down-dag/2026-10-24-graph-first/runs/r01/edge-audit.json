@@ -1,0 +1,281 @@
+[
+  {
+    "from": "baseline",
+    "to": "application",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The application is defined as a configured input-to-output program, using the reader\u2019s known API model.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "application",
+    "to": "case",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "A case must distinguish inputs and context supplied to the application from grading information.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "objective",
+    "to": "reference",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Expected outcomes implement the stated support requirements.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "case",
+    "to": "coverage",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Representativeness concerns which reusable input situations are included.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "case",
+    "to": "reference",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Each expected outcome belongs to a particular input and context.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "reference",
+    "to": "grader",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The grader must compare actual behavior with an acceptable outcome or criterion.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "grader",
+    "to": "calibration",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Agreement checks assess whether the grading rule captures informed human judgments.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "application",
+    "to": "run",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The run executes one identified application configuration.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "case",
+    "to": "run",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The run supplies case inputs and preserves separate grading information.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "grader",
+    "to": "run",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The run applies explicit assessment rules to its saved outputs.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "run",
+    "to": "aggregate",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Pass counts and denominators come from recorded per-case run results.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "coverage",
+    "to": "aggregate",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The limit on generalization depends on which situations the cases cover.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "aggregate",
+    "to": "comparison",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Comparing scores requires knowing what each score summarizes and its scope.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "comparison",
+    "to": "improvement",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "A claimed improvement needs evidence of gains and regressions under comparable conditions.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "objective",
+    "to": "action_outcome",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Correct action outcomes depend on the defined authorization and task requirements.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "coverage",
+    "to": "start",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Starting cases must include realistic and unusual situations.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "improvement",
+    "to": "start",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The starter workflow uses measured failures to revise and rerun.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "action_outcome",
+    "to": "start",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "A support workflow with actions must inspect their consequences separately from wording.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "variability",
+    "to": "target",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The answer\u2019s need for evals rests on unreliable inference from a few variable answers.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "start",
+    "to": "target",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The answer\u2019s concrete starting method requires the evaluated support workflow.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "aggregate",
+    "to": "target",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The answer calls evals evidence, which requires knowing the score\u2019s limited meaning.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "baseline",
+    "to": "tool",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Tools extend the reader\u2019s known function input/output model to calls that retrieve or change records.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "tool",
+    "to": "application",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The tested application includes tool execution, whose behavior must be understood.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "tool",
+    "to": "action_outcome",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Resulting records distinguish effects of functions from the model\u2019s words.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "case",
+    "to": "repeatability",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Resetting requires the intended case-specific starting state.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "run",
+    "to": "uncertainty",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Repeated attempts and case observations are the objects whose scores can vary.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "case",
+    "to": "heldout",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "A reserved set is a subset of reusable evaluation cases.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "uncertainty",
+    "to": "comparison",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The comparison\u2019s small-gain caveat depends on the two sources of variation.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "repeatability",
+    "to": "comparison",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Equivalent starting state is required by the comparison design.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "heldout",
+    "to": "comparison",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The final comparison reserves cases unused in choosing the change.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "aggregate",
+    "to": "decision",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "A high score is a summary with limited scope, not a readiness guarantee.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "objective",
+    "to": "decision",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Acceptable failures and release conditions depend on the chosen requirements.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "action_outcome",
+    "to": "decision",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The unauthorized-action example requires distinguishing actual actions from replies.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "calibration",
+    "to": "decision",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Readiness evidence depends on grading the intended behavior, not only scoring consistently.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "decision",
+    "to": "start",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The initial workflow must interpret its high average without treating it as a deployment guarantee.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "reference",
+    "to": "start",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "Preparing the starter dataset uses expert-checked expected behavior.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "run",
+    "to": "start",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The starter workflow explicitly executes cases and grades saved outputs.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "run",
+    "to": "incomplete",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "The recorded execution and grading steps identify which result is missing and where it failed.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "incomplete",
+    "to": "aggregate",
+    "decision": "retain",
+    "specific_claim_requiring_prerequisite": "A meaningful denominator report must expose incomplete or ungraded attempts.",
+    "removal_test": "Removing this prerequisite leaves the named concept or method unexplained for the stated Python/API baseline."
+  },
+  {
+    "from": "variability",
+    "to": "comparison",
+    "decision": "remove",
+    "reason": "The more specific uncertainty node now supplies the full variation explanation; direct edge adds no needed bridge."
+  }
+]

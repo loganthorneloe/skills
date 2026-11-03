@@ -1,0 +1,14 @@
+# Claims
+- C1: A language model turns text into tokens, maps each token to a learned vector, and is trained to predict the next token.
+- C2: Scaled dot-product attention computes softmax(QK^T/sqrt(d_k))V: each position's output is a weighted sum of value vectors, weights from query-key dot products.
+- C3: Scaling by 1/sqrt(d_k) keeps dot products from growing with dimension and saturating the softmax.
+- C4: In a decoder (GPT-style) language model a causal mask stops each position attending to later positions.
+- C5: Multi-head attention runs several attention functions in parallel with different learned projections; concrete head counts/sizes.
+- C6: Attention alone ignores word order, so position information is added to the input vectors.
+- C7: Trained heads show distinct, sometimes interpretable patterns (long-distance dependencies; induction heads that copy earlier patterns, linked to in-context learning).
+- C8: Attention weights are not, by themselves, a reliable explanation of a model's prediction.
+- C9: Attention removes the step-by-step dependency of recurrent networks: O(1) sequential operations and O(1) path length between positions, implemented as matrix multiplications that parallelize on GPUs.
+- C10: Transformer language models use long context better than LSTMs, and their loss falls smoothly and predictably as size, data, and compute grow.
+- C11: ChatGPT is fine-tuned (supervised + RLHF) from a GPT-3.5-series model; GPT-3 is a 175B-parameter decoder-only transformer.
+- C12: Self-attention cost per layer grows with the square of sequence length.
+- C13: In standard GPT sizing, feed-forward layers hold about two thirds of non-embedding parameters (Kaplan §2.1).

@@ -1,0 +1,32 @@
+{
+  "topic": "encryption",
+  "A": {
+    "scores": {
+      "prerequisites": 5,
+      "continuity": 4,
+      "mechanism": 4,
+      "foundation_evidence": 5,
+      "accuracy": 5,
+      "transfer": 5,
+      "exhibits": 5,
+      "readability": 5,
+      "presentation": 5
+    }
+  },
+  "B": {
+    "scores": {
+      "prerequisites": 5,
+      "continuity": 5,
+      "mechanism": 5,
+      "foundation_evidence": 5,
+      "accuracy": 5,
+      "transfer": 5,
+      "exhibits": 5,
+      "readability": 4,
+      "presentation": 5
+    }
+  },
+  "winner": "B",
+  "rationale": "Narrow B preference: its explanation connects the inverse-exponent relation to restoring prime remainders for arbitrary inputs. A validates examples and cites the general proof without teaching that connection, but offers easier interactive exploration and lower cognitive load.",
+  "major_issues": []
+}

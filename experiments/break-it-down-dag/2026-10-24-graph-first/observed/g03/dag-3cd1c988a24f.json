@@ -1,0 +1,650 @@
+{
+  "reader_assumptions": [
+    "Reader understands basic SELECT, UPDATE, WHERE and rows/column values.",
+    "No prior knowledge of transactions, snapshots, locks, or concurrency control."
+  ],
+  "target": "target",
+  "nodes": [
+    {
+      "id": "sql_state",
+      "question": "What SQL knowledge can the explanation assume?",
+      "answer": "The reader can read SELECT, UPDATE, WHERE and recognize table rows and column values. No transaction or concurrency-control vocabulary is assumed.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "correctness",
+      "question": "What makes a database operation correct for an application?",
+      "answer": "The application has a rule that should hold in completed states: for example, a transfer preserves the combined account balance. Such a rule is often called an invariant. An operation is correct in isolation when, starting from a state satisfying the rule, its complete execution leaves the rule satisfied. Valid SQL alone does not establish that property.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "3.4 bank-transfer example",
+          "claim": "The complete transfer must preserve the intended relationship between account balances.",
+          "basis": "source-grounded definition and synthesis"
+        }
+      ]
+    },
+    {
+      "id": "transaction",
+      "question": "What operations belong to a transaction, and what do commit and rollback mean?",
+      "answer": "A transaction groups SQL work into one completion unit. BEGIN starts an explicit group; COMMIT retains its work; ROLLBACK discards it. A connection is an application conversation with the database, and separate connections can run separate transactions. PostgreSQL implicitly wraps a standalone statement in a transaction.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "3.4, BEGIN/COMMIT/ROLLBACK and implicit statement transactions",
+          "claim": "Defines transaction boundaries and completion.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation Between Database Connections",
+          "claim": "Separate connections can have separate concurrent transactions.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "atomicity",
+      "question": "What does all-or-nothing completion guarantee?",
+      "answer": "Atomicity means all updates in a transaction survive together or none do. A transfer must debit and credit together. That rule does not alone ensure that the values used to decide what to write stay appropriate while another transaction changes related data. Visibility of unfinished changes is an isolation question.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "3.4, opening bank-transfer example",
+          "claim": "A partial transfer is prevented by all-or-nothing grouping.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.2, business-rule limitation",
+          "claim": "A transaction snapshot still need not preserve every cross-transaction business rule.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "overlap",
+      "question": "How can two transactions overlap even when each statement executes correctly?",
+      "answer": "Concurrent means transaction lifetimes overlap. A can read, B can read, A can write, and B can write before both finish; no physically simultaneous CPU execution is required. Each SQL statement can correctly act on its permitted inputs while those inputs omit a competing decision.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.3, concurrent A/B example",
+          "claim": "Transactions can read before the other transaction writes.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1, Session A and Session B UPDATE example",
+          "claim": "Separate sessions issue overlapping operations.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "serial",
+      "question": "What would executing whole transactions one at a time mean?",
+      "answer": "A serial execution completes all of A before starting B, or all of B before starting A. If each transaction preserves a rule whenever it starts from a valid state, either serial order preserves that rule. This is reasoning about complete operations, not merely the order of final writes.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2 opening definition and 13.2.3",
+          "claim": "Serial comparison concerns complete transactions.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "3.4, bank-transfer example",
+          "claim": "Correctness concerns the grouped operation.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "interference",
+      "question": "How can overlapping, individually valid decisions violate a shared rule?",
+      "answer": "Constructed example: two staff rows, A and B, initially have on_call=true; the rule requires at least one true. Each transaction reads the other row and sets its own row false only if the other is true. Either operation alone preserves the rule. If both read first, both decisions pass, then they update different rows and both can commit under PostgreSQL Repeatable Read. The result has nobody on call. The writes are correct for each transaction\u2019s observations; the combined decision is wrong.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.2 business-rule limitation; 13.2.3 read/write anomaly example",
+          "claim": "Stable snapshots can allow a combined result with no serial equivalent; the on-call example is our deduction, not a reported source example.",
+          "basis": "constructed example using documented semantics"
+        }
+      ]
+    },
+    {
+      "id": "visibility",
+      "question": "Which version of a row can a read observe?",
+      "answer": "A read observes a particular permitted state, not necessarily every latest change. Distinguish another transaction\u2019s uncommitted work, its committed work, and this transaction\u2019s own earlier writes. PostgreSQL ordinary SELECT sees its own preceding updates, even before commit; its view of other transactions depends on isolation level.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.1, opening SELECT paragraphs",
+          "claim": "Ordinary SELECT visibility distinguishes other transactions from own writes.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "No Isolation Between Operations On The Same Database Connection",
+          "claim": "Same-connection writes are visible to later reads.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "anomalies",
+      "question": "How do dirty, changed-value, changed-set, and serialization anomalies differ?",
+      "answer": "A dirty read sees someone else\u2019s unfinished update. A nonrepeatable read sees a previously read value change after another commit. A phantom read sees the rows satisfying the same WHERE condition change after another commit. A serialization anomaly means the committed outcome matches no ordering of complete transactions. Stable individual reads therefore do not by themselves rule out every bad combined outcome.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2, four phenomenon definitions and Table 13.1",
+          "claim": "Defines the four distinctions used to compare guarantees.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "snapshot",
+      "question": "How can a read see a stable database state while another transaction writes?",
+      "answer": "A snapshot is the database state a read is allowed to observe. Multiversion concurrency control (MVCC) keeps distinguishable versions so a read can use an earlier state while other work writes newer data. PostgreSQL Read Committed ordinary SELECT uses a new snapshot per statement; Repeatable Read uses the first non-control statement\u2019s snapshot for the transaction, plus its own writes.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+          "locator": "13.1 opening paragraphs",
+          "claim": "MVCC lets statements observe an earlier database version.",
+          "basis": "supplemental live source"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.1 and 13.2.2 snapshot timing",
+          "claim": "Read Committed and Repeatable Read choose snapshots at different boundaries.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "levels",
+      "question": "What protections do the named isolation levels promise?",
+      "answer": "The conventional four-level comparison specifies forbidden outcomes. Read Uncommitted may allow all four anomalies; Read Committed forbids dirty reads; Repeatable Read also forbids nonrepeatable reads but its minimum guarantee can allow phantoms and serialization anomalies; Serializable forbids all four. Products can exceed these minima: PostgreSQL Read Uncommitted behaves as Read Committed, and its Repeatable Read also prevents phantoms. A level is a guarantee about allowed behavior.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2 Table 13.1 and following paragraphs",
+          "claim": "Level minima differ from PostgreSQL implementations.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "snapshot_limit",
+      "question": "Why can a stable transaction snapshot still allow a wrong combined result?",
+      "answer": "In the on-call example both transaction snapshots contain two available staff. Each changes a different row, so a same-row write collision need not occur. A then B would leave B on call because B reads A=false; B then A would leave A on call. Both-off fits neither order. Repeatable reads stabilize observations but do not necessarily protect the assumptions linking reads of one row to writes of another.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.2 and 13.2.3",
+          "claim": "PostgreSQL snapshot isolation permits serialization anomalies; constructed schedule applies that rule.",
+          "basis": "constructed deduction supported by supplied and live source"
+        }
+      ]
+    },
+    {
+      "id": "serializable",
+      "question": "What does serializable execution guarantee?",
+      "answer": "Serializable promises that successfully committed transactions have an effect equivalent to some serial order. Actual work may overlap. If every participating operation preserves the application rule in isolation, this guarantee preserves it across their committed combination. It cannot repair logically incorrect operations or a workflow whose required reads occur outside its transaction.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.3 opening and consistent-use discussion",
+          "claim": "Committed work is equivalent to serial execution; correctness depends on correct individual transactions.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "mechanisms",
+      "question": "How do snapshots, locks, and conflict checks implement isolation?",
+      "answer": "A mechanism is how the database enforces its promise. Snapshots choose visible versions. Blocking locks reserve access so a conflicting operation waits; protecting a searched range can also prevent new matching rows. Conflict checking instead detects combinations of reads and writes incompatible with the promised order and rejects work. PostgreSQL Serializable adds such checks to snapshots; its read-dependency tracking is not a blocking read lock. Engines can combine these techniques.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1 REPEATABLE READ locking rules",
+          "claim": "Record and range protection can make competing operations wait.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.3 monitoring and predicate locks",
+          "claim": "PostgreSQL uses dependency tracking and serialization failures.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/18/mvcc-intro.html",
+          "locator": "13.1",
+          "claim": "MVCC provides a distinct concurrency-control mechanism.",
+          "basis": "supplemental live source"
+        }
+      ]
+    },
+    {
+      "id": "engine_details",
+      "question": "Why do engine and statement type matter beyond the level name?",
+      "answer": "Do not apply ordinary SELECT rules automatically to UPDATE or locking reads. InnoDB 8.4 Repeatable Read ordinary reads share a snapshot, while locking reads/modifications protect searched records or ranges. With autocommit disabled, its Serializable level treats plain SELECT as shared locking reads. SQLite WAL supports concurrent snapshot readers but only one writer; a stale reader attempting to write can fail with SQLITE_BUSY_SNAPSHOT. Thus using snapshots does not imply that every engine permits the on-call anomaly.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1 REPEATABLE READ and SERIALIZABLE",
+          "claim": "Statement type and autocommit alter behavior.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation Between Database Connections; Isolation And Concurrency",
+          "claim": "Single-writer enforcement and stale-snapshot rejection complement snapshots.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "retries",
+      "question": "Why must applications sometimes retry a whole transaction?",
+      "answer": "A serialization failure means the attempted transaction could not be safely accepted with competing work. Discard it and retry the whole transaction, including its reads and decisions, from fresh state; replaying only its final write can repeat the invalid decision. PostgreSQL Repeatable Read can require this too. SQLite stale-snapshot rejection similarly requires releasing the old snapshot before starting again. A rejection can be how isolation protects correctness.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.2 concurrent-update failure; 13.2.3 retry requirement",
+          "claim": "Entire transactions must be retried after serialization failures.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation And Concurrency, X upgrading to writer",
+          "claim": "Stale read snapshots must be released before retrying writes.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "choice",
+      "question": "How should correctness requirements guide the isolation choice?",
+      "answer": "Start with the rule and all reads and writes needed to preserve it. Choose guarantees that exclude the dangerous interleavings, using the actual engine and statement behavior. Serializable provides general serial-equivalence protection for correctly bounded transactions, with retry handling. Weaker levels may suffice for narrower operations with appropriate coordination. Waiting, rejected attempts, and performance depend on workload; no universally fastest or best level follows from these sources.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2.1 simple versus complex operations; 13.2.3 consistent Serializable use",
+          "claim": "Different operations need different protection; retries and checks have costs.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1 introduction and locking behavior",
+          "claim": "Isolation choices affect coordination and contention.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why can concurrent correct operations yield a wrong result, and how do isolation levels help?",
+      "answer": "Two individually correct operations can base their decisions on observations that omit each other\u2019s changes; their combined writes can then break an application rule. Transaction boundaries make work a unit, while isolation constrains what overlapping units may observe and commit. Weaker guarantees exclude particular read anomalies; even stable snapshots can permit incompatible decisions. Serializable excludes outcomes with no serial equivalent, often by waiting or rejecting work that must be retried. The engine, statements, and correctly chosen transaction boundaries determine how those guarantees apply.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/18/transaction-iso.html",
+          "locator": "13.2 Table 13.1, 13.2.2, 13.2.3",
+          "claim": "Explains observation guarantees, snapshot limits, serial equivalence and retries.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+          "locator": "3.4",
+          "claim": "Defines operation boundaries and atomicity.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1",
+          "claim": "Shows implementation and statement distinctions.",
+          "basis": "supplied packet, checked against live relevant section"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation And Concurrency",
+          "claim": "Shows another mechanism for preventing incompatible histories.",
+          "basis": "supplied packet, checked against live relevant section"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "sql_state",
+      "to": "transaction",
+      "why": "A transaction groups the SQL operations the reader already understands."
+    },
+    {
+      "from": "transaction",
+      "to": "atomicity",
+      "why": "All-or-nothing applies to the grouped unit."
+    },
+    {
+      "from": "transaction",
+      "to": "overlap",
+      "why": "Overlap concerns the steps of distinct transaction units."
+    },
+    {
+      "from": "transaction",
+      "to": "serial",
+      "why": "Serial order is an order of whole transactions."
+    },
+    {
+      "from": "overlap",
+      "to": "interference",
+      "why": "The rule-breaking example requires interleaved decisions."
+    },
+    {
+      "from": "atomicity",
+      "to": "interference",
+      "why": "The example must explain why successful grouped completion alone is insufficient."
+    },
+    {
+      "from": "overlap",
+      "to": "visibility",
+      "why": "Overlapping work raises which concurrent changes a reader can see."
+    },
+    {
+      "from": "visibility",
+      "to": "anomalies",
+      "why": "Read anomalies are distinctions among observed versions and row sets."
+    },
+    {
+      "from": "serial",
+      "to": "anomalies",
+      "why": "Serialization anomalies are defined relative to serial outcomes."
+    },
+    {
+      "from": "visibility",
+      "to": "snapshot",
+      "why": "A snapshot restricts visible versions to a particular database state."
+    },
+    {
+      "from": "anomalies",
+      "to": "levels",
+      "why": "Levels are described by the anomalies they exclude."
+    },
+    {
+      "from": "snapshot",
+      "to": "levels",
+      "why": "Actual read behavior requires snapshot timing."
+    },
+    {
+      "from": "snapshot",
+      "to": "snapshot_limit",
+      "why": "The failure concerns transactions using stable snapshots."
+    },
+    {
+      "from": "interference",
+      "to": "snapshot_limit",
+      "why": "The limit must be shown by a concrete rule-breaking combination."
+    },
+    {
+      "from": "serial",
+      "to": "snapshot_limit",
+      "why": "The outcome must be compared with possible serial executions."
+    },
+    {
+      "from": "snapshot",
+      "to": "mechanisms",
+      "why": "Versions provide one way of implementing read consistency."
+    },
+    {
+      "from": "overlap",
+      "to": "mechanisms",
+      "why": "Locks and checks control interference from overlapping work."
+    },
+    {
+      "from": "mechanisms",
+      "to": "engine_details",
+      "why": "Product differences concern concrete concurrency-control implementations."
+    },
+    {
+      "from": "levels",
+      "to": "engine_details",
+      "why": "Level labels must be separated from actual product guarantees."
+    },
+    {
+      "from": "serializable",
+      "to": "retries",
+      "why": "Preserving serial outcomes can require rejecting conflicting work."
+    },
+    {
+      "from": "engine_details",
+      "to": "choice",
+      "why": "Correct selection requires the specific engine and statements."
+    },
+    {
+      "from": "retries",
+      "to": "choice",
+      "why": "Correct transaction handling includes failure recovery."
+    },
+    {
+      "from": "serializable",
+      "to": "choice",
+      "why": "The intended invariant determines required guarantees."
+    },
+    {
+      "from": "interference",
+      "to": "target",
+      "why": "Explains how concurrency invalidates separately sound decisions."
+    },
+    {
+      "from": "choice",
+      "to": "target",
+      "why": "Explains how isolation helps and how to apply it."
+    },
+    {
+      "from": "sql_state",
+      "to": "correctness",
+      "why": "A rule refers to the rows and values the reader already recognizes."
+    },
+    {
+      "from": "correctness",
+      "to": "serial",
+      "why": "The preservation argument needs a definition of individually correct operations."
+    },
+    {
+      "from": "correctness",
+      "to": "interference",
+      "why": "Calling the combined outcome wrong requires the shared rule."
+    },
+    {
+      "from": "serial",
+      "to": "serializable",
+      "why": "Serializable is defined by equivalence to a serial order."
+    },
+    {
+      "from": "snapshot_limit",
+      "to": "choice",
+      "why": "A safe choice must account for failures that stable reads alone do not exclude."
+    },
+    {
+      "from": "serial",
+      "to": "mechanisms",
+      "why": "Conflict-checking explanations refer to compatibility with a serial order."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "stage": "initial-before-supplemental-research",
+      "snapshot": "initial-dag.json",
+      "gaps": [
+        "transaction",
+        "atomicity",
+        "overlap",
+        "serial",
+        "interference",
+        "visibility",
+        "anomalies",
+        "snapshot",
+        "levels",
+        "snapshot_limit",
+        "serializable",
+        "mechanisms",
+        "engine_details",
+        "retries",
+        "choice",
+        "target"
+      ],
+      "searches": [],
+      "evidence": [
+        "Supplied four-page primary-source packet read before graph construction."
+      ],
+      "changes": [
+        "Initial backward decomposition from target; answers left open pending relevant-section verification."
+      ]
+    },
+    {
+      "round": 1,
+      "stage": "primary-source-verification",
+      "gaps": [
+        "Precise snapshot boundaries",
+        "Concrete shared-rule failure",
+        "Meaning of MVCC",
+        "Retries and statement-specific behavior"
+      ],
+      "searches": [
+        {
+          "type": "direct-open",
+          "urls": [
+            "https://www.postgresql.org/docs/18/transaction-iso.html",
+            "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+            "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+            "https://www.sqlite.org/isolation.html"
+          ],
+          "purpose": "Read packet sources in full relevant sections, pin PostgreSQL to version 18."
+        },
+        {
+          "type": "direct-open",
+          "urls": [
+            "https://www.postgresql.org/docs/18/mvcc-intro.html"
+          ],
+          "purpose": "Close mechanism gap: how an earlier visible database version relates to MVCC."
+        }
+      ],
+      "evidence": [
+        "https://www.postgresql.org/docs/18/transaction-iso.html",
+        "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+        "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+        "https://www.sqlite.org/isolation.html",
+        "https://www.postgresql.org/docs/18/mvcc-intro.html"
+      ],
+      "changes": [
+        "Filled all researched answers and attached locators.",
+        "Added constructed on-call example, explicitly distinguished from published example.",
+        "Verified snapshot timing, same-connection visibility, engine qualifications and whole-transaction retry."
+      ]
+    },
+    {
+      "round": 2,
+      "stage": "prerequisite-and-synthesis-review",
+      "gaps": [
+        "Correctness/invariant was improperly folded into assumed SQL knowledge.",
+        "Two edges described motivating order rather than necessary definitions."
+      ],
+      "searches": [],
+      "evidence": [
+        "https://www.postgresql.org/docs/18/tutorial-transactions.html",
+        "https://www.postgresql.org/docs/18/transaction-iso.html"
+      ],
+      "changes": [
+        "Added explicit correctness node grounded in transfer example.",
+        "Narrowed assumed root to actual reader baseline.",
+        "Replaced levels\u2192serializable and snapshot_limit\u2192serializable with serial\u2192serializable.",
+        "Connected snapshot limitation to guarantee selection and serial order to conflict-checking mechanism.",
+        "Reviewed each answer for undefined prerequisites and preserved product-specific limits."
+      ]
+    }
+  ],
+  "scope": {
+    "included": [
+      "Single-database transactions on separate connections",
+      "Atomicity versus isolation",
+      "Observation anomalies and snapshot boundaries",
+      "Constructed cross-row write-skew example",
+      "Serializable effects versus concurrency-control mechanisms",
+      "Product-qualified PostgreSQL 18, InnoDB 8.4 and SQLite examples",
+      "Whole-transaction retry requirement"
+    ],
+    "excluded": [
+      "Distributed transactions and replicas",
+      "Durability/storage recovery internals",
+      "All lock types and query-plan-dependent lock footprints",
+      "Production performance recommendations",
+      "External-service side effects and retry idempotency design"
+    ],
+    "limits": [
+      "No live database workload executed; example verified with a state-transition model and documentation.",
+      "No SQL standard text directly consulted; standard minimum comparison is attributed to PostgreSQL documentation.",
+      "No full report or graph rendering performed: graph-only task with shared renderer."
+    ]
+  },
+  "constructed_example": {
+    "id": "on-call",
+    "kind": "original worked deduction, not a source measurement",
+    "assumptions": [
+      "Two different rows initially true.",
+      "Each transaction reads the other row, then updates only its own row if the other is true.",
+      "Both transactions run PostgreSQL Repeatable Read; no extra rule-enforcing constraint or explicit coordination.",
+      "Both read before either commits; both writes target different rows."
+    ],
+    "transactions": {
+      "A": [
+        "BEGIN ISOLATION LEVEL REPEATABLE READ",
+        "SELECT on_call FROM staff WHERE id = 'B'",
+        "If true: UPDATE staff SET on_call = false WHERE id = 'A'",
+        "COMMIT"
+      ],
+      "B": [
+        "BEGIN ISOLATION LEVEL REPEATABLE READ",
+        "SELECT on_call FROM staff WHERE id = 'A'",
+        "If true: UPDATE staff SET on_call = false WHERE id = 'B'",
+        "COMMIT"
+      ]
+    },
+    "serial_outcomes": [
+      [
+        false,
+        true
+      ],
+      [
+        true,
+        false
+      ]
+    ],
+    "concurrent_outcome": [
+      false,
+      false
+    ],
+    "verification": "checks.json records state-model verification; this is not a PostgreSQL integration test."
+  }
+}

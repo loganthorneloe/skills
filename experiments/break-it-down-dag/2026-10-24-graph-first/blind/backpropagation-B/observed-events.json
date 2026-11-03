@@ -1,0 +1,42 @@
+[
+  {
+    "time": "2026-10-24T20:27:16.085219+00:00",
+    "file": "backpropagation-B/dag.json",
+    "sha256": "36d8b2738eda7c3dea5b1590dfff7cc7473d22f5dd44e0dc424b52eac16e68af",
+    "snapshot": "observed/dag-36d8b2738eda.json",
+    "nodes": 19,
+    "edges": 27
+  },
+  {
+    "time": "2026-10-24T20:27:34.128145+00:00",
+    "file": "backpropagation-B/dag.json",
+    "sha256": "adbe28cb9ec1288ec701839147d133a63740d94179f6814dbaeda98700a03914",
+    "snapshot": "observed/dag-adbe28cb9ec1.json",
+    "nodes": 19,
+    "edges": 27
+  },
+  {
+    "time": "2026-10-24T20:27:50.181440+00:00",
+    "file": "backpropagation-B/dag.json",
+    "sha256": "0c22384f6ae76b8a71219b13005144abb3f17cdd8e989f7077cd95f989e09b4d",
+    "snapshot": "observed/dag-0c22384f6ae7.json",
+    "nodes": 19,
+    "edges": 27
+  },
+  {
+    "time": "2026-10-24T20:27:56.198250+00:00",
+    "file": "backpropagation-B/dag.json",
+    "sha256": "d9fd84e2b80821ece2e5b11d03aef0a62fde2dd4fadaaec824b5ba515ee85296",
+    "snapshot": "observed/dag-d9fd84e2b808.json",
+    "nodes": 19,
+    "edges": 27
+  },
+  {
+    "time": "2026-10-24T20:28:52.387468+00:00",
+    "file": "backpropagation-B/dag.json",
+    "sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818",
+    "snapshot": "observed/dag-f869d004106d.json",
+    "nodes": 19,
+    "edges": 27
+  }
+]

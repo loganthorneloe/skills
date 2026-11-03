@@ -1,0 +1,37 @@
+{
+  "pass": true,
+  "nodes": 19,
+  "edges": 27,
+  "unique_ids": true,
+  "endpoints": true,
+  "acyclic": true,
+  "all_nodes_reach_target": true,
+  "supported_nodes_have_evidence": true,
+  "topological_order": [
+    "arithmetic",
+    "functions",
+    "label",
+    "weighted_sum",
+    "sensitivity",
+    "activation",
+    "hidden",
+    "add_rule",
+    "multiply_rule",
+    "chain",
+    "accumulate",
+    "relu_rule",
+    "prediction",
+    "loss",
+    "reverse",
+    "gradient",
+    "update",
+    "training",
+    "target"
+  ],
+  "status_counts": {
+    "assumed": 2,
+    "supported": 17
+  },
+  "history_snapshots": 5,
+  "limits": "Structural validity does not prove prerequisite quality; edge necessity manually audited in round 4."
+}

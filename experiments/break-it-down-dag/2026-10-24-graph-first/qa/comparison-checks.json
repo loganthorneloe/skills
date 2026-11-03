@@ -1,0 +1,70 @@
+[
+  {
+    "width": 1440,
+    "pageOverflow": false,
+    "headline": "Clearer graphs, two remaining reasoning gaps",
+    "repairRows": 4,
+    "topics": [
+      {
+        "visible": [
+          "pair-evals"
+        ],
+        "pressed": 1
+      },
+      {
+        "visible": [
+          "pair-isolation"
+        ],
+        "pressed": 1
+      },
+      {
+        "visible": [
+          "pair-backpropagation"
+        ],
+        "pressed": 1
+      },
+      {
+        "visible": [
+          "pair-bayesian_spam"
+        ],
+        "pressed": 1
+      }
+    ],
+    "keyboardTopic": "true",
+    "errors": []
+  },
+  {
+    "width": 390,
+    "pageOverflow": false,
+    "headline": "Clearer graphs, two remaining reasoning gaps",
+    "repairRows": 4,
+    "topics": [
+      {
+        "visible": [
+          "pair-evals"
+        ],
+        "pressed": 1
+      },
+      {
+        "visible": [
+          "pair-isolation"
+        ],
+        "pressed": 1
+      },
+      {
+        "visible": [
+          "pair-backpropagation"
+        ],
+        "pressed": 1
+      },
+      {
+        "visible": [
+          "pair-bayesian_spam"
+        ],
+        "pressed": 1
+      }
+    ],
+    "keyboardTopic": "true",
+    "errors": []
+  }
+]

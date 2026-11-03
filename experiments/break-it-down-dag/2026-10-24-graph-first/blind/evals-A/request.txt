@@ -1,0 +1,3 @@
+Break down AI application evals from first principles. I can write a small Python program and call a model API, but I have no machine-learning or AI-engineering background. Why do I need evals, how do they work, and how would I start evaluating a customer-support assistant?
+
+For this task, produce only the prerequisite research graph and its evidence/history, not the full explanation report.

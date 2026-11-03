@@ -1,0 +1,31 @@
+{
+  "version": "repair-heldout-1.0-frozen",
+  "frozen_at_utc": "2026-10-24T20:41:19.864701+00:00",
+  "sha256": {
+    "design/repair-benchmark/benchmark.json": "cae6679187620aabd8f4a2f560de52179533d24b8a2c91a80182c4d9378afd1a",
+    "design/repair-benchmark/source-packet.json": "014de35387023df493688a15b6f4d1095e2f05a44a73fabdbe6d8034bc9bfa74",
+    "design/repair-benchmark/rubric-addendum.md": "4cbae3b6ad51f83fd44a0b9cf6123e91f8fae1ecf4c8edc4b55b450e6b2a8739",
+    "design/benchmark/rubric.md": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f"
+  },
+  "generation_started_before_freeze": false,
+  "access": {
+    "generator": [
+      "topics[0].request",
+      "source-packet.json"
+    ],
+    "coordinator_evaluator": [
+      "benchmark.json",
+      "rubric-addendum.md",
+      "freeze-manifest.json"
+    ],
+    "repair_instruction_designer": "No access"
+  },
+  "validation": {
+    "json_parse": "pass",
+    "conceptual_obligations": 7,
+    "application_probes": 4,
+    "verified_sources": 3,
+    "paraphrases_under_200_words": true,
+    "arithmetic": "checked"
+  }
+}

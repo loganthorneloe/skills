@@ -1,0 +1,12 @@
+{
+  "frozen_at": "2026-10-24T20:42:12.410451+00:00",
+  "files": {
+    "repair/benchmark-v1.1.json": "7522a35e1c7be84286da3c04f85e9b6efe2bb40142f0c8aede2f62c5712c9e2e",
+    "design/benchmark/rubric.md": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f",
+    "design/repair-benchmark/benchmark.json": "cae6679187620aabd8f4a2f560de52179533d24b8a2c91a80182c4d9378afd1a",
+    "design/repair-benchmark/rubric-addendum.md": "4cbae3b6ad51f83fd44a0b9cf6123e91f8fae1ecf4c8edc4b55b450e6b2a8739",
+    "repair/hash-source-packet.json": "014de35387023df493688a15b6f4d1095e2f05a44a73fabdbe6d8034bc9bfa74",
+    "repair/judge-instructions.txt": "f018188bc9aaf5fe546b4de792bba3a11062ab4dee154008868d64009e48967b",
+    "runs/r04/request.txt": "b8a644e8860d493fe49920a48babfe20048615d67ed8acc612cbbd3250b9ab25"
+  }
+}

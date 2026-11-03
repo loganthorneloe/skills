@@ -1,0 +1,272 @@
+{
+  "reader_assumptions": [
+    "Reader understands basic SELECT, UPDATE, WHERE and rows/column values.",
+    "No prior knowledge of transactions, snapshots, locks, or concurrency control.",
+    "Correctness means an application rule is satisfied before and after each complete operation; the database cannot infer every such rule."
+  ],
+  "target": "target",
+  "nodes": [
+    {
+      "id": "sql_state",
+      "question": "What does it mean for a database result to be correct?",
+      "answer": "Reader can read basic SQL and recognize rows and values.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "transaction",
+      "question": "What operations belong to a transaction, and what do commit and rollback mean?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "atomicity",
+      "question": "What does all-or-nothing completion guarantee?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "overlap",
+      "question": "How can two transactions overlap even when each statement executes correctly?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "serial",
+      "question": "What would executing whole transactions one at a time mean?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "interference",
+      "question": "How can overlapping, individually valid decisions violate a shared rule?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "visibility",
+      "question": "Which version of a row can a read observe?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "anomalies",
+      "question": "How do dirty, changed-value, changed-set, and serialization anomalies differ?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "snapshot",
+      "question": "How can a read see a stable database state while another transaction writes?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "levels",
+      "question": "What protections do the named isolation levels promise?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "snapshot_limit",
+      "question": "Why can a stable transaction snapshot still allow a wrong combined result?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "serializable",
+      "question": "What does serializable execution guarantee?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "mechanisms",
+      "question": "How do snapshots, locks, and conflict checks implement isolation?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "engine_details",
+      "question": "Why do engine and statement type matter beyond the level name?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "retries",
+      "question": "Why must applications sometimes retry a whole transaction?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "choice",
+      "question": "How should correctness requirements guide the isolation choice?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "target",
+      "question": "Why can concurrent correct operations yield a wrong result, and how do isolation levels help?",
+      "answer": "",
+      "status": "gap",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "sql_state",
+      "to": "transaction",
+      "why": "A transaction groups the SQL operations the reader already understands."
+    },
+    {
+      "from": "transaction",
+      "to": "atomicity",
+      "why": "All-or-nothing applies to the grouped unit."
+    },
+    {
+      "from": "transaction",
+      "to": "overlap",
+      "why": "Overlap concerns the steps of distinct transaction units."
+    },
+    {
+      "from": "transaction",
+      "to": "serial",
+      "why": "Serial order is an order of whole transactions."
+    },
+    {
+      "from": "sql_state",
+      "to": "interference",
+      "why": "Wrongness requires a stated rule for database values."
+    },
+    {
+      "from": "overlap",
+      "to": "interference",
+      "why": "The rule-breaking example requires interleaved decisions."
+    },
+    {
+      "from": "atomicity",
+      "to": "interference",
+      "why": "The example must explain why successful grouped completion alone is insufficient."
+    },
+    {
+      "from": "overlap",
+      "to": "visibility",
+      "why": "Overlapping work raises which concurrent changes a reader can see."
+    },
+    {
+      "from": "visibility",
+      "to": "anomalies",
+      "why": "Read anomalies are distinctions among observed versions and row sets."
+    },
+    {
+      "from": "serial",
+      "to": "anomalies",
+      "why": "Serialization anomalies are defined relative to serial outcomes."
+    },
+    {
+      "from": "visibility",
+      "to": "snapshot",
+      "why": "A snapshot restricts visible versions to a particular database state."
+    },
+    {
+      "from": "anomalies",
+      "to": "levels",
+      "why": "Levels are described by the anomalies they exclude."
+    },
+    {
+      "from": "snapshot",
+      "to": "levels",
+      "why": "Actual read behavior requires snapshot timing."
+    },
+    {
+      "from": "snapshot",
+      "to": "snapshot_limit",
+      "why": "The failure concerns transactions using stable snapshots."
+    },
+    {
+      "from": "interference",
+      "to": "snapshot_limit",
+      "why": "The limit must be shown by a concrete rule-breaking combination."
+    },
+    {
+      "from": "serial",
+      "to": "snapshot_limit",
+      "why": "The outcome must be compared with possible serial executions."
+    },
+    {
+      "from": "snapshot_limit",
+      "to": "serializable",
+      "why": "The remaining anomaly motivates serializable protection."
+    },
+    {
+      "from": "levels",
+      "to": "serializable",
+      "why": "Serializable is the strongest named level under discussion."
+    },
+    {
+      "from": "snapshot",
+      "to": "mechanisms",
+      "why": "Versions provide one way of implementing read consistency."
+    },
+    {
+      "from": "overlap",
+      "to": "mechanisms",
+      "why": "Locks and checks control interference from overlapping work."
+    },
+    {
+      "from": "mechanisms",
+      "to": "engine_details",
+      "why": "Product differences concern concrete concurrency-control implementations."
+    },
+    {
+      "from": "levels",
+      "to": "engine_details",
+      "why": "Level labels must be separated from actual product guarantees."
+    },
+    {
+      "from": "serializable",
+      "to": "retries",
+      "why": "Preserving serial outcomes can require rejecting conflicting work."
+    },
+    {
+      "from": "engine_details",
+      "to": "choice",
+      "why": "Correct selection requires the specific engine and statements."
+    },
+    {
+      "from": "retries",
+      "to": "choice",
+      "why": "Correct transaction handling includes failure recovery."
+    },
+    {
+      "from": "serializable",
+      "to": "choice",
+      "why": "The intended invariant determines required guarantees."
+    },
+    {
+      "from": "interference",
+      "to": "target",
+      "why": "Explains how concurrency invalidates separately sound decisions."
+    },
+    {
+      "from": "choice",
+      "to": "target",
+      "why": "Explains how isolation helps and how to apply it."
+    }
+  ],
+  "revisions": []
+}

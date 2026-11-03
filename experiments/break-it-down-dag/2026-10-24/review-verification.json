@@ -1,0 +1,44 @@
+{
+  "desktop": {
+    "viewport": 1440,
+    "width": 1440
+  },
+  "mobile": {
+    "viewport": 390,
+    "width": 390
+  },
+  "missing": [],
+  "errors": [],
+  "states": [
+    {
+      "topic": "evals",
+      "srcs": [
+        "runs/e01/report.html",
+        "runs/e05/report.html"
+      ]
+    },
+    {
+      "topic": "causal",
+      "srcs": [
+        "runs/e03/report.html",
+        "runs/e07/report.html"
+      ]
+    },
+    {
+      "topic": "encryption",
+      "srcs": [
+        "runs/e06/report.html",
+        "runs/e02/report.html"
+      ]
+    },
+    {
+      "topic": "isolation",
+      "srcs": [
+        "runs/e08/report.html",
+        "runs/e04/report.html"
+      ]
+    }
+  ],
+  "keyboard": "causal",
+  "staticReportLinks": 8
+}

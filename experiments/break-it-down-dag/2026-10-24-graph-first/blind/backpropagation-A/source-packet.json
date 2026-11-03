@@ -1,0 +1,45 @@
+{
+  "topic": "Backpropagation in neural-network training",
+  "reader_baseline": "Comfortable with arithmetic and basic Python variables and functions; no calculus assumed.",
+  "scope": "Explain how a calculation produces a prediction and loss, how tiny-change sensitivities are computed efficiently, and how those sensitivities inform parameter updates.",
+  "retrieved_on": "2026-10-24",
+  "packet_notes": "Four original educational or official implementation sources. Source listing is bibliographic, not a proposed teaching order. Some originals use calculus and tensor notation; the paraphrases translate their relevant content into arithmetic and small-change language. A full convergence proof, matrix derivation, and optimizer survey are outside this packet. No model training or autograd program was executed.",
+  "sources": [
+    {
+      "id": "google-nodes",
+      "title": "Neural networks: Nodes and hidden layers",
+      "publisher": "Google Machine Learning Crash Course",
+      "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+      "section_locator": "Opening linear-model equation; Exercise 1; Adding layers to the network; Exercise 2",
+      "paraphrase": "A basic numerical predictor multiplies each input by a weight, adds those products, and adds a bias. Weights and bias are adjustable parameters; input values are the quantities supplied for a particular prediction. Altering a weight changes how much its associated input contributes. Altering the bias shifts the total independently of the inputs. A hidden layer contains intermediate numerical values between input and output. Each such value can be calculated from weighted inputs plus a bias, and later calculations use those intermediate values as their inputs. Hidden-layer parameters and output-layer parameters are both part of the model. The example with three inputs, four hidden neurons, and one output contains twenty-one parameters: sixteen for the hidden calculations and five for the final calculation. Merely stacking weighted additions does not create nonlinear behavior: a composition of linear calculations remains linear. Thus extra layers alone do not explain a neural network's ability to model nonlinear relationships. The visible prediction is the result of applying the current parameter values throughout the calculation.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "cs231n-backprop",
+      "title": "CS231n: Backpropagation, Intuitions",
+      "publisher": "Stanford CS231n course notes",
+      "url": "https://cs231n.github.io/optimization-2/",
+      "section_locator": "Simple expressions and interpretation of the gradient; Compound expressions, chain rule, backpropagation; Backprop in practice: Staged computation; Patterns in backward flow",
+      "paraphrase": "A derivative describes the effect of a very small change to one quantity on another quantity. Its sign indicates the direction of the effect, and its magnitude indicates its scale. For multiplication, changing one input has an effect scaled by the other input; for addition, a small increase to either input increases the sum by the same amount. A gradient collects these sensitivities for several adjustable quantities. When a result is calculated through several operations, the chain rule combines local sensitivities by multiplication. A backward calculation starts with how the final result responds and works through the recorded operations, multiplying the incoming sensitivity by each operation's local sensitivity. If a quantity contributes through several uses, the contributions returning from those uses must be added rather than overwritten. Values saved from the forward calculation make those local calculations possible without repeatedly recomputing everything. Sensitivities describe behavior near the current values: they do not promise accurate predictions of what will happen after a large parameter change.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "sanderson-backprop",
+      "title": "What is backpropagation really doing?",
+      "publisher": "3Blue1Brown; lesson by Grant Sanderson, text adaptation by Josh Pullen",
+      "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+      "section_locator": "Quick Recap; What is Backpropagation?; The Intuition for Backpropagation; discussion of competing desired changes and stochastic gradient descent",
+      "paraphrase": "The lesson measures a network's error on a labeled example by comparing its outputs with the desired outputs and adding squared differences. Averaging these costs over examples gives an overall training objective. Learning adjusts weights and biases to reduce that objective. A gradient describes how sensitive the cost is to each parameter; larger components mean that equal tiny changes have larger effects on the cost. Moving opposite the gradient provides a local direction for reducing cost. The intuition begins with output values that should increase or decrease, then asks which adjustable parameters influence them. An earlier hidden value may affect several outputs whose desired changes compete. Their contributions are added to determine the combined effect associated with that earlier value. The same reasoning is applied farther back through the calculation. Individual training examples may also favor different changes, so their contributions must be combined. Small batches provide a practical estimate of the full collection's desired adjustment. Backpropagation supplies the sensitivity information used by this learning procedure.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "pytorch-autograd",
+      "title": "Automatic Differentiation with torch.autograd",
+      "publisher": "PyTorch Tutorials",
+      "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+      "section_locator": "Computing Gradients; Disabling Gradient Tracking; More on Computational Graphs; Optional Reading: Tensor Gradients and Jacobian Products, accumulation example",
+      "paraphrase": "PyTorch can record numerical operations while computing an output. Operations carry information about how to calculate their backward derivatives. Parameters marked as requiring gradients participate in this tracking. After calculating a scalar loss, calling loss.backward() computes sensitivities with respect to tracked parameters and stores the results in their grad attributes. During the forward pass, the library computes numerical results and records the operations needed for differentiation. During the backward pass, it applies the stored derivative functions and the chain rule, accumulating contributions until it reaches the parameters. This is automatic differentiation of the performed calculation. It does not require a programmer to manually derive one enormous expression for the entire network. Gradient buffers accumulate contributions, so calling backward again without clearing them can add another result to existing values. Normal training code must manage that accumulation deliberately. When only generating predictions from an already trained model, gradient tracking can be disabled to avoid unnecessary work. Computing gradients supplies information for optimization; it does not itself specify the parameter update policy.",
+      "access_notes": "Official HTML retrieved after docs.pytorch.org redirect."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+--- candidate-v2
++++ repair-v3
+@@ -18,11 +18,11 @@
+ 
+ Vet high-signal primary research, foundational texts, educators, and firsthand practitioners for relevance, methods, and currency. Read full relevant sections and figures; distinguish findings, interpretation, and synthesis. Note exhibit locators, teaching purpose, and omission reasons.
+ 
+-Before prerequisite research, save `dag.json`: reader assumptions, target ID, nodes (`id`, atomic `question`, `answer`, `status`: assumed/supported/partial/gap, evidence URL/locator/exact claim), edges (`from`, `to`, `why`), revisions. Work backward to assumed knowledge. A→B requires A to explain B: record what fails without A; remove edges if B remains explainable. Keep scope, optional material, examples and motivation separate from prerequisites. Split questions with different prerequisites or evidence; merge duplicates.
++Before research save `dag.json`: reader baseline/scope, target ID, nodes (`id`, atomic `question`, `answer`, `status`: assumed/supported/partial/gap, evidence URL/locator/claim), edges (`from`,`to`,`why`), revisions. Work backward to baseline. A→B: name B's actual claim needing A; remove if B remains explainable in its stated scope. Audit every edge, including target. Separate given inputs from obtaining them, guarantees from mechanisms; split bundles, merge duplicates. Keep order/examples/motivation outside edges. Scope cannot hide requested concepts or their beginner bridges.
+ 
+-Research partial/gap nodes; mark supported only if located passages explain all answer claims; record uncovered claims as partial/gap. Save initial state before research; append each actual round's gaps, searches, evidence and reconstructable changes immediately, including no-change rounds; never backfill. Stop at support or disclosed search limits.
++Research partial/gap nodes; support only claims explained by located passages. Save initial state; immediately log actual rounds' gaps, searches, evidence, reconstructable edits, including no-change; never backfill. Stop at support/disclosed search limits.
+ 
+-Reconcile answers/edges with source passages and prose; repair missing foundations in both. Save final JSON and readable SVG/HTML beside the report. Check unique IDs, endpoints, acyclicity and required paths to target; valid structure cannot prove good prerequisites.
++Test an unfamiliar case and a counterexample using only graph+baseline; expose missing inputs, assumptions, distinctions or outcome checks. Repair graph/prose and evidence. Save final JSON and readable SVG/HTML beside report. Check IDs, endpoints, acyclicity and target paths; valid shape is insufficient.
+ 
+ Prefer relevant source figures, tables, short quotations, and reported metrics as exhibits, placed beside the claims they support. Explain what to notice in that evidence before considering an additional generated visual or summary. Obtain source-provided images or vectors; otherwise extract or render the relevant PDF region. When HTML omits a figure, check the original PDF or supplements. Preserve axes, legends, labels, proportions, colors, and necessary caption context. Inspect extraction for clipping and readability. Link an enlarged view when details need it. Respect reuse and quotation limits; explain specific access or rights gaps.
+ 

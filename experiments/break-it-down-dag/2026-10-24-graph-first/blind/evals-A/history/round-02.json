@@ -1,0 +1,636 @@
+{
+  "round": 2,
+  "kind": "supplemental_research_and_reconciliation",
+  "gaps_before": [
+    "Aggregation calculation and grouped failure interpretation",
+    "Controlled comparisons and small-difference uncertainty",
+    "Final target synthesis reconciliation"
+  ],
+  "searches": [
+    "site.anthropic.com engineering evals trials non deterministic evaluations agents pass rate",
+    "site.nist.gov proportion confidence interval sample size binomial"
+  ],
+  "opened": [
+    "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+    "https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm"
+  ],
+  "read_sections": [
+    "Anthropic: structure; conversational agents; nondeterminism; zero-to-one roadmap; monitoring",
+    "NIST: complete confidence-interval page, especially observed proportion definition"
+  ],
+  "findings": [
+    "Repeated attempts and sufficient cases matter when effects are small.",
+    "State isolation avoids comparison contamination.",
+    "Observed fraction has an explicit mathematical definition."
+  ],
+  "changes": [
+    {
+      "id": "summary",
+      "before": {
+        "id": "summary",
+        "question": "What does an overall score tell you?",
+        "answer": "It summarizes the judgments on tested cases. For binary checks, a pass rate is the number of passing cases divided by the number tested. Report the counts and inspect failures; an overall rate can conceal differences between support situations.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals",
+            "exact_claim": "A score is evidence about the measured behavior; unrepresentative data or unsuitable metrics can misrepresent production usefulness.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          }
+        ]
+      },
+      "after": {
+        "id": "summary",
+        "question": "What does an overall score tell you?",
+        "answer": "For binary judgments, the pass rate is passing cases divided by tested cases. It describes this set of judgments under this rule.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals",
+            "exact_claim": "A score is evidence about the measured behavior; unrepresentative data or unsuitable metrics can misrepresent production usefulness.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm",
+            "locator": "Binomial confidence interval example, lines 20\u201321",
+            "exact_claim": "Observed proportion equals event count divided by sample count.",
+            "basis": "Elementary proportion calculation applied to passes; NIST uses defects."
+          }
+        ]
+      }
+    },
+    {
+      "id": "compare",
+      "before": {
+        "id": "compare",
+        "question": "How can you tell whether a change improved the assistant?",
+        "answer": "Rerun the same cases and grading criteria after changing the prompt, model, or other application component; compare outputs and failures as well as aggregate scores. Keep other settings fixed where feasible so the comparison is interpretable.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+            "locator": "Add graders",
+            "exact_claim": "Saved datasets and graders support repeated checks after prompt or model changes.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process",
+            "exact_claim": "Repeated evaluation reveals regressions as well as gains.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          }
+        ]
+      },
+      "after": {
+        "id": "compare",
+        "question": "How can you tell whether a change improved the assistant?",
+        "answer": "Rerun the same cases and graders after a change, then compare results. Reset mutable test state between attempts. Hold other settings fixed where possible to make the intended change interpretable.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+            "locator": "Add graders",
+            "exact_claim": "Saved datasets and graders support repeated checks after prompt or model changes.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process",
+            "exact_claim": "Repeated evaluation reveals regressions as well as gains.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+            "locator": "Step 4: stable environment, lines 305\u2013307",
+            "exact_claim": "Shared state can distort comparisons.",
+            "basis": "Directly read primary source; paraphrase, not quotation"
+          }
+        ],
+        "synthesis_note": "Holding non-target settings fixed is an experimental-design inference from repeated comparable runs and stable environments, not a guarantee of causal identification."
+      }
+    },
+    {
+      "id": "limits",
+      "before": {
+        "id": "limits",
+        "question": "Why does a good eval score not guarantee production success?",
+        "answer": "It concerns only the tested situations and chosen measurements. Unrepresentative cases, an inaccurate grader, and response variation can limit what the score establishes. A small difference between runs may need more evidence.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals; Evals tips",
+            "exact_claim": "A generic metric or unrepresentative dataset may reward behavior that is not useful in production.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          }
+        ]
+      },
+      "after": {
+        "id": "limits",
+        "question": "Why does a good eval score not guarantee production success?",
+        "answer": "An eval score supports conclusions about the measured behavior and tested situations. Coverage, grading validity, and variation limit extrapolation to production.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals; Evals tips",
+            "exact_claim": "A generic metric or unrepresentative dataset may reward behavior that is not useful in production.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+            "locator": "How to think about non-determinism, lines 271\u2013277",
+            "exact_claim": "Success varies across attempts.",
+            "basis": "Directly read primary source; paraphrase, not quotation"
+          }
+        ]
+      }
+    },
+    {
+      "id": "target",
+      "before": {
+        "id": "target",
+        "question": "Why use evals, and how should a Python programmer start evaluating a customer-support assistant?",
+        "answer": "Evals turn selected examples and explicit success criteria into repeatable evidence about an application. Start with a narrow support task, record realistic and difficult cases with the context and expected behavior, choose and human-check graders, run a baseline, inspect scores and failures, and compare revisions on the same cases. Grow the suite from real failures. Treat the result as evidence with limits, not a guarantee.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process, lines 1012\u20131019",
+            "exact_claim": "Define the objective, collect data, define measurements, run comparisons, and continuously evaluate.",
+            "basis": "Directly read relevant official HTML sections; paraphrase, not quotation"
+          }
+        ],
+        "synthesis_note": "Workflow is an application of the cited process to the reader\u2019s support task, not a measured result or a universal deployment standard."
+      },
+      "after": {
+        "id": "target",
+        "question": "Why use evals, and how should a Python programmer start evaluating a customer-support assistant?",
+        "answer": "Use evals to turn explicit success criteria and recorded cases into repeatable evidence. For support, define one task, collect cases with needed context and expected behavior, select and human-check graders, run a baseline, inspect failures, and compare revisions. Add real failures to the suite. Interpret results within their coverage and measurement limits.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process, lines 1012\u20131019",
+            "exact_claim": "Define the objective, collect data, define measurements, run comparisons, and continuously evaluate.",
+            "basis": "Directly read relevant official HTML sections; paraphrase, not quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/graders",
+            "locator": "String check graders; Text similarity graders; Score model graders; Python graders",
+            "exact_claim": "String checks, similarity checks, model grading, and Python checks assess distinct properties; exact comparison can penalize different wording with the same meaning.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals; Evals tips",
+            "exact_claim": "Human judgment checks whether the measure captures intended quality; automated assessments should be checked against human assessments.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process",
+            "exact_claim": "Record real failures as test cases and repeat evaluations when application components change.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evals",
+            "locator": "Analyze the results",
+            "exact_claim": "Analyze outputs and grading results before revising the prompt.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals; Evals tips",
+            "exact_claim": "A generic metric or unrepresentative dataset may reward behavior that is not useful in production.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+            "locator": "How to think about non-determinism, lines 271\u2013277",
+            "exact_claim": "Success varies across attempts.",
+            "basis": "Directly read primary source; paraphrase, not quotation"
+          }
+        ],
+        "synthesis_note": "Workflow is an application of the cited process to the reader\u2019s support task, not a measured result or a universal deployment standard."
+      }
+    },
+    {
+      "id": "arithmetic",
+      "before": null,
+      "after": {
+        "id": "arithmetic",
+        "question": "What does a fraction of cases mean?",
+        "answer": "A count divided by the total gives the fraction of cases with that property.",
+        "status": "assumed",
+        "evidence": []
+      }
+    },
+    {
+      "id": "uncertainty",
+      "before": null,
+      "after": {
+        "id": "uncertainty",
+        "question": "Why might an observed score difference be inconclusive?",
+        "answer": "Outcomes vary across attempts. Repeat trials; smaller effects can require larger evaluations. The graph does not establish a significance test for a particular comparison.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+            "locator": "Structure, lines 61\u201362; Step 0, lines 288\u2013289",
+            "exact_claim": "Repeated trials address variability; smaller effects need more evidence.",
+            "basis": "Directly read primary source; paraphrase, not quotation"
+          }
+        ]
+      }
+    },
+    {
+      "id": "coverage",
+      "before": null,
+      "after": {
+        "id": "coverage",
+        "question": "Which real-world situations does a dataset represent?",
+        "answer": "Coverage depends on how cases were selected. Include expected usage and difficult cases; an unrepresentative collection can give misleading evidence about production behavior.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process",
+            "exact_claim": "Choose relevant cases reflecting intended situations, including failures and unusual inputs.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+            "locator": "Create a dataset",
+            "exact_claim": "A dataset provides multiple reusable examples.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "How to read evals; Evals tips",
+            "exact_claim": "A generic metric or unrepresentative dataset may reward behavior that is not useful in production.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          }
+        ]
+      }
+    }
+  ],
+  "edges_before": [
+    {
+      "to": "behavior",
+      "why": "Without input/output behavior, the object being tested is undefined.",
+      "from": "input_output"
+    },
+    {
+      "to": "variation",
+      "why": "Without knowing that the API generates a response, variation has no identified source.",
+      "from": "api"
+    },
+    {
+      "to": "objective",
+      "why": "The intended application task is needed to define task-specific success.",
+      "from": "behavior"
+    },
+    {
+      "to": "reference",
+      "why": "Without defined success, an annotation cannot express the intended judgment for a case.",
+      "from": "objective"
+    },
+    {
+      "to": "case",
+      "why": "The reader must identify the input being recorded and the output later judged.",
+      "from": "input_output"
+    },
+    {
+      "to": "case",
+      "why": "A runnable input alone lacks the case information needed to establish acceptable behavior.",
+      "from": "reference"
+    },
+    {
+      "to": "dataset",
+      "why": "A reusable collection cannot be specified before its individual case is understood.",
+      "from": "case"
+    },
+    {
+      "to": "grader",
+      "why": "The grader needs case-specific expected behavior against which it assesses the output.",
+      "from": "reference"
+    },
+    {
+      "to": "choice",
+      "why": "Without knowing a grader\u2019s function, different checking rules have no common purpose.",
+      "from": "grader"
+    },
+    {
+      "to": "calibration",
+      "why": "Agreement with human judgments is a check on the automated grading judgment itself.",
+      "from": "grader"
+    },
+    {
+      "to": "calibration",
+      "why": "Human agreement matters only relative to what the application is intended to achieve.",
+      "from": "objective"
+    },
+    {
+      "to": "run",
+      "why": "A run needs an identified collection of input cases.",
+      "from": "dataset"
+    },
+    {
+      "to": "run",
+      "why": "An evaluation run requires a rule to convert outputs into assessments.",
+      "from": "grader"
+    },
+    {
+      "to": "run",
+      "why": "Producing the application output requires the reader\u2019s existing ability to call the model.",
+      "from": "api"
+    },
+    {
+      "to": "summary",
+      "why": "An aggregate score needs the individual assessments produced by a run.",
+      "from": "run"
+    },
+    {
+      "to": "compare",
+      "why": "Comparison needs two executions with specified configurations and shared evaluation conditions.",
+      "from": "run"
+    },
+    {
+      "to": "limits",
+      "why": "To interpret an aggregate score\u2019s limitations, the reader must know what it summarizes.",
+      "from": "summary"
+    },
+    {
+      "to": "limits",
+      "why": "Without response variation, a single execution\u2019s uncertainty is unexplained.",
+      "from": "variation"
+    },
+    {
+      "to": "limits",
+      "why": "Without grader checking, the possibility that a score measures the wrong quality is unexplained.",
+      "from": "calibration"
+    },
+    {
+      "to": "limits",
+      "why": "Coverage limitations concern which situations the collection includes.",
+      "from": "dataset"
+    },
+    {
+      "to": "improve",
+      "why": "Without rerunning comparisons, a proposed fix has no evaluation evidence of improvement or regression.",
+      "from": "compare"
+    },
+    {
+      "to": "target",
+      "why": "Starting requires selecting checks suited to the support requirements.",
+      "from": "choice"
+    },
+    {
+      "to": "target",
+      "why": "The requested purpose includes using evaluation evidence to improve the assistant.",
+      "from": "improve"
+    },
+    {
+      "to": "target",
+      "why": "Explaining why to use evals requires stating what their evidence does and does not establish.",
+      "from": "limits"
+    },
+    {
+      "to": "target",
+      "why": "The startup procedure needs a concrete definition of acceptable support behavior.",
+      "from": "objective"
+    }
+  ],
+  "edges_after": [
+    {
+      "to": "behavior",
+      "why": "Without input/output behavior, the object being tested is undefined.",
+      "from": "input_output"
+    },
+    {
+      "to": "variation",
+      "why": "Without knowing that the API generates a response, variation has no identified source.",
+      "from": "api"
+    },
+    {
+      "to": "objective",
+      "why": "The intended application task is needed to define task-specific success.",
+      "from": "behavior"
+    },
+    {
+      "to": "reference",
+      "why": "Without defined success, an annotation cannot express the intended judgment for a case.",
+      "from": "objective"
+    },
+    {
+      "to": "case",
+      "why": "The reader must identify the input being recorded and the output later judged.",
+      "from": "input_output"
+    },
+    {
+      "to": "case",
+      "why": "A runnable input alone lacks the case information needed to establish acceptable behavior.",
+      "from": "reference"
+    },
+    {
+      "to": "dataset",
+      "why": "A reusable collection cannot be specified before its individual case is understood.",
+      "from": "case"
+    },
+    {
+      "to": "choice",
+      "why": "Without knowing a grader\u2019s function, different checking rules have no common purpose.",
+      "from": "grader"
+    },
+    {
+      "to": "calibration",
+      "why": "Agreement with human judgments is a check on the automated grading judgment itself.",
+      "from": "grader"
+    },
+    {
+      "to": "calibration",
+      "why": "Human agreement matters only relative to what the application is intended to achieve.",
+      "from": "objective"
+    },
+    {
+      "to": "run",
+      "why": "A run needs an identified collection of input cases.",
+      "from": "dataset"
+    },
+    {
+      "to": "run",
+      "why": "An evaluation run requires a rule to convert outputs into assessments.",
+      "from": "grader"
+    },
+    {
+      "to": "run",
+      "why": "Producing the application output requires the reader\u2019s existing ability to call the model.",
+      "from": "api"
+    },
+    {
+      "to": "summary",
+      "why": "An aggregate score needs the individual assessments produced by a run.",
+      "from": "run"
+    },
+    {
+      "to": "compare",
+      "why": "Comparison needs two executions with specified configurations and shared evaluation conditions.",
+      "from": "run"
+    },
+    {
+      "to": "limits",
+      "why": "To interpret an aggregate score\u2019s limitations, the reader must know what it summarizes.",
+      "from": "summary"
+    },
+    {
+      "to": "limits",
+      "why": "Without grader checking, the possibility that a score measures the wrong quality is unexplained.",
+      "from": "calibration"
+    },
+    {
+      "to": "improve",
+      "why": "Without rerunning comparisons, a proposed fix has no evaluation evidence of improvement or regression.",
+      "from": "compare"
+    },
+    {
+      "to": "target",
+      "why": "Starting requires selecting checks suited to the support requirements.",
+      "from": "choice"
+    },
+    {
+      "to": "target",
+      "why": "The requested purpose includes using evaluation evidence to improve the assistant.",
+      "from": "improve"
+    },
+    {
+      "to": "target",
+      "why": "Explaining why to use evals requires stating what their evidence does and does not establish.",
+      "from": "limits"
+    },
+    {
+      "from": "objective",
+      "to": "grader",
+      "why": "A grading rule needs a definition of success; a reference answer is optional for rules such as format checks."
+    },
+    {
+      "from": "arithmetic",
+      "to": "summary",
+      "why": "A pass rate requires understanding a fraction of observed cases."
+    },
+    {
+      "from": "dataset",
+      "to": "coverage",
+      "why": "Representation concerns which cases the collection includes."
+    },
+    {
+      "from": "variation",
+      "to": "uncertainty",
+      "why": "Without output variation, differing results across identical attempts have no explained source."
+    },
+    {
+      "from": "run",
+      "to": "uncertainty",
+      "why": "Repeated attempts require an identified execution of cases and grading."
+    },
+    {
+      "from": "summary",
+      "to": "uncertainty",
+      "why": "A reported score difference requires understanding the scores being compared."
+    },
+    {
+      "from": "uncertainty",
+      "to": "limits",
+      "why": "Sampling and repeated-attempt limits explain why observed differences may not settle a decision."
+    },
+    {
+      "from": "coverage",
+      "to": "limits",
+      "why": "Extrapolating to production requires knowing which production situations were represented."
+    }
+  ],
+  "scope_before": {
+    "included": [
+      "application-level behavior",
+      "case data and grading",
+      "repeatable comparisons",
+      "initial customer-support workflow"
+    ],
+    "excluded": [
+      "model training",
+      "general intelligence benchmarks",
+      "provider-specific platform setup",
+      "deployment approval thresholds",
+      "formal statistical significance testing"
+    ],
+    "optional_examples": [
+      "Support ticket classification illustrates exact matching; open-ended support replies need additional criteria."
+    ]
+  },
+  "scope_after": {
+    "included": [
+      "application-level behavior",
+      "case data and grading",
+      "repeatable comparisons",
+      "initial customer-support workflow"
+    ],
+    "excluded": [
+      "model training",
+      "general intelligence benchmarks",
+      "provider-specific platform setup",
+      "deployment approval thresholds",
+      "formal statistical significance testing"
+    ],
+    "optional_examples": [
+      {
+        "name": "Constructed refund-policy case",
+        "input": "Customer requests a refund after 40 days; supplied policy allows ordinary refunds within 30 days.",
+        "expected_behavior": "Explain the policy accurately; do not invent approval. Any exceptions or escalation must follow the supplied service policy.",
+        "purpose": "Illustrates recording context and desired behavior; not measured data or a universal refund rule."
+      },
+      {
+        "name": "Published support-ticket classification",
+        "source": "https://developers.openai.com/api/docs/guides/evals",
+        "purpose": "Exact-label matching example only; not a complete evaluation of an open-ended support assistant."
+      }
+    ],
+    "limits": [
+      "No company policy, real logs, or actual assistant outputs supplied; startup workflow is a supported synthesis, not an executed application eval.",
+      "No universal passing score, sufficient sample size, or deployment guarantee established.",
+      "Formal paired-comparison inference and test-set overfitting controls are outside this starter graph.",
+      "Legacy platform material supports concepts only; no current SDK implementation is prescribed."
+    ],
+    "exhibit_decisions": [
+      {
+        "source": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+        "locator": "Structure of an evaluation; nondeterminism diagrams",
+        "decision": "No extraction: graph-only request; original exhibits can be considered for a later report."
+      },
+      {
+        "source": "https://www.itl.nist.gov/div898/handbook/prc/section2/prc241.htm",
+        "locator": "Confidence interval formulas and example",
+        "decision": "No extraction: formal interval calculation is outside this prerequisite graph."
+      }
+    ]
+  },
+  "assumptions_after": [
+    "Can write a small Python program using inputs and outputs.",
+    "Can call a model API.",
+    "No machine-learning or AI-engineering background.",
+    "Understands elementary counts, division, and percentages; no statistical inference assumed."
+  ],
+  "edge_audit": [
+    "Removed reference -> grader: a specific reference answer is not necessary for every grader; objective -> grader is the actual prerequisite.",
+    "Removed objective -> target as transitively present through grader/choice.",
+    "Split fraction arithmetic, coverage, and repeated-attempt uncertainty into distinct questions."
+  ],
+  "remaining_gaps": [
+    "No company policy, real logs, or actual assistant outputs supplied; startup workflow is a supported synthesis, not an executed application eval.",
+    "No universal passing score, sufficient sample size, or deployment guarantee established.",
+    "Formal paired-comparison inference and test-set overfitting controls are outside this starter graph.",
+    "Legacy platform material supports concepts only; no current SDK implementation is prescribed."
+  ],
+  "stop_reason": "Core starter concepts supported; formal inference and service-specific criteria explicitly scoped out, no further rounds needed."
+}

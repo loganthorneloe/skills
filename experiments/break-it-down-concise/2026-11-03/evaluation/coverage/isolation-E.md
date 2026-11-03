@@ -1,0 +1,10 @@
+Q1: 2 — "A transaction is a group of SQL statements, from BEGIN to COMMIT, that the database treats as one unit"; "Isolation levels are rules about which interleavings the database allows" — defines transaction and ties isolation to results matching a one-at-a-time order.
+Q2: 2 — "How two correct operations produce a wrong result" deposit table (A +20, B +30 ends at 130) — shows read, decide, write interleaving, lost update, and why no serial order matches.
+Q3: 2 — "dirty reads (reading another transaction's uncommitted write), non-repeatable reads (a row changing between two reads), and phantoms (a repeated WHERE search returning different rows)" — three defined plus lost update and write skew explained.
+Q4: 2 — "Serializable allows only results equivalent to some one-at-a-time order"; table "only Serializable reads 'Not Possible' everywhere"; "prepared to retry" — covers equivalence, no anomalies, and the block/abort cost.
+Q5: 2 — "The gap snapshots leave" doctors example, "Both transactions count two doctors from the same snapshot... update different rows... write locks 'don't solve this problem'" — explains snapshot reads and why non-conflicting writes break a cross-row rule.
+Q6: 2 — "Databases enforce levels in two main ways. With locks... With snapshots..."; "cancelling one for the application to retry"; "SELECT ... FOR UPDATE" — covers locks, snapshots, aborts, retry, explicit locking.
+Q7: 2 — "Names and defaults vary" Hermitage table; "'Repeatable read' stops lost updates in PostgreSQL but not in MySQL"; defaults Read Committed vs Repeatable Read — clearly teaches checking actual behavior.
+Q8: 2 — "Write skew happens when two transactions read overlapping data, each checks a rule, and each writes a different row"; "use Serializable with retries, or explicit locks"; "database-enforced constraints" — a novice can transfer to double booking and name the preventions, though the room example is not worked and FOR UPDATE on a not-yet-existing row is not addressed.
+TOTAL: 16/16
+ERRORS: none

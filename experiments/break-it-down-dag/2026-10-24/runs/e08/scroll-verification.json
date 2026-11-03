@@ -1,0 +1,14 @@
+[
+  {
+    "element": "figure.wide .tablewrap",
+    "keyboardMoved": true,
+    "scrollLeft": 300,
+    "max": 300
+  },
+  {
+    "element": ".figscroll",
+    "keyboardMoved": true,
+    "scrollLeft": 145,
+    "max": 145
+  }
+]

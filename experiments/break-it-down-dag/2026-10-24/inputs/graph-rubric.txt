@@ -1,0 +1,4 @@
+## Graph audit (separate 1–5 dimensions)
+
+Reader fit; prerequisite completeness; edge necessity/direction; granularity/parsimony; evidence alignment; research-loop traceability; synthesis realization. Check actual initial→final revisions, not just polished final DAGs. Distinguish acyclicity from conceptual correctness. Identify missing nodes, false dependencies, assumed knowledge, irrelevant nodes, unsupported answers, and report order violations with exact IDs. Suggest the smallest repairs; do not silently modify evaluated outputs.
+

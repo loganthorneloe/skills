@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Interest Rates Slow Inflation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{
+  --canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;
+  --blue:#2f6c9e;--green:#46734d;--red:#bf3030;
+}
+*{box-sizing:border-box}
+html{background:var(--canvas)}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.75;-webkit-text-size-adjust:100%}
+main{max-width:1040px;margin:0 auto;padding:56px 24px 96px}
+.prose{max-width:720px;margin:0 auto}
+h1,h2,h3{font-family:Sora,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.2;color:var(--text)}
+h1{font-size:2.5rem;margin:0 0 12px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.6rem;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.15rem;margin:36px 0 8px;letter-spacing:-0.01em}
+p{margin:0 0 1.1em}
+.lede{font-size:1.1rem;color:var(--muted);margin-bottom:8px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px;text-decoration:none;display:inline-block}
+.tiles{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);margin:24px 0 8px}
+.tile{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.tile:last-child:nth-child(odd){grid-column:1 / -1}
+.tile h3{margin:0 0 6px;font-size:1rem;line-height:1.4}
+.tile .meta{font-style:italic;color:var(--muted);font-size:.92rem;line-height:1.55;margin:0 0 10px}
+.tile p:last-child{margin-bottom:0}
+.tile p{font-size:.97rem;line-height:1.7}
+.answer{font-size:1.12rem}
+figure{margin:36px auto;max-width:1000px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+.pair{display:flex;gap:24px;justify-content:center;align-items:flex-start}
+.pair a{flex:0 1 auto;max-width:480px}
+.pair img{max-width:100%}
+figcaption{max-width:720px;margin:14px auto 0;font-size:.93rem;line-height:1.65;color:var(--muted)}
+figcaption strong{color:var(--text);font-weight:500}
+.scroll{overflow-x:auto}
+blockquote{margin:24px 0;padding:0 0 0 20px;border-left:2px solid var(--red);font-size:1.05rem}
+blockquote cite{display:block;font-style:normal;font-size:.9rem;color:var(--muted);margin-top:4px}
+table{border-collapse:collapse;width:100%;font-size:.95rem;margin:20px 0 28px;background:var(--surface)}
+th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;line-height:1.55}
+th{font-weight:500}
+.num{font-family:Sora,system-ui,sans-serif;font-weight:600}
+@media (max-width:700px){
+  main{padding:36px 20px 72px}
+  h1{font-size:2rem}
+  h2{font-size:1.35rem}
+  body{font-size:16px}
+  .tiles{grid-template-columns:1fr}
+  .tile:last-child:nth-child(odd){grid-column:auto}
+  .pair{flex-direction:column;align-items:center}
+  .pair a{max-width:100%}
+  th,td{padding:8px 6px}
+  table{font-size:.85rem}
+  .scroll img{max-width:none;width:680px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+<div class="prose">
+<h1>How raising interest rates slows inflation<span class="dot">.</span></h1>
+<p class="lede">Why a higher central bank rate eventually means prices rise more slowly, and why the effect takes one to two years or more to arrive.</p>
+
+<h2>Sources this explanation relies on</h2>
+<p>Five sources carry the claims below. Each was read directly, and the figures shown are taken from the original documents.</p>
+</div>
+
+<div class="tiles" role="list">
+  <div class="tile" role="listitem">
+    <h3><a href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1999/the-transmission-mechanism-of-monetary-policy.pdf">The transmission mechanism of monetary policy</a><span class="ext" aria-hidden="true">↗</span></h3>
+    <p class="meta">Bank of England staff, under the guidance of the Monetary Policy Committee · Central bank report, Bank of England Quarterly Bulletin · May 1999</p>
+    <p>The committee that sets UK interest rates had its own staff write down, for Parliament, how it believes its decisions reach the economy. It is the backbone of the mechanism explained here. Its lag numbers come from one 1999 model and are illustrative rather than forecasts, and some details, such as most UK mortgages being variable-rate, have since changed.</p>
+  </div>
+  <div class="tile" role="listitem">
+    <h3><a href="https://www.ijcb.org/journal/v9n4/transmission-lags-monetary-policy-meta-analysis">Transmission Lags of Monetary Policy: A Meta-Analysis</a><span class="ext" aria-hidden="true">↗</span></h3>
+    <p class="meta">Tomas Havranek and Marek Rusnak · Peer-reviewed journal article, International Journal of Central Banking · December 2013</p>
+    <p>Two Czech National Bank researchers gathered 198 estimates from 67 published studies covering 30 economies and measured when prices bottom out after a rate rise. It shows how long the lag is on average and how widely estimates vary. It measures the low point of the price level, not of inflation, and most underlying studies predate 2013.</p>
+  </div>
+  <div class="tile" role="listitem">
+    <h3><a href="https://business.columbia.edu/sites/default/files-efs/pubfiles/3556/fivefacts.pdf">Five Facts About Prices: A Reevaluation of Menu Cost Models</a><span class="ext" aria-hidden="true">↗</span></h3>
+    <p class="meta">Emi Nakamura and Jón Steinsson · Peer-reviewed journal article, Quarterly Journal of Economics · November 2008</p>
+    <p>The authors worked with the individual price records the US Bureau of Labor Statistics collects to build the consumer price index, covering 1988 to 2005. It is used here only for how often individual prices actually change. The figures are for the US in that period and roughly halve if temporary sales are counted.</p>
+  </div>
+  <div class="tile" role="listitem">
+    <h3><a href="https://bankunderground.co.uk/2019/09/27/bitesize-fixing-ideas-the-slowing-of-interest-rate-pass-through-to-mortgagors/">Bitesize: Fixing ideas – The Slowing of Interest-rate Pass-through to Mortgagors</a><span class="ext" aria-hidden="true">↗</span></h3>
+    <p class="meta">Fergus Cumming · Staff blog post, Bank Underground (Bank of England) · September 2019</p>
+    <p>A Bank of England economist used mortgage transaction records to measure how long UK borrowers are protected from rate changes by fixed-rate deals. It updates the 1999 report's picture of mortgages. It is a short staff blog, not official Bank policy, and covers the UK only up to 2019.</p>
+  </div>
+  <div class="tile" role="listitem">
+    <h3><a href="https://doi.org/10.24149/wp2631">The Short Lags of Monetary Policy</a><span class="ext" aria-hidden="true">↗</span></h3>
+    <p class="meta">Gergely Buda, Vasco M. Carvalho, and colleagues · Working paper, Federal Reserve Bank of Dallas · September 2026</p>
+    <p>University and central bank researchers built daily spending and sales series for Spain from bank transaction and tax records, then traced what happened after interest rate surprises between 2015 and 2023. It shows which parts of the economy react fast and which slowly. It is not yet peer reviewed, covers one country, and follows effects for only a year.</p>
+  </div>
+</div>
+
+<div class="prose">
+<h2>The short answer</h2>
+<p class="answer">A central bank sets one short-term interest rate. Banks pass that rate on to the loans and savings accounts people and firms use, so a rise makes borrowing more expensive and saving more rewarding. People and businesses then spend less. When less is being bought than the economy can produce, firms struggle to raise prices and workers struggle to win big pay rises, so prices climb more slowly. That is lower inflation.</p>
+<p class="answer">It takes a long time because every link in that chain has its own delay. Many loans are fixed for years, shops and factories adjust orders and staffing gradually, and most individual prices and wages are only reviewed every several months to a year. The Bank of England's rule of thumb is about a year for output to feel the full effect and up to a further year for inflation; studies across many countries put the typical delay at around two years or more, with wide variation.</p>
+
+<h2>What a central bank actually controls</h2>
+<p>Inflation is the rate at which prices in general are rising, usually measured as the change in a price index over twelve months. If inflation is 5%, a basket of goods that cost £100 a year ago costs £105 now. A central bank cannot order shops to charge less. What it can do is set the interest rate at which it lends to, or pays, banks for very short periods, often overnight or for a couple of weeks. This is called the policy rate or official rate (in the UK, Bank Rate).</p>
+<p>The central bank can fix this rate because it is the only supplier of the money banks use to settle payments with each other. The 1999 Bank of England report describes it simply: the Bank chooses the price at which it will lend that money. Other short-term rates in the money markets move the same day, and banks usually change their standard lending rates by the same amount soon after. Variable-rate loans and overdrafts reprice quickly; savings rates follow, because banks keep a fairly steady margin between what they pay savers and what they charge borrowers.</p>
+<p>So the central bank directly controls one price, the price of short-term borrowing, and everything else follows from how people respond to it. The report's own diagram lays out the routes.</p>
+</div>
+
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Transmission mechanism diagram, scrollable on small screens">
+    <a href="assets/boe1999-transmission-diagram.png"><img src="assets/boe1999-transmission-diagram.png" width="1357" height="679" alt="Bank of England diagram: the official rate leads to market rates, asset prices, expectations and confidence, and the exchange rate; these drive domestic demand and net external demand, which add to total demand; total demand drives domestic inflationary pressure, which with import prices determines inflation. The exchange rate also feeds import prices directly."></a>
+  </div>
+  <figcaption><strong>The official rate never touches prices directly.</strong> Read the diagram from left to right. The rate changes four things at once (market interest rates, the prices of assets such as shares and houses, people's expectations, and the exchange rate). Those change how much people at home and abroad want to buy, and only that total demand, set against what the economy can supply, creates or removes pressure on inflation. The one shortcut runs along the bottom, where the exchange rate changes the price of imports. The source notes that the figure leaves out some interactions that can matter. Source: Bank of England, <a href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1999/the-transmission-mechanism-of-monetary-policy.pdf">The transmission mechanism of monetary policy</a><span class="ext" aria-hidden="true">↗</span>, 1999, p.161. © Bank of England, reproduced for non-commercial explanation with attribution.</figcaption>
+</figure>
+
+<div class="prose">
+<h2>Step one: a higher rate means less spending</h2>
+<p>Start with the route you already know, loans. Suppose a household has a £200,000 variable-rate mortgage and the rate rises by one percentage point, say from 4% to 5%. The interest due each year goes up by about £2,000, or roughly £167 a month. The household's income has not changed, so that £167 has to come out of something else: meals out, a new car, a holiday. Multiply that across millions of borrowers and spending in shops falls.</p>
+<p>Higher rates also change behaviour for people with no debt. Savings accounts pay more, so putting money aside now buys more spending later, and some people choose to wait. The report frames this as postponing consumption: a higher rate increases how much future spending a person gets for each pound they give up today. A minority, such as retirees living on interest, actually receive more income, so the overall fall in spending is the net of losers and winners.</p>
+<p>Prices of assets fall too. A share or a house is worth the income it is expected to produce in future, and when interest rates are higher, future income is worth less today. When house prices stop rising or fall, owners feel poorer and spend less. Houses are also used as security for loans, so lower values make borrowing harder. Firms face the same pressures: bank loans cost more, a new factory or machine has to earn a higher return to be worth building, and stock held in warehouses becomes more expensive to finance. They invest less and hire more cautiously.</p>
+<p>Finally, higher rates tend to raise the value of the currency, because investors are drawn to the better returns. A stronger currency makes imports cheaper and makes exports harder to sell abroad, which shifts spending away from goods produced at home.</p>
+<p>Each of these responses is a decision by a household or firm. Added up, they mean the economy as a whole buys less. That reduced total spending is what economists call lower aggregate demand.</p>
+
+<h2>Step two: less spending means slower price rises</h2>
+<p>An economy at any moment has a level of output it can produce without strain, given its workers, machines and know-how. The report calls this potential output. When demand pushes production above that level, firms run flat out, compete for scarce workers, and pay more to keep them. Higher wages raise each firm's costs, and busy firms find it easy to pass those costs on, and sometimes to widen their margins. Prices rise faster.</p>
+<p>When higher interest rates pull demand back below that level, the reverse happens. Firms have spare capacity and fewer customers. Raising prices risks losing sales, and workers have less bargaining power, so wage settlements ease. Prices keep rising, but more slowly. Separately, the stronger currency makes imported goods and materials cheaper, which lowers part of measured inflation directly, though the report notes this too can take many months to pass through the chain of importers and retailers.</p>
+<p>Notice what interest rates do not do. The report states that monetary policy has little direct effect on the economy's supply capacity. A rate rise does not make more oil, food or microchips appear. It works by reducing how much people want to buy until demand fits what can be supplied. That is why fighting inflation with rates usually costs some output and jobs along the way.</p>
+
+<h2>Expectations: why credibility matters</h2>
+<p>Wages and many prices are set with an eye on where prices are going. If workers expect 5% inflation next year, they ask for at least 5% more pay just to stand still, and firms that expect their costs to rise 5% set prices accordingly. So expected inflation tends to become actual inflation. The report makes the point that even with the economy running at exactly its potential, inflation settles wherever people expect it to; it only settles at the central bank's target once people believe the target will be hit.</p>
+<p>Expectations also decide what a given interest rate means. The real interest rate is roughly the rate you pay minus the inflation you expect. The report's example: with expected inflation at 10%, a 10% interest rate is a real rate of zero, which does little to discourage borrowing because the debt shrinks in value as fast as interest accrues. With expected inflation at 3%, the same 10% rate is a real rate of 7%, which bites hard. So what matters for spending is whether the real rate rises, not just the headline rate. And it is why central banks care so much about being believed: when people trust that inflation will come back to target, they build lower inflation into their pay claims and price plans, which does part of the work.</p>
+
+<h2>How long it takes</h2>
+<p>The Bank of England's 1999 report illustrated the timing with its own economic model. It simulated an unexpected one-percentage-point rise in the official rate, held for one year and then reversed, and tracked output (real GDP) and inflation compared with what would otherwise have happened. The two charts below show the results side by side.</p>
+</div>
+
+<figure>
+  <div class="pair">
+    <a href="assets/boe1999-chart1-gdp.png"><img src="assets/boe1999-chart1-gdp.png" width="391" height="365" alt="Chart 1: effect on real GDP of a 100 basis point rise maintained for one year. The shaded band falls from zero in quarter 1 to a low of about 0.24 to 0.34 percent below base in quarter 5, then recovers to near zero by quarter 12."></a>
+    <a href="assets/boe1999-chart2-inflation.png"><img src="assets/boe1999-chart2-inflation.png" width="373" height="348" alt="Chart 2: effect on the inflation rate of a 100 basis point rise maintained for one year. The shaded band stays near zero, even slightly positive, through quarter 5, then drops sharply to a low of about 0.24 to 0.41 percentage points below base around quarter 9, and is still about 0.17 to 0.37 below base in quarter 12."></a>
+  </div>
+  <figcaption><strong>Output reacts within a year; inflation waits about a year and then falls.</strong> In the left chart, GDP starts falling right after the rise and bottoms around the fifth quarter at 0.2% to 0.35% below where it would otherwise be. In the right chart, inflation barely moves through the first year and only drops in the second, reaching its largest fall of about 0.2 to 0.4 percentage points around the ninth quarter. Even three years on it has not fully returned, although the rate rise was reversed after one year. The shaded band is the range between two simulations with different policy assumptions, not a probability range, and the Bank stresses these are illustrations from one model, not forecasts. Source: Bank of England, 1999, p.170, Charts 1 and 2. © Bank of England, reproduced with attribution.</figcaption>
+</figure>
+
+<div class="prose">
+<p>The report sums up the wider evidence in the same terms: in the UK and other industrial economies it takes up to about a year for a rate change to have its peak effect on demand and production, and up to a further year for those changes to have their fullest effect on inflation. It immediately adds that there is a great deal of variation around those averages.</p>
+<p>How much variation becomes clear when many studies are compared. Havranek and Rusnak collected 198 estimates of when the price level bottoms out after a one-point rate rise. Their corrected average is 29 months, with developed economies falling between 25 and 50 months, and the average largest fall in prices is 0.9%.</p>
+</div>
+
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Meta-analysis figure and table, scrollable on small screens">
+    <a href="assets/havranek2013-fig2-table2-lags.png"><img src="assets/havranek2013-fig2-table2-lags.png" width="1014" height="1314" style="max-width:560px;width:100%" alt="Figure 2 from Havranek and Rusnak: density of estimated transmission lags in months, from 0 to over 60, with two peaks, one near 12 months and one near 50 months. A solid line marks the overall average near 33 months; dashed lines mark averages for hump-shaped responses near 18 months and strictly decreasing responses near 49 months. Below, Table 2 lists summary statistics."></a>
+  </div>
+  <figcaption><strong>There is no single lag.</strong> The curve shows how often each lag length appears across the studies, and the estimates run from a month to five years. They form two clusters because studies estimate two shapes of response: one where prices fall and then recover (averaging 18 months to the low point) and one where prices keep falling until the study's horizon ends (averaging 49 months, which the authors note can look implausibly long). The table gives the numbers. Treat "about two years" as the middle of a wide spread, not a fixed delay. These measure the price level's low point, not inflation's, and most underlying studies are from before 2013. Source: Havranek and Rusnak, <a href="https://www.ijcb.org/sites/default/files/journal/v9n4/ijcb-v9n4-transmission-lags-monetary-policy-meta-analysis.pdf">Transmission Lags of Monetary Policy</a><span class="ext" aria-hidden="true">↗</span>, International Journal of Central Banking, 2013, p.45. Reuse terms are not stated; reproduced with attribution.</figcaption>
+</figure>
+
+<div class="prose">
+<table>
+  <caption style="text-align:left;caption-side:top;font-size:.93rem;color:var(--muted);padding-bottom:6px">Months until prices reach their lowest point after a one-point rate rise (Havranek and Rusnak 2013, Table 2, values transcribed)</caption>
+  <thead><tr><th scope="col">Type of estimate</th><th scope="col">Estimates</th><th scope="col">Mean</th><th scope="col">Median</th><th scope="col">Range</th></tr></thead>
+  <tbody>
+    <tr><td>All responses</td><td>198</td><td class="num">33.5</td><td>37</td><td>1–60</td></tr>
+    <tr><td>Prices fall, then recover</td><td>100</td><td class="num">18.2</td><td>15</td><td>1–57</td></tr>
+    <tr><td>Prices keep falling</td><td>98</td><td class="num">49.1</td><td>48</td><td>24–60</td></tr>
+  </tbody>
+</table>
+
+<h2>Why it takes so long</h2>
+<p>The delay is not one wait but several, stacked end to end. Each comes from a real feature of how loans, businesses and prices work.</p>
+
+<h3>Many borrowers do not feel the rise for years</h3>
+<p>The mortgage example above assumed a variable rate. Borrowers on fixed-rate deals pay the old rate until their deal ends. In 1999 most UK mortgages floated with the official rate, but that has changed sharply. A Bank of England economist measured how long UK mortgage holders are shielded from rate changes.</p>
+</div>
+
+<figure>
+  <a href="assets/bankunderground2019-chart1-wait.jpg"><img src="assets/bankunderground2019-chart1-wait.jpg" width="665" height="567" alt="Line chart, 2005 to 2019: average time UK mortgages are shielded from interest-rate changes, in years. It moves between about 0.6 and 2 years until 2012, then rises steadily to about 3.5 years by 2019."></a>
+  <figcaption><strong>UK mortgage holders now wait years for a rate change to reach them.</strong> The line shows the average time until mortgages revert to a variable rate. Before 2008 it was mostly between one and two years; by 2019 it was about three and a half. The author attributes this to variable-rate mortgages falling from about a third of new loans to under one in twenty, and to people fixing for longer. A rate rise therefore reaches household budgets gradually, as each fixed deal expires. The post's text describes new borrowers while the chart note describes all outstanding mortgages, so read the line as a broad average. Source: Fergus Cumming, <a href="https://bankunderground.co.uk/2019/09/27/bitesize-fixing-ideas-the-slowing-of-interest-rate-pass-through-to-mortgagors/">Bank Underground</a><span class="ext" aria-hidden="true">↗</span>, 2019, Chart 1. © Bank of England, reproduced with attribution.</figcaption>
+</figure>
+
+<div class="prose">
+<p>The same holds elsewhere. The post notes that 30-year fixed mortgages are common in the United States, where payments on such loans do not change at all when the central bank moves. For those households, the rate rise works mainly through new borrowers, through savings rates, and through falling asset prices, which are slower and weaker routes.</p>
+
+<h3>Spending cuts ripple slowly through production</h3>
+<p>Even when a household does cut back, the effect on jobs and wages takes time. The 1999 report traces the sequence. Shops sell less than they expected, so unsold stock builds up. They then cut orders from distributors, whose own stock builds up, and only when that stock is unusually large do manufacturers cut production. Lower production leads to fewer hours and jobs and smaller pay rises, which in turn reduces spending again. Each round takes weeks or months.</p>
+<p>Recent evidence sharpens this picture. Using daily bank transaction and tax data for Spain, Buda, Carvalho and colleagues found that spending reacts much faster than older quarterly studies suggested.</p>
+</div>
+
+<figure>
+  <div class="scroll" tabindex="0" role="region" aria-label="Daily response figure, scrollable on small screens">
+    <a href="assets/buda2026-fig2-daily-activity.png"><img src="assets/buda2026-fig2-daily-activity.png" width="1479" height="1404" alt="Figure 2 from Buda and colleagues: daily responses over 365 days, with a zoom on the first 93 days, for sales, consumption, investment and employment after a monetary policy tightening surprise. Sales and consumption fall within the first weeks and reach a low around 40 to 60 days. Employment falls gradually and is lowest at the end of the year."></a>
+  </div>
+  <figcaption><strong>Spending falls within weeks; jobs drift down over a year.</strong> Follow the red lines. Consumption and firms' sales are already lower within the first weeks of a surprise tightening and reach their low point within about two months (right-hand panels zoom into the first 93 days). Employment, bottom row, keeps sliding for the whole year. The shaded areas are confidence bands, which are wide for investment. The responses are to a small rate surprise of about 4 basis points (0.04 percentage points), so the sizes are not comparable to a one-point rise; the timing is the point. Spain, 2015 to 2023. Source: Buda, Carvalho and colleagues, <a href="https://doi.org/10.24149/wp2631">The Short Lags of Monetary Policy</a><span class="ext" aria-hidden="true">↗</span>, Federal Reserve Bank of Dallas Working Paper 2631, 2026, Figure 2. Reuse terms are not stated; reproduced with attribution.</figcaption>
+</figure>
+
+<div class="prose">
+<p>The authors found that retailers piled up unsold stock first and manufacturers only later, once retailers cut orders, and that employment started falling substantially when manufacturers reported excess stock and reduced production. That is the 1999 chain, now visible in daily data. Their conclusion is that the long lag in inflation does not come from people being slow to cut spending. It comes from a quick fall in demand working its way gradually through supply chains, jobs and pay.</p>
+
+<h3>Prices themselves are changed only now and then</h3>
+<p>The last link is the price tag. Most firms do not reprice every day; they review prices from time to time. Nakamura and Steinsson examined the individual prices behind the US consumer price index and found that, leaving aside temporary sales, a typical item's price changes only about once every 8 to 11 months.</p>
+<blockquote>"these frequency estimates imply uncensored durations of regular prices of between 8 and 11 months."<cite>Nakamura and Steinsson, Quarterly Journal of Economics, 2008, p.1416</cite></blockquote>
+<p>So when demand weakens, the price index cannot respond all at once. It drifts lower as individual prices come up for review and are raised by less than they otherwise would have been. Wages adjust in the same stop-start way, because pay is set in periodic reviews and contracts; the 1999 report names slow adjustment of both wages and prices as part of the lag. This is US data from 1988 to 2005; counting temporary sales, prices change about twice as often, and firms reprice more often when inflation is high. The Spanish study shows the result at the level of the whole price index.</p>
+</div>
+
+<figure>
+  <a href="assets/buda2026-fig13-employment-cpi.png"><img src="assets/buda2026-fig13-employment-cpi.png" width="1066" height="790" style="max-width:740px;width:100%" alt="Figure 13 from Buda and colleagues: monthly responses over 11 months. Total employment drops in the first month and stays about 0.1 to 0.15 percent lower. CPI declines slowly and steadily, reaching about 0.2 percent lower by month 11. Permanent employment is flat until month 7, then falls. Temporary employment falls at once and recovers by month 11."></a>
+  <figcaption><strong>Prices are the last thing to move.</strong> Look at the top-right panel. Even though spending dropped within weeks, the consumer price index slides down only gradually, with most of the decline after month six and the deepest point at month eleven, the end of the study's window. Permanent jobs (bottom left) barely move until late in the year, while temporary jobs, which retail and wholesale firms rely on heavily, react at once. Because the window stops at a year, this figure cannot show when the effect on prices ends. Spain, August 2015 to October 2023. Source: Buda, Carvalho and colleagues, 2026, Figure 13. Reuse terms are not stated; reproduced with attribution.</figcaption>
+</figure>
+
+<div class="prose">
+<h2>What this means, and where it stops</h2>
+<p>Because the full effect arrives a year or two later, a central bank has to act on its forecast of inflation, not on today's figure. If it waits until inflation is visibly high, the rises it then makes will bite long after the problem has peaked, and it may tighten too much. Most inflation-targeting central banks set their policy horizon at 12 to 24 months for this reason, according to Havranek and Rusnak.</p>
+<p>The lag is also not fixed. The 1999 report lists what changes it: how far a move was expected in advance (markets often react to expected rate changes before they happen), the state of consumer and business confidence, the stage of the business cycle, events abroad, and how firmly people believe the inflation target. Changes in how people borrow, such as the shift to long fixed-rate mortgages, can slow the household route. The Spanish evidence adds that some of what looked like slowness in older studies was an artefact of measuring the economy only once a quarter: spending moved quickly, but prices still lagged. The figures here come mostly from the UK, the US, Spain and older multi-country studies, so a specific country today may sit anywhere in the range.</p>
+<p>Finally, interest rates work by reducing demand. When inflation comes mainly from a shortage of supply, such as a jump in energy prices, raising rates cannot create the missing supply; it can only cut spending until demand fits the smaller supply, and that costs output and jobs. The effects also fall unevenly: borrowers, especially those whose fixed deals expire, bear more of the cost, while savers gain. These trade-offs, together with the long and uncertain delay, are why rate decisions are judgement calls rather than mechanical settings.</p>
+</div>
+</main>
+</body>
+</html>

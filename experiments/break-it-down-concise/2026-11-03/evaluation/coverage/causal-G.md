@@ -1,0 +1,10 @@
+Q1: 2 — "The short answer"; "Where the gap comes from when students choose" (18 = 2 effect + 16 selection bias) — States that choosers differ in motivation and the gap mixes effect with prior differences, with a worked table.
+Q2: 2 — "What 'the app helped' means" ("the counterfactual, and it is missing for everyone") — Defines the with/without comparison for one student, says only one is seen, and moves to group comparison.
+Q3: 1 — "Students who choose an app tend to differ ... in motivation"; simulator note "more motivated students are more likely to use the app" — Teaches the mechanism and the motivation example but never names or defines "confounder", so the both-ways link is implicit.
+Q4: 2 — "Random assignment: the fair comparison" ("motivated and unmotivated students land in both groups in about equal shares. The same holds for every trait, measured or not") — Clearly explains chance assignment, balance on unmeasured traits, and the gap estimating the effect.
+Q5: 2 — Lab section ("shrinks toward zero as the group grows"); paragraph after lab; p-value definition and 95% CI in the Delhi caption — Explains chance gaps, shrinking with group size, and p-value/confidence interval as the test against chance.
+Q6: 1 — Last paragraph ("Even a clean trial answers only for the product, the students, the test, and the stretch of time it studied"); "beyond the study's context" — Conveys limited generalization but never contrasts assignment with representative sampling or names external validity.
+Q7: 2 — "Why 'controlling for' differences is not enough" and "When you cannot run a lottery" table — Covers matching/regression, RD, diff-in-diff, natural experiments, each with the unverifiable assumption it needs.
+Q8: 2 — "Where the gap comes from when students choose"; "Random assignment"; closing "how the comparison group was chosen" — A novice can name motivation/prior differences among volunteers and propose random assignment, though classroom-level assignment is not addressed directly.
+TOTAL: 14/16
+ERRORS: none (minor: "roughly doubled it" is loose, 0.70 vs 0.34 gives an effect near 0.36, so the winners' raw gain is about double; acceptable)

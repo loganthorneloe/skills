@@ -1,0 +1,89 @@
+{
+  "status": "PASS",
+  "structural_checks": [
+    "unique IDs",
+    "valid target/endpoints",
+    "acyclic",
+    "all nodes reach target",
+    "supported nodes have evidence",
+    "no unresolved gap nodes",
+    "initial revision preserved"
+  ],
+  "node_count": 16,
+  "edge_count": 24,
+  "topological_order": [
+    "arithmetic",
+    "parameters",
+    "sensitivity",
+    "activation",
+    "loss",
+    "branch",
+    "trace_forward",
+    "local_rules",
+    "chain",
+    "reverse",
+    "gradient",
+    "trace_backward",
+    "update",
+    "limits",
+    "trace_update",
+    "target"
+  ],
+  "trace_forward": {
+    "h": 2,
+    "p1": 2,
+    "p2": 1.0,
+    "loss": 1.0
+  },
+  "trace_backward": [
+    {
+      "parameter": "w",
+      "backprop": 1,
+      "central_difference": 0.9999999999177334,
+      "absolute_error": 8.22666379463044e-11,
+      "epsilon": 1e-06
+    },
+    {
+      "parameter": "b",
+      "backprop": 0.5,
+      "central_difference": 0.4999999999588667,
+      "absolute_error": 4.11333189731522e-11,
+      "epsilon": 1e-06
+    },
+    {
+      "parameter": "v1",
+      "backprop": 2,
+      "central_difference": 1.999999999946489,
+      "absolute_error": 5.3510973430093145e-11,
+      "epsilon": 1e-06
+    },
+    {
+      "parameter": "v2",
+      "backprop": -2,
+      "central_difference": -1.999999999946489,
+      "absolute_error": 5.3510973430093145e-11,
+      "epsilon": 1e-06
+    }
+  ],
+  "trace_update": {
+    "parameters": [
+      0.9,
+      -0.05,
+      0.8,
+      0.7
+    ],
+    "forward": {
+      "h": 1.75,
+      "p1": 1.4000000000000001,
+      "p2": 1.2249999999999999,
+      "loss": 0.38031250000000016
+    },
+    "local_predicted_loss_change": -0.925,
+    "actual_loss_change": -0.6196874999999998
+  },
+  "not_checked": [
+    "Rendering (shared renderer handles this)",
+    "Framework autograd",
+    "General convergence or teaching effectiveness"
+  ]
+}

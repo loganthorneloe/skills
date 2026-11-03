@@ -1,0 +1,50 @@
+[
+  {
+    "time": "2026-10-24T20:42:51.448158+00:00",
+    "file": "runs/r02/dag.initial.json",
+    "sha256": "d7f2fa376cd6d6ba2b7c8d157a766bce1d3e8da61bc0c7a8fa4bef8b8c5d2b4b",
+    "snapshot": "observed/r02/dag.initial-d7f2fa376cd6.json",
+    "nodes": 21,
+    "edges": 35
+  },
+  {
+    "time": "2026-10-24T20:42:51.448360+00:00",
+    "file": "runs/r02/dag.json",
+    "sha256": "d7f2fa376cd6d6ba2b7c8d157a766bce1d3e8da61bc0c7a8fa4bef8b8c5d2b4b",
+    "snapshot": "observed/r02/dag-d7f2fa376cd6.json",
+    "nodes": 21,
+    "edges": 35
+  },
+  {
+    "time": "2026-10-24T20:44:50.028904+00:00",
+    "file": "runs/r02/dag.json",
+    "sha256": "0593dac61b6a0b5077b9cde64b22e8e0296c1539eb39c85bc2b6569e3cc07e30",
+    "snapshot": "observed/r02/dag-0593dac61b6a.json",
+    "nodes": 23,
+    "edges": 42
+  },
+  {
+    "time": "2026-10-24T20:44:50.029550+00:00",
+    "file": "runs/r02/dag.round-2.json",
+    "sha256": "0593dac61b6a0b5077b9cde64b22e8e0296c1539eb39c85bc2b6569e3cc07e30",
+    "snapshot": "observed/r02/dag.round-2-0593dac61b6a.json",
+    "nodes": 23,
+    "edges": 42
+  },
+  {
+    "time": "2026-10-24T20:45:46.283273+00:00",
+    "file": "runs/r02/dag.json",
+    "sha256": "078775cdf500d8b33eb02a4459883d875c4e536678f821f53d3bb6ce323c4cce",
+    "snapshot": "observed/r02/dag-078775cdf500.json",
+    "nodes": 23,
+    "edges": 43
+  },
+  {
+    "time": "2026-10-24T20:45:46.283641+00:00",
+    "file": "runs/r02/dag.round-3.json",
+    "sha256": "078775cdf500d8b33eb02a4459883d875c4e536678f821f53d3bb6ce323c4cce",
+    "snapshot": "observed/r02/dag.round-3-078775cdf500.json",
+    "nodes": 23,
+    "edges": 43
+  }
+]

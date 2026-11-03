@@ -1,0 +1,11 @@
+{
+  "round": 0,
+  "kind": "initial",
+  "description": "Initial graph from supplied packet before supplemental research.",
+  "gaps": [
+    "Support-specific success criteria and conversation context",
+    "Score aggregation and grouped failures",
+    "Controlled comparisons and small-difference uncertainty",
+    "Evidence for proposed startup synthesis"
+  ]
+}

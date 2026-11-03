@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Database Transaction Isolation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{
+  --canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;
+  --blue:#2f6c9e;--green:#46734d;--red:#bf3030;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --head:"Sora","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:var(--sans);font-weight:400;font-size:17px;line-height:1.75}
+main{max-width:720px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{font-family:var(--head);font-weight:600;letter-spacing:-0.02em;line-height:1.2}
+h1{font-size:2.4rem;margin:0 0 40px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.5rem;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:1.1rem;margin:28px 0 4px;letter-spacing:-0.01em}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,.scroll:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+code{font-family:var(--mono);font-size:.88em}
+.sources h3{font-size:1.02rem;margin:26px 0 2px;line-height:1.4}
+.sources h3 a{font-weight:600}
+.meta{font-style:italic;color:var(--muted);font-size:.92rem;margin:0 0 6px;line-height:1.55}
+.sources p:not(.meta){font-size:.95rem}
+.answer{font-size:1.08rem}
+ul{padding-left:22px;margin:0 0 18px}
+li{margin-bottom:6px}
+figure{margin:28px 0 32px}
+figure img{display:block;max-width:100%;height:auto;background:#fff;border:1px solid var(--border)}
+figcaption{font-size:.9rem;color:var(--muted);line-height:1.6;margin-top:10px}
+figcaption strong{color:var(--text);font-weight:500}
+.wide{margin-left:auto;margin-right:auto}
+@media (min-width:1000px){.wide{width:min(960px,calc(100vw - 48px));margin-left:50%;transform:translateX(-50%)}}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:640px){.scroll img.minw{width:680px;max-width:none}}
+.fig-narrow img{max-width:min(100%,560px)}
+table.timeline{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.5;background:var(--surface)}
+table.timeline th,table.timeline td{border:1px solid var(--border);padding:8px 10px;vertical-align:top;text-align:left}
+table.timeline th{font-weight:500;background:var(--canvas)}
+table.timeline td.n{font-family:var(--head);font-weight:600;width:2.2em}
+table.timeline td.val{font-family:var(--head);font-weight:600;white-space:nowrap}
+table.timeline .bad{color:var(--red)}
+@media (max-width:640px){main{padding:36px 20px 72px}h1{font-size:1.9rem}body{font-size:16px}table.timeline{min-width:560px}}
+</style>
+</head>
+<body>
+<main>
+<h1>Database transaction isolation<span class="dot">.</span></h1>
+
+<section class="sources" aria-labelledby="src">
+<h2 id="src" style="margin-top:0;border-top:0;padding-top:0">Sources</h2>
+
+<h3><a href="https://arxiv.org/abs/cs/0701157">A Critique of ANSI SQL Isolation Levels</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">Hal Berenson, Phil Bernstein, and colleagues · Conference paper and Microsoft Research technical report, ACM SIGMOD · June 1995</p>
+<p>The authors include Jim Gray, who received the Turing Award for transaction processing, and Jim Melton, editor of the SQL standard. They write out exact sequences of reads and writes and prove which ones each isolation level lets through, showing that the standard's definitions miss lost updates and write skew. Proofs about definitions do not age, but its descriptions of 1995 products do not describe today's versions.</p>
+
+<h3><a href="https://www.postgresql.org/docs/current/transaction-iso.html">PostgreSQL 18 Documentation: Transaction Isolation</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">The PostgreSQL Global Development Group · Official product documentation, postgresql.org · Current manual, accessed November 2026</p>
+<p>PostgreSQL's developers state what each level does in the current release, with short SQL examples and the exact errors the database raises when it refuses an interleaving. It describes PostgreSQL only.</p>
+
+<h3><a href="https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html">MySQL 8.4 Reference Manual: Transaction Isolation Levels</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">Oracle Corporation · Official product documentation, dev.mysql.com · MySQL 8.4 manual, accessed November 2026</p>
+<p>The vendor's manual confirms MySQL's default level and explains how its plain reads and its updates see different data. It calls the default strongly consistent, a description the independent tests below do not support.</p>
+
+<h3><a href="https://arxiv.org/abs/1208.4179">Serializable Snapshot Isolation in PostgreSQL</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">Dan R. K. Ports and Kevin Grittner · Conference paper, Proceedings of the VLDB Endowment (VLDB 2012) · August 2012</p>
+<p>The two engineers who built PostgreSQL's Serializable mode explain why snapshot isolation falls short, how their mode catches the gap, and what it costs in benchmarks. The measurements come from 2012 hardware, PostgreSQL 9.1, and a locking implementation the authors built themselves for comparison, so they are one measured example rather than a general rule.</p>
+
+<h3><a href="https://arxiv.org/abs/1302.0309">Highly Available Transactions: Virtues and Limitations</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">Peter Bailis, Aaron Davidson, and colleagues · Conference paper (extended version), VLDB 2014 / arXiv · February 2013</p>
+<p>Only one table is used here: database researchers' survey, from vendor documentation, of default isolation levels in 18 databases as of January 2013. It shows weak defaults were the norm then, not what any product does now.</p>
+
+<h3><a href="https://doi.org/10.1145/3035918.3064037">ACIDRain: Concurrency-Related Attacks on Database-Backed Web Applications</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">Todd Warszawski and Peter Bailis · Conference paper, ACM SIGMOD · May 2017</p>
+<p>Stanford researchers found 22 concurrency bugs in 12 popular e-commerce platforms and confirmed each by triggering it. Its reach figure of about 2 million websites counts sites running the affected software, not sites attacked, and some attacks needed an added network delay to trigger reliably.</p>
+
+<h3><a href="https://github.com/ept/hermitage">Hermitage: Testing Transaction Isolation Levels</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">Martin Kleppmann and contributors · Open test suite and results, GitHub · First published November 2014, updated January 2026</p>
+<p>Kleppmann, author of <i>Designing Data-Intensive Applications</i>, wrote two-session SQL scripts that try to trigger each anomaly, so anyone can rerun them and check the results. The tests were run by hand on particular versions, some old, and can show that an anomaly occurs but not prove that it never will.</p>
+
+<h3><a href="https://www.postgresql.org/docs/release/12.4/">PostgreSQL 12.4 Release Notes</a><span class="ext" aria-hidden="true">↗</span>, with <a href="https://jepsen.io/analyses/postgresql-12.3">Jepsen: PostgreSQL 12.3</a><span class="ext" aria-hidden="true">↗</span></h3>
+<p class="meta">The PostgreSQL Global Development Group · Release notes · August 2020; Kyle Kingsbury · Independent consistency analysis, jepsen.io · June 2020</p>
+<p>Jepsen, an independent tester that checks databases against formal definitions, found a rare case in which PostgreSQL's Serializable mode let an anomaly through, and the project's release notes record the fix. The Jepsen report was read only in summary, so the release notes supply the exact wording.</p>
+</section>
+
+<h2>The short answer</h2>
+<p class="answer">Each transaction is checked as if it runs alone. A database runs many at once by interleaving their steps, and when two of them touch the same data and at least one writes it, one can act on a value the other is about to change. The result can then match neither "A, then B" nor "B, then A," and that mismatch is what wrong means here. Isolation levels are settings that tell the database how many of those interleavings to forbid. Weak levels forbid few and rarely make anyone wait. Serializable forbids every interleaving whose result no one-at-a-time order could produce, and it pays by making transactions wait or by aborting one so the application can run it again. Most databases default to a weaker level, and the same level name promises different things in different products.</p>
+
+<h2>What "correct" means for one transaction and for many</h2>
+<p>A transaction is a group of SQL statements between <code>BEGIN</code> and <code>COMMIT</code> that the database treats as one unit. Applications depend on rules the data must always satisfy, such as "a balance never drops below zero" or "at least one doctor is on call." These rules are called invariants. A transaction is individually correct when, started on data that satisfies the rules and run with nothing else happening, it leaves data that still satisfies them.</p>
+<p>That gives a test for many transactions at once. Run them one at a time, in any order, and each starts from correct data and leaves correct data, so every one-at-a-time order (a serial order) ends correct. An interleaved run is called serializable when its result equals that of some serial order. Ports and Grittner draw the consequence: if each transaction does the right thing alone, it does the right thing in any serializable mix. Asking whether a concurrent run is correct therefore becomes asking whether some serial order could have produced it.</p>
+
+<h2>How two correct transactions produce a wrong result</h2>
+<p>Suppose an account holds 100. Transaction A deposits 20 and transaction B deposits 30. Each reads the balance with a <code>SELECT</code>, adds its amount in application code, and writes the total back with an <code>UPDATE</code>. Run in either order, they leave 150. The database, though, runs statements from different connections as they arrive, so this sequence is allowed at the default level of PostgreSQL and MySQL:</p>
+
+<figure>
+<div class="scroll" tabindex="0" role="region" aria-label="Lost update timeline, scrollable">
+<table class="timeline">
+
+<thead><tr><th scope="col">Step</th><th scope="col">Transaction A (+20)</th><th scope="col">Transaction B (+30)</th><th scope="col">Stored balance</th></tr></thead>
+<tbody>
+<tr><td class="n">1</td><td><code>SELECT balance FROM accounts WHERE id = 1;</code> sees 100</td><td></td><td class="val">100</td></tr>
+<tr><td class="n">2</td><td></td><td><code>SELECT balance FROM accounts WHERE id = 1;</code> sees 100</td><td class="val">100</td></tr>
+<tr><td class="n">3</td><td><code>UPDATE accounts SET balance = 120 WHERE id = 1;</code> <code>COMMIT;</code></td><td></td><td class="val">120</td></tr>
+<tr><td class="n">4</td><td></td><td><code>UPDATE accounts SET balance = 130 WHERE id = 1;</code> <code>COMMIT;</code></td><td class="val bad">130 (A's 20 is gone)</td></tr>
+</tbody>
+</table>
+</div>
+<figcaption>Illustration written for this report. The same history (100, then 120, then 130) is Berenson and colleagues' definition of a lost update.</figcaption>
+</figure>
+
+<p>Neither transaction has a bug. B computed 130 from a value that A had already replaced, so A's committed deposit vanished. In any serial order one of the two would have read the other's result. Here each read the balance from before the other's write, so each behaved as if it ran first, and both cannot be first. That is why 130 matches no serial order.</p>
+<p>Two conditions produce every failure of this kind. The transactions must conflict, meaning they touch the same data and at least one writes it. And one of them must base a decision or a write on a value that the other changes, or has not yet committed, before the first finishes. Steps that do not conflict can be reordered freely without changing the result, which is why databases can interleave most work safely.</p>
+
+<figure class="fig-narrow">
+<img src="assets/warszawski2017-fig1-withdraw-race.png" width="1059" height="1218" alt="Two code panels: a withdraw function that reads a balance, checks it covers the amount, and writes the new balance; and the same function wrapped in a transaction.">
+<figcaption><strong>The same race taking money out.</strong> Two simultaneous $99 withdrawals both read $100, both pass the check, and $198 leaves the account. Panel (b) shows that wrapping the code in a transaction still leaves it open at Read Committed or weaker unless the code locks the row it reads. The code is simplified, not taken from a real application. Figure 1 from Warszawski and Bailis, ACIDRain, SIGMOD 2017 (<a href="assets/warszawski2017-fig1-withdraw-race.png">full size</a>); reuse rights beyond personal and classroom use are unstated, so it appears here with attribution.</figcaption>
+</figure>
+
+<p>The read-then-write shape matters. In PostgreSQL at Read Committed, a single statement <code>UPDATE accounts SET balance = balance + 20 WHERE id = 1</code> does not lose the update: the second such statement waits for the first to commit and then applies to the new value. The bug needs the value to pass through application code between a <code>SELECT</code> and an <code>UPDATE</code>.</p>
+
+<h2>The failure patterns have names</h2>
+<p>Database literature names each recurring interleaving, and isolation levels are defined by which of them they forbid:</p>
+<ul>
+<li>A dirty read reads another transaction's change before it commits, so the change may later be rolled back and never officially exist.</li>
+<li>A non-repeatable read gets different values from reading the same row twice in one transaction, because another transaction committed a change in between.</li>
+<li>A phantom appears when a repeated search such as <code>WHERE on_call = true</code> returns a different set of rows because another transaction inserted or deleted one.</li>
+<li>A lost update is the deposit example above.</li>
+<li>Read skew reads two related rows at different moments. If 40 moves from account x (50) to account y (50), a report that reads x after the move and y before it sees 10 + 50 = 60 instead of 100.</li>
+<li>Write skew happens when two transactions read the same data, each checks a rule, and each then writes a different row, so that together they break the rule. An example follows below.</li>
+<li>A dirty write overwrites another transaction's uncommitted change. Every real isolation level prevents it.</li>
+</ul>
+
+<h2>Isolation levels forbid more interleavings at each step</h2>
+<p>The SQL standard names four levels and defines the lower three by which of three phenomena, dirty read, non-repeatable read, and phantom, each must rule out. PostgreSQL's manual presents the standard's table with one column added.</p>
+
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="PostgreSQL Table 13.1, scrollable">
+<img class="minw" src="assets/postgresql18-table13-1-isolation-levels.png" width="1570" height="400" alt="Table 13.1, Transaction Isolation Levels: rows Read uncommitted, Read committed, Repeatable read, Serializable; columns Dirty Read, Nonrepeatable Read, Phantom Read, Serialization Anomaly.">
+</div>
+<figcaption><strong>Each row up the ladder rules out one more phenomenon.</strong> The last column, "Serialization Anomaly," is "Possible" at every level except Serializable: only the top level guarantees a result some serial order could produce. "Allowed, but not in PG" marks where PostgreSQL is stricter than the standard requires. Table 13.1, PostgreSQL 18 Documentation, §13.2 (<a href="assets/postgresql18-table13-1-isolation-levels.png">full size</a>). Portions Copyright © 1996–2026, The PostgreSQL Global Development Group, used under the PostgreSQL Licence.</figcaption>
+</figure>
+
+<p>Databases enforce these levels in two main ways, and both explain why stronger costs more. A locking database makes a transaction lock a row before reading or writing it, and a conflicting request waits. Write locks are held until commit at every level. The levels differ in read locks: none at Read Uncommitted, released right after each read at Read Committed, held until commit at Repeatable Read, and at Serializable also held on search conditions, so no new matching row can appear. Holding every lock until commit guarantees serializability, but transactions wait for each other.</p>
+<p>Multiversion databases, including PostgreSQL, MySQL's InnoDB engine for plain reads, and Oracle, keep old versions of rows and let readers see a consistent snapshot, so in PostgreSQL's words "reading never blocks writing and writing never blocks reading." At Read Committed each statement gets a fresh snapshot. Under snapshot isolation the whole transaction reads one snapshot from its start, and when two transactions write the same row, the later one is refused. In the deposit example at PostgreSQL's Repeatable Read, B's <code>UPDATE</code> fails with "could not serialize access due to concurrent update." The application rolls B back and runs it again; the rerun reads 120 and writes 150.</p>
+
+<h2>The standard's ladder has gaps</h2>
+<p>Berenson and colleagues showed that forbidding the standard's three phenomena does not guarantee serializability, and that lost updates and write skew fall outside them entirely. Their fuller table lists each level against eight anomalies.</p>
+
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Berenson Table 4, scrollable">
+<img class="minw" src="assets/berenson1995-table4-anomalies-by-level.png" width="2218" height="959" alt="Table 4, Isolation Types Characterized by Possible Anomalies Allowed: six isolation levels against eight anomalies from dirty write to write skew.">
+</div>
+<figcaption><strong>Read across the Snapshot row.</strong> Snapshot isolation blocks lost updates (P4) and read skew (A5A) but still allows write skew (A5B). The Repeatable Read row, which uses the paper's locking definition rather than any product's, misses phantoms instead, so neither level is strictly stronger. Only the bottom row is "Not Possible" everywhere. Table 4 from Berenson et al., SIGMOD 1995 (<a href="assets/berenson1995-table4-anomalies-by-level.png">full size</a>); © 1995 ACM, copied for non-commercial use with notice.</figcaption>
+</figure>
+
+<p>Write skew is the gap that survives snapshot isolation, and Ports and Grittner's example shows why. The rule is that at least one doctor stays on call.</p>
+
+<figure class="fig-narrow">
+<img src="assets/ports2012-fig1-write-skew-doctors.png" width="1043" height="818" alt="Two transactions side by side over time. Each counts doctors on call, and if the count is at least 2, takes one doctor off call: T1 updates Alice, T2 updates Bob. Both commit.">
+<figcaption><strong>Both transactions see two doctors on call, and each takes a different one off.</strong> Either run alone leaves one doctor on call. Under snapshot isolation both read the same snapshot and update different rows, Alice and Bob, so the rule that the later writer of a row is refused never applies, both commit, and nobody is on call. Figure 1 from Ports and Grittner, VLDB 2012 (<a href="assets/ports2012-fig1-write-skew-doctors.png">full size</a>), adapted by its authors from Cahill and colleagues; reuse rights beyond personal and classroom copies are unstated, so it appears here with attribution.</figcaption>
+</figure>
+
+<p>Serializable closes this gap. A locking engine makes one transaction wait on the other's read locks. PostgreSQL instead tracks what each transaction read and, when it finds a pattern of dependencies no serial order could produce, aborts one transaction with "could not serialize access due to read/write dependencies among transactions." Either way the guarantee arrives as waiting or as an error, not as a silent fix, and PostgreSQL's manual is explicit that "Applications using this level must be prepared to retry transactions due to serialization failures."</p>
+
+<h2>Names and defaults differ between products</h2>
+<p>A level's name says less than its tested behavior. PostgreSQL's manual states that its Repeatable Read "is implemented using a technique known … as Snapshot Isolation," so it refuses lost updates but allows write skew. MySQL's InnoDB uses Repeatable Read by default, yet its plain <code>SELECT</code>s read a snapshot taken at the first read while its <code>UPDATE</code>s act on the newest committed data. Hermitage's tests and the ACIDRain authors both triggered lost updates under it. In Hermitage's tests, Oracle's level named "serializable" behaves as snapshot isolation and allows write skew.</p>
+<p>Defaults are usually weaker than Serializable. PostgreSQL defaults to Read Committed and MySQL to Repeatable Read, so the deposit example runs unprotected in both unless the application asks for more. In a January 2013 survey of vendor documentation by Bailis and colleagues, only 3 of 18 databases defaulted to serializability, and 8 did not offer it at all.</p>
+
+<h2>The cost depends on how serializability is built</h2>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Ports and Grittner Figure 5, scrollable">
+<img class="minw" src="assets/ports2012-fig5-dbt2-throughput.png" width="2168" height="759" alt="Two line charts of transaction throughput normalized to snapshot isolation, against the fraction of read-only transactions, for SI, SSI, and S2PL, in in-memory and disk-bound configurations.">
+</div>
+<figcaption><strong>The vertical axis is throughput as a fraction of snapshot isolation (1.0x).</strong> PostgreSQL's serializable mode (SSI, blue) stays near the top, while classic lock-until-commit serializability (S2PL, red) falls to about 0.43x when most transactions only read, in the in-memory panel. The data come from PostgreSQL 9.1 on 2012 hardware with a locking implementation the authors built themselves. Figure 5 from Ports and Grittner, VLDB 2012 (<a href="assets/ports2012-fig5-dbt2-throughput.png">full size</a>); reuse rights beyond personal and classroom copies are unstated, so it appears here with attribution.</figcaption>
+</figure>
+<p>Across their benchmarks, the authors report a cost of less than 7% relative to snapshot isolation. On an auction-site benchmark, SSI served 422 requests per second against snapshot isolation's 435, while lock-based serializability served 208. How serializability is built matters more than the level's name, though these are one database's numbers on one set of workloads.</p>
+
+<h2>What isolation cannot fix</h2>
+<p>Isolation protects only statements inside the same transaction. Of ACIDRain's 22 confirmed vulnerabilities, which let attackers reuse gift cards, get free items, and corrupt inventory, 5 came from the databases' default weak isolation (4 lost updates and 1 phantom). The other 17 came from code that never put the related steps in one transaction, which no isolation level can repair. The Bitcoin exchange Flexcoin closed in 2014 after, in its own statement, an attacker sent "thousands of simultaneous requests" to move coins out before balances updated.</p>
+<p>At weaker levels, applications close specific gaps by hand. They write the change as one statement (<code>SET balance = balance + 20</code>), lock the rows they read before deciding with <code>SELECT … FOR UPDATE</code>, let the database enforce the rule with a constraint, or create a row that both transactions must write so their conflict becomes visible to the database. Each fix covers only the case it was written for, which is why Ports and Grittner's court-system users, with hundreds of tables and more than 20 programmers, chose Serializable rather than checking every pair of transactions.</p>
+<p>Guarantees also depend on the implementation. In 2020 Jepsen found that PostgreSQL's Serializable mode, in a rare case with three transactions, could let an anomaly through; the 12.4 release notes record that the bug "could allow a serializable transaction to commit when it should have failed with a serialization error," and it is fixed. When correctness depends on reading a value and then writing based on it, the safe choices are to run at Serializable and retry on failure, or to know exactly which anomaly your product's level allows and close that one explicitly.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,95 @@
+{
+  "note": "Descriptive means of ordinal judgments; not statistical estimates or acceptance criteria. Original scores frozen before decoding.",
+  "slices": {
+    "all": {
+      "old": {
+        "n": 4,
+        "accepted": 0,
+        "mean_dimensions": {
+          "reader_fit": 5.0,
+          "prerequisite_coverage": 3.5,
+          "edge_validity": 3.0,
+          "granularity": 3.0,
+          "evidence_alignment": 5.0,
+          "research_record_authenticity": 4.0,
+          "application_utility": 3.5
+        },
+        "material_finding_count": 9
+      },
+      "new": {
+        "n": 4,
+        "accepted": 1,
+        "mean_dimensions": {
+          "reader_fit": 4.75,
+          "prerequisite_coverage": 3.5,
+          "edge_validity": 3.75,
+          "granularity": 4.0,
+          "evidence_alignment": 5.0,
+          "research_record_authenticity": 4.0,
+          "application_utility": 3.5
+        },
+        "material_finding_count": 8
+      }
+    },
+    "regression": {
+      "old": {
+        "n": 2,
+        "accepted": 0,
+        "mean_dimensions": {
+          "reader_fit": 5.0,
+          "prerequisite_coverage": 3.0,
+          "edge_validity": 3.0,
+          "granularity": 3.0,
+          "evidence_alignment": 5.0,
+          "research_record_authenticity": 4.0,
+          "application_utility": 3.0
+        },
+        "material_finding_count": 6
+      },
+      "new": {
+        "n": 2,
+        "accepted": 0,
+        "mean_dimensions": {
+          "reader_fit": 4.5,
+          "prerequisite_coverage": 3.0,
+          "edge_validity": 4.0,
+          "granularity": 3.5,
+          "evidence_alignment": 5.0,
+          "research_record_authenticity": 4.0,
+          "application_utility": 3.0
+        },
+        "material_finding_count": 6
+      }
+    },
+    "held_out": {
+      "old": {
+        "n": 2,
+        "accepted": 0,
+        "mean_dimensions": {
+          "reader_fit": 5.0,
+          "prerequisite_coverage": 4.0,
+          "edge_validity": 3.0,
+          "granularity": 3.0,
+          "evidence_alignment": 5.0,
+          "research_record_authenticity": 4.0,
+          "application_utility": 4.0
+        },
+        "material_finding_count": 3
+      },
+      "new": {
+        "n": 2,
+        "accepted": 1,
+        "mean_dimensions": {
+          "reader_fit": 5.0,
+          "prerequisite_coverage": 4.0,
+          "edge_validity": 3.5,
+          "granularity": 4.5,
+          "evidence_alignment": 5.0,
+          "research_record_authenticity": 4.0,
+          "application_utility": 4.0
+        },
+        "material_finding_count": 2
+      }
+    }
+  }
+}

@@ -33,7 +33,7 @@ Select exhibits that teach different things. Include several when each adds some
 4. Open each extracted image and check it for clipping, blur, and legibility. Keep a full-resolution version for an enlarged view.
 5. For a key table, return both a rendered image and the transcribed values. A table may be rebuilt as HTML with attribution only when its values match the source exactly.
 6. Copy quotations exactly and keep them short; use ellipses only where omission does not change meaning.
-7. Follow the source's stated reuse terms. When copies of a source (publisher, repository, PubMed Central) carry different terms, use the most permissive copy. When none are stated, attribute the exhibit, record "rights unstated," and let the caller decide whether to embed or link.
+7. Follow the source's stated reuse terms. When copies of a source (publisher, repository, PubMed Central) carry different terms, use the most permissive copy. When the terms allow reuse, or none are stated, extract the exhibit with attribution and record its terms or "rights unstated." When the terms forbid reproduction, do not extract it; return its record with `rights: link-only` so the caller cites the source with an inline link instead.
 
 Generated visuals, calculations, and constructed data may supplement source exhibits; return them as type `generated` and never mix them with published observations.
 
@@ -51,7 +51,7 @@ Return one record per exhibit to the user or calling agent:
 - inspected: <what was checked, e.g. "opened at full size, all rows and legend visible"> | not applicable
 - notice: <what the reader should see in it and why it supports the claim>
 - limits: <conditions, conflicts, or caveats that change its interpretation>
-- rights: <stated terms, or "rights unstated">
+- rights: <stated terms, "rights unstated", or "link-only">
 ```
 
 Then list claims still lacking evidence and useful candidates omitted or not extracted, each with its reason. Never report an extraction or inspection that did not happen.

@@ -1,0 +1,1 @@
+Break down public-key encryption from first principles. I understand files and sending messages over the internet but have no cryptography background. How can someone publish a key so strangers can send private messages without also letting everyone read those messages?

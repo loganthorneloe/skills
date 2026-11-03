@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How mRNA Vaccines Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font:400 17px/1.75 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:768px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.25}
+h1{font-size:2.4rem;margin:0 0 32px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.5rem;margin:64px 0 16px;padding-top:24px;border-top:1px solid var(--border)}
+h3{font-size:1.1rem;margin:32px 0 8px}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+.sources{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);margin:0 0 8px}
+.src{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.src:last-child:nth-child(odd){grid-column:1 / -1}
+.src .t{margin:0 0 6px;line-height:1.45}
+.src .m{margin:0 0 10px;font-style:italic;color:var(--muted);font-size:.9rem;line-height:1.5}
+.src p:last-child{margin:0;font-size:.95rem;line-height:1.6}
+.answer{font-size:1.1rem}
+figure{margin:32px 0;}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+figcaption{font-size:.9rem;line-height:1.6;color:var(--muted);margin-top:10px}
+figcaption a{color:var(--muted)}
+.wide{margin-left:calc(50% - min(50vw - 12px, 480px));margin-right:calc(50% - min(50vw - 12px, 480px))}
+blockquote{margin:24px 0;padding:0 0 0 20px;border-left:2px solid var(--red);font-size:1.05rem}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.9rem;margin-top:6px}
+svg text{font-family:Inter,system-ui,sans-serif}
+.hscroll{max-width:100%}
+.hscroll:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.diagram{background:var(--surface);border:1px solid var(--border);padding:12px}
+@media (max-width:640px){
+  main{padding:40px 20px 72px}
+  h1{font-size:1.9rem}
+  .sources{grid-template-columns:1fr}
+  .src:last-child:nth-child(odd){grid-column:auto}
+  .wide{margin-left:0;margin-right:0}
+  .hscroll{overflow-x:auto}
+  .hscroll svg{min-width:620px}
+  .hscroll img{max-width:none}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>How mRNA vaccines work<span class="dot">.</span></h1>
+
+<h2 id="sources" style="margin-top:0;border-top:0;padding-top:0">Sources</h2>
+<div class="sources">
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5906799/">mRNA vaccines — a new era in vaccinology<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">Norbert Pardi, Michael J. Hogan, Frederick W. Porter, and Drew Weissman · Review article, Nature Reviews Drug Discovery · January 2018</p>
+    <p>Written by the lab that developed the modified-mRNA and lipid-particle design the COVID vaccines use, so it is a reliable guide to how the platform works. It predates those vaccines and its authors hold interests in the technology, so it is used for mechanism only.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://www.nobelprize.org/prizes/medicine/2023/press-release/">Press release: The Nobel Prize in Physiology or Medicine 2023<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">The Nobel Assembly at Karolinska Institutet · Prize announcement, nobelprize.org · October 2023</p>
+    <p>The prize committee's summary of the experiments showing that altered mRNA letters quiet the inflammatory alarm. It is a plain-language secondary account, not a methods source.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7745181/">Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">Fernando P. Polack, Stephen J. Thomas, and colleagues · Randomized controlled trial, New England Journal of Medicine · December 2020</p>
+    <p>The pivotal Pfizer–BioNTech trial: about 43,500 people randomly given vaccine or saline, cases confirmed by lab test. It was company-sponsored and followed people for a median of two months, before Delta and Omicron.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8786601/">Immune imprinting, breadth of variant recognition, and germinal center response in human SARS-CoV-2 infection and vaccination<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">Katharina Röltgen, Sandra C. A. Nielsen, and colleagues · Research article, Cell · January 2022</p>
+    <p>Stanford pathologists stained vaccinated people's lymph node biopsies with a probe that detects only vaccine mRNA, so it shows directly where the mRNA went and how long it stayed. Only seven vaccinees were compared, sampled at irregular times.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8863502/">Duration of effectiveness of vaccines against SARS-CoV-2 infection and COVID-19 disease: results of a systematic review and meta-regression<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">Daniel R. Feikin, Melissa M. Higdon, and colleagues · Systematic review and meta-regression, The Lancet · February 2022</p>
+    <p>A World Health Organization–led team pooled 18 studies and rated each for bias, a sound measure of how protection changed over six months. All the studies predate Omicron, and seven had a serious risk of bias.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8946961/">Intracellular Reverse Transcription of Pfizer BioNTech COVID-19 mRNA Vaccine BNT162b2 In Vitro in Human Liver Cell Line<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">Markus Aldén, Francisko Olofsson Falla, and colleagues · Laboratory research article, Current Issues in Molecular Biology · February 2022</p>
+    <p>Original lab data and the study most cited as evidence that the vaccine touches DNA, read here for exactly what it measured. It used liver cancer cells in a dish, and its authors say they did not show genome insertion.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9164063/">Comment on Aldén et al. Intracellular Reverse Transcription of Pfizer BioNTech COVID-19 mRNA Vaccine BNT162b2 In Vitro in Human Liver Cell Line<span class="ext" aria-hidden="true">↗</span></a></p>
+    <p class="m">Hamid A. Merchant · Published comment, Current Issues in Molecular Biology · April 2022</p>
+    <p>A pharmaceutics researcher's critique of why the cell-line result may not carry over to vaccinated people. It is an argument, with no new experiments.</p>
+  </div>
+</div>
+
+<h2 id="answer">The short answer</h2>
+<p class="answer">The shot delivers a temporary recipe, written in mRNA, for one harmless piece of the virus: its surface spike protein. Some of your cells read the recipe and build spike, the same way they build their own proteins. Your immune system meets spike without the virus, learns its shape, and keeps antibodies and memory cells that recognize the real virus later. The recipe does not become part of your DNA: it works outside the nucleus where DNA is kept, your cells have no routine way to turn it back into DNA, and it is broken down within days to weeks.</p>
+
+<h2 id="mrna">mRNA is a disposable copy of one gene</h2>
+<p>Your DNA, the permanent instructions for building proteins, stays inside the cell's nucleus. Proteins are built outside it, in the cytoplasm, by machines called ribosomes. So the cell copies one gene into messenger RNA (mRNA), which leaves the nucleus; a ribosome reads it and builds the protein, and the cell then destroys the mRNA. Traffic runs one way, DNA to mRNA to protein, and a ribosome will read an mRNA the cell did not write like any other.</p>
+
+<h2 id="shot">What is in the shot</h2>
+<p>The Pfizer–BioNTech and Moderna vaccines both encode the spike protein of SARS-CoV-2, which the virus uses to enter cells and which antibodies most need to recognize. Spike alone cannot build a virus, and the vaccine carries no other virus genes. Two small edits lock spike in its pre-attack shape, the shape antibodies should learn.</p>
+<p>Loose RNA is quickly destroyed and crosses cell membranes poorly, so the mRNA is wrapped in a lipid nanoparticle, a ball of fat-like molecules about 100 nanometres across, which cells swallow and which releases the mRNA into the cytoplasm.</p>
+<p>Cells also treat incoming RNA as a sign of infection, setting off inflammation and slowing protein making. Katalin Karikó and Drew Weissman found, from 2005 on, that swapping the RNA letter uridine for a natural variant, pseudouridine, largely silenced that alarm and raised protein output. This nucleoside modification won the 2023 Nobel Prize; the vaccines use a close relative, 1-methylpseudouridine.</p>
+<figure>
+  <a href="assets/nobel-fig2.jpg"><img src="assets/nobel-fig2-1200.jpg" width="1200" height="1061" alt="Two cells side by side. Left: mRNA with ordinary uridine enters a cell, little protein appears on the surface, and inflammatory signal molecules are released. Right: mRNA with pseudouridine enters, many proteins appear on the surface, and the inflammatory signal is crossed out."></a>
+  <figcaption>Unmodified mRNA (left) versus pseudouridine mRNA (right). Figure 2 from the <a href="https://www.nobelprize.org/prizes/medicine/2023/press-release/">2023 Nobel Prize press release</a>. © The Nobel Committee for Physiology or Medicine, illustration by Mattias Karlén; reuse terms not stated, shown with attribution. <a href="assets/nobel-fig2.jpg">Full size</a>.</figcaption>
+</figure>
+<p>The right-hand cell displays far more protein. The drawing overstates one point: the modification turns the alarm down, not off, and some useful stimulation remains.</p>
+
+<h2 id="immune">How making spike teaches the immune system</h2>
+<p>The vaccine never shows your body a virus; it gets your own cells to display spike for a while. Cells near the injection make spike and show fragments of it on their surface. Dendritic cells, immune cells that collect such samples, carry them to a nearby lymph node, where immune cells are trained.</p>
+<figure>
+  <a href="assets/pardi-fig3.jpg"><img src="assets/pardi-fig3.jpg" width="638" height="623" alt="Illustration of a needle injecting particle-wrapped mRNA into skin tissue, with immune cells taking it up and migrating to a lymph node. Three numbered boxes: 1 antigen expression in antigen-presenting cells, 2 dendritic cell maturation and migration, 3 activation of T follicular helper cells and germinal centre B cells."></a>
+  <figcaption>The three steps an injected mRNA vaccine depends on. Figure 3 from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5906799/">Pardi et al., 2018</a> (author manuscript; reuse terms not stated, shown with attribution).</figcaption>
+</figure>
+<p>Read the boxes in order: recipe read at the injection site (1), dendritic cells activate and travel (2), lasting immunity built in the lymph node (3). The drawing shows a skin injection; the COVID vaccines go into muscle, with the same sequence.</p>
+<p>There, the few B cells whose receptors happen to fit spike multiply. In clusters called germinal centres, helped by T follicular helper cells, they mutate their receptors and the best fits win, so antibodies improve over weeks. Some become antibody factories, others long-lived memory B cells; antibodies stuck to spike block the virus from entering cells. Killer T cells learn to destroy cells making spike, which in a real infection means infected cells. The trial team's earlier study found neutralizing antibodies and T cell responses after two doses.</p>
+<figure class="wide">
+  <div class="hscroll" tabindex="0" role="region" aria-label="Röltgen Figure 7, scroll sideways"><a href="assets/roltgen-fig7.jpg"><img src="assets/roltgen-fig7.jpg" width="766" height="967" alt="Multi-panel microscopy figure. Panel B shows lymph node tissue at days 7, 16, 37, 42 and 60 after the second dose stained with a control probe, a vaccine mRNA probe, and a spike antibody. Panels C to E are bar and line charts of detection over time."></a></div>
+  <figcaption>Vaccine mRNA (red dots, panel B middle column) and spike (brown, right column) in lymph node germinal centres 7 to 60 days after dose 2; panel D counts mRNA spots over time. Figure 7 from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8786601/">Röltgen et al., 2022</a>, Cell, under Elsevier's COVID-19 research re-use permission. <a href="assets/roltgen-fig7.jpg">Full size</a>.</figcaption>
+</figure>
+<p>This figure shows how long the recipe stays. In panel D, vaccine mRNA is high on days 16 and 37, drops steeply by day 42, and is faintly present at day 60, as is spike; unvaccinated biopsies showed none. So "gone in a few days" is too strong for lymph nodes, where weeks is accurate. The study is small and its biopsies were unscheduled.</p>
+
+<h2 id="evidence">What the trials showed</h2>
+<p>Among about 36,500 trial participants with no prior infection, 8 vaccinated people and 162 on placebo developed confirmed symptomatic COVID-19 from 7 days after the second dose. That is 95% efficacy: the vaccine group's risk was about one-twentieth of placebo's.</p>
+<figure class="wide">
+  <div class="hscroll" tabindex="0" role="region" aria-label="Polack Figure 3, scroll sideways"><a href="assets/polack-fig3.jpg"><img src="assets/polack-fig3.jpg" width="751" height="735" alt="Cumulative incidence chart of COVID-19 over 119 days after dose 1. The placebo line rises steadily to about 2.3 percent; the vaccine line rises with placebo for about 12 days and then flattens near 0.3 percent. A table below lists case counts and vaccine efficacy by time period."></a></div>
+  <figcaption>Share of participants with COVID-19 after the first dose, vaccine (red) versus placebo (blue). Figure 3 from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7745181/">Polack et al., 2020</a>, NEJM, PMC Open Access Subset. <a href="assets/polack-fig3.jpg">Full size</a>.</figcaption>
+</figure>
+<p>The lines track together for about 12 days, while immune training is under way, then the vaccine line goes nearly flat. The trial covered symptomatic illness over about two months against the original strain.</p>
+<p>Protection then faded unevenly. From one to six months after full vaccination, effectiveness fell on average about 21 percentage points against infection and 25 against symptomatic disease, but only 10 against severe disease, where most estimates stayed above 70%.</p>
+<figure class="wide">
+  <div class="hscroll" tabindex="0" role="region" aria-label="Feikin Figure 2, scroll sideways"><a href="assets/feikin-fig2.jpg"><img src="assets/feikin-fig2.jpg" width="779" height="845" alt="Grid of line charts of vaccine effectiveness against months since final dose, for severe disease, symptomatic disease and any infection, in all ages and older adults. Severe disease lines stay near 80 to 100 percent; infection lines slope downward."></a></div>
+  <figcaption>Vaccine effectiveness by months since the final dose and outcome; Pfizer–BioNTech and Moderna are the mRNA vaccines. Figure 2 from <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8863502/">Feikin et al., 2022</a>, The Lancet, CC BY 4.0. <a href="assets/feikin-fig2.jpg">Full size</a>.</figcaption>
+</figure>
+<p>The severe-disease panels on the left stay high while the infection panels on the right slope down, consistent with blood antibodies declining while memory cells persist. The studies predate Omicron, and some decline may reflect study bias.</p>
+
+<h2 id="dna">Why it does not change your DNA</h2>
+<p>For vaccine mRNA to alter your genes, three things would have to happen, and the vaccine supplies none of them.</p>
+<figure class="diagram" aria-labelledby="dna-cap">
+<div class="hscroll" tabindex="0" role="region" aria-label="Diagram, scroll sideways on small screens"><svg viewBox="0 0 720 330" role="img" aria-labelledby="dna-title dna-desc" style="width:100%;height:auto;display:block">
+  <title id="dna-title">Where vaccine mRNA goes in a cell</title>
+  <desc id="dna-desc">A cell with a nucleus holding DNA. Vaccine mRNA enters the cytoplasm, is read by a ribosome to make spike protein, and is then broken down. A dashed path toward the nucleus is blocked at three steps: copying RNA back into DNA, entering the nucleus, and inserting into a chromosome.</desc>
+  <rect x="10" y="10" width="700" height="310" rx="150" fill="#ffffff" stroke="#646c77" stroke-width="1.5"/>
+  <text x="180" y="42" font-size="13" fill="#646c77">Cytoplasm</text>
+  <ellipse cx="520" cy="170" rx="150" ry="105" fill="#f5f4f0" stroke="#2f6c9e" stroke-width="2"/>
+  <text x="520" y="92" font-size="13" text-anchor="middle" fill="#2f6c9e" font-weight="500">Nucleus</text>
+  <path d="M430 190 q15 -25 30 0 t30 0 t30 0 t30 0 t30 0" fill="none" stroke="#2f6c9e" stroke-width="3"/>
+  <path d="M430 200 q15 25 30 0 t30 0 t30 0 t30 0 t30 0" fill="none" stroke="#2f6c9e" stroke-width="3"/>
+  <text x="520" y="240" font-size="13" text-anchor="middle" fill="#101527">Your DNA (chromosomes)</text>
+  <path d="M50 160 q12 -10 24 0 t24 0 t24 0 t24 0" fill="none" stroke="#bf3030" stroke-width="3"/>
+  <text x="98" y="140" font-size="13" text-anchor="middle" fill="#bf3030" font-weight="500">Vaccine mRNA</text>
+  <circle cx="180" cy="165" r="16" fill="#46734d"/>
+  <text x="180" y="198" font-size="12" text-anchor="middle" fill="#46734d" font-weight="500">Ribosome</text>
+  <path d="M200 165 L232 165" stroke="#101527" stroke-width="1.5" marker-end="url(#ar)"/>
+  <text x="240" y="160" font-size="13" fill="#101527">Spike protein</text>
+  <text x="240" y="177" font-size="12" fill="#646c77">→ immune training</text>
+  <text x="98" y="232" font-size="12" text-anchor="middle" fill="#646c77">Broken down by</text>
+  <text x="98" y="248" font-size="12" text-anchor="middle" fill="#646c77">the cell's enzymes</text>
+  <path d="M98 175 L98 216" stroke="#646c77" stroke-width="1.5" marker-end="url(#ar)"/>
+  <path d="M130 120 C 210 60, 320 60, 378 120" fill="none" stroke="#101527" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <g font-size="12" fill="#101527">
+    <circle cx="220" cy="78" r="11" fill="#ffffff" stroke="#bf3030" stroke-width="1.5"/><text x="220" y="82" text-anchor="middle" fill="#bf3030" font-weight="500">1</text>
+    <circle cx="300" cy="66" r="11" fill="#ffffff" stroke="#bf3030" stroke-width="1.5"/><text x="300" y="70" text-anchor="middle" fill="#bf3030" font-weight="500">2</text>
+    <circle cx="370" cy="108" r="11" fill="#ffffff" stroke="#bf3030" stroke-width="1.5"/><text x="370" y="112" text-anchor="middle" fill="#bf3030" font-weight="500">3</text>
+  </g>
+  <text x="360" y="296" font-size="11.5" text-anchor="middle" fill="#101527"><tspan fill="#bf3030" font-weight="500">1</tspan> RNA to DNA (no enzyme) · <tspan fill="#bf3030" font-weight="500">2</tspan> enter nucleus (no signal) · <tspan fill="#bf3030" font-weight="500">3</tspan> into a chromosome (no enzyme)</text>
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#101527"/></marker></defs>
+</svg></div>
+<figcaption id="dna-cap">What the vaccine mRNA does (solid path) and the three steps it would need to change DNA (dashed). Drawn for this report from textbook cell biology; not to scale.</figcaption>
+</figure>
+<p>First, the RNA would have to be copied into DNA, which needs an enzyme called reverse transcriptase; HIV carries one, but the vaccine has none and SARS-CoV-2 does not use one. Second, that DNA would have to enter the nucleus, but the mRNA is read in the cytoplasm and has no signal to cross into it. Third, it would have to be cut into a chromosome, which needs an integrase enzyme, also absent. Meanwhile the cell breaks the mRNA down. Pardi and colleagues state the field's position:</p>
+<blockquote>"as mRNA is a non-infectious, non-integrating platform, there is no potential risk of infection or insertional mutagenesis"<cite>Pardi et al., 2018</cite></blockquote>
+<p>That is a statement about mechanism from the platform's developers; no genome scan of vaccinated people was found to cite either way.</p>
+<p>The worry has a source. Human cells carry their own reverse-transcriptase genes in self-copying DNA segments called LINE-1, and in 2022 Aldén and colleagues added vaccine to Huh7 liver cancer cells in a dish and within 6 hours detected DNA matching part of the vaccine sequence. They were explicit about the limit:</p>
+<blockquote>"At this stage, we do not know if DNA reverse transcribed from BNT162b2 is integrated into the cell genome."<cite>Aldén et al., 2022</cite></blockquote>
+<p>Huh7 cells divide constantly and, as the authors and Merchant both note, differ from healthy cells in ways that may favour reverse transcription, and Merchant's comment argues the dish doses exceeded what tissues see. The result is a reason for follow-up studies, not evidence that anyone's genome changed.</p>
+
+<h2 id="limits">Limits</h2>
+<p>The efficacy figures describe the original vaccines and virus over months, not years. Side effects are outside this report; the trial was too small to detect rare ones. The DNA answer rests on established molecular biology, not a genome survey of vaccinated people.</p>
+</main>
+</body>
+</html>

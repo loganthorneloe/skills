@@ -1,0 +1,31 @@
+<svg viewBox="0 0 680 360" role="img" aria-labelledby="chart-title chart-desc" class="chart">
+<title id="chart-title">Report length against judged quality</title>
+<desc id="chart-desc">Each mark is one report. Horizontal position is reading length as a percentage of the same topic's baseline; vertical position is the blind judge total divided by the baseline total. Distill and hybrid sit up and to the left of the baselines; budget alone sits lowest among short reports on isolation.</desc>
+<line x1="64" x2="656" y1="304.0" y2="304.0" class="grid"/><text x="56" y="308.0" class="tick" text-anchor="end">0.9×</text>
+<line x1="64" x2="656" y1="209.3" y2="209.3" class="grid base"/><text x="56" y="213.3" class="tick" text-anchor="end">1.0×</text>
+<line x1="64" x2="656" y1="114.7" y2="114.7" class="grid"/><text x="56" y="118.7" class="tick" text-anchor="end">1.1×</text>
+<line x1="64" x2="656" y1="20.0" y2="20.0" class="grid"/><text x="56" y="24.0" class="tick" text-anchor="end">1.2×</text>
+<line x1="64.0" x2="64.0" y1="20" y2="304" class="grid"/><text x="64.0" y="322" class="tick" text-anchor="middle">0%</text>
+<line x1="192.7" x2="192.7" y1="20" y2="304" class="grid"/><text x="192.7" y="322" class="tick" text-anchor="middle">25%</text>
+<line x1="321.4" x2="321.4" y1="20" y2="304" class="grid"/><text x="321.4" y="322" class="tick" text-anchor="middle">50%</text>
+<line x1="450.1" x2="450.1" y1="20" y2="304" class="grid"/><text x="450.1" y="322" class="tick" text-anchor="middle">75%</text>
+<line x1="578.8" x2="578.8" y1="20" y2="304" class="grid"/><text x="578.8" y="322" class="tick" text-anchor="middle">100%</text>
+<text x="360.0" y="348" class="axis" text-anchor="middle">Reading length, % of baseline</text>
+<text transform="translate(16 162.0) rotate(-90)" class="axis" text-anchor="middle">Judge score vs baseline</text>
+<circle cx="583.9" cy="209.3" r="6" class="mk baseline"/>
+<circle cx="573.6" cy="209.3" r="6" class="mk baseline"/>
+<rect x="532.1" y="214.2" width="11" height="11" class="mk baseline"/>
+<rect x="614.5" y="193.4" width="11" height="11" class="mk baseline"/>
+<path d="M578.8 202.3 L585.3 214.3 L572.3 214.3 Z" class="mk baseline"/>
+<circle cx="218.4" cy="267.1" r="6" class="mk budget"/>
+<rect x="223.2" y="172.6" width="11" height="11" class="mk budget"/>
+<circle cx="352.3" cy="190.4" r="6" class="mk select"/>
+<rect x="388.0" y="151.8" width="11" height="11" class="mk select"/>
+<circle cx="213.3" cy="209.3" r="6" class="mk combined"/>
+<rect x="228.4" y="89.3" width="11" height="11" class="mk combined"/>
+<path d="M295.7 202.3 L302.2 214.3 L289.2 214.3 Z" class="mk combined"/>
+<circle cx="285.4" cy="112.8" r="6" class="mk distill"/>
+<rect x="300.4" y="47.6" width="11" height="11" class="mk distill"/>
+<path d="M254.5 220.3 L261.0 232.3 L248.0 232.3 Z" class="mk distill"/>
+<path d="M336.8 113.3 L343.3 125.3 L330.3 125.3 Z" class="mk hybrid"/>
+</svg>

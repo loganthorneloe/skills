@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Introduction | Causal Inference</title>
+  <meta name="description" content="Online notes to accompany the APTS/StatML/Foundations of AI module on Causal Inference" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Introduction | Causal Inference" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="/images/causal.jpg" />
+  <meta property="og:description" content="Online notes to accompany the APTS/StatML/Foundations of AI module on Causal Inference" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Introduction | Causal Inference" />
+  
+  <meta name="twitter:description" content="Online notes to accompany the APTS/StatML/Foundations of AI module on Causal Inference" />
+  <meta name="twitter:image" content="/images/causal.jpg" />
+
+<meta name="author" content="Vanessa Didelez and Robin J. Evans" />
+
+
+<meta name="date" content="2025-11-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="frameworks.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">APTS: Causal Inference Module</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a>
+<ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#aims-of-course"><i class="fa fa-check"></i>Aims of Course</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#history-of-causal-inference"><i class="fa fa-check"></i>History of Causal Inference</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#philosophy"><i class="fa fa-check"></i>Philosophy</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#ques"><i class="fa fa-check"></i><b>1.1</b> Statistical vs causal questions</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#tt"><i class="fa fa-check"></i><b>1.2</b> Target Trials</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#tte"><i class="fa fa-check"></i><b>1.3</b> Target Trial Emulation</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="frameworks.html"><a href="frameworks.html"><i class="fa fa-check"></i><b>2</b> Frameworks for Statistical Causality</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="frameworks.html"><a href="frameworks.html#the-do-approach"><i class="fa fa-check"></i><b>2.1</b> The ‘do’ approach</a></li>
+<li class="chapter" data-level="2.2" data-path="frameworks.html"><a href="frameworks.html#potential-outcomes"><i class="fa fa-check"></i><b>2.2</b> Potential Outcomes</a></li>
+<li class="chapter" data-level="2.3" data-path="frameworks.html"><a href="frameworks.html#structural-equation-models"><i class="fa fa-check"></i><b>2.3</b> Structural equation models</a></li>
+<li class="chapter" data-level="2.4" data-path="frameworks.html"><a href="frameworks.html#decision-theoretic-approach"><i class="fa fa-check"></i><b>2.4</b> Decision theoretic approach</a></li>
+<li class="chapter" data-level="2.5" data-path="frameworks.html"><a href="frameworks.html#finest-fully-randomized-causally-interpretable-structured-tree-graphs"><i class="fa fa-check"></i><b>2.5</b> Finest fully randomized causally interpretable structured tree graphs</a></li>
+<li class="chapter" data-level="2.6" data-path="frameworks.html"><a href="frameworks.html#a-hierarchy-of-the-frameworks"><i class="fa fa-check"></i><b>2.6</b> A hierarchy of the frameworks</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="ce.html"><a href="ce.html"><i class="fa fa-check"></i><b>3</b> Causal Effects</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="ce.html"><a href="ce.html#effects-in-different-populations"><i class="fa fa-check"></i><b>3.1</b> Effects in different populations</a></li>
+<li class="chapter" data-level="3.2" data-path="ce.html"><a href="ce.html#conditional-effects"><i class="fa fa-check"></i><b>3.2</b> Conditional effects</a></li>
+<li class="chapter" data-level="3.3" data-path="ce.html"><a href="ce.html#multiple-time-points"><i class="fa fa-check"></i><b>3.3</b> Multiple time points</a></li>
+<li class="chapter" data-level="3.4" data-path="ce.html"><a href="ce.html#mediation-effects"><i class="fa fa-check"></i><b>3.4</b> Mediation effects</a></li>
+<li class="chapter" data-level="3.5" data-path="ce.html"><a href="ce.html#principal-stratum-effects"><i class="fa fa-check"></i><b>3.5</b> Principal stratum effects</a></li>
+<li class="chapter" data-level="3.6" data-path="ce.html"><a href="ce.html#other-contrasts"><i class="fa fa-check"></i><b>3.6</b> Other contrasts</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ci.html"><a href="ci.html"><i class="fa fa-check"></i><b>4</b> Conditional independence</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ci.html"><a href="ci.html#independence"><i class="fa fa-check"></i><b>4.1</b> Independence</a></li>
+<li class="chapter" data-level="4.2" data-path="ci.html"><a href="ci.html#conditional-independence"><i class="fa fa-check"></i><b>4.2</b> Conditional Independence</a></li>
+<li class="chapter" data-level="" data-path="ci.html"><a href="ci.html#bibliographic-notes"><i class="fa fa-check"></i>Bibliographic Notes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="gm.html"><a href="gm.html"><i class="fa fa-check"></i><b>5</b> Graphical Models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="gm.html"><a href="gm.html#definitions"><i class="fa fa-check"></i><b>5.1</b> Definitions</a></li>
+<li class="chapter" data-level="5.2" data-path="gm.html"><a href="gm.html#markov-properties"><i class="fa fa-check"></i><b>5.2</b> Markov Properties</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="gm.html"><a href="gm.html#factorization-and-the-local-markov-property"><i class="fa fa-check"></i><b>5.2.1</b> Factorization and the local Markov property</a></li>
+<li class="chapter" data-level="5.2.2" data-path="gm.html"><a href="gm.html#global-markov-property"><i class="fa fa-check"></i><b>5.2.2</b> Global Markov property</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="gm.html"><a href="gm.html#dsep"><i class="fa fa-check"></i><b>5.3</b> Paths and d-separation</a></li>
+<li class="chapter" data-level="5.4" data-path="gm.html"><a href="gm.html#ancestrality"><i class="fa fa-check"></i><b>5.4</b> Ancestrality</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cgm.html"><a href="cgm.html"><i class="fa fa-check"></i><b>6</b> Causal graphical models</a></li>
+<li class="chapter" data-level="7" data-path="scm.html"><a href="scm.html"><i class="fa fa-check"></i><b>7</b> Structural causal models</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="scm.html"><a href="scm.html#definition"><i class="fa fa-check"></i><b>7.1</b> Definition</a></li>
+<li class="chapter" data-level="7.2" data-path="scm.html"><a href="scm.html#cross-world-independences"><i class="fa fa-check"></i><b>7.2</b> Cross-world independences</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="swigs.html"><a href="swigs.html"><i class="fa fa-check"></i><b>8</b> Single World Intervention Graphs</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="swigs.html"><a href="swigs.html#swigs-1"><i class="fa fa-check"></i><b>8.1</b> SWIGs</a></li>
+<li class="chapter" data-level="8.2" data-path="swigs.html"><a href="swigs.html#model-definition"><i class="fa fa-check"></i><b>8.2</b> Model Definition</a></li>
+<li class="chapter" data-level="8.3" data-path="swigs.html"><a href="swigs.html#d-separation-in-swigs"><i class="fa fa-check"></i><b>8.3</b> d-separation in SWIGs</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="causassmp.html"><a href="causassmp.html"><i class="fa fa-check"></i><b>9</b> Causal assumptions</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="causassmp.html"><a href="causassmp.html#ssc"><i class="fa fa-check"></i><b>9.1</b> No unobserved confounding</a></li>
+<li class="chapter" data-level="9.2" data-path="causassmp.html"><a href="causassmp.html#asspos"><i class="fa fa-check"></i><b>9.2</b> Positivity</a></li>
+<li class="chapter" data-level="9.3" data-path="causassmp.html"><a href="causassmp.html#cons"><i class="fa fa-check"></i><b>9.3</b> Consistency</a></li>
+<li class="chapter" data-level="9.4" data-path="causassmp.html"><a href="causassmp.html#assnoinf"><i class="fa fa-check"></i><b>9.4</b> No interference</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="or.html"><a href="or.html"><i class="fa fa-check"></i><b>10</b> Outcome Regression</a></li>
+<li class="chapter" data-level="11" data-path="ps.html"><a href="ps.html"><i class="fa fa-check"></i><b>11</b> Propensity scores</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ps.html"><a href="ps.html#balancing-scores"><i class="fa fa-check"></i><b>11.1</b> Balancing scores</a></li>
+<li class="chapter" data-level="11.2" data-path="ps.html"><a href="ps.html#htest"><i class="fa fa-check"></i><b>11.2</b> Horvitz-Thompson estimator</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="dr.html"><a href="dr.html"><i class="fa fa-check"></i><b>12</b> Doubly Robust Estimation</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="dr.html"><a href="dr.html#estimating-equations"><i class="fa fa-check"></i><b>12.1</b> Estimating equations</a></li>
+<li class="chapter" data-level="12.2" data-path="dr.html"><a href="dr.html#aipw"><i class="fa fa-check"></i><b>12.2</b> Augmented inverse probability weighting</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="covadj.html"><a href="covadj.html"><i class="fa fa-check"></i><b>13</b> Covariate adjustment</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="covadj.html"><a href="covadj.html#parent-sets"><i class="fa fa-check"></i><b>13.1</b> Parent sets</a></li>
+<li class="chapter" data-level="13.2" data-path="covadj.html"><a href="covadj.html#back-door-adjustment"><i class="fa fa-check"></i><b>13.2</b> Back-door adjustment</a></li>
+<li class="chapter" data-level="13.3" data-path="covadj.html"><a href="covadj.html#examples"><i class="fa fa-check"></i><b>13.3</b> Examples</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="effadj.html"><a href="effadj.html"><i class="fa fa-check"></i><b>14</b> Efficient adjustment</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="effadj.html"><a href="effadj.html#optimal-adjustment-set"><i class="fa fa-check"></i><b>14.1</b> Optimal adjustment set</a></li>
+<li class="chapter" data-level="14.2" data-path="effadj.html"><a href="effadj.html#other-scenarios"><i class="fa fa-check"></i><b>14.2</b> Other scenarios</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="fp.html"><a href="fp.html"><i class="fa fa-check"></i><b>15</b> Forbidden projection</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="fp.html"><a href="fp.html#lp"><i class="fa fa-check"></i><b>15.1</b> Latent projection</a></li>
+<li class="chapter" data-level="15.2" data-path="fp.html"><a href="fp.html#adjustment-sets"><i class="fa fa-check"></i><b>15.2</b> Adjustment sets</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="bias.html"><a href="bias.html"><i class="fa fa-check"></i><b>16</b> Causal biases</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="bias.html"><a href="bias.html#confounding-bias"><i class="fa fa-check"></i><b>16.1</b> Confounding bias</a></li>
+<li class="chapter" data-level="16.2" data-path="bias.html"><a href="bias.html#selection-bias"><i class="fa fa-check"></i><b>16.2</b> Selection bias</a></li>
+<li class="chapter" data-level="16.3" data-path="bias.html"><a href="bias.html#bias-due-to-conditioning-on-a-mediator"><i class="fa fa-check"></i><b>16.3</b> Bias due to conditioning on a mediator</a></li>
+<li class="chapter" data-level="16.4" data-path="bias.html"><a href="bias.html#time-related-biases"><i class="fa fa-check"></i><b>16.4</b> Time-related biases</a>
+<ul>
+<li class="chapter" data-level="16.4.1" data-path="bias.html"><a href="bias.html#time-dependent-confounding"><i class="fa fa-check"></i><b>16.4.1</b> Time-dependent confounding</a></li>
+<li class="chapter" data-level="16.4.2" data-path="bias.html"><a href="bias.html#attrition-bias"><i class="fa fa-check"></i><b>16.4.2</b> Attrition bias</a></li>
+<li class="chapter" data-level="16.4.3" data-path="bias.html"><a href="bias.html#immortal-time-bias"><i class="fa fa-check"></i><b>16.4.3</b> Immortal time bias</a></li>
+<li class="chapter" data-level="16.4.4" data-path="bias.html"><a href="bias.html#prevalent-user-bias"><i class="fa fa-check"></i><b>16.4.4</b> Prevalent user bias</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="msm.html"><a href="msm.html"><i class="fa fa-check"></i><b>17</b> Marginal structural models</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="msm.html"><a href="msm.html#estimation-and-inference"><i class="fa fa-check"></i><b>17.1</b> Estimation and inference</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="machine-learning-approaches.html"><a href="machine-learning-approaches.html"><i class="fa fa-check"></i><b>18</b> Machine learning approaches</a></li>
+<li class="chapter" data-level="19" data-path="pds.html"><a href="pds.html"><i class="fa fa-check"></i><b>19</b> Post-double selection</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="pds.html"><a href="pds.html#frisch-waugh-lovell-theorem"><i class="fa fa-check"></i><b>19.1</b> Frisch-Waugh-Lovell Theorem</a></li>
+<li class="chapter" data-level="19.2" data-path="pds.html"><a href="pds.html#sparsity"><i class="fa fa-check"></i><b>19.2</b> Sparsity</a>
+<ul>
+<li class="chapter" data-level="19.2.1" data-path="pds.html"><a href="pds.html#simulation"><i class="fa fa-check"></i><b>19.2.1</b> Simulation</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="double-machine-learning.html"><a href="double-machine-learning.html"><i class="fa fa-check"></i><b>20</b> Double Machine Learning</a>
+<ul>
+<li class="chapter" data-level="20.1" data-path="double-machine-learning.html"><a href="double-machine-learning.html#conditions-for-double-ml"><i class="fa fa-check"></i><b>20.1</b> Conditions for Double ML</a></li>
+<li class="chapter" data-level="20.2" data-path="double-machine-learning.html"><a href="double-machine-learning.html#eligibility-for-401k-example"><i class="fa fa-check"></i><b>20.2</b> Eligibility for 401(k) Example</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="cf.html"><a href="cf.html"><i class="fa fa-check"></i><b>21</b> Causal Forests</a>
+<ul>
+<li class="chapter" data-level="21.1" data-path="cf.html"><a href="cf.html#random-forests"><i class="fa fa-check"></i><b>21.1</b> Random Forests</a></li>
+<li class="chapter" data-level="21.2" data-path="cf.html"><a href="cf.html#causal-forests"><i class="fa fa-check"></i><b>21.2</b> Causal Forests</a></li>
+<li class="chapter" data-level="21.3" data-path="cf.html"><a href="cf.html#asymptotics"><i class="fa fa-check"></i><b>21.3</b> Asymptotics</a></li>
+<li class="chapter" data-level="21.4" data-path="cf.html"><a href="cf.html#r-implementation"><i class="fa fa-check"></i><b>21.4</b> R Implementation</a></li>
+<li class="chapter" data-level="21.5" data-path="cf.html"><a href="cf.html#burn-the-forest"><i class="fa fa-check"></i><b>21.5</b> Burn the forest</a></li>
+</ul></li>
+<li class="chapter" data-level="22" data-path="bart.html"><a href="bart.html"><i class="fa fa-check"></i><b>22</b> Bayesian Additive Regression Trees</a>
+<ul>
+<li class="chapter" data-level="22.1" data-path="bart.html"><a href="bart.html#bart-on-our-data"><i class="fa fa-check"></i><b>22.1</b> BART on our data</a></li>
+</ul></li>
+<li class="chapter" data-level="23" data-path="meta-learners.html"><a href="meta-learners.html"><i class="fa fa-check"></i><b>23</b> Meta-Learners</a></li>
+<li class="chapter" data-level="24" data-path="tvc.html"><a href="tvc.html"><i class="fa fa-check"></i><b>24</b> Time-varying confounding</a></li>
+<li class="chapter" data-level="25" data-path="mediation.html"><a href="mediation.html"><i class="fa fa-check"></i><b>25</b> Mediation</a></li>
+<li class="chapter" data-level="26" data-path="iv.html"><a href="iv.html"><i class="fa fa-check"></i><b>26</b> Instrumental variables</a></li>
+<li class="chapter" data-level="27" data-path="causal-discovery.html"><a href="causal-discovery.html"><i class="fa fa-check"></i><b>27</b> Causal discovery</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Causal Inference</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction<a href="intro.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The most important feature in the study of causal inference, is to note that you will only be
+able to obtain a causally interpretable answer if you start with a causally
+interpretable question! This is discussed in Section <a href="intro.html#ques">1.1</a>. From there,
+we suggest thinking about the ideal ‘target trial’ (Section <a href="intro.html#tt">1.2</a>), and
+trying to emulate such a trial from the observational data provided (<a href="intro.html#tte">1.3</a>).</p>
+<div id="ques" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Statistical vs causal questions<a href="intro.html#ques" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The major difference between standard statistical inference and causal inference
+is the kind of questions that we try to answer. Statistics is typically
+concerned with either describing a system or predicting (or classifying) an
+observation. In causal inference the question will–either explicitly or
+implicitly–involve some sort of intervention that can, at least in principle,
+be modified.</p>
+<p>As an example, the following two questions would fall into the category of
+descriptive or predictive:</p>
+<ul>
+<li><p>“Is this patient at high risk of developing complications during
+surgery?”</p></li>
+<li><p>“Is this patient suitable for surgery?”</p></li>
+</ul>
+<p>In contrast, the following questions are causal in their nature:</p>
+<ul>
+<li><p>“Which type of anaesthetic should this patient receive to minimise
+the risk of complications during surgery?”</p></li>
+<li><p>“How does the amount of anaesthetic affect the risk of
+complications during surgery?”</p></li>
+<li><p>“What can be done to reduce the risk of complications during
+surgery for an average / a particular type of patient?”</p></li>
+</ul>
+<p>The first two questions make no reference to any sort of intervention while
+the final three all do, even if only implicitly. Figure <a href="intro.html#fig:whatif">1.1</a> gives
+a cartoon illustrating the differences between statistical and causal inference:
+in the former, we are only interested in the relationship between the observed
+outcomes under the two settings; for causal inference, we are interested in
+what <em>would have</em> happened to (a subset of) the population if everyone had been
+treated compared with everyone given the control.</p>
+<div class="figure"><span style="display:block;" id="fig:whatif"></span>
+<img src="_main_files/figure-html/whatif-1.png" alt="Illustration of the differences between associational and causal questions.  Adapted from @hernan25whatif" width="80%" />
+<p class="caption">
+Figure 1.1: Illustration of the differences between associational and causal questions. Adapted from <span class="citation">Hernán and Robins (<a href="#ref-hernan25whatif">2025</a>)</span>
+</p>
+</div>
+</div>
+<div id="tt" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Target Trials<a href="intro.html#tt" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The concept of the target trial was fully introduced by <span class="citation">Hernán and Robins (<a href="#ref-hernan16target">2016</a>)</span>,
+building on principles that were given in <span class="citation">Hernán et al. (<a href="#ref-hernan08observational">2008</a>)</span>. The earlier
+work looked at an apparent discrepancy between randomized controlled trials—which
+seemed to show that hormone replacement therapy had a detrimental effect on
+cardiovascular outcomes for post-menopausal women—and observational studies—in
+which the effect was beneficial; Hernán et al. showed that, once the randomized
+trials were emulated in the observational data, both datasets showed that HRT
+has a detrimental effect.</p>
+<p>The idea is to either take an ideal trial, or consider how you <em>would</em> estimate
+the causal effect of interest
+if you were able to run an ideal trial. This ideal trial is then <em>emulated</em>
+using the available data, which is usually observational (see Section
+<a href="intro.html#tte">1.3</a>). The five main things to
+consider can be remembered using the mnemonic PICOT.</p>
+<ul>
+<li><p><strong>P</strong>opulation: the group in which you wish to estimate the causal
+effect.</p></li>
+<li><p><strong>I</strong>ntervention: a precise description of the treatment arm.</p></li>
+<li><p><strong>C</strong>omparison: what is the group with which you wish to compare the treatment arm?</p></li>
+<li><p><strong>O</strong>utcome: the response you intend to measure.</p></li>
+<li><p><strong>T</strong>ime: how will you determine the start and end of follow-up?</p></li>
+</ul>
+<p>We will also need to specify a causal effect that we wish to estimate. To make
+this more comcrete, we include Table <a href="intro.html#tab:tttab">1.1</a>, giving the TT specification
+used in the hormone replacement therapy example.</p>
+<table>
+<caption><span id="tab:tttab">Table 1.1: </span> An example of an analysis plan for a target trial, adapted from Table 1 of <span class="citation">Hernán and Robins (<a href="#ref-hernan16target">2016</a>)</span>.</caption>
+<colgroup>
+<col width="46%" />
+<col width="53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Protocol element</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Population</td>
+<td align="left">Postmenopausal women within 5 years of menopause and with no history of cancer and no hormone therapy over past 2 years.</td>
+</tr>
+<tr class="even">
+<td align="left">Intervention</td>
+<td align="left">Initiate estrogen plus progestin hormone therapy at baseline and remain on it during the follow-up unless you are diagnosed with deep vein thrombosis, pulmonary embolism, myocardial infarction, or cancer.</td>
+</tr>
+<tr class="odd">
+<td align="left">Comparison</td>
+<td align="left">Refrain from taking hormone therapy during the follow-up.</td>
+</tr>
+<tr class="even">
+<td align="left">Outcome</td>
+<td align="left">Breast cancer diagnosed by an oncologist within 5 years of baseline.</td>
+</tr>
+<tr class="odd">
+<td align="left">Time</td>
+<td align="left">Starts at randomization and ends at diagnosis of breast cancer, death, loss to follow-up, or 5 years after baseline, whichever occurs first.</td>
+</tr>
+</tbody>
+</table>
+<!-- | Assignment procedures | Participants will be randomly assigned to either strategy at baseline and will be aware of the strategy to which they have been assigned. | -->
+<!-- | Causal contrasts of interest | Intention-to-treat effect, per-protocol effect. | -->
+<!-- | Analysis plan | Intention-to-treat effect estimated via comparison of 5-year cancer risks among individuals assigned to each treatment strategy. Per-protocol effect estimation requires adjustments for pre- and post-baseline prognostic factors associated with adherence to the strategies of interest. All analyses will be adjusted for pre- and post-baseline prognostic factors associated with loss to follow-up. This analysis plan implies that the investigators prespecify and collect data on the adjustment factors. | -->
+</div>
+<div id="tte" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Target Trial Emulation<a href="intro.html#tte" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Having formulated the ideal trial, it remains to try to emulate it using the
+available (and generally observational) data. The first action is to apply the
+inclusion and exclusion criteria specified in the ideal trial to your observational
+data. Depending upon your data and the criteria you specify, you may end up
+with a very small number of observations. In this case, it is sensible to consider
+whether you could weaken your criteria to include more observations.</p>
+<p>You should next determine which of the remaining individuals should be considered
+as control units, and which as treated units. Again, there may be some that do
+not qualify as either, and again this may need to be relaxed if the sample size
+gets too small.</p>
+<p>Then consider how you will measure the outcome in your observational data. Often
+this is not possible to do exactly, and you may have to make do with (for example)
+a disease code being applied at a certain time.</p>
+<p>Finally, think about how you will define the time zero (‘randomization’) in your
+treatment and control groups. This is generally particularly important in the
+control group, to avoid <a href="bias.html#bias">immortal time bias</a> and <a href="bias.html#bias">prevalent user bias</a>.</p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-hernan08observational" class="csl-entry">
+Hernán, Miguel A, Alvaro Alonso, Roger Logan, Francine Grodstein, Karin B Michels, Walter C Willett, JoAnn E Manson, and James M Robins. 2008. <span>“Observational Studies Analyzed Like Randomized Experiments: An Application to Postmenopausal Hormone Therapy and Coronary Heart Disease.”</span> <em>Epidemiology</em> 19 (6): 766–79.
+</div>
+<div id="ref-hernan16target" class="csl-entry">
+Hernán, Miguel A, and James M Robins. 2016. <span>“Using Big Data to Emulate a Target Trial When a Randomized Trial Is Not Available.”</span> <em>American Journal of Epidemiology</em> 183 (8): 758–64.
+</div>
+<div id="ref-hernan25whatif" class="csl-entry">
+———. 2025. <em>Causal Inference: What If</em>. Boca Raton: Chapman &amp; Hall/CRC.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="frameworks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-intro.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

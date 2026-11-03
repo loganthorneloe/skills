@@ -1,0 +1,443 @@
+{
+  "title": "Backpropagation prerequisite research graph",
+  "reader_assumptions": [
+    "Comfortable with signed arithmetic and basic Python variables/functions.",
+    "No calculus, derivatives, gradients, or neural-network knowledge assumed."
+  ],
+  "target": "target",
+  "nodes": [
+    {
+      "id": "arithmetic",
+      "question": "What numerical operations can we already use?",
+      "answer": "Signed numbers, sums, products, squares, comparisons, and substitution into formulas.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "functions",
+      "question": "How can a calculation reuse an earlier result?",
+      "answer": "A Python variable can store a value that later function calls or expressions use.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "weighted_sum",
+      "question": "What does a weight or bias control?",
+      "answer": "A neuron first computes z = sum(w_i*x_i)+b. A weight scales its input; bias shifts the total independently of the inputs.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "google-nodes",
+          "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+          "locator": "Opening linear-model equation",
+          "exact_claim": "A neuron first computes z = sum(w_i*x_i)+b. A weight scales its input; bias shifts the total independently of the inputs.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "hidden",
+      "question": "What is a hidden value?",
+      "answer": "An intermediate result computed from inputs and parameters and then used as input to later calculations.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "google-nodes",
+          "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+          "locator": "Adding layers to the network",
+          "exact_claim": "An intermediate result computed from inputs and parameters and then used as input to later calculations.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "activation",
+      "question": "Why include a nonlinear activation?",
+      "answer": "Weighted additions alone remain linear when composed. An activation such as ReLU, max(0,z), permits nonlinear behavior.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "google-nodes",
+          "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+          "locator": "Exercise 2; ReLU definition absent from packet",
+          "exact_claim": "Weighted additions alone remain linear when composed. An activation such as ReLU, max(0,z), permits nonlinear behavior.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "prediction",
+      "question": "How is the current prediction obtained?",
+      "answer": "Run the weighted sums and activations from inputs to output using the current parameters, retaining intermediate values.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "google-nodes",
+          "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+          "locator": "Adding layers to the network",
+          "exact_claim": "Run the weighted sums and activations from inputs to output using the current parameters, retaining intermediate values.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "label",
+      "question": "What does a labeled example supply?",
+      "answer": "An input and a desired output against which its prediction can be compared.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "sanderson-backprop",
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "Quick Recap",
+          "exact_claim": "An input and a desired output against which its prediction can be compared.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "loss",
+      "question": "How is prediction error made into one number?",
+      "answer": "For this scalar regression example choose L = (prediction-target)^2/2. Squaring makes deviations in either direction costly; the half is a convenient fixed scaling.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "sanderson-backprop",
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "Quick Recap: squared differences; half-scaling is our example choice",
+          "exact_claim": "For this scalar regression example choose L = (prediction-target)^2/2. Squaring makes deviations in either direction costly; the half is a convenient fixed scaling.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "sensitivity",
+      "question": "What does a derivative mean without assuming calculus?",
+      "answer": "It is the limiting ratio of output change to an input change as that input change approaches zero, with other independent inputs fixed. Its sign gives direction and magnitude gives local scale.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cs231n-backprop",
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "exact_claim": "It is the limiting ratio of output change to an input change as that input change approaches zero, with other independent inputs fixed. Its sign gives direction and magnitude gives local scale.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "add_rule",
+      "question": "How sensitive is a sum to either input?",
+      "answer": "For a+b, increasing a alone by a tiny amount increases the result by the same amount: sensitivity 1. The same holds for b.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cs231n-backprop",
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "exact_claim": "For a+b, increasing a alone by a tiny amount increases the result by the same amount: sensitivity 1. The same holds for b.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "multiply_rule",
+      "question": "How sensitive is a product to either input?",
+      "answer": "For a*b, the sensitivity to a is b, and to b is a, using the other input\u2019s current value.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cs231n-backprop",
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "exact_claim": "For a*b, the sensitivity to a is b, and to b is a, using the other input\u2019s current value.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "relu_rule",
+      "question": "How does ReLU pass a tiny change?",
+      "answer": "For z>0 ReLU has sensitivity 1; for z<0 it has sensitivity 0. At z=0 there is no ordinary derivative; an implementation must select a convention.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "chain",
+      "question": "How do sensitivities combine along successive operations?",
+      "answer": "Multiply local sensitivities along a path: if an intermediate changes by a times a tiny input change and the output changes by b times that intermediate change, the output change is approximately a*b times the input change.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cs231n-backprop",
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Compound expressions, chain rule, backpropagation",
+          "exact_claim": "Multiply local sensitivities along a path: if an intermediate changes by a times a tiny input change and the output changes by b times that intermediate change, the output change is approximately a*b times the input change.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "accumulate",
+      "question": "What happens when a value affects the loss through several uses?",
+      "answer": "Add the sensitivity returned from each use; overwriting loses part of its effect. For e*e, both input slots depend on e.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cs231n-backprop",
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Patterns in backward flow",
+          "exact_claim": "Add the sensitivity returned from each use; overwriting loses part of its effect. For e*e, both input slots depend on e.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "question": "How does backpropagation obtain every parameter sensitivity efficiently?",
+      "answer": "Start the loss sensitivity at 1. Visit recorded operations in reverse dependency order. Multiply incoming sensitivity by each local sensitivity, and add to each input\u2019s accumulated sensitivity. Saved forward values supply the local rules. This reuses downstream work across parameters.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "cs231n-backprop",
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Backprop in practice: Staged computation; Patterns in backward flow",
+          "exact_claim": "Start the loss sensitivity at 1. Visit recorded operations in reverse dependency order. Multiply incoming sensitivity by each local sensitivity, and add to each input\u2019s accumulated sensitivity. Saved forward values supply the local rules. This reuses downstream work across parameters.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "gradient",
+      "question": "What is the gradient with respect to the weights and biases?",
+      "answer": "The collection of loss sensitivities, one per adjustable parameter, evaluated at the present values. This measures local response, not a unique retrospective share of total error.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "sanderson-backprop",
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "What is Backpropagation?",
+          "exact_claim": "The collection of loss sensitivities, one per adjustable parameter, evaluated at the present values. This measures local response, not a unique retrospective share of total error.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "update",
+      "question": "How can a gradient change the parameters to lower loss?",
+      "answer": "Gradient descent sets each parameter to its old value minus learning_rate times its gradient component. A sufficiently small step is a local descent direction when the gradient is nonzero; a large step may fail.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "sanderson-backprop",
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "Quick Recap; stochastic gradient descent",
+          "exact_claim": "Gradient descent sets each parameter to its old value minus learning_rate times its gradient component. A sufficiently small step is a local descent direction when the gradient is nonzero; a large step may fail.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "training",
+      "question": "How does this calculation become learning over examples?",
+      "answer": "Repeat prediction, loss, backward calculation, and parameter update. To optimize mean loss over examples, average their gradient contributions; batches estimate this average. Recompute after updates because the values and sensitivities change.",
+      "status": "partial",
+      "evidence": [
+        {
+          "source": "sanderson-backprop",
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "Competing desired changes and stochastic gradient descent",
+          "exact_claim": "Repeat prediction, loss, backward calculation, and parameter update. To optimize mean loss over examples, average their gradient contributions; batches estimate this average. Recompute after updates because the values and sensitivities change.",
+          "basis": "supplied source packet paraphrase; full passage reconciliation pending"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "How does backpropagation tell a small network how to adjust each weight to learn?",
+      "answer": "It computes how a tiny change of each parameter would change the present scalar loss, by composing local arithmetic sensitivities backward through the forward calculation. An optimizer uses those sensitivities to update parameters, and training repeats this across examples.",
+      "status": "partial",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "to": "weighted_sum",
+      "why": "Products and sums must be understood to say what the parameters do.",
+      "from": "arithmetic"
+    },
+    {
+      "to": "hidden",
+      "why": "Hidden neurons in this chosen network perform weighted sums.",
+      "from": "weighted_sum"
+    },
+    {
+      "to": "hidden",
+      "why": "Intermediate values require understanding that later computations reuse earlier results.",
+      "from": "functions"
+    },
+    {
+      "to": "activation",
+      "why": "The linear calculation being modified must be identified to explain why a nonlinear operation is added.",
+      "from": "weighted_sum"
+    },
+    {
+      "to": "prediction",
+      "why": "The forward prediction depends on evaluating the intermediate layer first.",
+      "from": "hidden"
+    },
+    {
+      "to": "prediction",
+      "why": "This network\u2019s forward evaluation includes ReLU; omitting its rule leaves predictions undetermined.",
+      "from": "activation"
+    },
+    {
+      "to": "loss",
+      "why": "Loss cannot quantify the requested mismatch without a desired output.",
+      "from": "label"
+    },
+    {
+      "to": "loss",
+      "why": "Loss compares the actual computed prediction with that desired output.",
+      "from": "prediction"
+    },
+    {
+      "to": "sensitivity",
+      "why": "Small differences and ratios supply the non-calculus definition.",
+      "from": "arithmetic"
+    },
+    {
+      "to": "add_rule",
+      "why": "The numerical factor 1 only has meaning after defining a sensitivity.",
+      "from": "sensitivity"
+    },
+    {
+      "to": "multiply_rule",
+      "why": "The other-input factor must be interpreted as a local change ratio.",
+      "from": "sensitivity"
+    },
+    {
+      "to": "relu_rule",
+      "why": "The factors 0 and 1 describe local change ratios.",
+      "from": "sensitivity"
+    },
+    {
+      "to": "relu_rule",
+      "why": "ReLU\u2019s piecewise function must be known to determine its local response.",
+      "from": "activation"
+    },
+    {
+      "to": "chain",
+      "why": "Multiplying change ratios is unintelligible without defining those ratios.",
+      "from": "sensitivity"
+    },
+    {
+      "to": "accumulate",
+      "why": "For distinct routes, each route\u2019s composed effect must be determined before effects can be summed.",
+      "from": "chain"
+    },
+    {
+      "to": "reverse",
+      "why": "Backward propagation through weighted addition needs its local rule.",
+      "from": "add_rule"
+    },
+    {
+      "to": "reverse",
+      "why": "Backward propagation through weighting and squared error needs its product rule.",
+      "from": "multiply_rule"
+    },
+    {
+      "to": "reverse",
+      "why": "This chosen network includes a ReLU requiring its backward rule.",
+      "from": "relu_rule"
+    },
+    {
+      "to": "reverse",
+      "why": "Each backward input sensitivity combines incoming and local sensitivity.",
+      "from": "chain"
+    },
+    {
+      "to": "reverse",
+      "why": "Repeated uses require summing returned contributions, including the error used twice in its square.",
+      "from": "accumulate"
+    },
+    {
+      "to": "reverse",
+      "why": "A scalar objective anchors what all returned sensitivities refer to.",
+      "from": "loss"
+    },
+    {
+      "to": "gradient",
+      "why": "The requested gradient\u2019s computation requires the backward procedure.",
+      "from": "reverse"
+    },
+    {
+      "to": "update",
+      "why": "Update direction and amount use each parameter\u2019s sensitivity.",
+      "from": "gradient"
+    },
+    {
+      "to": "training",
+      "why": "Learning requires an actual parameter change between successive calculations.",
+      "from": "update"
+    },
+    {
+      "to": "training",
+      "why": "Combining examples requires adding their sensitivity contributions.",
+      "from": "accumulate"
+    },
+    {
+      "to": "target",
+      "why": "The answer needs the mechanism that computes parameter sensitivities.",
+      "from": "reverse"
+    },
+    {
+      "to": "target",
+      "why": "The answer needs the repeated update procedure that uses those sensitivities.",
+      "from": "training"
+    }
+  ],
+  "scope": {
+    "in": [
+      "Scalar feedforward regression with ReLU hidden units",
+      "Local sensitivities and shared-use accumulation",
+      "Traceable forward/backward/update example"
+    ],
+    "out": [
+      "Convergence proofs",
+      "Matrix calculus",
+      "Optimizer survey",
+      "Classifier probabilities"
+    ],
+    "limits": [
+      "Derivatives describe local effects, not historical causal shares of error.",
+      "One successful update is not a convergence or generalization guarantee."
+    ],
+    "optional": [
+      "Autograd implementation details"
+    ]
+  },
+  "examples": [
+    {
+      "id": "tiny-example",
+      "status": "planned",
+      "role": "requested arithmetic demonstration, not an additional conceptual prerequisite",
+      "plan": "Two ReLU hidden units, one scalar output, squared-error loss, all parameter sensitivities and one update."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "kind": "initial",
+      "basis": "assigned request and supplied packet only",
+      "gaps": [
+        "Exact derivative definition",
+        "ReLU forward and backward rule at and away from zero",
+        "Full-passage reconciliation",
+        "Local descent limits",
+        "Numerical trace not yet executed"
+      ],
+      "changes": "Initial graph saved before supplemental research."
+    }
+  ]
+}

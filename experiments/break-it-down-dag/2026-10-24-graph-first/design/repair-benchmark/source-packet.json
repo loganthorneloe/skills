@@ -1,0 +1,36 @@
+{
+  "topic": "Hash tables",
+  "reader_baseline": "Arithmetic and basic Python; no data-structures background.",
+  "scope": "Key lookup, collisions, growth, and performance limits.",
+  "retrieved_on": "2026-10-24",
+  "packet_notes": "Bibliographic order only. These generic set/table mechanisms can store dictionary key-value entries; this is not a CPython implementation account.",
+  "sources": [
+    {
+      "id":"cornell-hashing",
+      "title":"20. Hashing",
+      "publisher":"Cornell CS 2110",
+      "url":"https://courses.cis.cornell.edu/courses/cs2110/2026sp/lectures/lec20/",
+      "section_locator":"Hash Tables; Hashing; hashCode() Method; Hash Table Resizing",
+      "paraphrase":"An array allows direct access at a known index. Hashing calculates an index from an object's value, avoiding a search through every bucket. A hash code and a capacity-dependent index are distinct quantities: remainder division can convert the code into an index. Equal objects must yield equal codes, but unequal objects can share codes. When capacity changes, the indexing calculation changes; existing elements must be redistributed accordingly. Increasing capacity does not require changing the underlying object hash codes.",
+      "access_notes":"Public HTML retrieved; relevant passages verified. Java examples illustrate generic mechanisms."
+    },
+    {
+      "id":"ods-chaining",
+      "title":"5.1 Hashing with Chaining",
+      "publisher":"Pat Morin, Open Data Structures",
+      "url":"https://opendatastructures.org/ods-cpp/5_1_Hashing_with_Chaining.html",
+      "section_locator":"Opening array-of-lists description; add/find pseudocode; paragraphs preceding 5.1.1",
+      "paraphrase":"Chaining stores a list at each array location. Several elements with the same index occupy that list. Searching computes the index, compares the query with individual entries there, and returns failure after reaching the list's end without a match. The work depends on the selected list's length. Spreading entries among lists keeps searches short; a poor hash function can put every entry together. This implementation grows before the entry count exceeds capacity and reinserts entries into a doubled table.",
+      "access_notes":"Public HTML/pseudocode retrieved. Some formulas are images with text alternatives; advanced proof not used."
+    },
+    {
+      "id":"cornell-growth",
+      "title":"Lecture 22: Hash tables and amortized analysis",
+      "publisher":"Cornell CS 3110",
+      "url":"https://www.cs.cornell.edu/courses/cs3110/2008fa/lectures/lec22_amort.html",
+      "section_locator":"Opening discussion before Amortized analysis; doubling and resizing-cost paragraphs",
+      "paraphrase":"If entries outgrow bucket capacity, bucket searches become longer. Growth allocates more buckets and redistributes existing entries, so an insertion triggering growth can take work proportional to the stored population. With doubling, rebuilding costs across successive expansions form a geometric sum; over many insertions the rebuilding work averages to a constant amount per insertion. This average does not bound every individual insertion. Load thresholds are implementation choices that trade storage against performance, rather than universal constants.",
+      "access_notes":"Public HTML retrieved; opening argument verified; potential-function proof outside packet scope."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "result": "PASS",
+  "node_count": 20,
+  "edge_count": 29,
+  "status_counts": {
+    "assumed": 3,
+    "supported": 17
+  },
+  "checks": [
+    "unique IDs",
+    "valid target",
+    "valid edge endpoints",
+    "no duplicate edges",
+    "nonempty edge necessity rationales",
+    "acyclic",
+    "all nodes reach target",
+    "all roots reader-assumed",
+    "required node fields",
+    "supported evidence fields present",
+    "initial and actual rounds reconstruct final nodes/edges"
+  ],
+  "topological_order": [
+    "input_output",
+    "api",
+    "arithmetic",
+    "behavior",
+    "variation",
+    "objective",
+    "reference",
+    "grader",
+    "case",
+    "choice",
+    "calibration",
+    "dataset",
+    "run",
+    "coverage",
+    "summary",
+    "compare",
+    "uncertainty",
+    "improve",
+    "limits",
+    "target"
+  ],
+  "limits": [
+    "Structural checks do not establish prerequisite quality or evidence truth.",
+    "Evidence/edge semantic review performed manually; no live assistant evaluation or rendering performed."
+  ]
+}

@@ -1,0 +1,1522 @@
+{
+  "evaluation": "Independent single-arm graph audit; benchmark v1.1 plus frozen hash-table supplement; no candidate skills or previous scores read.",
+  "status": "complete; all four original judgments finalized and frozen",
+  "graphs": [
+    {
+      "label": "r01",
+      "topic": "evals",
+      "finalized": true,
+      "graph_sha256": "dc33783b25a39d07b99a199b4338ef7c0dc5199ea572ad303ac7085402052547",
+      "dimensions": {
+        "reader_fit": 4,
+        "prerequisite_coverage": 3,
+        "edge_validity": 4,
+        "granularity": 5,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 3
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "pass_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural_audit": {
+        "nodes": 22,
+        "edges": 39,
+        "roots": [
+          "baseline",
+          "objective",
+          "variability"
+        ],
+        "target": "target",
+        "unique_ids": true,
+        "unique_edges": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "all_nodes_reach_target": true,
+        "disconnected_nodes": [],
+        "svg_endpoint_and_rationale_match": true,
+        "visual_layout": "Not visually inspected; no layout verdict."
+      },
+      "coverage": [
+        {
+          "obligation": "E1",
+          "nodes": [
+            "objective",
+            "reference",
+            "decision"
+          ],
+          "status": "adequate",
+          "reason": "Facts, policy and authorization determine success; attractive wording is insufficient."
+        },
+        {
+          "obligation": "E2",
+          "nodes": [
+            "application",
+            "tool",
+            "case"
+          ],
+          "status": "adequate",
+          "reason": "Full application components and separate case/grading information explicit."
+        },
+        {
+          "obligation": "E3",
+          "nodes": [
+            "reference",
+            "grader",
+            "calibration"
+          ],
+          "status": "adequate",
+          "reason": "Concrete grader choices and human disagreement checks supplied."
+        },
+        {
+          "obligation": "E4",
+          "nodes": [
+            "run",
+            "repeatability",
+            "variability"
+          ],
+          "status": "adequate",
+          "reason": "Execution, records, controlled starting conditions and nondeterminism taught; repeatability is present although attached to comparison."
+        },
+        {
+          "obligation": "E5",
+          "nodes": [
+            "uncertainty",
+            "variability",
+            "case"
+          ],
+          "status": "adequate",
+          "reason": "Repeated attempts and extra representative cases explicitly probe different things."
+        },
+        {
+          "obligation": "E6",
+          "nodes": [
+            "aggregate",
+            "coverage",
+            "incomplete",
+            "decision"
+          ],
+          "status": "adequate",
+          "reason": "Counts, criteria, groups and incomplete cases disclosed; no general reliability guarantee."
+        },
+        {
+          "obligation": "E7",
+          "nodes": [
+            "comparison",
+            "improvement",
+            "heldout",
+            "uncertainty"
+          ],
+          "status": "adequate",
+          "reason": "Consistent cases/grader/state, variation, failure retention and held-out cases supplied."
+        },
+        {
+          "obligation": "E8",
+          "nodes": [
+            "action_outcome",
+            "repeatability",
+            "run",
+            "objective",
+            "reference"
+          ],
+          "status": "partial",
+          "reason": "Action branch is included. It checks final records and records intermediate function results, but does not teach comparing initial state, authorized expected change and action/permission history to establish that this attempt caused the requested change. See R01-M1."
+        }
+      ],
+      "edge_audit": [
+        {
+          "edges": [
+            "baseline->application",
+            "baseline->tool",
+            "tool->application"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Uses the reader's function/API model and supplies tool execution meaning before describing the application."
+        },
+        {
+          "edges": [
+            "application->case",
+            "objective->reference",
+            "case->coverage",
+            "case->reference",
+            "reference->grader",
+            "grader->calibration"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Each destination uses application inputs, case selection, owner criteria, reference judgment or grader validation supplied by its parents."
+        },
+        {
+          "edges": [
+            "application->run",
+            "case->run",
+            "grader->run"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The run executes an identified application on cases and applies the chosen grader."
+        },
+        {
+          "edges": [
+            "case->repeatability",
+            "case->heldout"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Both depend on the meaning of reusable case information."
+        },
+        {
+          "edges": [
+            "run->uncertainty"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Chosen explanation distinguishes repeated execution observations from changing tested situations."
+        },
+        {
+          "edges": [
+            "run->aggregate",
+            "coverage->aggregate",
+            "run->incomplete",
+            "incomplete->aggregate"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Results and their completion status define the reported numerator/denominator and scope."
+        },
+        {
+          "edges": [
+            "aggregate->comparison",
+            "uncertainty->comparison",
+            "repeatability->comparison",
+            "heldout->comparison"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Its actual answer compares summaries under matched starts, allows output variation and uses reserved cases."
+        },
+        {
+          "edges": [
+            "comparison->improvement"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Read as the represented measured-improvement loop, including checking regressions; the initial run itself has no comparison prerequisite."
+        },
+        {
+          "edges": [
+            "objective->action_outcome",
+            "tool->action_outcome"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Tools supply external effects and objectives supply authorized outcomes. These edges are true but insufficient; the state-change bridge is missing."
+        },
+        {
+          "edges": [
+            "aggregate->decision",
+            "objective->decision",
+            "action_outcome->decision",
+            "calibration->decision"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Judging release evidence draws on scope, actual consequential failures, requirements and validity of grading; some of this is implicit in the brief answer."
+        },
+        {
+          "edges": [
+            "coverage->start",
+            "improvement->start",
+            "action_outcome->start",
+            "variability->target",
+            "start->target",
+            "aggregate->target",
+            "decision->start",
+            "reference->start",
+            "run->start"
+          ],
+          "classification": "explicitly conditional prerequisite",
+          "reason": "The starter answer explicitly integrates these methods; action effects are conditional on enabled actions. Target synthesizes the starter procedure and evidence limits. Redundant aggregate/reference/run paths are harmless."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "application",
+            "variability",
+            "objective",
+            "coverage",
+            "calibration",
+            "improvement"
+          ],
+          "source": "inputs/sources/ai-evals.json:eval-best-practices",
+          "locator": "What are evals?; Evals tips; Design your eval process",
+          "status": "supported",
+          "reason": "Packet entails use-case criteria, varied cases, grader validation and iteration; constructed support requirements labeled."
+        },
+        {
+          "nodes": [
+            "case",
+            "run"
+          ],
+          "source": "inputs/sources/ai-evals.json:eval-working-example",
+          "locator": "Create an eval; Creating an eval run; Analyze the results",
+          "status": "supported",
+          "reason": "Input/reference separation and preserved run configuration supported."
+        },
+        {
+          "nodes": [
+            "reference",
+            "grader"
+          ],
+          "source": "inputs/sources/ai-evals.json:eval-datasets,eval-graders",
+          "locator": "Annotation and grader sections",
+          "status": "supported",
+          "reason": "Expert judgments and limits of exact/qualitative checks supported."
+        },
+        {
+          "nodes": [
+            "tool",
+            "objective",
+            "comparison",
+            "heldout"
+          ],
+          "source": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "lines 1014-1033,1102-1123; checked directly",
+          "status": "supported",
+          "reason": "Tools and held-out example verified. Explanation of tuning to a set and controlled comparison is honestly labeled synthesis."
+        },
+        {
+          "nodes": [
+            "application",
+            "run",
+            "action_outcome",
+            "repeatability",
+            "uncertainty",
+            "incomplete"
+          ],
+          "source": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Structure lines 61-68; support example 219-257; trial isolation 305-307; grading 313-315",
+          "status": "supported",
+          "reason": "Verified added source: application harness, transcript and outcomes, tool history example and clean starts. Coverage failure is in what the graph teaches, not a false citation."
+        },
+        {
+          "nodes": [
+            "aggregate",
+            "decision",
+            "start",
+            "target"
+          ],
+          "source": "graph derivation/synthesis",
+          "locator": "claim_type fields; substantive_tests",
+          "status": "supported",
+          "reason": "99/100=99%; 2 completed passes from 5 attempts cannot be reported as full completion. Scope and decision synthesis reasonable."
+        }
+      ],
+      "history_audit": {
+        "observed_distinct_states": 3,
+        "observed_hashes_verified": true,
+        "final_matches_last_observed": true,
+        "conclusion": "Observed saved states substantiate real graph deltas. Self-authored research logs and retrievable primary passages are consistent; observed files do not establish thought chronology or independently certify each web retrieval.",
+        "limitations": [
+          "No underlying tool transcript supplied.",
+          "No claim of manufactured history inferred from that limitation."
+        ],
+        "deltas": "16/29 -> 21/38 -> 22/39; added tool/state/uncertainty/heldout/decision and then incomplete-result handling. Final observed bytes match final graph."
+      },
+      "probes": [
+        {
+          "id": "EA1",
+          "status": "pass",
+          "nodes": [
+            "case",
+            "uncertainty",
+            "coverage",
+            "aggregate"
+          ],
+          "reason": "100 attempts on one reset case probe variation for that situation, not the mix of support situations; define criteria and add representative cases."
+        },
+        {
+          "id": "EA2",
+          "status": "partial",
+          "nodes": [
+            "action_outcome",
+            "run",
+            "repeatability",
+            "objective",
+            "reference"
+          ],
+          "reason": "Can reject the words alone, demand policy and final state, and collect logs. Must add the missing lesson that a preexisting/correct-looking record is insufficient without tying the authorized expected change and relevant history to this attempt."
+        },
+        {
+          "id": "EA3",
+          "status": "pass",
+          "nodes": [
+            "comparison",
+            "uncertainty",
+            "calibration",
+            "heldout"
+          ],
+          "reason": "Easier cases and changed grader confound scores; matched evaluation plus repeated attempts and grader checks are explicit."
+        },
+        {
+          "id": "EA4",
+          "status": "pass",
+          "nodes": [
+            "start",
+            "run",
+            "case",
+            "reference",
+            "grader",
+            "objective"
+          ],
+          "reason": "A narrow workflow, small case set and rubric, recorded first run and inspection are available before any comparison."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "R01-M1",
+          "kind": "missing_dependency_and_coverage",
+          "location": "action_outcome; E8; EA2",
+          "finding": "\u201cCheck resulting records as well as words\u201d does not establish an accomplished action. The graph has clean-start guidance and generic expected behavior elsewhere, but never explains comparing initial records with the requested/authorized expected change and action/permission history. A refund record already present before an unchanged run can satisfy the stated final-record check. Its test with an unchanged address assumes the expected-state comparison without teaching this general bridge.",
+          "smallest_repair": "Extend action_outcome with an explicit before/expected-after/actual-after comparison and relevant authorization/action history; connect case/reference and state-control information to that branch. Add a preexisting-refund counterexample."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "R01-m1",
+          "location": "history.jsonl round 1 removed_edges",
+          "finding": "Lists reference->start as removed, but it is present in both initial and round1 saved states. The final edge audit retains it. This list describes an apparent intermediate edit, not an actual snapshot delta.",
+          "smallest_repair": "Label intermediate removals/re-additions or report net snapshot deltas."
+        },
+        {
+          "id": "R01-m2",
+          "location": "run / repeatability",
+          "finding": "Initial-run starting-state control is taught only in repeatability and reached through comparison; attach the already available control to run for a cleaner first-run path."
+        }
+      ]
+    },
+    {
+      "label": "r02",
+      "topic": "isolation",
+      "finalized": true,
+      "graph_sha256": "078775cdf500d8b33eb02a4459883d875c4e536678f821f53d3bb6ce323c4cce",
+      "dimensions": {
+        "reader_fit": 4,
+        "prerequisite_coverage": 5,
+        "edge_validity": 5,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "pass",
+        "process_evidence": "pass_with_limits",
+        "overall": "accepted_with_scoped_extensions"
+      },
+      "structural_audit": {
+        "nodes": 23,
+        "edges": 43,
+        "roots": [
+          "rule",
+          "transaction"
+        ],
+        "target": "target",
+        "unique_ids": true,
+        "unique_edges": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "all_nodes_reach_target": true,
+        "disconnected_nodes": [],
+        "svg_endpoint_and_rationale_match": true,
+        "visual_layout": "Not visually inspected; no layout verdict."
+      },
+      "coverage": [
+        {
+          "obligation": "I1",
+          "nodes": [
+            "transaction",
+            "atomicity"
+          ],
+          "status": "adequate",
+          "reason": "BEGIN/COMMIT/ROLLBACK grouping and atomicity/isolation distinction supplied."
+        },
+        {
+          "obligation": "I2",
+          "nodes": [
+            "concurrency",
+            "read_decision",
+            "wrong_result"
+          ],
+          "status": "adequate",
+          "reason": "wrong_result.examples gives initial rows, read/read/write/write/commit schedule; ordinary concurrency does not require simultaneous CPU execution."
+        },
+        {
+          "obligation": "I3",
+          "nodes": [
+            "rule",
+            "wrong_result",
+            "correctness_limit"
+          ],
+          "status": "adequate",
+          "reason": "At least one on call is supplied; alone-safe operations violate it together. Rule does not depend on transaction syntax."
+        },
+        {
+          "obligation": "I4",
+          "nodes": [
+            "serial",
+            "serializable",
+            "correctness_limit"
+          ],
+          "status": "adequate",
+          "reason": "Serial-equivalent committed outcomes, actual overlap, and limits of wrong individual logic explicit."
+        },
+        {
+          "obligation": "I5",
+          "nodes": [
+            "dirty",
+            "nonrepeatable",
+            "phantom",
+            "levels",
+            "read_committed",
+            "repeatable_read"
+          ],
+          "status": "adequate",
+          "reason": "Minimum guarantees distinguished from stronger engine behavior; stability separated from serial equivalence."
+        },
+        {
+          "obligation": "I6",
+          "nodes": [
+            "snapshot",
+            "repeatable_read",
+            "stable_not_serial",
+            "wrong_result"
+          ],
+          "status": "adequate",
+          "reason": "Row-version bridge, own writes, fixed-snapshot timing and disjoint writes explained; full example contrasts both serial orders."
+        },
+        {
+          "obligation": "I8",
+          "nodes": [
+            "locks",
+            "mechanisms",
+            "retry",
+            "read_decision"
+          ],
+          "status": "adequate",
+          "reason": "Waiting versus rejected attempt, complete read/decision/write retry and potential repeat failure taught."
+        },
+        {
+          "obligation": "I7",
+          "nodes": [
+            "statement_kind"
+          ],
+          "status": "scoped extension",
+          "reason": "No guarded stock-update remedy is offered. statement_kind explains engine-specific wait/recheck behavior; verification contrasts two counters only as a counterexample to the claim that concurrency always loses updates. It does not propose guarded UPDATE as an invariant-preservation recipe, so affected-row handling is not an applicable core obligation under v1.1."
+        }
+      ],
+      "edge_audit": [
+        {
+          "edges": [
+            "transaction->atomicity",
+            "transaction->concurrency",
+            "transaction->serial",
+            "transaction->dirty",
+            "transaction->snapshot"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Destinations use the transaction unit, completion and own-write context; no artificial transaction prerequisite is imposed on the independent application rule."
+        },
+        {
+          "edges": [
+            "concurrency->read_decision",
+            "concurrency->nonrepeatable",
+            "concurrency->phantom",
+            "concurrency->locks"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "These meanings use the overlap/interleaving mechanism: another transaction acts between observations or requests conflicting access."
+        },
+        {
+          "edges": [
+            "serial->serializable"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Serial equivalence is defined using whole-transaction serial execution."
+        },
+        {
+          "edges": [
+            "rule->wrong_result",
+            "read_decision->wrong_result"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The worked on-call schedule needs both the rule and read-dependent decisions. Its serial comparison is internally explicit; it does not require every later isolation mechanism."
+        },
+        {
+          "edges": [
+            "snapshot->read_committed",
+            "snapshot->repeatable_read"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The precise statement/transaction visibility guarantees use row snapshots; own-write behavior preserved."
+        },
+        {
+          "edges": [
+            "dirty->levels",
+            "nonrepeatable->levels",
+            "phantom->levels",
+            "serializable->levels"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Level comparison names the anomalies and serial-equivalence protection already defined by parents."
+        },
+        {
+          "edges": [
+            "snapshot->mechanisms",
+            "locks->mechanisms",
+            "serializable->mechanisms"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The actual answer compares versions, waiting locks and serializable monitoring, so those foundations are used rather than made universal prerequisites for defining anomalies."
+        },
+        {
+          "edges": [
+            "snapshot->statement_kind",
+            "locks->statement_kind",
+            "read_committed->statement_kind"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The answer contrasts PostgreSQL plain SELECT with waiting/rechecking UPDATE, requiring the named level, snapshots and locking. snapshot->statement_kind is transitively redundant but valid."
+        },
+        {
+          "edges": [
+            "levels->engine",
+            "statement_kind->engine"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Actual answer includes minimum/stronger guarantees and operation-specific behavior."
+        },
+        {
+          "edges": [
+            "transaction->retry",
+            "serializable->retry",
+            "read_decision->retry"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "This explanation distinguishes a serialization rejection from waiting and requires whole transactions and the read-derived decisions being repeated; transaction link partly redundant but valid."
+        },
+        {
+          "edges": [
+            "repeatable_read->stable_not_serial",
+            "serializable->stable_not_serial",
+            "read_decision->stable_not_serial"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Stable PostgreSQL snapshots, serial-equivalence criterion and read-dependent writes jointly explain the gap."
+        },
+        {
+          "edges": [
+            "serializable->correctness_limit",
+            "rule->correctness_limit",
+            "transaction->correctness_limit"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Preserving a supplied invariant uses complete units and a serial-equivalent order; transitive transaction edge harmless."
+        },
+        {
+          "edges": [
+            "atomicity->target",
+            "wrong_result->target",
+            "levels->target",
+            "mechanisms->target",
+            "engine->target",
+            "retry->target",
+            "stable_not_serial->target",
+            "correctness_limit->target"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Each incoming branch supplies a claim explicitly used in target: atomicity, concurrent failure, level protections, mechanisms, qualified engines/statements, retries, snapshot limits and correct application boundaries."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "transaction",
+            "atomicity"
+          ],
+          "source": "inputs/sources/transaction-isolation.json:postgres-transactions",
+          "locator": "\u00a73.4 transaction tutorial",
+          "status": "supported",
+          "reason": "Grouping and completion meanings supported; ordinary table-data scope avoids sequence/external-side-effect overstatement."
+        },
+        {
+          "nodes": [
+            "dirty",
+            "nonrepeatable",
+            "phantom",
+            "serial",
+            "serializable",
+            "levels",
+            "read_committed",
+            "repeatable_read",
+            "stable_not_serial",
+            "correctness_limit"
+          ],
+          "source": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "\u00a713.2 Table 13.1; \u00a713.2.1; \u00a713.2.2; \u00a713.2.3, independently read",
+          "status": "supported",
+          "reason": "Definitions, snapshots, stronger PostgreSQL protection and serial-equivalent composition match source."
+        },
+        {
+          "nodes": [
+            "snapshot",
+            "mechanisms"
+          ],
+          "source": "https://www.postgresql.org/docs/current/mvcc-intro.html",
+          "locator": "\u00a713.1 opening and locking paragraphs, independently read",
+          "status": "supported",
+          "reason": "Retained versions and distinction from blocking locks support novice mechanism bridge."
+        },
+        {
+          "nodes": [
+            "read_decision",
+            "retry"
+          ],
+          "source": "https://www.postgresql.org/docs/current/mvcc-serialization-failure-handling.html",
+          "locator": "\u00a713.5 complete-transaction and repeated-failure paragraphs, independently read",
+          "status": "supported",
+          "reason": "Full retry includes logic choosing SQL/values; completion is not guaranteed."
+        },
+        {
+          "nodes": [
+            "statement_kind"
+          ],
+          "source": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "\u00a713.2.1 UPDATE paragraphs, independently read",
+          "status": "supported",
+          "reason": "Waiting updater applies to newer row and rechecks WHERE. No universal engine claim."
+        },
+        {
+          "nodes": [
+            "concurrency",
+            "locks",
+            "mechanisms",
+            "engine"
+          ],
+          "source": "inputs/sources/transaction-isolation.json:mysql-isolation,sqlite-isolation",
+          "locator": "MySQL \u00a717.7.2.1; SQLite Isolation And Concurrency",
+          "status": "supported",
+          "reason": "Range/record locks, autocommit qualification, single writer and stale-snapshot rejection supported. engine.limits defines WAL and preserves SQLite exception."
+        },
+        {
+          "nodes": [
+            "rule",
+            "wrong_result",
+            "target"
+          ],
+          "source": "dag.json wrong_result.examples; verification.json",
+          "locator": "Constructed on-call/capacity/counter examples",
+          "status": "inference/derivation checked",
+          "reason": "On-call overlap gives false,false, both serial orders retain one true. Capacity 6+6=12>10; either serial order retains six. Current-value increments yield 102; stale constant writes 101; split read/write operations remain serially orderable yet incorrect. All checked as derivations, not claimed live executions."
+        }
+      ],
+      "history_audit": {
+        "observed_distinct_states": 3,
+        "observed_hashes_verified": true,
+        "final_matches_last_observed": true,
+        "conclusion": "Observed saved states substantiate real graph deltas. Self-authored research logs and retrievable primary passages are consistent; observed files do not establish thought chronology or independently certify each web retrieval.",
+        "limitations": [
+          "No underlying tool transcript supplied.",
+          "No claim of manufactured history inferred from that limitation."
+        ],
+        "deltas": "21/35 -> 23/42 -> 23/43; added stable_not_serial/correctness_limit; removed two reading-order edges; final read_committed->statement_kind addition and target qualification corroborated."
+      },
+      "probes": [
+        {
+          "id": "IA1",
+          "status": "pass",
+          "nodes": [
+            "wrong_result",
+            "snapshot",
+            "repeatable_read",
+            "stable_not_serial",
+            "serializable"
+          ],
+          "reason": "Explicit on-call example reads both true before disjoint updates. Stable views do not coordinate decisions; either serial order makes second stay on call."
+        },
+        {
+          "id": "IA2",
+          "status": "pass",
+          "nodes": [
+            "serial",
+            "serializable",
+            "correctness_limit",
+            "mechanisms"
+          ],
+          "reason": "No: real work may overlap; outcome matches some serial order. Wrong single-transaction logic still wrong, and application must group its complete decision."
+        },
+        {
+          "id": "IA3",
+          "status": "scoped extension",
+          "nodes": [
+            "statement_kind"
+          ],
+          "reason": "Guarded stock-remedy recipe not offered. Wait/recheck semantics alone are not treated as sufficient affected-row/error-handling instruction."
+        },
+        {
+          "id": "IA4",
+          "status": "pass",
+          "nodes": [
+            "read_decision",
+            "retry",
+            "transaction"
+          ],
+          "reason": "Final UPDATE can encode stale observations; repeat all relevant reads and decision logic in the whole transaction. Retry may fail again."
+        }
+      ],
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "R02-m1",
+          "location": "engine",
+          "finding": "Autocommit appears in the InnoDB example without a direct beginner definition. transaction mentions implicit single-statement transactions, so this is a small terminology bridge; add a parenthetical definition."
+        },
+        {
+          "id": "R02-m2",
+          "location": "verification.json edge_audit",
+          "finding": "Counterfactual text is boilerplate, but actual edge rationales and child answers independently support the graph. The boilerplate alone would not establish necessity."
+        }
+      ]
+    },
+    {
+      "label": "r03",
+      "topic": "bayesian_spam",
+      "finalized": true,
+      "graph_sha256": "1019b0a8d94e58de8411af3a898ec443b0a4ace75823c6a66d619cbceb8b7438",
+      "dimensions": {
+        "reader_fit": 5,
+        "prerequisite_coverage": 5,
+        "edge_validity": 3,
+        "granularity": 5,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "needs_repair",
+        "process_evidence": "pass_with_limits",
+        "overall": "needs_repair"
+      },
+      "structural_audit": {
+        "nodes": 22,
+        "edges": 39,
+        "roots": [
+          "chance",
+          "features",
+          "partition"
+        ],
+        "target": "target",
+        "unique_ids": true,
+        "unique_edges": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "all_nodes_reach_target": true,
+        "disconnected_nodes": [],
+        "svg_endpoint_and_rationale_match": true,
+        "visual_layout": "Not visually inspected; no layout verdict."
+      },
+      "coverage": [
+        {
+          "obligation": "P1",
+          "nodes": [
+            "chance",
+            "condition",
+            "given"
+          ],
+          "status": "adequate",
+          "reason": "All four denominator groups explicit."
+        },
+        {
+          "obligation": "P2",
+          "nodes": [
+            "prior",
+            "counts",
+            "partition"
+          ],
+          "status": "adequate",
+          "reason": "10,000 split into 100 spam and 9,900 legitimate; complementary classes."
+        },
+        {
+          "obligation": "P3",
+          "nodes": [
+            "multiply",
+            "given",
+            "counts"
+          ],
+          "status": "adequate",
+          "reason": "Within-class multiplication gives 90 and 990 flags."
+        },
+        {
+          "obligation": "P4",
+          "nodes": [
+            "total",
+            "answer",
+            "bayes",
+            "normalize"
+          ],
+          "status": "adequate",
+          "reason": "Sum both routes, then divide; general weighted expression grounded in counts."
+        },
+        {
+          "obligation": "P5",
+          "nodes": [
+            "vary",
+            "prior"
+          ],
+          "status": "adequate",
+          "reason": "Fixed 90% and 10% rates, varying prior; assumption explicitly repeated."
+        },
+        {
+          "obligation": "P6",
+          "nodes": [
+            "word",
+            "bayes",
+            "estimate"
+          ],
+          "status": "adequate",
+          "reason": "Relative within-class occurrence and equal-rate boundary explicit."
+        },
+        {
+          "obligation": "P7",
+          "nodes": [
+            "joint",
+            "independence",
+            "feature_value",
+            "scores",
+            "dependence"
+          ],
+          "status": "adequate",
+          "reason": "Multi-feature extension included, conditional independence distinguished from marginal independence and counterexample supplied."
+        },
+        {
+          "obligation": "P8",
+          "nodes": [
+            "chance",
+            "calibration",
+            "normalize"
+          ],
+          "status": "adequate",
+          "reason": "Model probability is premise-dependent, not certainty; no deletion policy offered."
+        }
+      ],
+      "edge_audit": [
+        {
+          "edges": [
+            "chance->condition",
+            "condition->given",
+            "chance->prior",
+            "condition->multiply"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Probability population and conditional groups supply the meanings used by the child rates and products."
+        },
+        {
+          "edges": [
+            "given->counts",
+            "counts->total",
+            "total->answer",
+            "counts->answer",
+            "condition->answer",
+            "multiply->counts",
+            "partition->total"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Stipulated rates and multiplication determine counts; partition/summing supplies total; numerator and conditional denominator determine 1/12. Transitive paths are harmless."
+        },
+        {
+          "edges": [
+            "prior->bayes",
+            "condition->bayes",
+            "bayes->vary",
+            "given->vary",
+            "bayes->word",
+            "multiply->bayes",
+            "partition->bayes"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "General formula needs prior, conditional groups, products and partition; chosen applications substitute fixed rates or a word clue."
+        },
+        {
+          "edges": [
+            "features->estimate",
+            "condition->estimate",
+            "features->joint",
+            "condition->joint",
+            "features->feature_value",
+            "condition->feature_value"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Binary representation and within-class conditioning determine estimands, patterns and absence complements."
+        },
+        {
+          "edges": [
+            "joint->independence",
+            "independence->scores",
+            "bayes->scores",
+            "feature_value->scores",
+            "scores->normalize"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Joint likelihood motivates the factorization assumption; observed feature values and Bayes weighting define scores; their normalization requires both scores."
+        },
+        {
+          "edges": [
+            "independence->dependence",
+            "normalize->dependence"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Its actual numerical counterexample computes and contrasts normalized outcomes under and without independence."
+        },
+        {
+          "edges": [
+            "dependence->calibration",
+            "normalize->calibration"
+          ],
+          "classification": "mixed; see R03-M1",
+          "reason": "normalize->calibration is defensible for model probability. dependence->calibration is an illustrative counterexample mislabeled as necessary: the destination makes a general premise/reliability statement without using the concrete duplicate-word construction."
+        },
+        {
+          "edges": [
+            "answer->target",
+            "vary->target",
+            "word->target",
+            "calibration->target",
+            "normalize->target",
+            "estimate->target"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Target explicitly includes counts, base-rate changes, single words, learned rates, normalization and model-probability qualification."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "chance",
+            "condition",
+            "prior",
+            "multiply",
+            "joint"
+          ],
+          "source": "https://probabilitycourse.com/chapter1/1_4_0_conditional_probability.php",
+          "locator": "Definition lines 40-42; complement 55; chain rules 110-116, independently read",
+          "status": "supported",
+          "reason": "Conditional groups, products and within-class chain rule supported."
+        },
+        {
+          "nodes": [
+            "partition",
+            "total",
+            "bayes"
+          ],
+          "source": "inputs/sources/bayesian-spam.json:total-probability",
+          "locator": "Two-class partition and weighted sum",
+          "status": "supported",
+          "reason": "Both disjoint class contributions enter evidence denominator."
+        },
+        {
+          "nodes": [
+            "given",
+            "answer"
+          ],
+          "source": "inputs/sources/bayesian-spam.json:google-classification-metrics; assigned request",
+          "locator": "Recall; false-positive rate; precision",
+          "status": "supported",
+          "reason": "Rate names have distinct denominators; supplied inputs labeled assumptions."
+        },
+        {
+          "nodes": [
+            "features",
+            "estimate",
+            "independence",
+            "scores",
+            "normalize",
+            "feature_value",
+            "calibration",
+            "target"
+          ],
+          "source": "https://scikit-learn.org/stable/modules/naive_bayes.html",
+          "locator": "1.9 lines 75-94; 1.9.4 lines 141-148, independently read",
+          "status": "supported",
+          "reason": "Factorization, class priors, class scores, probability caution, binary representation and absence complement supported."
+        },
+        {
+          "nodes": [
+            "counts",
+            "total",
+            "answer",
+            "vary",
+            "word",
+            "dependence"
+          ],
+          "source": "graph mathematical derivations",
+          "locator": "dag.json worked_cases; case-tests.initial.json",
+          "status": "inference/derivation checked",
+          "reason": "Recomputed 90/1080=1/12; p=.001,.01,.1,.5 gives .892857%,8.333333%,50%,90%; majority iff p>.1. Equal clue rates cancel. Duplicate clues: 5/104 vs 25/124; A-present/B-absent transfer: 5/21. All correct."
+        }
+      ],
+      "history_audit": {
+        "observed_distinct_states": 2,
+        "observed_hashes_verified": true,
+        "final_matches_last_observed": true,
+        "conclusion": "Observed saved states substantiate real graph deltas. Self-authored research logs and retrievable primary passages are consistent; observed files do not establish thought chronology or independently certify each web retrieval.",
+        "limitations": [
+          "No underlying tool transcript supplied.",
+          "No claim of manufactured history inferred from that limitation."
+        ],
+        "deltas": "18/30 -> 22/39; multiply, partition, feature_value, normalize added; four advertised edges removed, thirteen added. Observed copies verify final and initial state."
+      },
+      "probes": [
+        {
+          "id": "PA1",
+          "status": "pass",
+          "nodes": [
+            "given",
+            "multiply",
+            "counts",
+            "total",
+            "answer",
+            "condition"
+          ],
+          "reason": "100 spam, 9900 legitimate, 90 and 990 flags; 90/1080=1/12. Denominator distinction explicit."
+        },
+        {
+          "id": "PA2",
+          "status": "pass",
+          "nodes": [
+            "prior",
+            "bayes",
+            "vary"
+          ],
+          "reason": "At prior .5: .45/(.45+.05)=.9; within-class rates held fixed."
+        },
+        {
+          "id": "PA3",
+          "status": "pass",
+          "nodes": [
+            "word",
+            "joint",
+            "independence",
+            "dependence"
+          ],
+          "reason": "Equal .2 rates cancel; always-cooccurring clues preserve single-clue joint rates, unlike naive multiplication. Counterexample makes transfer explicit."
+        },
+        {
+          "id": "PA4",
+          "status": "scoped extension",
+          "nodes": [
+            "calibration"
+          ],
+          "reason": "No action policy offered; threshold optimization excluded. Core premise/uncertainty limit taught."
+        }
+      ],
+      "material_findings": [
+        {
+          "id": "R03-M1",
+          "kind": "invalid_prerequisite",
+          "location": "dependence->calibration",
+          "finding": "The child asks whether calculated model probability guarantees the true fraction and answers by naming its assumed inputs/independence and empirical validation. Understanding that answer does not require the specific duplicated-word numerical counterexample in dependence; the condition/model meanings already arrive through normalize and its ancestors. The why text asserts a concrete failure mechanism is required, conflating supporting illustration with conceptual necessity.",
+          "smallest_repair": "Relabel dependence->calibration as an example/support relation, or remove it. Retain the counterexample as a useful branch; no new conceptual lesson needed."
+        }
+      ],
+      "minor_findings": [
+        {
+          "id": "R03-m1",
+          "location": "scope",
+          "finding": "Action policy deliberately omitted; this is permitted by benchmark v1.1, not missing core coverage."
+        }
+      ]
+    },
+    {
+      "label": "r04",
+      "topic": "hash_tables",
+      "finalized": true,
+      "graph_sha256": "4dcf58a1b81de84322eb2e9fac75f5702b39d4684cd4553d1a670530d32db6a3",
+      "dimensions": {
+        "reader_fit": 4,
+        "prerequisite_coverage": 5,
+        "edge_validity": 4,
+        "granularity": 4,
+        "evidence_alignment": 5,
+        "research_record_authenticity": 4,
+        "application_utility": 5
+      },
+      "verdicts": {
+        "structural": "pass",
+        "semantic": "pass",
+        "process_evidence": "pass_with_limits",
+        "overall": "accepted"
+      },
+      "structural_audit": {
+        "nodes": 17,
+        "edges": 29,
+        "roots": [
+          "baseline"
+        ],
+        "target": "target",
+        "unique_ids": true,
+        "unique_edges": true,
+        "valid_endpoints": true,
+        "acyclic": true,
+        "all_nodes_reach_target": true,
+        "disconnected_nodes": [],
+        "svg_endpoint_and_rationale_match": true,
+        "visual_layout": "Not visually inspected; no layout verdict."
+      },
+      "coverage": [
+        {
+          "obligation": "H1",
+          "nodes": [
+            "entry",
+            "array",
+            "find"
+          ],
+          "status": "adequate",
+          "reason": "Key/value pair and numbered storage distinguished; one selected bucket replaces whole-table scan."
+        },
+        {
+          "obligation": "H2",
+          "nodes": [
+            "hash",
+            "index",
+            "array"
+          ],
+          "status": "adequate",
+          "reason": "Repeatable supplied function, remainder definition and direct-address arithmetic explicit."
+        },
+        {
+          "obligation": "H3",
+          "nodes": [
+            "hash",
+            "index",
+            "collision"
+          ],
+          "status": "adequate",
+          "reason": "Equal codes and equal remainders both can collide; neither establishes key equality."
+        },
+        {
+          "obligation": "H4",
+          "nodes": [
+            "chain",
+            "placement",
+            "find"
+          ],
+          "status": "adequate",
+          "reason": "Chaining retains distinct entries; actual key comparisons return match or justify absence under explicit placement invariant."
+        },
+        {
+          "obligation": "H5",
+          "nodes": [
+            "load",
+            "find",
+            "expected",
+            "keycost"
+          ],
+          "status": "adequate",
+          "reason": "n/m is mean bucket length; controlled distribution and constant primitive costs qualify fast lookup."
+        },
+        {
+          "obligation": "H6",
+          "nodes": [
+            "growth",
+            "reindex",
+            "placement"
+          ],
+          "status": "adequate",
+          "reason": "More buckets control crowding; existing entries must obey new index rule. Appending alone can lose lookup correctness."
+        },
+        {
+          "obligation": "H7",
+          "nodes": [
+            "worst",
+            "amortized",
+            "reindex"
+          ],
+          "status": "adequate",
+          "reason": "Concentration can require n comparisons; one resize is costly; larger capacity does not eliminate equal-code collisions."
+        }
+      ],
+      "edge_audit": [
+        {
+          "edges": [
+            "baseline->entry",
+            "baseline->array",
+            "baseline->hash"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Uses licensed Python equality/functions/indexing and arithmetic; array internals supplied rather than assumed."
+        },
+        {
+          "edges": [
+            "hash->index",
+            "index->collision"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Code-to-index mapping is used by the actual collision explanation, including distinct-code collisions."
+        },
+        {
+          "edges": [
+            "collision->chain",
+            "entry->chain"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The actual question is retaining colliding distinct key-value entries, requiring collision/equality and entry meanings."
+        },
+        {
+          "edges": [
+            "hash->placement",
+            "index->placement"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Hash equality contract and capacity-dependent index define the stored-location invariant; hash->placement is transitively redundant but valid."
+        },
+        {
+          "edges": [
+            "array->find",
+            "index->find",
+            "chain->find",
+            "placement->find"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Lookup uses direct indexed access, the selected chain and equality; placement is essential to infer absence from exhausting only one bucket."
+        },
+        {
+          "edges": [
+            "chain->load"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Mean entries per bucket sequence requires what each bucket contains."
+        },
+        {
+          "edges": [
+            "hash->keycost"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Costs being counted include the hash computation already defined; string scanning examples explain cost variation."
+        },
+        {
+          "edges": [
+            "find->expected",
+            "load->expected",
+            "keycost->expected"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Actual conditional total-cost claim uses lookup comparisons, bounded load and the costs of hashing/equality."
+        },
+        {
+          "edges": [
+            "find->worst"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "An all-in-one-bucket search uses the find procedure to derive n comparisons."
+        },
+        {
+          "edges": [
+            "load->growth",
+            "index->reindex"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Growth reason depends on n/m; redistribution depends on capacity in index. The latter internally states the lookup consequence, so no separate mandatory resize-policy prerequisite is needed."
+        },
+        {
+          "edges": [
+            "growth->amortized",
+            "reindex->amortized"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "The stated analysis uses doubled capacities and rebuilding existing entries."
+        },
+        {
+          "edges": [
+            "find->target",
+            "expected->target",
+            "worst->target",
+            "growth->target",
+            "reindex->target",
+            "amortized->target"
+          ],
+          "classification": "defensible prerequisite",
+          "reason": "Find, expected, worst, growth and reindex supply target claims. amortized supplies its single-rebuild cost limitation; the why text overstates a low-average claim absent from target, a minor rationale mismatch rather than a false dependence on the node's rebuild-cost content."
+        }
+      ],
+      "evidence_audit": [
+        {
+          "nodes": [
+            "entry",
+            "chain",
+            "find",
+            "load",
+            "worst",
+            "growth"
+          ],
+          "source": "repair/hash-source-packet.json:ods-chaining; https://opendatastructures.org/ods-cpp/5_1_Hashing_with_Chaining.html",
+          "locator": "Opening array-of-lists; add/find; load lines 17-31 and 47-60",
+          "status": "supported",
+          "reason": "Chaining, equality search, failed search and growth verified. Key-value adaptation is explicit synthesis."
+        },
+        {
+          "nodes": [
+            "hash",
+            "index",
+            "collision",
+            "reindex",
+            "placement"
+          ],
+          "source": "repair/hash-source-packet.json:cornell-hashing; https://courses.cis.cornell.edu/courses/cs2110/2026sp/lectures/lec20/",
+          "locator": "Hash Tables; Hashing; hashCode; Resizing; invariant lines 43-57 checked directly",
+          "status": "supported",
+          "reason": "Code/index distinction, equality contract and redistribution supported. Mutation failure follows placement invariant."
+        },
+        {
+          "nodes": [
+            "array"
+          ],
+          "source": "https://opendsa-server.cs.vt.edu/OpenDSA/Books/Catalog/html/Arrays.html",
+          "locator": "Opening definition; \u00a70.10.2, independently read",
+          "status": "supported",
+          "reason": "Contiguous equal-type numbered slots support b+i*s as stated derivation. Direct-memory constant cost is explicit machine model, not a hardware timing claim."
+        },
+        {
+          "nodes": [
+            "keycost",
+            "placement"
+          ],
+          "source": "https://hkn.eecs.berkeley.edu/examfiles/cs61bl_su14_mt2_sol.pdf",
+          "locator": "Question 1, PDF pages 1-2, independently read",
+          "status": "supported",
+          "reason": "Supplied character loops and equality/code contract support length-dependent work; graph does not generalize historical Java routines to current Python."
+        },
+        {
+          "nodes": [
+            "expected"
+          ],
+          "source": "https://opendatastructures.org/ods-cpp/5_1_Hashing_with_Chaining.html",
+          "locator": "\u00a75.1.1 random odd multiplier; Lemmas 5.1-5.2, independently read",
+          "status": "supported",
+          "reason": "Random choice of hashing parameter supplies expectation; fixed identity trace explicitly does not prove this guarantee."
+        },
+        {
+          "nodes": [
+            "amortized",
+            "growth",
+            "target"
+          ],
+          "source": "https://www.cs.cornell.edu/courses/cs3110/2008fa/lectures/lec22_amort.html",
+          "locator": "Opening growth/doubling discussion, independently read",
+          "status": "supported",
+          "reason": "Geometric rebuilding analysis supported; graph correctly isolates growth overhead from bad collision-search cost."
+        },
+        {
+          "nodes": [
+            "array",
+            "index",
+            "load",
+            "reindex",
+            "amortized"
+          ],
+          "source": "dag.json worked_examples; independent arithmetic",
+          "locator": "tiny-trace and benchmark HA1-HA4",
+          "status": "inference/derivation checked",
+          "reason": "Identity trace: 1/5 collide mod4; 5 relocates at mod8; 1/9 remain colliding; 5/8=.625. Supplied unfamiliar hash 3k+1 yields 7/31/55, mod8 all7, mod16 7/15/7. Loads .75->3->.75. Powers-of-two sum is below twice final term."
+        }
+      ],
+      "history_audit": {
+        "observed_distinct_states": 10,
+        "observed_hashes_verified": true,
+        "final_matches_last_observed": true,
+        "conclusion": "Observed saved states substantiate real graph deltas. Self-authored research logs and retrievable primary passages are consistent; observed files do not establish thought chronology or independently certify each web retrieval.",
+        "limitations": [
+          "No underlying tool transcript supplied.",
+          "No claim of manufactured history inferred from that limitation."
+        ],
+        "deltas": "Ten distinct observed saved states, but only five transitions alter nodes/edges (initial->round1, round3->round4, round6->round7, round7->verification, delivery evidence URLs). Other saved changes add research-log metadata, correctly logged as no concept/edge change. 16/24 -> 17/27 -> 17/29. All observed and released hashes verified; final matches.",
+        "access_gaps": "Oxford, Princeton, Iowa and one ODS click failures are disclosed and not used as support. Final sources independently accessible. Historical failure causes cannot be independently certified without underlying tool transcript."
+      },
+      "probes": [
+        {
+          "id": "HA1",
+          "status": "pass",
+          "nodes": [
+            "hash",
+            "index",
+            "chain",
+            "placement",
+            "find"
+          ],
+          "reason": "3k+1 gives codes 7,31,55 for 2,10,18, all bucket7 at m8. Scan keys 2 then10 for its value. Key26 gives79, also bucket7: compare 2,10,18 then exhaust chain to report absent. No new conceptual bridge required."
+        },
+        {
+          "id": "HA2",
+          "status": "pass",
+          "nodes": [
+            "index",
+            "reindex",
+            "placement",
+            "collision"
+          ],
+          "reason": "At m16 indices are7,15,7. Key10 must move or new lookup can miss it. Keys2 and18 still collide; a larger table does not promise collision elimination."
+        },
+        {
+          "id": "HA3",
+          "status": "pass",
+          "nodes": [
+            "load",
+            "growth",
+            "expected"
+          ],
+          "reason": "12/16=.75,48/16=3,48/64=.75. Mean crowding increases then decreases; actual chain lengths and cost remain distribution-dependent."
+        },
+        {
+          "id": "HA4",
+          "status": "pass",
+          "nodes": [
+            "worst",
+            "reindex",
+            "amortized"
+          ],
+          "reason": "Same hash code remains same selected bucket for every key after capacity-only change; scanning can require n comparisons. One growth insertion relocates many entries even when ordinary/expected operations are fast."
+        }
+      ],
+      "material_findings": [],
+      "minor_findings": [
+        {
+          "id": "R04-m1",
+          "location": "amortized->target",
+          "finding": "Rationale says target distinguishes low average insertion overhead, but target only states that an individual growth insertion can be expensive. The node does supply that needed rebuild-cost explanation; its full long-run proof is extra.",
+          "smallest_repair": "Narrow edge rationale to individual rebuild cost; optionally separate long-run overhead into an extension."
+        },
+        {
+          "id": "R04-m2",
+          "location": "expected.evidence",
+          "finding": "An old citation claim still says \u201cPrimitive-cost gap still open\u201d although array/keycost resolve it in the final graph.",
+          "smallest_repair": "Remove obsolete working-status sentence from final evidence."
+        },
+        {
+          "id": "R04-m3",
+          "location": "reader_assumptions",
+          "finding": "The assumptions list includes chosen chaining representation and example hash as well as true reader knowledge. Nodes teach these, so no substantive baseline is smuggled in.",
+          "smallest_repair": "Move model/example choices into scope or given_inputs."
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Single evaluator, one run per topic; no statistical generalization.",
+    "Application probes are graph-only transfer audits, not novice learning measurements.",
+    "Observed states substantiate saved artifacts, not thought chronology or independently logged web access.",
+    "Rendered endpoint/rationale parity checked; visual layout was not scored."
+  ],
+  "benchmark_hashes": {
+    "repair/benchmark-v1.1.json": "7522a35e1c7be84286da3c04f85e9b6efe2bb40142f0c8aede2f62c5712c9e2e",
+    "design/benchmark/rubric.md": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f",
+    "design/repair-benchmark/benchmark.json": "cae6679187620aabd8f4a2f560de52179533d24b8a2c91a80182c4d9378afd1a",
+    "design/repair-benchmark/rubric-addendum.md": "4cbae3b6ad51f83fd44a0b9cf6123e91f8fae1ecf4c8edc4b55b450e6b2a8739"
+  },
+  "candidate_hash": "Not inspected: candidate instructions excluded by evaluator access boundary."
+}

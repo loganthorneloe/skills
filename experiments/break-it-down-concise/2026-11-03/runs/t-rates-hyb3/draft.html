@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Interest Rates Cool Inflation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{--canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.75}
+main{max-width:720px;margin:0 auto;padding:56px 24px 96px}
+.wide{width:min(960px,calc(100vw - 48px));position:relative;left:50%;transform:translateX(-50%)}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.25;margin:0}
+h1{font-size:40px;margin-bottom:28px}
+h1 .dot{color:var(--red)}
+h2{font-size:25px;margin:56px 0 14px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:18px;margin:0 0 6px}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+.sources{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);border-left:1px solid var(--border);margin:8px 0 0}
+.src{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface)}
+.src:last-child:nth-child(odd){grid-column:1 / -1}
+.src .t{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:16px;line-height:1.4;margin:0 0 4px}
+.src .t a{font-weight:600}
+.src .m{font-style:italic;color:var(--muted);font-size:14.5px;line-height:1.55;margin:0 0 10px}
+.src p:last-child{font-size:15.5px;line-height:1.65;margin:0}
+.answer{font-size:18.5px;line-height:1.7}
+figure{margin:32px 0}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;border:1px solid var(--border);background:#fff}
+figcaption{font-size:15px;line-height:1.6;color:var(--muted);margin-top:12px}
+figcaption strong{color:var(--text);font-weight:500}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+.chart{background:var(--surface);border:1px solid var(--border);padding:16px 12px}
+.chart svg{display:block;width:100%;min-width:640px;height:auto}
+.label{font-weight:500}
+table{border-collapse:collapse;width:100%;font-size:15.5px;line-height:1.55;background:var(--surface)}
+th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}
+th{font-weight:500}
+blockquote{margin:20px 0;padding:0 0 0 18px;border-left:2px solid var(--red)}
+@media (max-width:640px){
+  main{padding:36px 20px 72px}
+  h1{font-size:31px}
+  h2{font-size:22px}
+  body{font-size:16px}
+  .sources{grid-template-columns:1fr}
+  .src:last-child:nth-child(odd){grid-column:auto}
+  .wide{width:calc(100vw - 40px)}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>How interest rates cool inflation<span class="dot">.</span></h1>
+
+<h2 style="margin-top:0;border-top:0;padding-top:0">Sources</h2>
+<p>Five sources carry the facts below. Three are written by central banks about their own tools, and two are research estimates of timing.</p>
+<div class="sources">
+  <div class="src">
+    <p class="t"><a href="https://www.bankofengland.co.uk/quarterly-bulletin/1999/q2/the-transmission-mechanism-of-monetary-policy">The transmission mechanism of monetary policy</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Bank of England staff, under the guidance of the Monetary Policy Committee · Central bank report, Bank of England Quarterly Bulletin · May 1999</p>
+    <p>The staff of the bank that sets UK rates describe, step by step, how their own rate decisions reach prices, and show model simulations of the timing. The numbers come from one 1999 model of the UK, where most mortgages then had floating rates, so treat the magnitudes as rough and the mechanism as the durable part.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://www.federalreserve.gov/aboutthefed/files/the-fed-explained.pdf">The Fed Explained: What the Central Bank Does</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Board of Governors of the Federal Reserve System · Public education publication, 11th edition · August 2021</p>
+    <p>The Fed's own account of how it moves US interest rates today; the tools it names are still listed on the Fed's policy-tools page as of December 2025. It explains procedure, not measured effects.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://www.frbsf.org/research-and-insights/publications/economic-letter/2024/04/how-quickly-do-prices-respond-to-monetary-policy">How Quickly Do Prices Respond to Monetary Policy?</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Zoë Arnaut and Leila Bengali · Research note, FRBSF Economic Letter 2024-10, Federal Reserve Bank of San Francisco · April 2024</p>
+    <p>Fed economists estimate how 136 categories of US consumer prices respond to rate surprises in historical data. It is a short note rather than a peer-reviewed paper, and its estimates have wide uncertainty bands.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://www.federalreserve.gov/newsevents/speech/waller20230713a.htm">Big Shocks Travel Fast: Why Policy Lags May Be Shorter Than You Think</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Christopher J. Waller, Federal Reserve Governor · Speech, Money Marketeers of New York University · July 2023</p>
+    <p>A sitting rate-setter states the standard rule of thumb for the delay and the reasons behind it. The second half is his own argument that the delay can be shorter, so it is a view, not an estimate.</p>
+  </div>
+  <div class="src">
+    <p class="t"><a href="https://www.kansascityfed.org/research/economic-bulletin/have-lags-in-monetary-policy-transmission-shortened/">Have Lags in Monetary Policy Transmission Shortened?</a><span class="ext" aria-hidden="true">↗</span></p>
+    <p class="m">Taeyoung Doh and Andrew T. Foerster · Research note, Economic Bulletin, Federal Reserve Bank of Kansas City · December 2022</p>
+    <p>Fed economists compare how fast inflation responded to tightening before and after 2009. The authors themselves describe the later estimates as highly uncertain, and only the web summary was read here.</p>
+  </div>
+</div>
+
+<h2>The short answer</h2>
+<p class="answer">A central bank raises one short-term interest rate, and other borrowing rates follow. Higher rates make people and businesses spend less, because borrowing costs more and saving pays more. When spending falls below what the economy can comfortably produce, businesses face less pressure to hire and raise wages, and less room to raise prices, so inflation slows. It takes time because each step waits on the one before it: loan payments reset slowly, stores and factories react to slower sales only after inventories pile up, and most firms change prices only every so often. The Bank of England's model puts the biggest effect on output about a year after a rate rise and the biggest effect on inflation about a year after that.</p>
+
+<figure class="wide">
+  <img src="assets/fed-explained-fig3-1.png" width="1226" height="442" alt="Federal Reserve Figure 3.1: five steps from an FOMC policy decision, to short-term interest rates, to financial conditions, to household and business decisions, to progress on employment and stable prices.">
+  <figcaption><strong>The whole chain in five boxes.</strong> The rate decision never touches prices directly; it works through interest rates, then through what households and businesses decide. Every arrow is a place where time passes. The Fed's mandate includes employment as well as prices. Source: Board of Governors of the Federal Reserve System, <em>The Fed Explained</em> (2021), Figure 3.1, p. 21; public domain.</figcaption>
+</figure>
+
+<h2>What the central bank actually controls</h2>
+<p>A central bank sets one price: the interest rate on very short loans between banks, called the policy rate. In the United States it is the <em>federal funds rate</em>, the rate banks charge each other to borrow overnight. The central bank does not set your mortgage or car loan rate. It controls this one rate because it is the only supplier of the money banks use to settle with each other, so it can fix the terms on which that money is borrowed or parked.</p>
+<p>Today the Fed does this by paying interest on the cash banks keep at the Fed, the <em>interest on reserve balances</em>, and by offering a similar rate to money-market funds through overnight reverse repurchase agreements. No bank will lend to another bank for less than it can earn risk-free at the Fed, so these two rates act as a floor that drags short-term market rates with them.</p>
+
+<figure class="wide">
+  <img src="assets/fed-explained-fig3-3.png" width="1226" height="1370" alt="Federal Reserve Figure 3.3: the FOMC lowers the interest on reserve balances rate and the overnight reverse repo rate; banks and money funds compare market rates with these rates; market rates move down; households and businesses see lower borrowing costs.">
+  <figcaption><strong>The two levers and what they push.</strong> Follow the right-hand path: the Fed changes what it pays banks, banks compare that with what they could earn lending elsewhere, and market rates move to match. The figure shows a cut; a rate rise runs the same arrows in the opposite direction. Source: Board of Governors of the Federal Reserve System, <em>The Fed Explained</em> (2021), Figure 3.3, p. 41; public domain.</figcaption>
+</figure>
+
+<p>Other rates follow at different speeds. The Bank of England reports that banks usually change their standard lending rates the same day, by the same amount, and variable-rate loans follow quickly. Fixed-rate loans do not change until they are renewed or a new loan is taken out. Long-term rates, such as on a 30-year mortgage, depend on what markets expect short rates to average in the future, so they can move more or less than the policy rate, and occasionally in the other direction.</p>
+
+<h2>How a higher rate reduces spending</h2>
+<p>Suppose the policy rate rises by one percentage point, and suppose that car loans rise by the same amount, from 7% to 8%. A family borrowing $30,000 over five years would pay about $608 a month instead of $594. Fourteen dollars a month changes little for one family, but some families at the margin now buy a cheaper car or keep the old one another year. Across millions of borrowers, that adds up.</p>
+<p>The Bank of England lists several ways a rate rise cuts household spending at once. Borrowers with variable-rate debt have less money left after their payments. Savers earn more by waiting, so some spend later rather than now. Higher rates lower the price of bonds, shares and houses, and people who feel poorer, or who can borrow less against a house worth less, spend less. Firms see the same pressures: projects financed by loans must now earn more to be worth doing, holding inventory costs more, and hiring looks less attractive. A higher rate also tends to raise the value of the currency, which makes imports cheaper and exports harder to sell.</p>
+<p>Not everyone loses. A retiree living on interest income gets more. The central bank sets one rate for the whole economy, though, and the Bank of England's conclusion is that, overall, higher rates reduce current spending.</p>
+
+<h2>How less spending lowers inflation</h2>
+<p>Every economy has a level of output it can produce with its workers and equipment working at a normal pace. Economists call it <em>potential output</em>, and the distance between actual and potential output the <em>output gap</em>. When people try to buy more than that, firms run near capacity, compete for scarce workers by raising wages, and pass the higher costs on in prices. Some also widen their profit margins because customers are lining up anyway. When spending falls back to or below capacity, that pressure eases. Inflation slows not because prices fall, but because they rise more slowly.</p>
+<p>Return to the car dealer. Fewer families buying cars means unsold cars on the lot. The dealer orders fewer from the factory and is less willing to raise sticker prices. The factory cuts overtime and posts fewer job openings. With fewer openings, workers have less leverage to win big raises, so labor costs rise more slowly, and firms have less reason to raise prices to cover them.</p>
+<p>Expectations close the loop. Workers and firms bargain over wages with an eye on the inflation they expect, and firms set prices on the same basis, so inflation that people expect tends to arrive. The Bank of England notes that an economy running exactly at capacity can still have high inflation if everyone expects it. That is why the interest rate that matters for spending is the <em>real interest rate</em>, roughly the stated rate minus expected inflation. A 10% loan when people expect 10% inflation costs nothing in real terms; the same 10% loan when they expect 3% inflation costs about 7%. A central bank that raises rates and is believed when it says it will keep inflation low lowers the expectations that feed into wage and price setting.</p>
+
+<h2>Why it takes so long</h2>
+<p>The delay comes from the chain itself. Each link must move before the next one starts, and several links are slow on their own.</p>
+<p>The first slow link is contracts. The Bank of England notes that "it may be several months before higher official rates affect the payments made by some mortgage-holders," and it may take longer still before those payments change what households buy. People with fixed-rate loans feel nothing until they renew or borrow again, so where fixed rates dominate, the effect runs mainly through new borrowers and new purchases.</p>
+<p>The second is the inventory chain, which the Bank of England traces in order. Slower sales leave retailers with excess stock, so they order less from distributors, who then order less from producers. Only when producers' stocks become unusually large do they cut production, and only then do jobs and earnings change, which in turn cuts spending again. All of this happens in sequence, not at once.</p>
+<p>The third is that prices and wages adjust slowly even when pressure changes. Governor Waller notes that firms typically adjust their prices about once a year, and many wages are fixed by contract for a period. He lists the standard reasons economists give for the sluggishness: "adjustment costs, sticky prices and wages, nominal contracts, habit persistence in consumption, or the fact that there is an option value of waiting." The last one means a business unsure of the future can wait before committing to a new factory, so investment slows gradually rather than stopping.</p>
+<p>Put together, the effect builds and fades rather than switching on. The Bank of England simulated a one-percentage-point rise held for one year. Output starts to fall quite quickly and reaches its largest fall, 0.2% to 0.35% of GDP, after about five quarters. Inflation is "little changed during the first year," falls sharply in the second, and reaches its largest fall, about 0.2 to 0.4 percentage points, after about nine quarters. Three years on it still has not returned to where it would have been, even though the rate rise was reversed after one year. The charts are in the <a href="https://www.bankofengland.co.uk/-/media/boe/files/quarterly-bulletin/1999/the-transmission-mechanism-of-monetary-policy">original report, page 170</a><span class="ext" aria-hidden="true">↗</span>.</p>
+<p>US estimates line up. Using historical rate surprises, Arnaut and Bengali find that the most rate-sensitive US consumer prices start falling below where they otherwise would have been about 18 months after a rise, and overall prices after a little over 24 months. Governor Waller's rule of thumb is that the largest effect on the real economy arrives 12 to 24 months after a surprise move.</p>
+
+<figure class="wide">
+  <div class="chart scroll" tabindex="0" role="region" aria-label="Timeline of when each effect of a rate rise appears, scrollable on narrow screens">
+  <svg viewBox="0 0 900 360" role="img" aria-labelledby="tl-title tl-desc" xmlns="http://www.w3.org/2000/svg">
+    <title id="tl-title">When each effect of a one-point rate rise shows up</title>
+    <desc id="tl-desc">Timeline from month 0 to 36. Market rates move the same day. In the Bank of England model, output falls most around month 15 and inflation falls most around month 27, still below baseline at month 36. In US estimates, the most rate-sensitive prices fall below baseline around month 18 and overall prices just after month 24.</desc>
+    <g font-family="Inter, system-ui, sans-serif" font-size="13" fill="#101527">
+      <!-- axis -->
+      <line x1="190" y1="310" x2="870" y2="310" stroke="#646c77" stroke-width="1"/>
+      <g fill="#646c77" font-size="12" text-anchor="middle">
+        <line x1="190" y1="310" x2="190" y2="316" stroke="#646c77"/><text x="190" y="332">0</text>
+        <line x1="303.3" y1="310" x2="303.3" y2="316" stroke="#646c77"/><text x="303.3" y="332">6</text>
+        <line x1="416.7" y1="310" x2="416.7" y2="316" stroke="#646c77"/><text x="416.7" y="332">12</text>
+        <line x1="530" y1="310" x2="530" y2="316" stroke="#646c77"/><text x="530" y="332">18</text>
+        <line x1="643.3" y1="310" x2="643.3" y2="316" stroke="#646c77"/><text x="643.3" y="332">24</text>
+        <line x1="756.7" y1="310" x2="756.7" y2="316" stroke="#646c77"/><text x="756.7" y="332">30</text>
+        <line x1="870" y1="310" x2="870" y2="316" stroke="#646c77"/><text x="870" y="332">36</text>
+        <text x="530" y="352">Months after the rate rise</text>
+      </g>
+      <g stroke="#cbd0d3" stroke-width="1" stroke-dasharray="2 4">
+        <line x1="416.7" y1="30" x2="416.7" y2="310"/><line x1="643.3" y1="30" x2="643.3" y2="310"/>
+      </g>
+      <!-- row labels -->
+      <g class="label" font-weight="500">
+        <text x="12" y="62">Market interest rates</text>
+        <text x="12" y="132">Spending and output</text>
+        <text x="12" y="150" fill="#646c77" font-weight="400" font-size="12">UK model</text>
+        <text x="12" y="202">Inflation</text>
+        <text x="12" y="220" fill="#646c77" font-weight="400" font-size="12">UK model</text>
+        <text x="12" y="272">US consumer prices</text>
+        <text x="12" y="290" fill="#646c77" font-weight="400" font-size="12">US estimate</text>
+      </g>
+      <!-- row 1 -->
+      <circle cx="190" cy="58" r="7" fill="#2f6c9e"/>
+      <text x="204" y="62">Move the same day</text>
+      <!-- row 2: output -->
+      <line x1="190" y1="128" x2="870" y2="128" stroke="#cbd0d3"/>
+      <circle cx="473.3" cy="128" r="7" fill="#46734d"/>
+      <text x="486" y="116">Largest fall ≈ month 15</text>
+      <text x="486" y="148" fill="#646c77" font-size="12">0.2% to 0.35% of GDP</text>
+      <text x="200" y="116" fill="#646c77" font-size="12">starts falling quickly</text>
+      <!-- row 3: inflation -->
+      <line x1="190" y1="198" x2="870" y2="198" stroke="#cbd0d3"/>
+      <rect x="190" y="192" width="226.7" height="12" fill="#cbd0d3"/>
+      <text x="200" y="184" fill="#646c77" font-size="12">little changed in year 1</text>
+      <circle cx="700" cy="198" r="7" fill="#bf3030"/>
+      <text x="612" y="184">Largest fall ≈ month 27</text>
+      <text x="612" y="222" fill="#646c77" font-size="12">0.2 to 0.4 points</text>
+      <path d="M856 198 l12 0" stroke="#bf3030" stroke-width="2"/>
+      <text x="866" y="222" text-anchor="end" fill="#646c77" font-size="12">still below at 36</text>
+      <!-- row 4: US prices -->
+      <line x1="190" y1="268" x2="870" y2="268" stroke="#cbd0d3"/>
+      <rect x="523" y="261" width="14" height="14" fill="#bf3030" transform="rotate(45 530 268)"/>
+      <text x="380" y="256">Most sensitive prices ≈ 18</text>
+      <rect x="648" y="261" width="14" height="14" fill="#101527" transform="rotate(45 655 268)"/>
+      <text x="670" y="256">Overall prices ≈ 24+</text>
+      <text x="670" y="292" fill="#646c77" font-size="12">first fall below baseline</text>
+    </g>
+  </svg>
+  </div>
+  <figcaption><strong>The delays, on one clock.</strong> Rates move at once, output responds within the first year, and inflation mostly in the second. The UK rows are milestones stated in the Bank of England's 1999 simulation of a one-point rise held for a year; the US row marks when Arnaut and Bengali (2024) find prices first drop below where they otherwise would have been. Only stated milestones are plotted, not the full curves, and the two sources use different models and countries. Chart drawn for this report from those sources.</figcaption>
+</figure>
+
+<h2>How big the effect is, and where it stops</h2>
+<p>The effect of a single modest rise is small. In the Bank of England simulation, one percentage point for one year lowers inflation by about 0.2 to 0.4 points at the peak. Arnaut and Bengali estimate that four years after a one-point rise in the federal funds rate, US prices are typically about 2.5% lower than they would otherwise have been. Both figures come with wide uncertainty, and the Bank of England warns that its simulation "cannot be used to infer how much interest rates would need to be changed on a sustained basis" to reach a given inflation target. Real tightening cycles are usually larger or longer than one point for one year, so their effects are larger too.</p>
+<p>Rates work on demand, not supply. The Fed's own guide notes that "supply shocks," such as crop failures or an oil disruption, raise prices and cut output at the same time. A higher interest rate cannot grow more wheat or pump more oil; it can only reduce spending elsewhere until overall price pressure fits the reduced supply. Arnaut and Bengali also find that prices differ a lot in how much they respond. Food and energy prices move more with world markets than with US rates, and a few prices, such as higher education, do not fall at all.</p>
+<p>The lag itself is not fixed. The Bank of England describes it as "long, variable and uncertain." Governor Waller argues that announcing future rate rises in advance, which central banks now routinely do, moves loan rates before the policy rate changes: the two-year Treasury yield rose from about 0.25% in September 2021 to about 2% by March 2022, before the Fed's first hike, which he says shaved roughly six months off the usual lag. He also argues that large, fast moves get people's attention and change behavior sooner than small ones. Doh and Foerster estimate that before 2009 inflation responded most after more than three years, and since 2009 after about one, though they stress the recent estimate is highly uncertain.</p>
+<p>The delay is the reason central banks act on forecasts. A rate rise today mostly affects inflation one to two years from now, so a central bank that waits until inflation is visibly high is already late, and one that keeps raising until inflation falls risks going too far, because the effects of earlier rises are still arriving.</p>
+</main>
+</body>
+</html>

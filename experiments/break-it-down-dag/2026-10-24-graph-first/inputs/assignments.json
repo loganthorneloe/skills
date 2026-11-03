@@ -1,0 +1,50 @@
+[
+  {
+    "run": "g01",
+    "topic": "evals",
+    "condition": "old",
+    "source_packet": "ai-evals.json"
+  },
+  {
+    "run": "g02",
+    "topic": "backpropagation",
+    "condition": "new",
+    "source_packet": "backpropagation.json"
+  },
+  {
+    "run": "g03",
+    "topic": "isolation",
+    "condition": "old",
+    "source_packet": "transaction-isolation.json"
+  },
+  {
+    "run": "g04",
+    "topic": "bayesian_spam",
+    "condition": "new",
+    "source_packet": "bayesian-spam.json"
+  },
+  {
+    "run": "g05",
+    "topic": "evals",
+    "condition": "new",
+    "source_packet": "ai-evals.json"
+  },
+  {
+    "run": "g06",
+    "topic": "backpropagation",
+    "condition": "old",
+    "source_packet": "backpropagation.json"
+  },
+  {
+    "run": "g07",
+    "topic": "isolation",
+    "condition": "new",
+    "source_packet": "transaction-isolation.json"
+  },
+  {
+    "run": "g08",
+    "topic": "bayesian_spam",
+    "condition": "old",
+    "source_packet": "bayesian-spam.json"
+  }
+]

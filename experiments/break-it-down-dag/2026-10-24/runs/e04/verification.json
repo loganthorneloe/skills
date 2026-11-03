@@ -1,0 +1,60 @@
+{
+  "390": {
+    "scrollWidth": 390,
+    "viewport": 390,
+    "images": [
+      {
+        "loaded": true,
+        "width": 542
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "controls": 0
+  },
+  "1440": {
+    "scrollWidth": 1440,
+    "viewport": 1440,
+    "images": [
+      {
+        "loaded": true,
+        "width": 542
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "controls": 0
+  },
+  "static": "Database transaction isolation.",
+  "errors": []
+}

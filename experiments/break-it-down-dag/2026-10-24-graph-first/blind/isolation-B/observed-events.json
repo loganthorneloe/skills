@@ -1,0 +1,26 @@
+[
+  {
+    "time": "2026-10-24T20:34:19.497409+00:00",
+    "file": "isolation-B/dag.json",
+    "sha256": "3b0c864a5f2d246bdc1e74c022e81698b3d79a895d9ab97dcb3e471d13346818",
+    "snapshot": "observed/dag-3b0c864a5f2d.json",
+    "nodes": 22,
+    "edges": 38
+  },
+  {
+    "time": "2026-10-24T20:36:01.901753+00:00",
+    "file": "isolation-B/dag.json",
+    "sha256": "a92c3aef0cbeb141fccbdc1133f76c9bbb8ebd90a3193ec4374b85e6e5b767b7",
+    "snapshot": "observed/dag-a92c3aef0cbe.json",
+    "nodes": 21,
+    "edges": 35
+  },
+  {
+    "time": "2026-10-24T20:36:34.024591+00:00",
+    "file": "isolation-B/dag.json",
+    "sha256": "fb6e33027029a653a44ad6148515f81d874b723b626ba9894560fe652165ffdc",
+    "snapshot": "observed/dag-fb6e33027029.json",
+    "nodes": 21,
+    "edges": 35
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "status": "frozen-before-generation",
+  "frozen_at_utc": "2026-10-24T20:24:46.992228+00:00",
+  "candidate_instructions_seen": false,
+  "new_graphs_generated_or_seen": false,
+  "files": {
+    "benchmark.json": "1966aff2603c1a9853ed3bcfe344ce81dc6ae06b76f854e09d6a19d06edbe127",
+    "rubric.md": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f"
+  },
+  "validation": "JSON parses; four unique topic IDs; eight essential questions and four application probes per topic; dependency probes and requests present.",
+  "amendment_policy": "Preserve this version. Any content change requires a new manifest/version and explicit post-freeze deviation disclosure."
+}

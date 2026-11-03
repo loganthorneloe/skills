@@ -1,0 +1,11 @@
+{
+  "candidate_chars": 11997,
+  "candidate_words": 1665,
+  "estimated_tokens": 2999.25,
+  "validator_tokens": 3000,
+  "original_block_chars": 1150,
+  "candidate_block_chars": 1150,
+  "outside_block_unchanged": true,
+  "validator": "PASS",
+  "behavioral_execution": "Not performed: design-only assignment excludes actual graphs."
+}

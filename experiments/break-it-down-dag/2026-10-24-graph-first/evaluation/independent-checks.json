@@ -1,0 +1,91 @@
+{
+  "backpropagation-A": {
+    "initial_loss": 1.0,
+    "analytic_gradient": [
+      1,
+      0.5,
+      2,
+      -2
+    ],
+    "independent_central_difference": [
+      0.9999999999177334,
+      0.4999999999588667,
+      1.999999999946489,
+      -1.999999999946489
+    ],
+    "max_absolute_error": 8.22666379463044e-11,
+    "updated_loss": 0.38031250000000016
+  },
+  "backpropagation-B": {
+    "initial_loss": 0.5,
+    "analytic_gradient": [
+      -2,
+      -1,
+      1,
+      0.5,
+      -1,
+      -1,
+      -1
+    ],
+    "independent_central_difference": [
+      -1.9999999999187335,
+      -1.0000000000565112,
+      1.000000000001,
+      0.5000000000143778,
+      -1.0000000000565112,
+      -1.0000000000565112,
+      -1.000000000001
+    ],
+    "max_absolute_error": 8.126654904572206e-11,
+    "updated_loss": 0.0012499999999999911
+  },
+  "bayesian": {
+    "base_rate_posteriors": {
+      "0": "0",
+      "1/1000": "1/112",
+      "1/100": "1/12",
+      "1/10": "1/2",
+      "1/2": "9/10",
+      "1": "1"
+    },
+    "two_independent_clues": "9/20",
+    "equal_likelihood_clue": "1/100"
+  },
+  "isolation": {
+    "on_call": {
+      "A_then_B": [
+        false,
+        true
+      ],
+      "B_then_A": [
+        true,
+        false
+      ],
+      "both_read_first": [
+        false,
+        false
+      ]
+    },
+    "withdrawal": {
+      "A_then_B": [
+        -50,
+        100
+      ],
+      "B_then_A": [
+        100,
+        -50
+      ],
+      "both_read_first": [
+        -50,
+        -50
+      ]
+    }
+  },
+  "integrity": {
+    "graphs": 8,
+    "all_edges_classified": 224,
+    "all_manifest_hashes_match": true,
+    "all_observed_hashes_match": true,
+    "first_six_frozen_results_unchanged": true
+  }
+}

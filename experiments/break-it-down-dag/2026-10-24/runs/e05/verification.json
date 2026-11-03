@@ -1,0 +1,102 @@
+[
+  {
+    "name": "desktop",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "loaded": true,
+        "width": 1520
+      },
+      {
+        "loaded": true,
+        "width": 760
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "fontChecks": [
+      true,
+      true,
+      true
+    ],
+    "links": [
+      "eval_start.py",
+      "cases.json"
+    ],
+    "controls": 0,
+    "focus": {
+      "tag": "A",
+      "outline": "3px"
+    },
+    "errors": []
+  },
+  {
+    "name": "mobile",
+    "width": 390,
+    "scrollWidth": 390,
+    "images": [
+      {
+        "loaded": true,
+        "width": 1520
+      },
+      {
+        "loaded": true,
+        "width": 760
+      }
+    ],
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "fontChecks": [
+      true,
+      true,
+      true
+    ],
+    "links": [
+      "eval_start.py",
+      "cases.json"
+    ],
+    "controls": 0,
+    "focus": {
+      "tag": "A",
+      "outline": "3px"
+    },
+    "errors": []
+  },
+  {
+    "noJS": true,
+    "title": "AI application evals",
+    "h2count": 8,
+    "imageCount": 2
+  }
+]

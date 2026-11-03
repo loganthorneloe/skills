@@ -1,0 +1,24 @@
+{
+  "keyboard": {
+    "tag": "A",
+    "outline": "solid"
+  },
+  "localLinks": [
+    {
+      "path": "figure-1.png",
+      "exists": true
+    },
+    {
+      "path": "figure-1.png",
+      "exists": true
+    },
+    {
+      "path": "source-paper.pdf#page=1",
+      "exists": true
+    }
+  ],
+  "graph": {
+    "imageLoaded": true,
+    "overflow": false
+  }
+}

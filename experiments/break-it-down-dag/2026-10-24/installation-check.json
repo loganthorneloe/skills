@@ -1,0 +1,54 @@
+{
+  "roots": [
+    "/Users/loganthorneloe/.codex/skills",
+    "/Users/loganthorneloe/.agents/skills",
+    "/Users/loganthorneloe/src/skills/.codex/skills",
+    "/Users/loganthorneloe/src/skills/.agents/skills"
+  ],
+  "skill_names": {
+    "\"imagegen\"": [
+      "/Users/loganthorneloe/.codex/skills/.system/imagegen/SKILL.md"
+    ],
+    "\"openai-docs\"": [
+      "/Users/loganthorneloe/.codex/skills/.system/openai-docs/SKILL.md"
+    ],
+    "review-agent": [
+      "/Users/loganthorneloe/.codex/skills/.system/review-agent/SKILL.md"
+    ],
+    "skill-creator": [
+      "/Users/loganthorneloe/.codex/skills/.system/skill-creator/SKILL.md"
+    ],
+    "skill-installer": [
+      "/Users/loganthorneloe/.codex/skills/.system/skill-installer/SKILL.md"
+    ],
+    "artifact-template-whip-up-slides": [
+      "/Users/loganthorneloe/.codex/skills/artifact-template-whip-up-slides/SKILL.md"
+    ],
+    "break-it-down-dag": [
+      "/Users/loganthorneloe/.codex/skills/break-it-down-dag/SKILL.md"
+    ],
+    "logan-brand": [
+      "/Users/loganthorneloe/.codex/skills/logan-brand/SKILL.md"
+    ],
+    "resume-builder": [
+      "/Users/loganthorneloe/.codex/skills/resume-builder/SKILL.md"
+    ],
+    "audit-sponsorship": [
+      "/Users/loganthorneloe/.agents/skills/audit-sponsorship/SKILL.md"
+    ],
+    "break-it-down": [
+      "/Users/loganthorneloe/.agents/skills/break-it-down/SKILL.md"
+    ],
+    "commit-and-push": [
+      "/Users/loganthorneloe/.agents/skills/commit-and-push/SKILL.md"
+    ],
+    "cost": [
+      "/Users/loganthorneloe/.agents/skills/cost/SKILL.md"
+    ],
+    "no-edit": [
+      "/Users/loganthorneloe/.agents/skills/no-edit/SKILL.md"
+    ]
+  },
+  "collisions": {},
+  "link_resolves": true
+}

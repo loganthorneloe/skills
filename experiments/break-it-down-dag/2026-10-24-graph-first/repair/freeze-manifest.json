@@ -1,0 +1,14 @@
+{
+  "frozen_at": "2026-10-24T20:41:23.945325+00:00",
+  "files": {
+    "repair/skill.txt": "519532158593f9f3f95769884d6e2080dec95bfb8a6479b78d3df9179e4fda95",
+    "repair/protocol.md": "c0f598ff5d4867911e7bdea0bc283f95b2dd32c80a0ab800723fe41be33243e2",
+    "repair/worker-instructions.txt": "f4e5bf9f59b7a74a9253861bda7817c1adb820c6a6525d43b68344bf51f67bf8",
+    "repair/benchmark-v1.1.json": "7522a35e1c7be84286da3c04f85e9b6efe2bb40142f0c8aede2f62c5712c9e2e",
+    "design/benchmark/rubric.md": "4adf590c9623f9db2dd3438a72cdef2b4e320099a8efec51b2de956b5853243f",
+    "inputs/sources/ai-evals.json": "a10509f23738a6727ff8af7cd477309d6e2aae4644f9ac109df5d562260139d7",
+    "inputs/sources/transaction-isolation.json": "9dc4cc90964da2271fe20d4e88473da9bab4892160903454f446c5aed68e4dce",
+    "inputs/sources/bayesian-spam.json": "db3cc3c0cc658f79181966af86da44eda7913abd54abf5f479b2a1febfedcaed"
+  },
+  "new_topic": "Independent benchmark will be frozen before its generation; hidden from instruction designer."
+}

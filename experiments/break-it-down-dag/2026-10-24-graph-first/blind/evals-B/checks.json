@@ -1,0 +1,36 @@
+{
+  "result": "PASS",
+  "nodes": 18,
+  "edges": 29,
+  "checks": [
+    "Unique IDs",
+    "Unique edges",
+    "Valid target and edge endpoints",
+    "Acyclic graph",
+    "Every node reaches target",
+    "Node schema and evidence fields",
+    "Supported nodes have evidence",
+    "Initial snapshot equals preserved revision-zero graph"
+  ],
+  "topological_order": [
+    "python",
+    "system",
+    "variation",
+    "intent",
+    "reference",
+    "cases",
+    "outcome",
+    "holdout",
+    "run",
+    "grade",
+    "repeat",
+    "calibrate",
+    "summary",
+    "slices",
+    "compare",
+    "improve",
+    "start",
+    "target"
+  ],
+  "limits": "Structural validation cannot prove prerequisite necessity or source entailment. Those were reviewed manually; no application or renderer tested."
+}

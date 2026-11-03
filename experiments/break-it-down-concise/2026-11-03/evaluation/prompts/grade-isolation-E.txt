@@ -1,0 +1,8 @@
+You are a blind coverage grader. Read ONLY these two files:
+1. The report: /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/blind/isolation/E/report.html (open it as text; you may also render it with Playwright if helpful). Ignore any other files.
+2. The question set with answer keys: /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/inputs/questions-isolation.md
+
+For each question, decide how well the report alone teaches the answer to its stated novice reader (the request is: "Break down database transaction isolation from first principles. I can read basic SQL SELECT and UPDATE statements but have never studied database internals. Why can two individually correct operations produce a wrong result when they run at the same time, and how do isolation levels help?"). Score 2 = a novice reading only this report could answer correctly; 1 = partial, implicit, or requires inference the report does not support; 0 = missing or wrong. Do not use your own knowledge to fill gaps; credit only what the report says. Note any factual error you notice.
+
+Write your result to /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/evaluation/coverage/isolation-E.md as markdown: one line per question "Qn: <score> — <short exact quote or section locator> — <one-sentence reason>", then "TOTAL: <sum>/16", then "ERRORS: <list or none>". Do not open any other file in the experiment directory. Do not create Claude Docs or artifacts. Return the total.
+Put any scripts or screenshots only in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/evaluation/scratch-grade-isolation-E/.

@@ -4,7 +4,7 @@ description: Explains complex topics from first principles with source evidence 
 ---
 # Break It Down
 
-Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not short. Read the Gotchas before starting.
+Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable and free of padding: include what the reader needs to follow the answer and nothing else. Read the Gotchas before starting.
 
 ## Companion research skills
 
@@ -23,13 +23,13 @@ Use available research, asset-extraction, artifact, and browser tools without re
 
 ## 2. Research for understanding and evidence
 
-Start with a handful of high-signal sources; expand until every claim has a passing or conditional source. Read each source for both purposes in the same pass, producing its `source-audit` record and noting exhibit candidates; reopen it only for specific checks. Drop sources that fail every claim. When a claim still lacks a source, search for one and audit it. Then extract and record exhibits from the surviving sources with `find-evidence`. When an exhibit's rights are unstated, embed it with attribution and say so in its caption. When copies of a source carry different reuse terms, use the most permissive copy. Keep both sets of records as working notes outside the readable report; they drive the audit section, exhibit placement, and step 6.
+Start with a handful of high-signal sources; expand until every claim has a passing or conditional source. Research for the full draft: the step 6 cut removes words, never sources or exhibits. Read each source for both purposes in the same pass, producing its `source-audit` record and noting exhibit candidates; reopen it only for specific checks. Drop sources that fail every claim. When a claim still lacks a source, search for one and audit it. Then extract and record exhibits from the surviving sources with `find-evidence`. Embed exhibits with attribution, and say so in the caption when rights are unstated. Cite a `link-only` exhibit with an ordinary inline link in the sentence it supports, with no figure, caption, or description standing in for it. Keep both sets of records as working notes outside the readable report; they drive the audit section, exhibit placement, and step 6.
 
 Settled background a textbook would state, and reasoning that follows directly from sourced facts, needs no record. Contested, quantitative, current, or product-specific claims do.
 
 ## 3. Build a connected explanation
 
-Write all prose in the `voice` skill. Begin with the topic title followed by the source audit, built from the audit records. For each source, place the full linked title on the first line. Immediately below it, put the author or team first (for more than four authors, the first two and "colleagues"), then the publication type, venue or publisher, and first publication date where available, together in one unlinked italic metadata line. Allow this line to wrap naturally on narrow screens. Below the metadata, write the reader-facing entry `source-audit` describes; failed sources do not appear. Keep entries short enough that the direct answer is reached quickly.
+Write all prose in the `voice` skill. Begin with the topic title followed by the source audit, built from the audit records. For each source, place the full linked title on the first line. Immediately below it, put the author or team first (for more than four authors, the first two and "colleagues"), then the publication type, venue or publisher, and first publication date where available, together in one unlinked italic metadata line. Allow this line to wrap naturally on narrow screens. Below the metadata, write one or two sentences: why to trust it for its use here, and the one limit that most changes how to read it. Failed sources do not appear.
 
 Source-entry header example:
 
@@ -38,13 +38,15 @@ Source-entry header example:
 
 State the direct answer after the audit, then build the explanation in prerequisite order. Embed each exhibit from the evidence records beside the claim it supports, and integrate it into the argument by explaining what to notice and any limit that changes its interpretation. Explain the evidence before considering an additional generated visual or summary. Do not repeat a question–figure–summary–disclaimer formula. Link an enlarged view when figure details need it. Use worked examples only to close comprehension gaps.
 
+Spend words in proportion to importance. Before drafting, rank the claims by how much the answer depends on them: give the top ones full mechanism and evidence, state minor ones in a sentence, and cut what the answer does not need. Teach each prerequisite in the fewest sentences that make it usable. Carry one worked example through the report rather than introducing new ones. Give each exhibit one to three sentences on what to notice and its limit. Open each section with its point. No section recaps, closing summaries, comprehension quizzes, or next-steps lists unless requested.
+
 ## 4. Make HTML teach
 
 Generated visuals and interactions are optional. Add one only to resolve a specific comprehension gap left by source exhibits and prose; omit toy demonstrations that merely restate the explanation. For an interaction, identify the reader-controlled input, visible consequence, and additional insight before implementation. Use native controls with lightweight JavaScript and HTML, SVG, or canvas.
 
 Keep controls next to results, with current values, units, sensible defaults, and reset where useful. State assumptions and source empirical inputs. Do not invent measured relationships. Provide keyboard access, labels, visible focus, accessible result updates, reduced-motion support, and a readable initial state without JavaScript.
 
-Keep definitions, explanation, evidence, caveats, and implications visible in the reading flow; end on implications and limits rather than a recap. No accordions, disclosure dropdowns, or hover-only essential text unless requested. A select may change a genuine model parameter. Prefer relevant source tables with attribution and context; use clearly labeled synthesis tables when the comparison spans sources. Choose by purpose, not a table quota.
+Keep definitions, explanation, evidence, caveats, and implications visible in the reading flow; end on implications and limits. No accordions, disclosure dropdowns, or hover-only essential text unless requested. A select may change a genuine model parameter. Prefer relevant source tables with attribution and context; use clearly labeled synthesis tables when the comparison spans sources. Choose by purpose, not a table quota.
 
 ## 5. Apply the house style
 
@@ -62,10 +64,11 @@ Prefer one HTML file with embedded CSS and only necessary JavaScript. Embed retr
 
 Before delivery:
 
-1. Run the `voice` revision pass. Check that prose connects prerequisites, mechanism, evidence, and implications without requiring links.
-2. Check every factual sentence against the audit and evidence records; fix overstatements. Match every recorded claim to a passing or conditional audit record. Reconcile the evidence records with the report; repair omissions caused by stopping early or avoiding extraction.
-3. Render at about 1280px and 390px wide and inspect screenshots for clipping, unreadable figures, broken assets, and brand drift. After `document.fonts.ready`, confirm `document.fonts.check('600 1em Sora')` and `document.fonts.check('400 1em Inter')` return true; computed font-family names alone are insufficient. If no scriptable browser is available, report these checks as not performed.
-4. Operate every control at default, changed, and boundary states. Check results against its stated logic, keyboard use, focus, and static fallback. Fix observed defects and repeat affected checks.
+1. Distill. Once the full draft is written and checked, cut the delivered version to about half its reading length, deleting or shrinking first the paragraphs whose loss would hurt the reader's understanding least. Cut words, not visuals: keep every figure, table, diagram, and interactive the draft used unless another visual shows the same data. Keep every claim the direct answer depends on, its mechanism, the evidence and caveats that bound it, and the field's standard name for each key concept. Run the remaining checks on it.
+2. Run the `voice` revision pass. Check that prose connects prerequisites, mechanism, evidence, and implications without requiring links.
+3. Check every factual sentence against the audit and evidence records; fix overstatements. Match every recorded claim to a passing or conditional audit record. Reconcile the evidence records with the report; repair omissions caused by stopping early or avoiding extraction.
+4. Render at about 1280px and 390px wide and inspect screenshots for clipping, unreadable figures, broken assets, and brand drift. After `document.fonts.ready`, confirm `document.fonts.check('600 1em Sora')` and `document.fonts.check('400 1em Inter')` return true; computed font-family names alone are insufficient. If no scriptable browser is available, report these checks as not performed.
+5. Operate every control at default, changed, and boundary states. Check results against its stated logic, keyboard use, focus, and static fallback. Fix observed defects and repeat affected checks.
 
 Deliver the actual file or supported artifact with a usable link, or complete HTML source when neither is available. Briefly state material access and verification gaps. Do not describe unperformed checks as passed.
 

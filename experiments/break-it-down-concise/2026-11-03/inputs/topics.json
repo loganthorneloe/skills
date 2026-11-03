@@ -1,0 +1,10 @@
+{
+ "causal": "Break down causal inference from first principles. I understand averages and percentages but have never studied statistics. If people who use a learning app score higher on an exam, why does that not prove the app helped, and how could we find out whether it did?",
+ "isolation": "Break down database transaction isolation from first principles. I can read basic SQL SELECT and UPDATE statements but have never studied database internals. Why can two individually correct operations produce a wrong result when they run at the same time, and how do isolation levels help?",
+ "evals": "Break down AI application evals from first principles. I can write a small Python program and call a model API, but I have no machine-learning or AI-engineering background. Why do I need evals, how do they work, and how would I start evaluating a customer-support assistant?",
+ "mrna": "Break down how mRNA vaccines work from first principles. I took high-school biology but nothing since. How does injecting mRNA teach my immune system to fight a virus, and why doesn't it change my DNA?",
+ "gps": "Break down how GPS finds your location from first principles. I know basic algebra and that satellites orbit Earth. How does my phone work out where it is from satellite signals, and why does it need such precise clocks?",
+ "rates": "Break down how central bank interest rates affect inflation from first principles. I understand loans and prices but have never studied economics. Why does raising interest rates slow inflation, and why does it take so long to work?",
+ "attention": "Break down attention in transformer language models from first principles. I can program and know what a matrix multiplication is, but I have no machine-learning background. What does attention actually compute, and why did it make models like ChatGPT possible?",
+ "anc": "Break down active noise cancellation in headphones from first principles. I know sound is a wave but nothing about signal processing. How can headphones cancel noise by adding more sound, and why does it work better on a low engine hum than on voices?"
+}

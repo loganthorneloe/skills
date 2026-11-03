@@ -1,0 +1,227 @@
+{
+ "t-anc-base/report.html": {
+  "words": 2884,
+  "img": 4,
+  "svg": 4,
+  "canvas": 0,
+  "controls": 3,
+  "tables": 1,
+  "figures": 4
+ },
+ "t-anc-hyb2/draft.html": {
+  "words": 2859,
+  "img": 5,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 0,
+  "figures": 5
+ },
+ "t-anc-hyb2/report.html": {
+  "words": 1696,
+  "img": 5,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 0,
+  "figures": 5
+ },
+ "t-anc-hyb3/draft.html": {
+  "words": 2843,
+  "img": 6,
+  "svg": 0,
+  "canvas": 2,
+  "controls": 2,
+  "tables": 0,
+  "figures": 6
+ },
+ "t-anc-hyb3/report.html": {
+  "words": 1815,
+  "img": 6,
+  "svg": 0,
+  "canvas": 2,
+  "controls": 2,
+  "tables": 0,
+  "figures": 6
+ },
+ "t-attention-base/report.html": {
+  "words": 3469,
+  "img": 6,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 2,
+  "figures": 5
+ },
+ "t-attention-hyb2/draft.html": {
+  "words": 2997,
+  "img": 4,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 1,
+  "figures": 4
+ },
+ "t-attention-hyb2/report.html": {
+  "words": 1836,
+  "img": 4,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 1,
+  "figures": 4
+ },
+ "t-attention-hyb3/draft.html": {
+  "words": 3097,
+  "img": 8,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 1,
+  "figures": 8
+ },
+ "t-attention-hyb3/report.html": {
+  "words": 1950,
+  "img": 8,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 1,
+  "figures": 8
+ },
+ "t-gps-base/report.html": {
+  "words": 3112,
+  "img": 4,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 1,
+  "tables": 1,
+  "figures": 4
+ },
+ "t-gps-hyb2/draft.html": {
+  "words": 2257,
+  "img": 5,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 1,
+  "tables": 0,
+  "figures": 5
+ },
+ "t-gps-hyb2/report.html": {
+  "words": 1420,
+  "img": 5,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 1,
+  "tables": 0,
+  "figures": 5
+ },
+ "t-gps-hyb3/draft.html": {
+  "words": 3070,
+  "img": 8,
+  "svg": 2,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 0,
+  "figures": 7
+ },
+ "t-gps-hyb3/report.html": {
+  "words": 1995,
+  "img": 8,
+  "svg": 2,
+  "canvas": 0,
+  "controls": 2,
+  "tables": 0,
+  "figures": 7
+ },
+ "t-mrna-base/report.html": {
+  "words": 3111,
+  "img": 3,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 4
+ },
+ "t-mrna-hyb2/draft.html": {
+  "words": 2724,
+  "img": 3,
+  "svg": 2,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 5
+ },
+ "t-mrna-hyb2/report.html": {
+  "words": 1702,
+  "img": 3,
+  "svg": 2,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 5
+ },
+ "t-mrna-hyb3/draft.html": {
+  "words": 2906,
+  "img": 5,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 6
+ },
+ "t-mrna-hyb3/report.html": {
+  "words": 1856,
+  "img": 5,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 6
+ },
+ "t-rates-base/report.html": {
+  "words": 3457,
+  "img": 7,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 1,
+  "figures": 6
+ },
+ "t-rates-hyb2/draft.html": {
+  "words": 2509,
+  "img": 5,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 4
+ },
+ "t-rates-hyb2/report.html": {
+  "words": 1362,
+  "img": 5,
+  "svg": 0,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 4
+ },
+ "t-rates-hyb3/draft.html": {
+  "words": 2454,
+  "img": 2,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 3
+ },
+ "t-rates-hyb3/report.html": {
+  "words": 1570,
+  "img": 2,
+  "svg": 1,
+  "canvas": 0,
+  "controls": 0,
+  "tables": 0,
+  "figures": 3
+ }
+}

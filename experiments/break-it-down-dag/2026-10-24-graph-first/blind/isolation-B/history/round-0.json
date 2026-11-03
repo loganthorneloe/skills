@@ -1,0 +1,6 @@
+{
+  "round": 0,
+  "action": "Saved initial graph before supplemental source reading. Partial nodes use the supplied packet as leads; gap nodes require mechanism evidence and worked reasoning.",
+  "source_material": "inputs/sources/transaction-isolation.json",
+  "changes": "Initial full graph in history/initial.json."
+}

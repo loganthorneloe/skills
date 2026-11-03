@@ -1,0 +1,28 @@
+diff -r baseline/break-it-down/SKILL.md combined/break-it-down/SKILL.md
+7c7
+< Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not short. Read the Gotchas before starting.
+---
+> Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not padded: include what the reader needs to follow the answer and nothing else. Read the Gotchas before starting.
+8a9,10
+> Keep the reading text (prose, headings, and exhibit discussion; not source metadata lines, quoted captions, or code) to about 1,000–1,200 words unless the user asks for more, roughly half a thorough report. Meet the budget by choosing what matters most, not by compressing sentences into jargon.
+> 
+32c34
+< Write all prose in the `voice` skill. Begin with the topic title followed by the source audit, built from the audit records. For each source, place the full linked title on the first line. Immediately below it, put the author or team first (for more than four authors, the first two and "colleagues"), then the publication type, venue or publisher, and first publication date where available, together in one unlinked italic metadata line. Allow this line to wrap naturally on narrow screens. Below the metadata, write the reader-facing entry `source-audit` describes; failed sources do not appear. Keep entries short enough that the direct answer is reached quickly.
+---
+> Write all prose in the `voice` skill. Begin with the topic title followed by the source audit, built from the audit records. For each source, place the full linked title on the first line. Immediately below it, put the author or team first (for more than four authors, the first two and "colleagues"), then the publication type, venue or publisher, and first publication date where available, together in one unlinked italic metadata line. Allow this line to wrap naturally on narrow screens. Below the metadata, write one or two sentences: why this source can be trusted for what it is used for here, and the one limit that most changes how to read it. Failed sources do not appear.
+39c41,43
+< State the direct answer after the audit, then build the explanation in prerequisite order. Embed each exhibit from the evidence records beside the claim it supports, and integrate it into the argument by explaining what to notice and any limit that changes its interpretation. Explain the evidence before considering an additional generated visual or summary. Do not repeat a question–figure–summary–disclaimer formula. Link an enlarged view when figure details need it. Use worked examples only to close comprehension gaps.
+---
+> State the direct answer in at most three sentences after the audit, then build the explanation in prerequisite order. Embed each exhibit from the evidence records beside the claim it supports, and integrate it into the argument by explaining what to notice and any limit that changes its interpretation. Explain the evidence before considering an additional generated visual or summary. Do not repeat a question–figure–summary–disclaimer formula. Link an enlarged view when figure details need it. Use worked examples only to close comprehension gaps.
+> 
+> Spend words in proportion to importance. Before drafting, rank the claims by how much the answer depends on them: give the top ones full mechanism and evidence, state minor ones in a sentence, and cut what the answer does not need. Teach each prerequisite in the fewest sentences that make it usable. Carry one worked example through the report rather than introducing new ones. Give each exhibit one to three sentences on what to notice and its limit. Open each section with its point. No section recaps, closing summaries, comprehension quizzes, or next-steps lists unless requested.
+diff -r baseline/voice/SKILL.md combined/voice/SKILL.md
+7c7
+< Write so the reader understands what happens, how, and why on the first read. Simple means understandable, not short. This skill governs wording, sentence and paragraph shape, and text structure. The user or calling task sets scope, reader, length, format, and visual design, and its explicit instructions override these defaults.
+---
+> Write so the reader understands what happens, how, and why on the first read. Simple means understandable, not padded. This skill governs wording, sentence and paragraph shape, and text structure. The user or calling task sets scope, reader, length, format, and visual design, and its explicit instructions override these defaults.
+45c45,46
+< 4. Check the length against any limit the caller set.
+---
+> 4. Cut every sentence that repeats a point already made, previews what comes next, or explains something this reader already knows.
+> 5. Check the length against any limit the caller set.

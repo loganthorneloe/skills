@@ -1,0 +1,10 @@
+# Coverage questions — active noise cancellation (frozen before generation)
+Score each 0/1/2 from the report alone. 2 = a novice reading only this report could answer correctly; 1 = partial, implicit, or needs inference the report does not support; 0 = missing or wrong.
+Q1. How can adding sound reduce sound? Key: superposition; a wave equal in amplitude and opposite in phase (inverted) adds to the noise to cancel it (destructive interference).
+Q2. What hardware does ANC use? Key: microphones (feedforward outside and/or feedback inside the cup), a processor/filter, and the speaker producing the anti-noise.
+Q3. What is the difference between feedforward and feedback ANC? Key: feedforward measures outside noise before it reaches the ear; feedback measures residual sound inside and corrects it; hybrids combine both.
+Q4. Why does the anti-noise have to be adaptive/filtered rather than a simple inversion? Key: the acoustic path through the cup and speaker changes the sound's amplitude and phase with frequency; a filter models this, and adaptive algorithms (e.g. LMS) update for changing noise and fit.
+Q5. Why does timing/latency limit performance? Key: the anti-noise must arrive in sync; a fixed delay is a small fraction of a long low-frequency period but a large fraction of a short high-frequency period, so errors grow with frequency.
+Q6. Why are low steady hums easier than voices? Key: low frequency, long wavelengths, predictable/stationary; voices are higher frequency, changing and unpredictable, so the system can't track them as well.
+Q7. What handles high frequencies instead? Key: passive isolation (ear cups/tips seal, materials) blocks higher frequencies; ANC and passive isolation complement each other.
+Q8 (transfer). Why might ANC make a 3 kHz tone louder in some cases, and how do designers avoid this? Key: if phase error exceeds about 60°/is large, the added wave no longer cancels and can add; designers limit ANC gain to low frequencies and rely on passive isolation above.

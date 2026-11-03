@@ -1,0 +1,660 @@
+{
+  "reader_assumptions": [
+    "Can write a small Python program and call a model API.",
+    "No machine-learning or AI-engineering background."
+  ],
+  "target_id": "workflow",
+  "nodes": [
+    {
+      "id": "program",
+      "question": "What does a program do with input and output?",
+      "answer": "Reader can write Python and call a model API.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "variation",
+      "question": "Why can a support application fail even when its model sounds fluent?",
+      "answer": "A fluent response can violate policy or describe an action that never occurred; repeated model executions can differ.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        },
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        }
+      ]
+    },
+    {
+      "id": "goal",
+      "question": "What observable behavior counts as successful customer support?",
+      "answer": "Define observable behavior from the support policy, including eligible, ineligible and missing-information situations.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Q&A over docs",
+          "claim": "Task-specific objectives, representative examples, repeated evaluation."
+        }
+      ]
+    },
+    {
+      "id": "case",
+      "question": "How does a test case make that behavior testable?",
+      "answer": "Record inputs and starting conditions separately from expected behavior; supply only task context to the application.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        },
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        }
+      ]
+    },
+    {
+      "id": "grader",
+      "question": "How can correctness be judged when many answers are acceptable?",
+      "answer": "Use exact checks for records and explicit human criteria for prose; calibrate automated judges with human judgments.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        },
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        }
+      ]
+    },
+    {
+      "id": "sample",
+      "question": "What does a score on a finite set of cases tell us?",
+      "answer": "A result describes sampled attempts; case mix, variability, sampling uncertainty, and grading error limit generalization.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Q&A over docs",
+          "claim": "Task-specific objectives, representative examples, repeated evaluation."
+        },
+        {
+          "url": "https://itl.nist.gov/div898/handbook/prc/section2/prc241.htm",
+          "locator": "Exact intervals for small numbers of failures",
+          "claim": "Finite binary samples require uncertainty treatment."
+        }
+      ]
+    },
+    {
+      "id": "compare",
+      "question": "How can a developer tell whether a change helped?",
+      "answer": "Keep cases and grading fixed while comparing baseline and candidate, inspect regressions and reserve independent checks.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Q&A over docs",
+          "claim": "Task-specific objectives, representative examples, repeated evaluation."
+        }
+      ]
+    },
+    {
+      "id": "workflow",
+      "question": "How do I start and maintain evals for a support assistant?",
+      "answer": "Define one support job, collect cases, run the application, review judgments, compare a controlled change, then maintain cases from real failures.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Q&A over docs",
+          "claim": "Task-specific objectives, representative examples, repeated evaluation."
+        }
+      ]
+    },
+    {
+      "id": "outcome",
+      "question": "Why inspect actual records and the action history?",
+      "answer": "A final record proves an effect, while the history checks required authorization before the effect.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        }
+      ]
+    },
+    {
+      "id": "population",
+      "question": "Which future support requests does a test set represent?",
+      "answer": "A score describes its case mix; a curated risk set is not a random sample of traffic.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Q&A over docs",
+          "claim": "Task-specific objectives, representative examples, repeated evaluation."
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "program",
+      "to": "variation",
+      "why": "Must distinguish program execution from correct behavior."
+    },
+    {
+      "from": "goal",
+      "to": "case",
+      "why": "Expected behavior determines what context and checks a case needs."
+    },
+    {
+      "from": "case",
+      "to": "grader",
+      "why": "A grader needs an explicit input and expected behavior."
+    },
+    {
+      "from": "grader",
+      "to": "sample",
+      "why": "Aggregate scores only mean something once individual judgments are defined."
+    },
+    {
+      "from": "sample",
+      "to": "compare",
+      "why": "Comparisons require understanding finite and variable observations."
+    },
+    {
+      "from": "compare",
+      "to": "workflow",
+      "why": "Release decisions require comparable evidence."
+    },
+    {
+      "from": "case",
+      "to": "workflow",
+      "why": "Implementation needs concrete case records."
+    },
+    {
+      "from": "goal",
+      "to": "outcome",
+      "why": "Knowing success criteria explains why both final effect and required permission matter."
+    },
+    {
+      "from": "outcome",
+      "to": "grader",
+      "why": "Checks must target correct observables."
+    },
+    {
+      "from": "population",
+      "to": "sample",
+      "why": "Generalization depends on how the sample relates to future traffic."
+    },
+    {
+      "from": "variation",
+      "to": "sample",
+      "why": "Repeated executions can disagree even on one case."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "stage": "initial-before-prerequisite-research",
+      "timestamp": "2026-10-24T15:32:18.443078+00:00",
+      "gaps": [
+        "variation",
+        "goal",
+        "case",
+        "grader",
+        "sample",
+        "compare",
+        "workflow"
+      ],
+      "searches": [],
+      "evidence": [],
+      "changes": [],
+      "graph": {
+        "nodes": [
+          {
+            "id": "program",
+            "question": "What does a program do with input and output?",
+            "answer": "Reader can write Python and call a model API.",
+            "status": "assumed",
+            "evidence": []
+          },
+          {
+            "id": "variation",
+            "question": "Why can a support application fail even when its model sounds fluent?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "goal",
+            "question": "What observable behavior counts as successful customer support?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "case",
+            "question": "How does a test case make that behavior testable?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "grader",
+            "question": "How can correctness be judged when many answers are acceptable?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "sample",
+            "question": "What does a score on a finite set of cases tell us?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "compare",
+            "question": "How can a developer tell whether a change helped?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "workflow",
+            "question": "How do I start and maintain evals for a support assistant?",
+            "answer": "",
+            "status": "gap",
+            "evidence": []
+          }
+        ],
+        "edges": [
+          {
+            "from": "program",
+            "to": "variation",
+            "why": "Must distinguish program execution from correct behavior."
+          },
+          {
+            "from": "variation",
+            "to": "goal",
+            "why": "Need failure modes to specify application success."
+          },
+          {
+            "from": "goal",
+            "to": "case",
+            "why": "Expected behavior determines what context and checks a case needs."
+          },
+          {
+            "from": "case",
+            "to": "grader",
+            "why": "A grader needs an explicit input and expected behavior."
+          },
+          {
+            "from": "grader",
+            "to": "sample",
+            "why": "Aggregate scores only mean something once individual judgments are defined."
+          },
+          {
+            "from": "sample",
+            "to": "compare",
+            "why": "Comparisons require understanding finite and variable observations."
+          },
+          {
+            "from": "compare",
+            "to": "workflow",
+            "why": "Release decisions require comparable evidence."
+          },
+          {
+            "from": "case",
+            "to": "workflow",
+            "why": "Implementation needs concrete case records."
+          }
+        ]
+      }
+    },
+    {
+      "round": 1,
+      "gaps": [
+        "Need distinguish outcome from required process",
+        "Finite test score is not production reliability",
+        "How to calibrate graders"
+      ],
+      "searches": [
+        "Anthropic demystifying evals",
+        "OpenAI evaluation best practices",
+        "tau-bench paper",
+        "NIST confidence intervals"
+      ],
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        },
+        {
+          "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+          "locator": "Types of graders; Steps 0\u20138",
+          "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Q&A over docs",
+          "claim": "Task-specific objectives, representative examples, repeated evaluation."
+        },
+        {
+          "url": "https://itl.nist.gov/div898/handbook/prc/section2/prc241.htm",
+          "locator": "Exact intervals for small numbers of failures",
+          "claim": "Finite binary samples require uncertainty treatment."
+        }
+      ],
+      "changes": [
+        "Add outcome/process prerequisite and population prerequisite. Remove variation\u2192goal: defining desired behavior does not require knowing variability."
+      ]
+    },
+    {
+      "round": 2,
+      "gaps": [],
+      "searches": [
+        "Read tau PDF figure 1 and figure 4, full \u00a7\u00a73,5,6",
+        "Read NIST confidence intervals",
+        "Read Anthropic grader and zero-to-one sections"
+      ],
+      "evidence": [
+        {
+          "url": "https://arxiv.org/html/2406.12045v1",
+          "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+          "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+        },
+        {
+          "url": "https://itl.nist.gov/div898/handbook/prc/section2/prc241.htm",
+          "locator": "Exact intervals for small numbers of failures",
+          "claim": "Finite binary samples require uncertainty treatment."
+        }
+      ],
+      "changes": [
+        "Explained outcome-versus-authorization distinction in report",
+        "Added population assumptions and zero-failure calculation",
+        "Selected original setup and reliability figures; rejected current-model rankings as out of scope"
+      ],
+      "graph": {
+        "nodes": [
+          {
+            "id": "program",
+            "question": "What does a program do with input and output?",
+            "answer": "Reader can write Python and call a model API.",
+            "status": "assumed",
+            "evidence": []
+          },
+          {
+            "id": "variation",
+            "question": "Why can a support application fail even when its model sounds fluent?",
+            "answer": "A fluent response can violate policy or describe an action that never occurred; repeated model executions can differ.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://arxiv.org/html/2406.12045v1",
+                "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+                "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+              },
+              {
+                "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+                "locator": "Types of graders; Steps 0\u20138",
+                "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+              }
+            ]
+          },
+          {
+            "id": "goal",
+            "question": "What observable behavior counts as successful customer support?",
+            "answer": "Define observable behavior from the support policy, including eligible, ineligible and missing-information situations.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+                "locator": "Types of graders; Steps 0\u20138",
+                "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+              },
+              {
+                "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+                "locator": "Design your eval process; Q&A over docs",
+                "claim": "Task-specific objectives, representative examples, repeated evaluation."
+              }
+            ]
+          },
+          {
+            "id": "case",
+            "question": "How does a test case make that behavior testable?",
+            "answer": "Record inputs and starting conditions separately from expected behavior; supply only task context to the application.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://arxiv.org/html/2406.12045v1",
+                "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+                "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+              },
+              {
+                "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+                "locator": "Types of graders; Steps 0\u20138",
+                "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+              }
+            ]
+          },
+          {
+            "id": "grader",
+            "question": "How can correctness be judged when many answers are acceptable?",
+            "answer": "Use exact checks for records and explicit human criteria for prose; calibrate automated judges with human judgments.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://arxiv.org/html/2406.12045v1",
+                "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+                "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+              },
+              {
+                "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+                "locator": "Types of graders; Steps 0\u20138",
+                "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+              }
+            ]
+          },
+          {
+            "id": "sample",
+            "question": "What does a score on a finite set of cases tell us?",
+            "answer": "A result describes sampled attempts; case mix, variability, sampling uncertainty, and grading error limit generalization.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://arxiv.org/html/2406.12045v1",
+                "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+                "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+              },
+              {
+                "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+                "locator": "Design your eval process; Q&A over docs",
+                "claim": "Task-specific objectives, representative examples, repeated evaluation."
+              },
+              {
+                "url": "https://itl.nist.gov/div898/handbook/prc/section2/prc241.htm",
+                "locator": "Exact intervals for small numbers of failures",
+                "claim": "Finite binary samples require uncertainty treatment."
+              }
+            ]
+          },
+          {
+            "id": "compare",
+            "question": "How can a developer tell whether a change helped?",
+            "answer": "Keep cases and grading fixed while comparing baseline and candidate, inspect regressions and reserve independent checks.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+                "locator": "Types of graders; Steps 0\u20138",
+                "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+              },
+              {
+                "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+                "locator": "Design your eval process; Q&A over docs",
+                "claim": "Task-specific objectives, representative examples, repeated evaluation."
+              }
+            ]
+          },
+          {
+            "id": "workflow",
+            "question": "How do I start and maintain evals for a support assistant?",
+            "answer": "Define one support job, collect cases, run the application, review judgments, compare a controlled change, then maintain cases from real failures.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://www.anthropic.com/research/demystifying-evals-for-ai-agents",
+                "locator": "Types of graders; Steps 0\u20138",
+                "claim": "Combine graders, small starting sets, isolate trials, inspect transcripts and calibrate."
+              },
+              {
+                "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+                "locator": "Design your eval process; Q&A over docs",
+                "claim": "Task-specific objectives, representative examples, repeated evaluation."
+              }
+            ]
+          },
+          {
+            "id": "outcome",
+            "question": "Why inspect actual records and the action history?",
+            "answer": "A final record proves an effect, while the history checks required authorization before the effect.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://arxiv.org/html/2406.12045v1",
+                "locator": "\u00a73 Reward, \u00a75.1, \u00a76",
+                "claim": "Database checks may miss confirmation violations; repeated trials differ; simulated users have limitations."
+              }
+            ]
+          },
+          {
+            "id": "population",
+            "question": "Which future support requests does a test set represent?",
+            "answer": "A score describes its case mix; a curated risk set is not a random sample of traffic.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+                "locator": "Design your eval process; Q&A over docs",
+                "claim": "Task-specific objectives, representative examples, repeated evaluation."
+              }
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "from": "program",
+            "to": "variation",
+            "why": "Must distinguish program execution from correct behavior."
+          },
+          {
+            "from": "goal",
+            "to": "case",
+            "why": "Expected behavior determines what context and checks a case needs."
+          },
+          {
+            "from": "case",
+            "to": "grader",
+            "why": "A grader needs an explicit input and expected behavior."
+          },
+          {
+            "from": "grader",
+            "to": "sample",
+            "why": "Aggregate scores only mean something once individual judgments are defined."
+          },
+          {
+            "from": "sample",
+            "to": "compare",
+            "why": "Comparisons require understanding finite and variable observations."
+          },
+          {
+            "from": "compare",
+            "to": "workflow",
+            "why": "Release decisions require comparable evidence."
+          },
+          {
+            "from": "case",
+            "to": "workflow",
+            "why": "Implementation needs concrete case records."
+          },
+          {
+            "from": "goal",
+            "to": "outcome",
+            "why": "Knowing success criteria explains why both final effect and required permission matter."
+          },
+          {
+            "from": "outcome",
+            "to": "grader",
+            "why": "Checks must target correct observables."
+          },
+          {
+            "from": "population",
+            "to": "sample",
+            "why": "Generalization depends on how the sample relates to future traffic."
+          },
+          {
+            "from": "variation",
+            "to": "sample",
+            "why": "Repeated executions can disagree even on one case."
+          }
+        ]
+      }
+    }
+  ],
+  "verification": {
+    "unique_ids": true,
+    "valid_endpoints": true,
+    "acyclic": true,
+    "all_nodes_reach_target": true,
+    "topological_order": [
+      "program",
+      "goal",
+      "population",
+      "variation",
+      "case",
+      "outcome",
+      "grader",
+      "sample",
+      "compare",
+      "workflow"
+    ],
+    "semantic_check": "Each edge reviewed against the prose; source evidence does not by itself prove dependency necessity."
+  }
+}

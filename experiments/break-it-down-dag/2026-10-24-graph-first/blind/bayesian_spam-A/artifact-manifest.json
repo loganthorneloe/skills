@@ -1,0 +1,62 @@
+[
+  {
+    "file": "dag.html",
+    "original_sha256": "13bfe56eae6b5e326a58d8b11a798e678ce9e0923ed42c01dae46b7ad0496f44",
+    "blind_sha256": "13bfe56eae6b5e326a58d8b11a798e678ce9e0923ed42c01dae46b7ad0496f44"
+  },
+  {
+    "file": "checks.json",
+    "original_sha256": "de119dbe25a85f99353124672928dcafe14b53dc303d11c0fac175135aab8746",
+    "blind_sha256": "de119dbe25a85f99353124672928dcafe14b53dc303d11c0fac175135aab8746"
+  },
+  {
+    "file": "dag.svg",
+    "original_sha256": "dbcf89a410174ff0c21e15238ed245bae0678b0cc0ded9489ab632595f403bee",
+    "blind_sha256": "dbcf89a410174ff0c21e15238ed245bae0678b0cc0ded9489ab632595f403bee"
+  },
+  {
+    "file": "run-notes.md",
+    "original_sha256": "e91cfec835edb1792f67605733c7895fe167ab953e037b1f48d01099ddbf382b",
+    "blind_sha256": "bc35eb9f9882bc2a8720d1651f7c3258460ac51f20f21ee7767c486b595814ca"
+  },
+  {
+    "file": "request.txt",
+    "original_sha256": "20ff755263b8f428539b4aae6920284eb25ce798bcb206bbc6c0dd05b109f25b",
+    "blind_sha256": "20ff755263b8f428539b4aae6920284eb25ce798bcb206bbc6c0dd05b109f25b"
+  },
+  {
+    "file": "dag.json",
+    "original_sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6",
+    "blind_sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6"
+  },
+  {
+    "file": "history/01-research.md",
+    "original_sha256": "1424c3c51dd97f0df8d328009c885b921d27c9d57dd5ec6449c7136ab70e76a0",
+    "blind_sha256": "1424c3c51dd97f0df8d328009c885b921d27c9d57dd5ec6449c7136ab70e76a0"
+  },
+  {
+    "file": "history/00-initial-notes.md",
+    "original_sha256": "805228c515be004ce6275b50a75acc0d97cfbf5ff6f96d4a4e33e46aaaf555b3",
+    "blind_sha256": "805228c515be004ce6275b50a75acc0d97cfbf5ff6f96d4a4e33e46aaaf555b3"
+  },
+  {
+    "file": "history/02-research.md",
+    "original_sha256": "8e3cc4b506d077040c89610b849495197bb84480f0f4e72692d77139e879ed58",
+    "blind_sha256": "8e3cc4b506d077040c89610b849495197bb84480f0f4e72692d77139e879ed58"
+  },
+  {
+    "file": "history/03-supported.json",
+    "original_sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6",
+    "blind_sha256": "9b927d78ff3ea38f2eabd315b60531f48830a8f6ed03a14418c412aefed0c6e6"
+  },
+  {
+    "file": "history/03-research.md",
+    "original_sha256": "778f4b6e162646e30f2cb4d9086122e45580307561f5f83deaad27301abed38b",
+    "blind_sha256": "778f4b6e162646e30f2cb4d9086122e45580307561f5f83deaad27301abed38b"
+  },
+  {
+    "file": "history/00-initial.json",
+    "original_sha256": "f31ffef185805683c247a5886dc8595340b5a1b4de6680ae2554deeda25d9c44",
+    "blind_sha256": "f31ffef185805683c247a5886dc8595340b5a1b4de6680ae2554deeda25d9c44"
+  }
+]

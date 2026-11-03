@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Headphones Cancel Noise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--canvas:#f5f4f0;--surface:#fff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font:400 17px/1.75 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1000px;margin:0 auto;padding:48px 24px 96px}
+.prose,main>h1,main>h2,main>p,main>ul,main>ol,section>h2,section>h3,section>p,section>ul,section>ol,.sources{max-width:720px;margin-left:auto;margin-right:auto}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.2}
+h1{font-size:2.4rem;margin:0 auto 40px;max-width:720px}
+h1 .dot{color:var(--red)}
+h2{font-size:1.55rem;margin-top:64px;margin-bottom:16px;padding-top:24px;border-top:1px solid var(--border)}
+h3{font-size:1.15rem;margin-top:32px}
+p{margin:0 auto 1.1em}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,button:focus-visible,input:focus-visible,.scroll:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px;text-decoration:none;display:inline-block}
+.sources .src{padding:16px 0;border-bottom:1px solid var(--border)}
+.sources .src:first-of-type{border-top:1px solid var(--border)}
+.src .t{margin:0}
+.src .meta{margin:0;font-style:italic;color:var(--muted);font-size:.92rem;line-height:1.5}
+.src .why{margin:.4em 0 0;font-size:.95rem}
+.answer{font-size:1.08rem}
+figure{margin:36px auto;max-width:960px}
+figure img{display:block;max-width:100%;height:auto;margin:0 auto;background:#fff;border:1px solid var(--border)}
+figcaption{max-width:720px;margin:12px auto 0;font-size:.92rem;line-height:1.6;color:var(--text)}
+figcaption .credit{color:var(--muted)}
+.scroll{overflow-x:auto}
+blockquote{max-width:720px;margin:24px auto;padding:0 0 0 20px;border-left:2px solid var(--red)}
+blockquote p{margin:0}
+blockquote cite{display:block;font-style:normal;color:var(--muted);font-size:.9rem;margin-top:4px}
+/* interactive */
+.lab{max-width:960px;margin:40px auto;background:var(--surface);border:1px solid var(--border)}
+.lab-head{padding:20px 24px 0}
+.lab-head h3{margin:0 0 6px}
+.lab-head p{font-size:.95rem;color:var(--muted);margin:0}
+.controls{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);margin-top:20px}
+.ctl{padding:16px 24px}
+.ctl+.ctl{border-left:1px solid var(--border)}
+.ctl label{font-weight:500;font-size:.95rem;display:flex;justify-content:space-between;gap:12px}
+.ctl output{font-family:Sora,system-ui,sans-serif;font-weight:600}
+input[type=range]{width:100%;accent-color:var(--blue);margin:10px 0 4px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 16px}
+button{font:500 .9rem Inter,system-ui,sans-serif;background:var(--surface);color:var(--text);border:1px solid var(--border);padding:6px 12px;cursor:pointer;border-radius:0}
+button:hover{border-color:var(--text)}
+.plot{border-top:1px solid var(--border);padding:12px 12px 4px}
+.plot svg{display:block;width:100%;height:auto;aspect-ratio:900/260}
+.plot path{vector-effect:non-scaling-stroke}
+.legend{display:flex;flex-wrap:wrap;gap:16px;padding:0 24px 12px;font-size:.88rem;color:var(--muted)}
+.sw{display:inline-block;width:22px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border)}
+.tile{padding:16px 24px;border-left:1px solid var(--border)}
+.tile:first-child{border-left:0}
+.tile .k{font-size:.82rem;color:var(--muted);font-weight:500;line-height:1.4}
+.tile .v{font-family:Sora,system-ui,sans-serif;font-weight:600;font-size:1.35rem;line-height:1.3}
+.note{padding:12px 24px 20px;border-top:1px solid var(--border);font-size:.9rem;color:var(--muted);margin:0}
+table{border-collapse:collapse;width:100%;max-width:720px;margin:24px auto;font-size:.95rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-weight:500;color:var(--muted)}
+@media (max-width:640px){
+ body{font-size:16px}
+ main{padding:32px 20px 72px}
+ h1{font-size:1.9rem}
+ .controls{grid-template-columns:1fr}
+ .ctl+.ctl{border-left:0;border-top:1px solid var(--border)}
+ .tiles{grid-template-columns:1fr 1fr}
+ .plot svg{aspect-ratio:auto;height:200px}
+ .tile:nth-child(3){border-left:0}
+ .tile:nth-child(n+3){border-top:1px solid var(--border)}
+ .wide img{max-width:none;width:720px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>How headphones cancel noise by adding sound<span class="dot">.</span></h1>
+
+<section class="sources" aria-labelledby="src-h">
+<h2 id="src-h" style="margin-top:0">Sources</h2>
+
+<div class="src">
+<p class="t"><a href="https://patents.google.com/patent/US2043416A/en">Process of silencing sound oscillations (US Patent 2,043,416)</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Paul Lueg · US patent · United States Patent Office · filed March 1934, granted June 1936</p>
+<p class="why">The first statement of cancelling sound with a microphone and loudspeaker. It shows the idea, not how well it works.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://arxiv.org/abs/2306.01425">Active Noise Control in The New Century: The Role and Prospect of Signal Processing</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Dongyuan Shi, Bhan Lam, and colleagues · review paper (preprint) · arXiv · June 2023</p>
+<p class="why">A survey by active researchers, including Stephen Elliott, who co-wrote the field's standard textbooks. It is a preprint with no new measurements, used here for history and timing limits.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://homes.esat.kuleuven.be/~dspuser/dasp/material/Slides_2023_2024/Chapter-6%20Sound%20Field%20Control-pp40.pdf">Digital Audio Signal Processing, Chapter 6: Sound Field Control</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Jesper Brunnström and Marc Moonen · university lecture slides · KU Leuven · 2023–2024</p>
+<p class="why">Course slides from a long-serving signal-processing professor. Its numbers are uncited rules of thumb.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://www.hsu-hh.de/ant/wp-content/uploads/sites/699/2019/01/Hybrid-Active-Noise-Control-Structures_-A-Short-Overview-Rivera-Nowak-Zoelzer.pdf">Hybrid Active Noise Control Structures: A Short Overview</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Piero Rivera Benois, Patrick Nowak, and Udo Zölzer · conference paper · Helmut Schmidt University, Hamburg · 2019</p>
+<p class="why">Defines the microphones and control schemes, from a group that builds headphone prototypes. It has no measurements, and its venue is inferred from the host page.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://www.hsu-hh.de/ant/wp-content/uploads/sites/699/2018/08/ICSV25_full_paper_Rivera_Papantoni_Zoelzer.pdf">Psychoacoustic Hybrid Active Noise Control Structure for Application in Headphones</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Piero Rivera Benois, Veatriki Papantoni, and Udo Zölzer · conference paper · 25th International Congress on Sound and Vibration, Hiroshima · July 2018</p>
+<p class="why">Measures a real-time prototype on an acoustic dummy head. It is one prototype with one noise direction, not a product.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://www.hsu-hh.de/ant/wp-content/uploads/sites/699/2017/11/Rivera-Nowak-Z%C3%B6lzer-2017-Fully-Digital-Implementation-of-a-Hybrid-Feedback-Structure-for-Broadband-Active-Noise-Control-in-Headphones.pdf">Fully Digital Implementation of a Hybrid Feedback Structure for Broadband Active Noise Control in Headphones</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Piero Rivera Benois, Patrick Nowak, and Udo Zölzer · conference paper · Helmut Schmidt University, Hamburg · 2017</p>
+<p class="why">Plays random noise and steady tones at one headphone prototype and measures what reaches the ear, so both kinds of noise are compared on the same device. Its tones are synthetic and steady, easier than a real engine.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://stacks.cdc.gov/view/cdc/210761">Rating the Performance of Active Noise Cancellation Devices</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Hilary L. Gallagher and William J. Murphy · article · NHCA Spectrum, National Hearing Conservation Association · July 2017</p>
+<p class="why">Air Force and NIOSH hearing researchers tested four commercial headsets on ten listeners with ANSI methods. They are aviation and industrial headsets, not current consumer earbuds.</p>
+</div>
+
+<div class="src">
+<p class="t"><a href="https://doi.org/10.3389/fpsyg.2014.00587">The perceptual significance of high-frequency energy in the human voice</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="meta">Brian B. Monson, Eric J. Hunter, Andrew J. Lotto, and Brad H. Story · review article · Frontiers in Psychology · June 2014</p>
+<p class="why">A peer-reviewed review by speech scientists, used for its measured picture of a voice. Its example is one male talker.</p>
+</div>
+</section>
+
+<h2>The short answer</h2>
+<p class="answer">Sound is a fast wobble in air pressure, and where two sounds meet their pressures add. If the speaker pushes the air out exactly when the noise pulls it in, the two cancel. "Exactly" means within a small fraction of one cycle. A low engine hum has long, repeating cycles, so there is timing slack and the next cycle is predictable. A voice has short cycles that change every syllable, so the same tiny delay spoils cancellation. Above about 1 kHz (1,000 Hz), headphones rely on the ear cup simply blocking sound.</p>
+
+<h2>Sound is pressure, and pressures add</h2>
+<p>A sound wave is air pressure rising and dipping many times a second; the count per second is its frequency, in hertz (Hz). Sound travels about 343 metres per second, so one cycle of 100 Hz spans 3.4 m of air (its wavelength), while one cycle at 4 kHz spans under 9 cm.</p>
+<p>When two sounds reach the same point, the pressures there add, which is called superposition. A wave shifted by half a cycle, peaks on troughs, is in opposite phase, and adding it to the original gives zero: destructive interference. Paul Lueg patented using this against noise in 1934.</p>
+
+<figure>
+<img src="assets/lueg-1936-fig1.png" width="1193" height="453" alt="Patent drawing: a pipe T with sound source A at left, microphone M, an amplifier V wired to loudspeaker L on the pipe wall, a solid wave s1 travelling right and a dashed wave s2 drawn half a cycle out of step with it beyond the loudspeaker.">
+<figcaption>Microphone M hears wave s1; amplifier V drives loudspeaker L, which adds the dashed wave s2. Notice s2's peaks sitting on s1's troughs to the right of L. This is the easiest case, one tone in a pipe. <span class="credit">Fig. 1 of <a href="https://patents.google.com/patent/US2043416A/en">US Patent 2,043,416</a><span class="ext" aria-hidden="true">↗</span>; public domain.</span></figcaption>
+</figure>
+
+<h2>Inside the headphone: two microphones and a speaker</h2>
+<p>A noise-cancelling headphone plays anti-noise through its ordinary speaker. An outer reference microphone hears the noise before it leaks in; an inner error microphone, next to your ear, hears what is left. Feedforward control computes anti-noise from the outer microphone; feedback control keeps pushing the inner microphone's leftover toward zero; hybrids do both.</p>
+
+<figure>
+<img src="assets/rivera-2018-fig1-anc-headphone-signals.png" width="1070" height="710" alt="Cutaway drawing of an ear cup over an ear: incoming noise at left reaches an outer microphone labelled x(n); a box P(z) carries it to an inner microphone near the ear labelled d(n); the speaker, box S(z), produces y(n), which is subtracted at the inner microphone; the leftover e(n) is sent back out.">
+<figcaption>The outer microphone hears <em>x(n)</em>; the cup turns it into <em>d(n)</em> at the ear (path <em>P</em>); the speaker's anti-noise arrives as <em>y(n)</em> (path <em>S</em>); the minus sign marks where they meet, leaving <em>e(n)</em> for the inner microphone. <span class="credit">Fig. 1 of <a href="https://www.hsu-hh.de/ant/wp-content/uploads/sites/699/2018/08/ICSV25_full_paper_Rivera_Papantoni_Zoelzer.pdf">Rivera Benois, Papantoni, and Zölzer, 2018</a><span class="ext" aria-hidden="true">↗</span>; rights unstated, reproduced with attribution.</span></figcaption>
+</figure>
+
+<h2>Timing is everything, and short waves leave no slack</h2>
+<p>The anti-noise must reach the ear at the same instant as the noise, so the microphone, converters, processor, and speaker must all finish first. Shi and colleagues call this "a causality constraint," and note it is tightest in headphones, where the microphones sit centimetres apart. Rivera Benois and colleagues found ordinary audio converters slow enough to "substantially decrease the noise attenuation frequency bandwidth."</p>
+<p>What counts is the delay as a share of one cycle. Suppose the anti-noise is 20 microseconds (µs) late. That is 0.2% of a 100 Hz cycle, and the hum drops about 38 decibels (dB; every 10 dB is a tenfold cut in sound power). It is 8% of a 4 kHz cycle, and the "s" only drops to half its pressure, 6 dB. A delay of half a cycle lands peak on peak and doubles the noise.</p>
+
+<div class="lab" id="lab">
+<div class="lab-head">
+<h3>Try it: how much does a small delay cost?</h3>
+<p>Set a frequency and how late the anti-noise arrives, and see what reaches your ear.</p>
+</div>
+<div class="controls">
+<div class="ctl">
+<label for="freq">Frequency <output id="freqOut" for="freq">100 Hz</output></label>
+<input type="range" id="freq" min="0" max="1000" step="1" value="137" aria-describedby="freqHelp">
+<div id="freqHelp" style="font-size:.85rem;color:var(--muted)">50 Hz to 8,000 Hz, log scale</div>
+</div>
+<div class="ctl">
+<label for="delay">Timing error <output id="delayOut" for="delay">20 µs</output></label>
+<input type="range" id="delay" min="0" max="100" step="1" value="20" aria-describedby="delayHelp">
+<div id="delayHelp" style="font-size:.85rem;color:var(--muted)">0 to 100 microseconds</div>
+</div>
+</div>
+<div class="presets" role="group" aria-label="Examples">
+<button type="button" data-f="100" data-d="20">Engine hum, 100 Hz</button>
+<button type="button" data-f="4000" data-d="20">"s" sound, 4 kHz</button>
+<button type="button" data-f="1000" data-d="20">Mid voice, 1 kHz</button>
+<button type="button" id="reset" data-f="100" data-d="20">Reset</button>
+</div>
+<div class="plot">
+<svg id="wave" viewBox="0 0 900 260" preserveAspectRatio="none" role="img" aria-label="Waveforms of noise, delayed anti-noise, and their sum">
+<line x1="40" y1="130" x2="880" y2="130" stroke="#cbd0d3" stroke-width="1" vector-effect="non-scaling-stroke"/>
+<path id="pNoise" fill="none" stroke="#101527" stroke-width="2.5" d="M40.0 130.0L42.3 126.9L44.7 123.7L47.0 120.6L49.3 117.5L51.7 114.4L54.0 111.3L56.3 108.2L58.7 105.2L61.0 102.2L63.3 99.2L65.7 96.3L68.0 93.4L70.3 90.5L72.7 87.7L75.0 85.0L77.3 82.3L79.7 79.7L82.0 77.1L84.3 74.6L86.7 72.1L89.0 69.8L91.3 67.5L93.7 65.3L96.0 63.1L98.3 61.1L100.7 59.1L103.0 57.2L105.3 55.4L107.7 53.7L110.0 52.1L112.3 50.5L114.7 49.1L117.0 47.8L119.3 46.6L121.7 45.4L124.0 44.4L126.3 43.5L128.7 42.7L131.0 42.0L133.3 41.4L135.7 40.9L138.0 40.5L140.3 40.2L142.7 40.1L145.0 40.0L147.3 40.1L149.7 40.2L152.0 40.5L154.3 40.9L156.7 41.4L159.0 42.0L161.3 42.7L163.7 43.5L166.0 44.4L168.3 45.4L170.7 46.6L173.0 47.8L175.3 49.1L177.7 50.5L180.0 52.1L182.3 53.7L184.7 55.4L187.0 57.2L189.3 59.1L191.7 61.1L194.0 63.1L196.3 65.3L198.7 67.5L201.0 69.8L203.3 72.1L205.7 74.6L208.0 77.1L210.3 79.7L212.7 82.3L215.0 85.0L217.3 87.7L219.7 90.5L222.0 93.4L224.3 96.3L226.7 99.2L229.0 102.2L231.3 105.2L233.7 108.2L236.0 111.3L238.3 114.4L240.7 117.5L243.0 120.6L245.3 123.7L247.7 126.9L250.0 130.0L252.3 133.1L254.7 136.3L257.0 139.4L259.3 142.5L261.7 145.6L264.0 148.7L266.3 151.8L268.7 154.8L271.0 157.8L273.3 160.8L275.7 163.7L278.0 166.6L280.3 169.5L282.7 172.3L285.0 175.0L287.3 177.7L289.7 180.3L292.0 182.9L294.3 185.4L296.7 187.9L299.0 190.2L301.3 192.5L303.7 194.7L306.0 196.9L308.3 198.9L310.7 200.9L313.0 202.8L315.3 204.6L317.7 206.3L320.0 207.9L322.3 209.5L324.7 210.9L327.0 212.2L329.3 213.4L331.7 214.6L334.0 215.6L336.3 216.5L338.7 217.3L341.0 218.0L343.3 218.6L345.7 219.1L348.0 219.5L350.3 219.8L352.7 219.9L355.0 220.0L357.3 219.9L359.7 219.8L362.0 219.5L364.3 219.1L366.7 218.6L369.0 218.0L371.3 217.3L373.7 216.5L376.0 215.6L378.3 214.6L380.7 213.4L383.0 212.2L385.3 210.9L387.7 209.5L390.0 207.9L392.3 206.3L394.7 204.6L397.0 202.8L399.3 200.9L401.7 198.9L404.0 196.9L406.3 194.7L408.7 192.5L411.0 190.2L413.3 187.9L415.7 185.4L418.0 182.9L420.3 180.3L422.7 177.7L425.0 175.0L427.3 172.3L429.7 169.5L432.0 166.6L434.3 163.7L436.7 160.8L439.0 157.8L441.3 154.8L443.7 151.8L446.0 148.7L448.3 145.6L450.7 142.5L453.0 139.4L455.3 136.3L457.7 133.1L460.0 130.0L462.3 126.9L464.7 123.7L467.0 120.6L469.3 117.5L471.7 114.4L474.0 111.3L476.3 108.2L478.7 105.2L481.0 102.2L483.3 99.2L485.7 96.3L488.0 93.4L490.3 90.5L492.7 87.7L495.0 85.0L497.3 82.3L499.7 79.7L502.0 77.1L504.3 74.6L506.7 72.1L509.0 69.8L511.3 67.5L513.7 65.3L516.0 63.1L518.3 61.1L520.7 59.1L523.0 57.2L525.3 55.4L527.7 53.7L530.0 52.1L532.3 50.5L534.7 49.1L537.0 47.8L539.3 46.6L541.7 45.4L544.0 44.4L546.3 43.5L548.7 42.7L551.0 42.0L553.3 41.4L555.7 40.9L558.0 40.5L560.3 40.2L562.7 40.1L565.0 40.0L567.3 40.1L569.7 40.2L572.0 40.5L574.3 40.9L576.7 41.4L579.0 42.0L581.3 42.7L583.7 43.5L586.0 44.4L588.3 45.4L590.7 46.6L593.0 47.8L595.3 49.1L597.7 50.5L600.0 52.1L602.3 53.7L604.7 55.4L607.0 57.2L609.3 59.1L611.7 61.1L614.0 63.1L616.3 65.3L618.7 67.5L621.0 69.8L623.3 72.1L625.7 74.6L628.0 77.1L630.3 79.7L632.7 82.3L635.0 85.0L637.3 87.7L639.7 90.5L642.0 93.4L644.3 96.3L646.7 99.2L649.0 102.2L651.3 105.2L653.7 108.2L656.0 111.3L658.3 114.4L660.7 117.5L663.0 120.6L665.3 123.7L667.7 126.9L670.0 130.0L672.3 133.1L674.7 136.3L677.0 139.4L679.3 142.5L681.7 145.6L684.0 148.7L686.3 151.8L688.7 154.8L691.0 157.8L693.3 160.8L695.7 163.7L698.0 166.6L700.3 169.5L702.7 172.3L705.0 175.0L707.3 177.7L709.7 180.3L712.0 182.9L714.3 185.4L716.7 187.9L719.0 190.2L721.3 192.5L723.7 194.7L726.0 196.9L728.3 198.9L730.7 200.9L733.0 202.8L735.3 204.6L737.7 206.3L740.0 207.9L742.3 209.5L744.7 210.9L747.0 212.2L749.3 213.4L751.7 214.6L754.0 215.6L756.3 216.5L758.7 217.3L761.0 218.0L763.3 218.6L765.7 219.1L768.0 219.5L770.3 219.8L772.7 219.9L775.0 220.0L777.3 219.9L779.7 219.8L782.0 219.5L784.3 219.1L786.7 218.6L789.0 218.0L791.3 217.3L793.7 216.5L796.0 215.6L798.3 214.6L800.7 213.4L803.0 212.2L805.3 210.9L807.7 209.5L810.0 207.9L812.3 206.3L814.7 204.6L817.0 202.8L819.3 200.9L821.7 198.9L824.0 196.9L826.3 194.7L828.7 192.5L831.0 190.2L833.3 187.9L835.7 185.4L838.0 182.9L840.3 180.3L842.7 177.7L845.0 175.0L847.3 172.3L849.7 169.5L852.0 166.6L854.3 163.7L856.7 160.8L859.0 157.8L861.3 154.8L863.7 151.8L866.0 148.7L868.3 145.6L870.7 142.5L873.0 139.4L875.3 136.3L877.7 133.1L880.0 130.0"/>
+<path id="pAnti" fill="none" stroke="#2f6c9e" stroke-width="2.5" stroke-dasharray="7 5" d="M40.0 128.9L42.3 132.0L44.7 135.1L47.0 138.3L49.3 141.4L51.7 144.5L54.0 147.6L56.3 150.7L58.7 153.7L61.0 156.7L63.3 159.7L65.7 162.7L68.0 165.6L70.3 168.4L72.7 171.3L75.0 174.0L77.3 176.7L79.7 179.4L82.0 182.0L84.3 184.5L86.7 187.0L89.0 189.4L91.3 191.7L93.7 193.9L96.0 196.1L98.3 198.2L100.7 200.2L103.0 202.1L105.3 204.0L107.7 205.7L110.0 207.4L112.3 208.9L114.7 210.4L117.0 211.8L119.3 213.0L121.7 214.2L124.0 215.2L126.3 216.2L128.7 217.0L131.0 217.8L133.3 218.4L135.7 219.0L138.0 219.4L140.3 219.7L142.7 219.9L145.0 220.0L147.3 220.0L149.7 219.9L152.0 219.6L154.3 219.3L156.7 218.8L159.0 218.3L161.3 217.6L163.7 216.8L166.0 215.9L168.3 215.0L170.7 213.9L173.0 212.7L175.3 211.4L177.7 210.0L180.0 208.5L182.3 206.9L184.7 205.2L187.0 203.5L189.3 201.6L191.7 199.7L194.0 197.6L196.3 195.5L198.7 193.3L201.0 191.1L203.3 188.7L205.7 186.3L208.0 183.8L210.3 181.3L212.7 178.6L215.0 176.0L217.3 173.2L219.7 170.5L222.0 167.6L224.3 164.8L226.7 161.8L229.0 158.9L231.3 155.9L233.7 152.9L236.0 149.8L238.3 146.7L240.7 143.6L243.0 140.5L245.3 137.4L247.7 134.3L250.0 131.1L252.3 128.0L254.7 124.9L257.0 121.7L259.3 118.6L261.7 115.5L264.0 112.4L266.3 109.3L268.7 106.3L271.0 103.3L273.3 100.3L275.7 97.3L278.0 94.4L280.3 91.6L282.7 88.7L285.0 86.0L287.3 83.3L289.7 80.6L292.0 78.0L294.3 75.5L296.7 73.0L299.0 70.6L301.3 68.3L303.7 66.1L306.0 63.9L308.3 61.8L310.7 59.8L313.0 57.9L315.3 56.0L317.7 54.3L320.0 52.6L322.3 51.1L324.7 49.6L327.0 48.2L329.3 47.0L331.7 45.8L334.0 44.8L336.3 43.8L338.7 43.0L341.0 42.2L343.3 41.6L345.7 41.0L348.0 40.6L350.3 40.3L352.7 40.1L355.0 40.0L357.3 40.0L359.7 40.1L362.0 40.4L364.3 40.7L366.7 41.2L369.0 41.7L371.3 42.4L373.7 43.2L376.0 44.1L378.3 45.0L380.7 46.1L383.0 47.3L385.3 48.6L387.7 50.0L390.0 51.5L392.3 53.1L394.7 54.8L397.0 56.5L399.3 58.4L401.7 60.3L404.0 62.4L406.3 64.5L408.7 66.7L411.0 68.9L413.3 71.3L415.7 73.7L418.0 76.2L420.3 78.7L422.7 81.4L425.0 84.0L427.3 86.8L429.7 89.5L432.0 92.4L434.3 95.2L436.7 98.2L439.0 101.1L441.3 104.1L443.7 107.1L446.0 110.2L448.3 113.3L450.7 116.4L453.0 119.5L455.3 122.6L457.7 125.7L460.0 128.9L462.3 132.0L464.7 135.1L467.0 138.3L469.3 141.4L471.7 144.5L474.0 147.6L476.3 150.7L478.7 153.7L481.0 156.7L483.3 159.7L485.7 162.7L488.0 165.6L490.3 168.4L492.7 171.3L495.0 174.0L497.3 176.7L499.7 179.4L502.0 182.0L504.3 184.5L506.7 187.0L509.0 189.4L511.3 191.7L513.7 193.9L516.0 196.1L518.3 198.2L520.7 200.2L523.0 202.1L525.3 204.0L527.7 205.7L530.0 207.4L532.3 208.9L534.7 210.4L537.0 211.8L539.3 213.0L541.7 214.2L544.0 215.2L546.3 216.2L548.7 217.0L551.0 217.8L553.3 218.4L555.7 219.0L558.0 219.4L560.3 219.7L562.7 219.9L565.0 220.0L567.3 220.0L569.7 219.9L572.0 219.6L574.3 219.3L576.7 218.8L579.0 218.3L581.3 217.6L583.7 216.8L586.0 215.9L588.3 215.0L590.7 213.9L593.0 212.7L595.3 211.4L597.7 210.0L600.0 208.5L602.3 206.9L604.7 205.2L607.0 203.5L609.3 201.6L611.7 199.7L614.0 197.6L616.3 195.5L618.7 193.3L621.0 191.1L623.3 188.7L625.7 186.3L628.0 183.8L630.3 181.3L632.7 178.6L635.0 176.0L637.3 173.2L639.7 170.5L642.0 167.6L644.3 164.8L646.7 161.8L649.0 158.9L651.3 155.9L653.7 152.9L656.0 149.8L658.3 146.7L660.7 143.6L663.0 140.5L665.3 137.4L667.7 134.3L670.0 131.1L672.3 128.0L674.7 124.9L677.0 121.7L679.3 118.6L681.7 115.5L684.0 112.4L686.3 109.3L688.7 106.3L691.0 103.3L693.3 100.3L695.7 97.3L698.0 94.4L700.3 91.6L702.7 88.7L705.0 86.0L707.3 83.3L709.7 80.6L712.0 78.0L714.3 75.5L716.7 73.0L719.0 70.6L721.3 68.3L723.7 66.1L726.0 63.9L728.3 61.8L730.7 59.8L733.0 57.9L735.3 56.0L737.7 54.3L740.0 52.6L742.3 51.1L744.7 49.6L747.0 48.2L749.3 47.0L751.7 45.8L754.0 44.8L756.3 43.8L758.7 43.0L761.0 42.2L763.3 41.6L765.7 41.0L768.0 40.6L770.3 40.3L772.7 40.1L775.0 40.0L777.3 40.0L779.7 40.1L782.0 40.4L784.3 40.7L786.7 41.2L789.0 41.7L791.3 42.4L793.7 43.2L796.0 44.1L798.3 45.0L800.7 46.1L803.0 47.3L805.3 48.6L807.7 50.0L810.0 51.5L812.3 53.1L814.7 54.8L817.0 56.5L819.3 58.4L821.7 60.3L824.0 62.4L826.3 64.5L828.7 66.7L831.0 68.9L833.3 71.3L835.7 73.7L838.0 76.2L840.3 78.7L842.7 81.4L845.0 84.0L847.3 86.8L849.7 89.5L852.0 92.4L854.3 95.2L856.7 98.2L859.0 101.1L861.3 104.1L863.7 107.1L866.0 110.2L868.3 113.3L870.7 116.4L873.0 119.5L875.3 122.6L877.7 125.7L880.0 128.9"/>
+<path id="pSum" fill="none" stroke="#bf3030" stroke-width="3.5" d="M40.0 128.9L42.3 128.9L44.7 128.9L47.0 128.9L49.3 128.9L51.7 128.9L54.0 128.9L56.3 128.9L58.7 128.9L61.0 128.9L63.3 128.9L65.7 128.9L68.0 129.0L70.3 129.0L72.7 129.0L75.0 129.0L77.3 129.0L79.7 129.1L82.0 129.1L84.3 129.1L86.7 129.1L89.0 129.2L91.3 129.2L93.7 129.2L96.0 129.2L98.3 129.3L100.7 129.3L103.0 129.3L105.3 129.4L107.7 129.4L110.0 129.4L112.3 129.5L114.7 129.5L117.0 129.5L119.3 129.6L121.7 129.6L124.0 129.6L126.3 129.7L128.7 129.7L131.0 129.8L133.3 129.8L135.7 129.8L138.0 129.9L140.3 129.9L142.7 130.0L145.0 130.0L147.3 130.0L149.7 130.1L152.0 130.1L154.3 130.2L156.7 130.2L159.0 130.2L161.3 130.3L163.7 130.3L166.0 130.3L168.3 130.4L170.7 130.4L173.0 130.5L175.3 130.5L177.7 130.5L180.0 130.6L182.3 130.6L184.7 130.6L187.0 130.7L189.3 130.7L191.7 130.7L194.0 130.8L196.3 130.8L198.7 130.8L201.0 130.8L203.3 130.9L205.7 130.9L208.0 130.9L210.3 130.9L212.7 131.0L215.0 131.0L217.3 131.0L219.7 131.0L222.0 131.0L224.3 131.0L226.7 131.1L229.0 131.1L231.3 131.1L233.7 131.1L236.0 131.1L238.3 131.1L240.7 131.1L243.0 131.1L245.3 131.1L247.7 131.1L250.0 131.1L252.3 131.1L254.7 131.1L257.0 131.1L259.3 131.1L261.7 131.1L264.0 131.1L266.3 131.1L268.7 131.1L271.0 131.1L273.3 131.1L275.7 131.1L278.0 131.0L280.3 131.0L282.7 131.0L285.0 131.0L287.3 131.0L289.7 130.9L292.0 130.9L294.3 130.9L296.7 130.9L299.0 130.8L301.3 130.8L303.7 130.8L306.0 130.8L308.3 130.7L310.7 130.7L313.0 130.7L315.3 130.6L317.7 130.6L320.0 130.6L322.3 130.5L324.7 130.5L327.0 130.5L329.3 130.4L331.7 130.4L334.0 130.4L336.3 130.3L338.7 130.3L341.0 130.2L343.3 130.2L345.7 130.2L348.0 130.1L350.3 130.1L352.7 130.0L355.0 130.0L357.3 130.0L359.7 129.9L362.0 129.9L364.3 129.8L366.7 129.8L369.0 129.8L371.3 129.7L373.7 129.7L376.0 129.7L378.3 129.6L380.7 129.6L383.0 129.5L385.3 129.5L387.7 129.5L390.0 129.4L392.3 129.4L394.7 129.4L397.0 129.3L399.3 129.3L401.7 129.3L404.0 129.2L406.3 129.2L408.7 129.2L411.0 129.2L413.3 129.1L415.7 129.1L418.0 129.1L420.3 129.1L422.7 129.0L425.0 129.0L427.3 129.0L429.7 129.0L432.0 129.0L434.3 129.0L436.7 128.9L439.0 128.9L441.3 128.9L443.7 128.9L446.0 128.9L448.3 128.9L450.7 128.9L453.0 128.9L455.3 128.9L457.7 128.9L460.0 128.9L462.3 128.9L464.7 128.9L467.0 128.9L469.3 128.9L471.7 128.9L474.0 128.9L476.3 128.9L478.7 128.9L481.0 128.9L483.3 128.9L485.7 128.9L488.0 129.0L490.3 129.0L492.7 129.0L495.0 129.0L497.3 129.0L499.7 129.1L502.0 129.1L504.3 129.1L506.7 129.1L509.0 129.2L511.3 129.2L513.7 129.2L516.0 129.2L518.3 129.3L520.7 129.3L523.0 129.3L525.3 129.4L527.7 129.4L530.0 129.4L532.3 129.5L534.7 129.5L537.0 129.5L539.3 129.6L541.7 129.6L544.0 129.6L546.3 129.7L548.7 129.7L551.0 129.8L553.3 129.8L555.7 129.8L558.0 129.9L560.3 129.9L562.7 130.0L565.0 130.0L567.3 130.0L569.7 130.1L572.0 130.1L574.3 130.2L576.7 130.2L579.0 130.2L581.3 130.3L583.7 130.3L586.0 130.3L588.3 130.4L590.7 130.4L593.0 130.5L595.3 130.5L597.7 130.5L600.0 130.6L602.3 130.6L604.7 130.6L607.0 130.7L609.3 130.7L611.7 130.7L614.0 130.8L616.3 130.8L618.7 130.8L621.0 130.8L623.3 130.9L625.7 130.9L628.0 130.9L630.3 130.9L632.7 131.0L635.0 131.0L637.3 131.0L639.7 131.0L642.0 131.0L644.3 131.0L646.7 131.1L649.0 131.1L651.3 131.1L653.7 131.1L656.0 131.1L658.3 131.1L660.7 131.1L663.0 131.1L665.3 131.1L667.7 131.1L670.0 131.1L672.3 131.1L674.7 131.1L677.0 131.1L679.3 131.1L681.7 131.1L684.0 131.1L686.3 131.1L688.7 131.1L691.0 131.1L693.3 131.1L695.7 131.1L698.0 131.0L700.3 131.0L702.7 131.0L705.0 131.0L707.3 131.0L709.7 130.9L712.0 130.9L714.3 130.9L716.7 130.9L719.0 130.8L721.3 130.8L723.7 130.8L726.0 130.8L728.3 130.7L730.7 130.7L733.0 130.7L735.3 130.6L737.7 130.6L740.0 130.6L742.3 130.5L744.7 130.5L747.0 130.5L749.3 130.4L751.7 130.4L754.0 130.4L756.3 130.3L758.7 130.3L761.0 130.2L763.3 130.2L765.7 130.2L768.0 130.1L770.3 130.1L772.7 130.0L775.0 130.0L777.3 130.0L779.7 129.9L782.0 129.9L784.3 129.8L786.7 129.8L789.0 129.8L791.3 129.7L793.7 129.7L796.0 129.7L798.3 129.6L800.7 129.6L803.0 129.5L805.3 129.5L807.7 129.5L810.0 129.4L812.3 129.4L814.7 129.4L817.0 129.3L819.3 129.3L821.7 129.3L824.0 129.2L826.3 129.2L828.7 129.2L831.0 129.2L833.3 129.1L835.7 129.1L838.0 129.1L840.3 129.1L842.7 129.0L845.0 129.0L847.3 129.0L849.7 129.0L852.0 129.0L854.3 129.0L856.7 128.9L859.0 128.9L861.3 128.9L863.7 128.9L866.0 128.9L868.3 128.9L870.7 128.9L873.0 128.9L875.3 128.9L877.7 128.9L880.0 128.9"/>
+</svg>
+</div>
+<div class="legend" aria-hidden="true">
+<span><span class="sw" style="border-color:#101527"></span>noise</span>
+<span><span class="sw" style="border-color:#2f6c9e;border-top-style:dashed"></span>anti-noise (late)</span>
+<span><span class="sw" style="border-color:#bf3030"></span>what reaches the ear</span>
+<span>time runs left to right, two cycles</span>
+</div>
+<div class="tiles" aria-live="polite">
+<div class="tile"><div class="k">One cycle lasts</div><div class="v" id="tPeriod">10,000 µs</div></div>
+<div class="tile"><div class="k">Error as share of a cycle</div><div class="v" id="tShare">0.20%</div></div>
+<div class="tile"><div class="k">Noise reduction</div><div class="v" id="tRed">38 dB quieter</div></div>
+<div class="tile"><div class="k">Quiet zone, about λ/10</div><div class="v" id="tZone">34 cm</div></div>
+</div>
+<p class="note">The model adds an equal, inverted, delayed copy to one pure tone, leaving 2·|sin(π·f·delay)| of the original. Delays are illustrative, not from any product, and real headphones add amplitude and fit errors. Quiet zone uses the λ/10 rule and 343 m/s.</p>
+</div>
+
+<p>Only frequency times delay matters: 10 dB of reduction needs timing within about 5% of a cycle, 20 dB within about 1.6%.</p>
+
+<h2>The quiet spot shrinks as the pitch rises</h2>
+<p>Cancellation is complete only where the error microphone measures it. Nearby, the two sounds have travelled different distances and drift out of step. The KU Leuven notes give the rule of thumb of a 10 dB zone "approx λ/10" across, a tenth of a wavelength. That is 34 cm at 100 Hz, which easily covers microphone and eardrum, but under 1 cm at 4 kHz, so the microphone can be quiet while your eardrum is not. The rule comes from large rooms, so inside a cup the numbers differ, but not the trend.</p>
+
+<h2>Why a hum is easy and a voice is hard</h2>
+<p>Engines and propellers put most of their noise into one rotation-linked tone and its multiples, "the fundamental and harmonics of the blade passing frequency," in Shi and colleagues' aircraft example. A tone repeats every cycle, so a controller can produce anti-noise for a cycle it has not heard yet, and its delay stops mattering. With delay in the loop, the KU Leuven notes say, the controller "must act as a predictor." Random, changing sound cannot be predicted, so only its long, low cycles survive the delay.</p>
+
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Measured spectra, scrollable on small screens">
+<img src="assets/rivera-2017-fig6-measured-spectra.png" width="1406" height="1098" alt="Three stacked spectra from 20 Hz to 20 kHz, magnitude in dB. Black line: noise at the ear with cancellation off, with sharp peaks near 100 Hz, 400 Hz and 2 kHz. Blue line in panel a, feedback control: lower than black up to about 900 Hz, then higher than black around 2 to 3 kHz. Panel b, adaptive tone control: the three peaks are gone but the rest matches black. Panel c, both combined.">
+</div>
+<figcaption>Noise left at a prototype's ear, cancellation off (black) and on (blue), for random noise plus steady tones near 100, 400, and 2,000 Hz. In (a), feedback control cuts the random noise 10–20 dB up to about 870 Hz but adds about 10 dB near 2.6 kHz. In (b), a tone-learning controller removes the tones by 40, 21, and 22 dB, the 2 kHz one included, while the random noise barely moves; (c) combines both. Predictability, not pitch alone, decides, though these tones were perfectly steady and took 15 minutes to learn. <span class="credit">Fig. 6 of <a href="https://www.hsu-hh.de/ant/wp-content/uploads/sites/699/2017/11/Rivera-Nowak-Z%C3%B6lzer-2017-Fully-Digital-Implementation-of-a-Hybrid-Feedback-Structure-for-Broadband-Active-Noise-Control-in-Headphones.pdf">Rivera Benois, Nowak, and Zölzer, 2017</a><span class="ext" aria-hidden="true">↗</span>; rights unstated, reproduced with attribution. <a href="assets/rivera-2017-fig6-measured-spectra.png">Full-size view</a>.</span></figcaption>
+</figure>
+
+<p>A voice fails on both counts. Its base pitch, near 100 Hz for a man, is within reach, but it stacks components up to several kilohertz, the hiss of "s" peaks around 3–8 kHz, and the pattern changes every syllable.</p>
+
+<figure>
+<img src="assets/monson-2014-fig1-speech-spectrogram.jpg" width="892" height="644" alt="Spectrogram of a male voice over 3 seconds, frequency 30 Hz to 20 kHz on a log scale. Red horizontal bands start near 100 Hz and stack up to a few kHz, changing shape every syllable, with vertical gaps between syllables and patches of energy above 5 kHz marked HFE.">
+<figcaption>A man saying "Oh say can you see by the dawn's early light"; red means more energy. Notice the stack rising from about 100 Hz into the kilohertz range and changing shape every syllable, where a hum would draw one flat line. <span class="credit">Fig. 1 of <a href="https://doi.org/10.3389/fpsyg.2014.00587">Monson, Hunter, Lotto, and Story, 2014</a><span class="ext" aria-hidden="true">↗</span>; CC BY.</span></figcaption>
+</figure>
+
+<h2>What real headphones add up to</h2>
+<p>The active part covers the low end, and the cup or ear tip blocks the rest: passive attenuation "is effective in the mid and high frequency ranges," Rivera Benois and colleagues write, while the low range "is actively treated." The KU Leuven notes give 10–15 dB from 30 to 500 Hz as typical for feedback headsets.</p>
+
+<figure>
+<img src="assets/niosh-2017-fig1-bose-a20.png" width="1237" height="772" alt="Chart for a Bose A20 aviation headset. X axis: spectral balance from minus 2 to 16 dB, meaning how bass-heavy the noise is. Y axis: estimated noise reduction in dB. A red band for cancellation off falls from about 27 dB to under 5 dB as noise gets more bass-heavy. A blue band for cancellation on stays between about 24 and 33 dB.">
+<figcaption>An aviation headset's protection with cancellation off (red) and on (blue), against how bass-heavy the noise is (rightward is bassier). Off, it falls from about 27 dB to under 5 dB; on, it stays high. Two of the other three headsets tested gained little or only in bass-heavy noise. <span class="credit">Fig. 1 of <a href="https://stacks.cdc.gov/view/cdc/210761">Gallagher and Murphy, 2017</a><span class="ext" aria-hidden="true">↗</span>; US government work, approved for public release.</span></figcaption>
+</figure>
+
+<p>These numbers come from prototypes and aviation headsets, not current earbuds, and Shi and colleagues note most commercial headphones use fixed rather than learning filters. With one fixed noise source, a feedforward prototype did cut random noise unevenly up to about 7.5 kHz. But with moving heads, shifting fit, and noise from all sides, the reliable active range stays low, and the seal decides how much of a nearby conversation you hear.</p>
+</main>
+
+
+<script>
+(function(){
+  var f=document.getElementById('freq'), d=document.getElementById('delay');
+  var fo=document.getElementById('freqOut'), dO=document.getElementById('delayOut');
+  var pN=document.getElementById('pNoise'), pA=document.getElementById('pAnti'), pS=document.getElementById('pSum');
+  var tP=document.getElementById('tPeriod'), tS=document.getElementById('tShare'), tR=document.getElementById('tRed'), tZ=document.getElementById('tZone');
+  var FMIN=50, FMAX=8000, curF=100;
+  function toF(v){return FMIN*Math.pow(FMAX/FMIN, v/1000);}
+  function toV(fr){return Math.round(1000*Math.log(fr/FMIN)/Math.log(FMAX/FMIN));}
+  function nice(fr){return fr>=1000? (fr/1000).toFixed(fr>=2000?1:2).replace(/\.?0+$/,'')+' kHz' : Math.round(fr)+' Hz';}
+  function fmt(n){return n.toLocaleString('en-US');}
+  function path(fn){
+    var s='', x0=40, w=840, A=90, N=360;
+    for(var i=0;i<=N;i++){var ph=i/N*2; var y=130-A*fn(ph); s+=(i?'L':'M')+(x0+w*i/N).toFixed(1)+' '+y.toFixed(1);} return s;
+  }
+  function update(){
+    var fr=curF, tau=+d.value*1e-6;
+    var shift=fr*tau; // fraction of a cycle
+    var phi=2*Math.PI*shift;
+    pN.setAttribute('d',path(function(c){return Math.sin(2*Math.PI*c);}));
+    pA.setAttribute('d',path(function(c){return -Math.sin(2*Math.PI*c-phi);}));
+    pS.setAttribute('d',path(function(c){return Math.sin(2*Math.PI*c)-Math.sin(2*Math.PI*c-phi);}));
+    fo.textContent=nice(fr); dO.textContent=d.value+' µs';
+    var per=1e6/fr; tP.textContent=fmt(per>=100?Math.round(per):Math.round(per*10)/10)+' µs';
+    var sh=shift*100; tS.textContent=(sh<1? sh.toFixed(2): sh<10? sh.toFixed(1): Math.round(sh))+'%';
+    var r=2*Math.abs(Math.sin(Math.PI*shift));
+    if(r<1e-6){tR.textContent='perfect';}
+    else{var db=-20*Math.log10(r); tR.textContent= db>=0.5? Math.round(db)+' dB quieter' : (db>-0.5? 'no change' : Math.round(-db)+' dB louder');}
+    var zone=343/fr/10*100; tZ.textContent= zone>=10? Math.round(zone)+' cm' : zone.toFixed(1)+' cm';
+    f.setAttribute('aria-valuetext',nice(fr)); d.setAttribute('aria-valuetext',d.value+' microseconds');
+  }
+  f.addEventListener('input',function(){curF=toF(+f.value);update();}); d.addEventListener('input',update);
+  Array.prototype.forEach.call(document.querySelectorAll('.presets button'),function(b){
+    b.addEventListener('click',function(){curF=+b.dataset.f; f.value=toV(curF); d.value=b.dataset.d; update();});
+  });
+  update();
+})();
+</script>
+</body>
+</html>

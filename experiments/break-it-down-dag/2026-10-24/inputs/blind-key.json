@@ -1,0 +1,34 @@
+{
+  "evals/A": {
+    "run": "e05",
+    "sha256": "8f3495fddceb4d472e6519be14f01aa0e4e765df9080b0a29fdc831c477508ec"
+  },
+  "evals/B": {
+    "run": "e01",
+    "sha256": "746ce07a002e65f1699bb42f4ac5d02bbee81e20b41d7ae38c3a5ffd58c539d9"
+  },
+  "causal/A": {
+    "run": "e03",
+    "sha256": "e9e9de9ed86f207904293662a9ef38b519c0f39f6ec731aa66df63f3ac4a14e1"
+  },
+  "causal/B": {
+    "run": "e07",
+    "sha256": "2c08195270e5f944b2d642029cbcd64cc94aa2be87d3e7faa9455e47cdcae822"
+  },
+  "encryption/A": {
+    "run": "e06",
+    "sha256": "93a18038170a54885d03c04d4c41e4286f37ad4b7dad73e8dca23a2acb48c0ac"
+  },
+  "encryption/B": {
+    "run": "e02",
+    "sha256": "ed57b54c8f09dd64c2e24f52eb0d2c30c18641e8aee28bff28bcb01a1b3f7877"
+  },
+  "isolation/A": {
+    "run": "e04",
+    "sha256": "ba77f5577b0265181bb60ffcff446394f0fb345171fcc1b33fb7e8a0c184b72b"
+  },
+  "isolation/B": {
+    "run": "e08",
+    "sha256": "46d0702b9991876362500c5837c2b1f8e7dc815a8cbcfa54e8d3db204cae8443"
+  }
+}

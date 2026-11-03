@@ -1,0 +1,5 @@
+Before research save `dag.json`: reader baseline/scope, target ID, nodes (`id`, atomic `question`, `answer`, `status`: assumed/supported/partial/gap, evidence URL/locator/claim), edges (`from`,`to`,`why`), revisions. Work backward to baseline. A→B: name B's actual claim needing A; remove if B remains explainable in its stated scope. Audit every edge, including target. Separate given inputs from obtaining them, guarantees from mechanisms; split bundles, merge duplicates. Keep order/examples/motivation outside edges. Scope cannot hide requested concepts or their beginner bridges.
+
+Research partial/gap nodes; support only claims explained by located passages. Save initial state; immediately log actual rounds' gaps, searches, evidence, reconstructable edits, including no-change; never backfill. Stop at support/disclosed search limits.
+
+Test an unfamiliar case and a counterexample using only graph+baseline; expose missing inputs, assumptions, distinctions or outcome checks. Repair graph/prose and evidence. Save final JSON and readable SVG/HTML beside report. Check IDs, endpoints, acyclicity and target paths; valid shape is insufficient.

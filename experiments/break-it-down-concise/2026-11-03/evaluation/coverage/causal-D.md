@@ -1,0 +1,10 @@
+Q1: 2 — "App users and non-users are different people... might have scored higher without it" (The short answer; The gap compares different students) — States pre-existing differences (motivation, preparation) and the six-student table splits the gap into effect plus selection bias.
+Q2: 2 — "Take one student, Maya... the other, called the counterfactual, belongs to a world that did not occur" (What "the app helped" means) — Defines both scores, that only one is observed, and that researchers therefore estimate averages across groups.
+Q3: 1 — "Students who choose the app may be more motivated or better prepared"; sim: "no-app scores rise with motivation" — The idea (motivation affects both choice and score) is taught with examples, but the word "confounder" is never used or defined.
+Q4: 2 — "If a coin flip decides who gets the app... any trait nobody recorded... selection bias is zero on average" (Let chance decide) — Explains balance on measured and unmeasured traits and that the gap then estimates the effect, with chance variation noted.
+Q5: 2 — "any one draw can be off by luck, more so with 20 students than 2,000... p-value: how often luck alone would produce a gap this large" — Covers chance gaps, sample size, and p-value/confidence intervals (figure captions) as the yardstick.
+Q6: 1 — "Neither study tested a self-study smartphone app"; "each trial covers particular products, places, and tests" — Generalization limits are noted, but the report never contrasts random assignment (fair within study) with representative sampling.
+Q7: 2 — "When randomizing is impossible" table (matching/regression, regression discontinuity, difference-in-differences) and "None of these assumptions can be fully verified" — Names alternatives and the catch of untestable assumptions about unmeasured differences.
+Q8: 2 — "Ask who the users were compared with... If students chose the app themselves, the gap mixes the app's effect with whatever made them different"; coin-flip section — A novice can name volunteer motivation/preparation and propose random assignment, though the need for many classes is not stated.
+TOTAL: 14/16
+ERRORS: none noticed

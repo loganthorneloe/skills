@@ -1,0 +1,26 @@
+[
+  {
+    "time": "2026-10-24T20:31:02.820604+00:00",
+    "file": "backpropagation-A/dag.initial.json",
+    "sha256": "63d7490ea090d44dafd86775a6d8c6d22187d87ef4fdff6d2e077911121236db",
+    "snapshot": "observed/dag.initial-63d7490ea090.json",
+    "nodes": 16,
+    "edges": 23
+  },
+  {
+    "time": "2026-10-24T20:31:02.820976+00:00",
+    "file": "backpropagation-A/dag.json",
+    "sha256": "63d7490ea090d44dafd86775a6d8c6d22187d87ef4fdff6d2e077911121236db",
+    "snapshot": "observed/dag-63d7490ea090.json",
+    "nodes": 16,
+    "edges": 23
+  },
+  {
+    "time": "2026-10-24T20:32:17.104596+00:00",
+    "file": "backpropagation-A/dag.json",
+    "sha256": "d8a14289bafbf437479a0e78a39ccad585eb147e9b023624ac04817c0c807777",
+    "snapshot": "observed/dag-d8a14289bafb.json",
+    "nodes": 16,
+    "edges": 24
+  }
+]

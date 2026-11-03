@@ -1,0 +1,14 @@
+# Claims (ranked by how much the answer depends on them)
+- C1 (top): Self-attention computes, for every position, a weighted average of value vectors; weights = softmax of query·key dot products scaled by 1/sqrt(d_k); Q, K, V are learned linear projections (matrix multiplications) of the token vectors. Attention(Q,K,V)=softmax(QK^T/sqrt(d_k))V.
+- C2: Scaling by 1/sqrt(d_k) because dot products of random vectors have variance d_k, which pushes softmax into near one-hot regions with tiny gradients.
+- C3: In language models (decoder), a causal mask (set scores to -inf) stops a position from attending to later positions, so the model can be trained to predict the next token at every position at once.
+- C4: Multi-head attention runs several attention functions in parallel with different learned projections, then concatenates and projects.
+- C5: Attention ignores order by itself; positional encodings are added to token embeddings.
+- C6: A transformer layer = attention + position-wise feed-forward network (+ residual, norm); stacked N times; text is converted to token vectors via learned embeddings; output is next-token probabilities.
+- C7 (top): Versus recurrent networks, self-attention needs O(1) sequential operations and O(1) maximum path length between positions (RNN: O(n), O(n)), at O(n^2·d) cost per layer.
+- C8: The Transformer reached better translation BLEU at a fraction of the training cost of prior models.
+- C9 (top): Transformers make better use of long context than LSTMs and their loss improves smoothly (power laws) with model size, data, compute.
+- C10: GPT models are decoder-only transformers with masked self-attention; GPT-3 has 175B parameters, 96 layers, 96 heads, 2048-token context.
+- C11 (top): ChatGPT = model from GPT-3.5 series fine-tuned with RLHF (InstructGPT methods); the fine-tuning, not just attention/scale, made it follow instructions.
+- C12: Individual attention heads learn different, sometimes interpretable patterns (e.g., long-distance dependencies), but this is suggestive, not proof.
+- C13 (limit): Cost grows with the square of sequence length.

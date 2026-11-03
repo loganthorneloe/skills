@@ -1,0 +1,45 @@
+{
+  "topic": "Database transaction isolation",
+  "reader_baseline": "Can read basic SELECT, UPDATE, and WHERE statements; has not studied transactions or concurrency control.",
+  "scope": "Explain what concurrent transactions may observe, why transaction boundaries alone do not eliminate every anomaly, and how isolation guarantees differ from implementation mechanisms.",
+  "retrieved_on": "2026-10-24",
+  "packet_notes": "Four official documentation pages from three database projects. PostgreSQL current documentation identified itself as version 18; MySQL source is explicitly version 8.4. Source listing is bibliographic, not a proposed teaching order. Product-specific guarantees must retain their product names. The packet does not claim that one isolation setting is universally optimal.",
+  "sources": [
+    {
+      "id": "postgres-transactions",
+      "title": "3.4. Transactions",
+      "publisher": "PostgreSQL",
+      "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+      "section_locator": "3.4. Transactions, opening bank-transfer example and BEGIN/COMMIT/ROLLBACK discussion",
+      "paraphrase": "A transaction groups several database operations into an all-or-nothing unit. The tutorial illustrates this with a bank transfer: subtracting money from one account and adding it to another must succeed together. If only one update survived a failure, the database would represent an incomplete transfer. Atomicity means the grouped operation takes effect completely or does not take effect. Intermediate work is not exposed as a completed transaction to other transactions. BEGIN starts an explicit transaction block, COMMIT completes it, and ROLLBACK abandons its updates. A database session can therefore perform several SQL statements before deciding whether to retain their combined result. PostgreSQL also executes individual statements within transactions when no explicit block is supplied. Savepoints allow part of a transaction's work to be discarded while keeping earlier work available to commit. Transaction boundaries express which operations belong together; they are essential context for reasoning about what happens when several sessions operate on related data and one transaction finishes while another is still running.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "postgres-isolation",
+      "title": "13.2. Transaction Isolation",
+      "publisher": "PostgreSQL",
+      "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+      "section_locator": "13.2 opening anomaly definitions and Table 13.1; 13.2.1 Read Committed; 13.2.2 Repeatable Read; 13.2.3 Serializable",
+      "paraphrase": "A dirty read observes another transaction's uncommitted data. A nonrepeatable read gets a changed value when reading again after another transaction commits. A phantom read gets a changed set of matching rows. A serialization anomaly is a committed result that no ordering of whole transactions, executed one at a time, could produce. PostgreSQL Read Committed gives ordinary SELECT statements a snapshot from the start of each statement, so two queries in one transaction can differ. Repeatable Read keeps the snapshot established by the first non-control statement, while still seeing the transaction's own writes. PostgreSQL's implementation prevents phantoms at this level but can still permit serialization anomalies. Serializable additionally checks for combinations of concurrent reads and writes inconsistent with any serial execution; applications must handle failures by retrying transactions. Serializable describes the effect of committed work, not a requirement to execute everything sequentially. PostgreSQL treats Read Uncommitted like Read Committed, illustrating that SQL isolation names specify minimum protections rather than identical behavior across implementations.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "mysql-isolation",
+      "title": "17.7.2.1 Transaction Isolation Levels",
+      "publisher": "MySQL 8.4 Reference Manual",
+      "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+      "section_locator": "17.7.2.1 introduction; REPEATABLE READ; READ COMMITTED; SERIALIZABLE",
+      "paraphrase": "InnoDB offers four named isolation levels and defaults to Repeatable Read. Under that level, ordinary nonlocking SELECT statements in a transaction use the snapshot established by its first consistent read. Locking reads and modifications behave differently: they acquire locks, and the search condition affects what is locked. A unique-index lookup can lock the matching record; a range search can lock gaps as well as records, preventing other transactions from inserting into the protected range. Read Committed gives each consistent read a fresh snapshot. Its locking rules generally protect records rather than surrounding gaps, allowing additional concurrent inserts and therefore possible phantom behavior. Serializable applies stronger rules; when autocommit is disabled, ordinary SELECT statements are treated as shared locking reads. These examples show why a plain read, a locking read, and an update cannot automatically be assigned identical visibility behavior. Isolation settings affect both permitted observations and the waiting or retrying work that applications may encounter. The tradeoff depends on the engine, statement, and workload.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    },
+    {
+      "id": "sqlite-isolation",
+      "title": "Isolation In SQLite",
+      "publisher": "SQLite",
+      "url": "https://www.sqlite.org/isolation.html",
+      "section_locator": "Isolation Between Database Connections; Isolation And Concurrency; No Isolation Between Operations On The Same Database Connection",
+      "paraphrase": "SQLite normally hides a writer's uncommitted changes from readers on other connections. A specific exception requires shared cache together with enabled read_uncommitted. SQLite permits only one writer at a time. In rollback-journal mode, readers are temporarily excluded when writes reach the database file, preventing observation of partly written transactions. In write-ahead-log mode, a writer appends changes separately, allowing existing readers to keep reading their earlier snapshot. A read transaction continues to see that snapshot even after another connection commits changes. Ending the read transaction and starting another allows the reader to see newer committed data. If a reader tries to become a writer after its snapshot has become stale, SQLite can reject that attempt with SQLITE_BUSY_SNAPSHOT; allowing it would create incompatible database history. BEGIN IMMEDIATE reserves the write transaction earlier and blocks competing writers. Operations on one connection have different visibility rules from operations on separate connections: later reads on a connection can see that connection's own completed updates before commit.",
+      "access_notes": "Public HTML and specified explanatory passages retrieved successfully."
+    }
+  ]
+}

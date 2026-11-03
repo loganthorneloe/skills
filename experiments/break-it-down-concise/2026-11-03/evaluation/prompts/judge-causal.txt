@@ -1,0 +1,14 @@
+You are an independent blind judge comparing anonymized explanation reports that answer the same request. Read only: the reports at /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/blind/causal/{A,C,D,E,F,G}/report.html (render each with Playwright at 1280px and 390px — require('playwright') or python playwright works; chromium.launch() needs no options — and read the text), the research packet at /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/research/causal (the sources and evidence the writers had; use it to check accuracy), the rubric at /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/inputs/prior-report-rubric.txt, and the topic probes in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/inputs/questions-causal.md. Do NOT open runs/, variants/, inputs/blind-key.json, protocol.md, or any other experiment file. Do not create Claude Docs or artifacts.
+
+Request: "Break down causal inference from first principles. I understand averages and percentages but have never studied statistics. If people who use a learning app score higher on an exam, why does that not prove the app helped, and how could we find out whether it did?"
+
+Context: the goal is reports that keep research quality and understanding while being much shorter and more to the point. Do not reward or punish length itself; judge what the reader gains per minute and whether anything important is lost.
+
+For each report:
+1. Score the 9 rubric dimensions 1–5 (prior-report-rubric.txt), plus: (10) signal density — 1 padded/repetitive, 5 every paragraph carries weight; (11) time to answer — 1 the reader wades through much before the core answer and mechanism, 5 the answer and its mechanism arrive fast.
+2. List factual errors or overclaims against the research packet, with quotes.
+3. Name the most important thing the report teaches well and anything important it omits or underexplains relative to the strongest report in the set.
+Then: rank all reports overall (best first) for a reader who wants real understanding fast; state which shorter reports, if any, match the best long report in understanding; and identify concrete patterns that made words worthwhile or wasted (e.g. audit entries, repeated examples, recaps, exhibit commentary), quoting examples.
+
+Write everything to /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/evaluation/judge-causal.md as markdown with a score table (rows = reports, columns = 11 dimensions + total). Return the ranking and a 5-line summary.
+Put any screenshots or scripts in /Users/loganthorneloe/src/skills/experiments/break-it-down-concise/2026-11-03/evaluation/scratch-judge-causal/ only (create it); never in a shared scratchpad.

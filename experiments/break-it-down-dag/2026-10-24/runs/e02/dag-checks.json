@@ -1,0 +1,9 @@
+{
+  "unique_ids": true,
+  "valid_endpoints": true,
+  "acyclic": true,
+  "all_nodes_reach_target": true,
+  "node_count": 11,
+  "edge_count": 13,
+  "prose_check": "All answers appear in report; edges reviewed as required knowledge, not merely reading order."
+}

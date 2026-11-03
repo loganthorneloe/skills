@@ -1,0 +1,719 @@
+{
+  "topic": "Backpropagation",
+  "target": "target",
+  "reader_assumptions": [
+    "Comfortable with arithmetic and basic Python variables and functions.",
+    "No calculus knowledge assumed.",
+    "Can interpret a numerical function as a sequence of arithmetic operations."
+  ],
+  "scope": {
+    "included": [
+      "Scalar loss, forward evaluation, local sensitivities, chain rule, shared paths, reverse computation, gradient update, traceable tiny example"
+    ],
+    "excluded": [
+      "Full explanation report",
+      "Matrix notation and convergence proofs",
+      "Optimizer survey",
+      "Implementation tutorial"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "arithmetic",
+      "question": "What can the reader already calculate?",
+      "answer": "Addition, subtraction, multiplication, squaring, comparisons, and arithmetic expressions evaluated with Python variables and functions.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "parameters",
+      "question": "What does a tiny network calculate, and which numbers can learning change?",
+      "answer": "Inputs describe an example. A weight multiplies an input; a bias adds a shift. These adjustable numbers determine intermediate hidden values and predictions. A forward pass evaluates the operations using the current parameters.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+          "locator": "Opening linear-model equation; Adding layers to the network",
+          "claim": "Weighted input sums plus biases produce intermediate and output values; parameters are adjustable.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "activation",
+      "question": "Why put a nonlinear operation between weighted sums, and what does ReLU calculate?",
+      "answer": "Several weighted sums alone collapse to a single linear calculation. We need an explicit simple activation rule for the arithmetic example: propose ReLU(z)=max(0,z), but its rule and sensitivity still require supplemental evidence.",
+      "status": "gap",
+      "evidence": [
+        {
+          "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+          "locator": "Exercise 2",
+          "claim": "Stacking linear calculations remains linear.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "loss",
+      "question": "How is a prediction mismatch turned into one number to reduce?",
+      "answer": "Given desired outputs y1,y2, choose L=((p1-y1)^2+(p2-y2)^2)/2. Squaring makes either error direction costly; summing combines outputs. The factor 1/2 is a declared example convention. Across training examples, average their losses.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "Quick Recap",
+          "claim": "Squared output differences are added; average example costs gives the objective.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "sensitivity",
+      "question": "What does sensitivity mean without assuming calculus?",
+      "answer": "For a very small change delta in one number, the resulting change in another is approximately sensitivity times delta. Sign indicates increase or decrease; magnitude gives the scale near the present values. A derivative is this limiting change ratio, not the historical share of blame for an existing error.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "claim": "Derivatives express effects of tiny changes, with sign and magnitude.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "local_rules",
+      "question": "How do addition, multiplication, squaring, and ReLU respond to tiny changes?",
+      "answer": "Addition passes a change with factor 1. Multiplication by a fixed number scales the change by that number. Squaring and ReLU rules need explicit justification for a reader without calculus.",
+      "status": "gap",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "claim": "Addition has local factor 1; a multiplication input has local factor equal to its other input.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "chain",
+      "question": "How does a small effect pass through successive calculations?",
+      "answer": "If an early change is multiplied by local factor a in one operation and then factor b in another, the resulting change is approximately ab times the original change. Multiply these local factors through a path: this is the chain rule.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Compound expressions, chain rule, backpropagation",
+          "claim": "Multiplying local sensitivities composes effects along sequential operations.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "branch",
+      "question": "What if one value affects the loss along multiple paths?",
+      "answer": "Add the sensitivities returning along every use of the value. The same tiny change affects each use, and the resulting effects on the total loss combine, potentially reinforcing or canceling.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Patterns in backward flow",
+          "claim": "Branch contributions are added rather than overwritten.",
+          "access": "supplied verified source packet"
+        },
+        {
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "The Intuition for Backpropagation",
+          "claim": "Earlier hidden values can receive competing desired changes from several outputs.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "reverse",
+      "question": "Why work backward, and what must be saved?",
+      "answer": "Save intermediate values while predicting. Set loss sensitivity to itself to 1. Visit operations from the loss backward: multiply each incoming sensitivity by the operation\u2019s local factor and add contributions at shared values. This reuses each downstream result instead of tracing every parameter-to-loss path separately.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Backprop in practice: Staged computation",
+          "claim": "Forward intermediate values support local backward computations.",
+          "access": "supplied verified source packet"
+        },
+        {
+          "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+          "locator": "More on Computational Graphs",
+          "claim": "Backward derivative functions apply the chain rule and accumulate results to parameters.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "gradient",
+      "question": "What information does the completed backward pass provide?",
+      "answer": "The parameter gradient is the collection of sensitivities of the chosen scalar loss to each weight and bias, holding other parameters fixed at current values. It describes local change, not a unique decomposition of the existing loss.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "claim": "Gradient collects sensitivities to multiple quantities.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "update",
+      "question": "How are these sensitivities used to learn?",
+      "answer": "For each parameter theta, choose a small positive step size eta and set theta_new=theta-eta*gradient_theta. Locally, the predicted loss change is -eta times the sum of squared parameter sensitivities, so a nonzero gradient gives a decrease for a sufficiently small step where the loss is differentiable. Repeat new forward and backward passes. Backprop computes the gradient; the update is a separate optimization choice.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "What is Backpropagation?; stochastic gradient descent discussion",
+          "claim": "Opposite-gradient adjustments reduce cost locally.",
+          "access": "supplied verified source packet"
+        },
+        {
+          "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+          "locator": "Computing Gradients",
+          "claim": "Gradient computation supplies information for optimization, not an update policy.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "limits",
+      "question": "Why can a gradient-based adjustment fail to lower the desired error?",
+      "answer": "Sensitivities describe the present neighborhood: a large step can behave differently. Examples can favor conflicting changes, so average their gradients for the training objective or estimate with a batch. Lower training loss does not itself establish performance on unseen data. At activation corners ordinary derivative reasoning needs an explicit convention.",
+      "status": "gap",
+      "evidence": [
+        {
+          "url": "https://cs231n.github.io/optimization-2/",
+          "locator": "Simple expressions and interpretation of the gradient",
+          "claim": "Sensitivities describe local behavior.",
+          "access": "supplied verified source packet"
+        },
+        {
+          "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+          "locator": "discussion of competing desired changes and stochastic gradient descent",
+          "claim": "Examples can favor conflicting changes; batches combine their contributions.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "trace_forward",
+      "question": "What exact tiny network and prediction error will we use?",
+      "answer": "Constructed example: x=2, w=1, b=0, h=ReLU(w*x+b)=2; p1=v1*h with v1=1 gives 2; p2=v2*h with v2=0.5 gives 1. Desired outputs are y1=1,y2=2. L=((2-1)^2+(1-2)^2)/2=1. Four adjustable parameters are w,b,v1,v2; output biases are omitted deliberately.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "trace_backward",
+      "question": "What numerical sensitivity does each parameter receive?",
+      "answer": "Planned trace at the example values: dL/dp1=1, dL/dp2=-1; dL/dv1=2, dL/dv2=-2. The shared h receives 1*1+(-1)*0.5=0.5. ReLU is active, so dL/dw=0.5*2=1 and dL/db=0.5. Verify against independent small perturbations.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "trace_update",
+      "question": "Does a small simultaneous update actually reduce this example loss?",
+      "answer": "With eta=0.1, update w to 0.9, b to -0.05, v1 to 0.8, v2 to 0.7. Recompute all operations to check the new loss; predicted local reduction and actual reduction should be distinguished.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "target",
+      "question": "How does a tiny network work out each weight\u2019s influence on prediction error and use that information to learn?",
+      "answer": "Backpropagation computes how an infinitesimal change in each parameter would change a scalar loss. It combines local arithmetic sensitivities backward through all paths. A separate update moves parameters opposite those sensitivities; repeat to learn from examples. Complete the trace and qualify the local meaning before finalizing.",
+      "status": "gap",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "arithmetic",
+      "to": "parameters",
+      "why": "Weighted sums require multiplication and addition."
+    },
+    {
+      "from": "parameters",
+      "to": "activation",
+      "why": "An activation acts on the weighted sum whose role must be understood."
+    },
+    {
+      "from": "parameters",
+      "to": "loss",
+      "why": "Loss compares network outputs to desired outputs."
+    },
+    {
+      "from": "arithmetic",
+      "to": "sensitivity",
+      "why": "A ratio of changes and signed scaling use known arithmetic."
+    },
+    {
+      "from": "sensitivity",
+      "to": "local_rules",
+      "why": "Local rules quantify the tiny-change effect just defined."
+    },
+    {
+      "from": "activation",
+      "to": "local_rules",
+      "why": "The ReLU sensitivity requires its piecewise forward rule."
+    },
+    {
+      "from": "local_rules",
+      "to": "chain",
+      "why": "Path sensitivity composes the local arithmetic factors."
+    },
+    {
+      "from": "sensitivity",
+      "to": "branch",
+      "why": "Combining contributions requires understanding what each sensitivity measures."
+    },
+    {
+      "from": "chain",
+      "to": "reverse",
+      "why": "Backward multiplication is the chain rule applied locally."
+    },
+    {
+      "from": "branch",
+      "to": "reverse",
+      "why": "The backward algorithm must accumulate every use of shared values."
+    },
+    {
+      "from": "parameters",
+      "to": "reverse",
+      "why": "Saved intermediate values come from evaluating the network."
+    },
+    {
+      "from": "loss",
+      "to": "reverse",
+      "why": "The scalar loss is the backward starting point."
+    },
+    {
+      "from": "reverse",
+      "to": "gradient",
+      "why": "Collecting the backward results at parameters yields the gradient."
+    },
+    {
+      "from": "gradient",
+      "to": "update",
+      "why": "Parameter updates need the corresponding signed sensitivities."
+    },
+    {
+      "from": "update",
+      "to": "limits",
+      "why": "Step-size limitations and repeated training qualify the learning rule."
+    },
+    {
+      "from": "activation",
+      "to": "trace_forward",
+      "why": "The trace needs the exact hidden activation calculation."
+    },
+    {
+      "from": "loss",
+      "to": "trace_forward",
+      "why": "The trace needs an explicit scalar error formula."
+    },
+    {
+      "from": "trace_forward",
+      "to": "trace_backward",
+      "why": "Local backward factors depend on the numerical forward values."
+    },
+    {
+      "from": "reverse",
+      "to": "trace_backward",
+      "why": "The numerical trace needs the backward multiplication and accumulation procedure."
+    },
+    {
+      "from": "trace_backward",
+      "to": "trace_update",
+      "why": "Parameter changes need the computed parameter sensitivities."
+    },
+    {
+      "from": "update",
+      "to": "trace_update",
+      "why": "The numerical changes instantiate the chosen update rule."
+    },
+    {
+      "from": "trace_update",
+      "to": "target",
+      "why": "The full numerical example makes the learning mechanism traceable."
+    },
+    {
+      "from": "limits",
+      "to": "target",
+      "why": "The answer must distinguish local sensitivity and training progress from stronger guarantees."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "stage": "initial before supplemental research",
+      "initial_graph": {
+        "topic": "Backpropagation",
+        "target": "target",
+        "reader_assumptions": [
+          "Comfortable with arithmetic and basic Python variables and functions.",
+          "No calculus knowledge assumed.",
+          "Can interpret a numerical function as a sequence of arithmetic operations."
+        ],
+        "scope": {
+          "included": [
+            "Scalar loss, forward evaluation, local sensitivities, chain rule, shared paths, reverse computation, gradient update, traceable tiny example"
+          ],
+          "excluded": [
+            "Full explanation report",
+            "Matrix notation and convergence proofs",
+            "Optimizer survey",
+            "Implementation tutorial"
+          ]
+        },
+        "nodes": [
+          {
+            "id": "arithmetic",
+            "question": "What can the reader already calculate?",
+            "answer": "Addition, subtraction, multiplication, squaring, comparisons, and arithmetic expressions evaluated with Python variables and functions.",
+            "status": "assumed",
+            "evidence": []
+          },
+          {
+            "id": "parameters",
+            "question": "What does a tiny network calculate, and which numbers can learning change?",
+            "answer": "Inputs describe an example. A weight multiplies an input; a bias adds a shift. These adjustable numbers determine intermediate hidden values and predictions. A forward pass evaluates the operations using the current parameters.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+                "locator": "Opening linear-model equation; Adding layers to the network",
+                "claim": "Weighted input sums plus biases produce intermediate and output values; parameters are adjustable.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "activation",
+            "question": "Why put a nonlinear operation between weighted sums, and what does ReLU calculate?",
+            "answer": "Several weighted sums alone collapse to a single linear calculation. We need an explicit simple activation rule for the arithmetic example: propose ReLU(z)=max(0,z), but its rule and sensitivity still require supplemental evidence.",
+            "status": "gap",
+            "evidence": [
+              {
+                "url": "https://developers.google.com/machine-learning/crash-course/neural-networks/nodes-hidden-layers",
+                "locator": "Exercise 2",
+                "claim": "Stacking linear calculations remains linear.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "loss",
+            "question": "How is a prediction mismatch turned into one number to reduce?",
+            "answer": "Given desired outputs y1,y2, choose L=((p1-y1)^2+(p2-y2)^2)/2. Squaring makes either error direction costly; summing combines outputs. The factor 1/2 is a declared example convention. Across training examples, average their losses.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+                "locator": "Quick Recap",
+                "claim": "Squared output differences are added; average example costs gives the objective.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "sensitivity",
+            "question": "What does sensitivity mean without assuming calculus?",
+            "answer": "For a very small change delta in one number, the resulting change in another is approximately sensitivity times delta. Sign indicates increase or decrease; magnitude gives the scale near the present values. A derivative is this limiting change ratio, not the historical share of blame for an existing error.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Simple expressions and interpretation of the gradient",
+                "claim": "Derivatives express effects of tiny changes, with sign and magnitude.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "local_rules",
+            "question": "How do addition, multiplication, squaring, and ReLU respond to tiny changes?",
+            "answer": "Addition passes a change with factor 1. Multiplication by a fixed number scales the change by that number. Squaring and ReLU rules need explicit justification for a reader without calculus.",
+            "status": "gap",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Simple expressions and interpretation of the gradient",
+                "claim": "Addition has local factor 1; a multiplication input has local factor equal to its other input.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "chain",
+            "question": "How does a small effect pass through successive calculations?",
+            "answer": "If an early change is multiplied by local factor a in one operation and then factor b in another, the resulting change is approximately ab times the original change. Multiply these local factors through a path: this is the chain rule.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Compound expressions, chain rule, backpropagation",
+                "claim": "Multiplying local sensitivities composes effects along sequential operations.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "branch",
+            "question": "What if one value affects the loss along multiple paths?",
+            "answer": "Add the sensitivities returning along every use of the value. The same tiny change affects each use, and the resulting effects on the total loss combine, potentially reinforcing or canceling.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Patterns in backward flow",
+                "claim": "Branch contributions are added rather than overwritten.",
+                "access": "supplied verified source packet"
+              },
+              {
+                "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+                "locator": "The Intuition for Backpropagation",
+                "claim": "Earlier hidden values can receive competing desired changes from several outputs.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "reverse",
+            "question": "Why work backward, and what must be saved?",
+            "answer": "Save intermediate values while predicting. Set loss sensitivity to itself to 1. Visit operations from the loss backward: multiply each incoming sensitivity by the operation\u2019s local factor and add contributions at shared values. This reuses each downstream result instead of tracing every parameter-to-loss path separately.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Backprop in practice: Staged computation",
+                "claim": "Forward intermediate values support local backward computations.",
+                "access": "supplied verified source packet"
+              },
+              {
+                "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+                "locator": "More on Computational Graphs",
+                "claim": "Backward derivative functions apply the chain rule and accumulate results to parameters.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "gradient",
+            "question": "What information does the completed backward pass provide?",
+            "answer": "The parameter gradient is the collection of sensitivities of the chosen scalar loss to each weight and bias, holding other parameters fixed at current values. It describes local change, not a unique decomposition of the existing loss.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Simple expressions and interpretation of the gradient",
+                "claim": "Gradient collects sensitivities to multiple quantities.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "update",
+            "question": "How are these sensitivities used to learn?",
+            "answer": "For each parameter theta, choose a small positive step size eta and set theta_new=theta-eta*gradient_theta. Locally, the predicted loss change is -eta times the sum of squared parameter sensitivities, so a nonzero gradient gives a decrease for a sufficiently small step where the loss is differentiable. Repeat new forward and backward passes. Backprop computes the gradient; the update is a separate optimization choice.",
+            "status": "supported",
+            "evidence": [
+              {
+                "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+                "locator": "What is Backpropagation?; stochastic gradient descent discussion",
+                "claim": "Opposite-gradient adjustments reduce cost locally.",
+                "access": "supplied verified source packet"
+              },
+              {
+                "url": "https://docs.pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html",
+                "locator": "Computing Gradients",
+                "claim": "Gradient computation supplies information for optimization, not an update policy.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "limits",
+            "question": "Why can a gradient-based adjustment fail to lower the desired error?",
+            "answer": "Sensitivities describe the present neighborhood: a large step can behave differently. Examples can favor conflicting changes, so average their gradients for the training objective or estimate with a batch. Lower training loss does not itself establish performance on unseen data. At activation corners ordinary derivative reasoning needs an explicit convention.",
+            "status": "gap",
+            "evidence": [
+              {
+                "url": "https://cs231n.github.io/optimization-2/",
+                "locator": "Simple expressions and interpretation of the gradient",
+                "claim": "Sensitivities describe local behavior.",
+                "access": "supplied verified source packet"
+              },
+              {
+                "url": "https://www.3blue1brown.com/lessons/backpropagation/",
+                "locator": "discussion of competing desired changes and stochastic gradient descent",
+                "claim": "Examples can favor conflicting changes; batches combine their contributions.",
+                "access": "supplied verified source packet"
+              }
+            ]
+          },
+          {
+            "id": "trace_forward",
+            "question": "What exact tiny network and prediction error will we use?",
+            "answer": "Constructed example: x=2, w=1, b=0, h=ReLU(w*x+b)=2; p1=v1*h with v1=1 gives 2; p2=v2*h with v2=0.5 gives 1. Desired outputs are y1=1,y2=2. L=((2-1)^2+(1-2)^2)/2=1. Four adjustable parameters are w,b,v1,v2; output biases are omitted deliberately.",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "trace_backward",
+            "question": "What numerical sensitivity does each parameter receive?",
+            "answer": "Planned trace at the example values: dL/dp1=1, dL/dp2=-1; dL/dv1=2, dL/dv2=-2. The shared h receives 1*1+(-1)*0.5=0.5. ReLU is active, so dL/dw=0.5*2=1 and dL/db=0.5. Verify against independent small perturbations.",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "trace_update",
+            "question": "Does a small simultaneous update actually reduce this example loss?",
+            "answer": "With eta=0.1, update w to 0.9, b to -0.05, v1 to 0.8, v2 to 0.7. Recompute all operations to check the new loss; predicted local reduction and actual reduction should be distinguished.",
+            "status": "gap",
+            "evidence": []
+          },
+          {
+            "id": "target",
+            "question": "How does a tiny network work out each weight\u2019s influence on prediction error and use that information to learn?",
+            "answer": "Backpropagation computes how an infinitesimal change in each parameter would change a scalar loss. It combines local arithmetic sensitivities backward through all paths. A separate update moves parameters opposite those sensitivities; repeat to learn from examples. Complete the trace and qualify the local meaning before finalizing.",
+            "status": "gap",
+            "evidence": []
+          }
+        ],
+        "edges": [
+          {
+            "from": "arithmetic",
+            "to": "parameters",
+            "why": "Weighted sums require multiplication and addition."
+          },
+          {
+            "from": "parameters",
+            "to": "activation",
+            "why": "An activation acts on the weighted sum whose role must be understood."
+          },
+          {
+            "from": "parameters",
+            "to": "loss",
+            "why": "Loss compares network outputs to desired outputs."
+          },
+          {
+            "from": "arithmetic",
+            "to": "sensitivity",
+            "why": "A ratio of changes and signed scaling use known arithmetic."
+          },
+          {
+            "from": "sensitivity",
+            "to": "local_rules",
+            "why": "Local rules quantify the tiny-change effect just defined."
+          },
+          {
+            "from": "activation",
+            "to": "local_rules",
+            "why": "The ReLU sensitivity requires its piecewise forward rule."
+          },
+          {
+            "from": "local_rules",
+            "to": "chain",
+            "why": "Path sensitivity composes the local arithmetic factors."
+          },
+          {
+            "from": "sensitivity",
+            "to": "branch",
+            "why": "Combining contributions requires understanding what each sensitivity measures."
+          },
+          {
+            "from": "chain",
+            "to": "reverse",
+            "why": "Backward multiplication is the chain rule applied locally."
+          },
+          {
+            "from": "branch",
+            "to": "reverse",
+            "why": "The backward algorithm must accumulate every use of shared values."
+          },
+          {
+            "from": "parameters",
+            "to": "reverse",
+            "why": "Saved intermediate values come from evaluating the network."
+          },
+          {
+            "from": "loss",
+            "to": "reverse",
+            "why": "The scalar loss is the backward starting point."
+          },
+          {
+            "from": "reverse",
+            "to": "gradient",
+            "why": "Collecting the backward results at parameters yields the gradient."
+          },
+          {
+            "from": "gradient",
+            "to": "update",
+            "why": "Parameter updates need the corresponding signed sensitivities."
+          },
+          {
+            "from": "update",
+            "to": "limits",
+            "why": "Step-size limitations and repeated training qualify the learning rule."
+          },
+          {
+            "from": "activation",
+            "to": "trace_forward",
+            "why": "The trace needs the exact hidden activation calculation."
+          },
+          {
+            "from": "loss",
+            "to": "trace_forward",
+            "why": "The trace needs an explicit scalar error formula."
+          },
+          {
+            "from": "trace_forward",
+            "to": "trace_backward",
+            "why": "Local backward factors depend on the numerical forward values."
+          },
+          {
+            "from": "reverse",
+            "to": "trace_backward",
+            "why": "The numerical trace needs the backward multiplication and accumulation procedure."
+          },
+          {
+            "from": "trace_backward",
+            "to": "trace_update",
+            "why": "Parameter changes need the computed parameter sensitivities."
+          },
+          {
+            "from": "update",
+            "to": "trace_update",
+            "why": "The numerical changes instantiate the chosen update rule."
+          },
+          {
+            "from": "trace_update",
+            "to": "target",
+            "why": "The full numerical example makes the learning mechanism traceable."
+          },
+          {
+            "from": "limits",
+            "to": "target",
+            "why": "The answer must distinguish local sensitivity and training progress from stronger guarantees."
+          }
+        ],
+        "revisions": []
+      },
+      "gaps": [
+        "Justify squared loss local factor and ReLU derivative with no calculus baseline.",
+        "Check activation corner convention and the limits of gradient updates.",
+        "Independently verify forward/backward/update arithmetic."
+      ],
+      "searches": [],
+      "evidence": [],
+      "changes": []
+    }
+  ]
+}

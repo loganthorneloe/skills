@@ -1,0 +1,18 @@
+diff -r baseline/break-it-down/SKILL.md select/break-it-down/SKILL.md
+7c7
+< Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not short. Read the Gotchas before starting.
+---
+> Explain the subject in plain language with enough depth to understand how it works. Default to a styled HTML report combining connected reasoning and original source evidence. Simple means understandable, not padded: include what the reader needs to follow the answer and nothing else. Read the Gotchas before starting.
+39a40,41
+> 
+> Spend words in proportion to importance. Before drafting, rank the claims by how much the answer depends on them: give the top ones full mechanism and evidence, state minor ones in a sentence, and cut what the answer does not need. Teach each prerequisite in the fewest sentences that make it usable. Carry one worked example through the report rather than introducing new ones. Give each exhibit one to three sentences on what to notice and its limit. Open each section with its point. No section recaps, closing summaries, comprehension quizzes, or next-steps lists unless requested.
+diff -r baseline/voice/SKILL.md select/voice/SKILL.md
+7c7
+< Write so the reader understands what happens, how, and why on the first read. Simple means understandable, not short. This skill governs wording, sentence and paragraph shape, and text structure. The user or calling task sets scope, reader, length, format, and visual design, and its explicit instructions override these defaults.
+---
+> Write so the reader understands what happens, how, and why on the first read. Simple means understandable, not padded. This skill governs wording, sentence and paragraph shape, and text structure. The user or calling task sets scope, reader, length, format, and visual design, and its explicit instructions override these defaults.
+45c45,46
+< 4. Check the length against any limit the caller set.
+---
+> 4. Cut every sentence that repeats a point already made, previews what comes next, or explains something this reader already knows.
+> 5. Check the length against any limit the caller set.

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Application Evals, From First Principles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Sora:wght@600&display=swap">
+<style>
+:root{--canvas:#f5f4f0;--surface:#ffffff;--text:#101527;--muted:#646c77;--border:#cbd0d3;--blue:#2f6c9e;--green:#46734d;--red:#bf3030}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--canvas);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:400;font-size:17px;line-height:1.75}
+main{max-width:768px;margin:0 auto;padding:56px 24px 96px}
+h1,h2,h3{font-family:Sora,system-ui,sans-serif;font-weight:600;letter-spacing:-0.02em;line-height:1.25;margin:0}
+h1{font-size:40px;margin-bottom:40px}
+h1 .dot{color:var(--red)}
+h2{font-size:25px;margin:64px 0 16px;padding-top:28px;border-top:1px solid var(--border)}
+h3{font-size:18px;margin:0 0 8px}
+p{margin:0 0 18px}
+a{color:var(--text);font-weight:500;text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover,a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.ext{color:var(--red);font-size:.8em;margin-left:2px}
+code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px}
+p code,li code{background:var(--surface);border:1px solid var(--border);padding:1px 5px}
+pre{background:var(--surface);border:1px solid var(--border);padding:18px 20px;overflow-x:auto;line-height:1.55;margin:0 0 18px}
+.sources{margin:0 0 8px}
+.src{padding:18px 0;border-top:1px solid var(--border)}
+.src:last-child{border-bottom:1px solid var(--border)}
+.src .t{margin:0}
+.src .m{margin:2px 0 8px;font-style:italic;color:var(--muted);font-size:15px}
+.src p:last-child{margin:0;font-size:16px}
+.answer{font-size:19px;line-height:1.7}
+figure{margin:28px 0 30px}
+figure.wide{margin-left:calc(50% - min(50vw, 560px) + 12px);margin-right:calc(50% - min(50vw, 560px) + 12px)}
+figure img{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--border)}
+figure.narrow img{max-width:520px;margin:0 auto}
+figcaption{font-size:15px;color:var(--muted);margin-top:10px;line-height:1.6}
+figcaption a{color:var(--muted)}
+.scroll{overflow-x:auto}
+.tablewrap{margin:20px 0 26px}
+blockquote{margin:24px 0;padding:0 0 0 20px;border-left:2px solid var(--red);font-size:18px}
+blockquote p{margin:0 0 6px}
+blockquote cite{font-style:normal;font-size:15px;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--border);border-left:1px solid var(--border);margin:24px 0 28px;background:var(--surface)}
+.tile{padding:24px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tile p{font-size:15.5px;line-height:1.65;margin:0 0 10px}
+.tile p:last-child{margin:0}
+table{border-collapse:collapse;width:100%;font-size:15px;background:var(--surface);margin:0}
+th,td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+th{font-weight:500}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.calc{background:var(--surface);border:1px solid var(--border);padding:24px;margin:24px 0 28px}
+.calc .row{display:grid;grid-template-columns:200px 1fr 72px;gap:14px;align-items:center;margin-bottom:14px}
+.calc label{font-weight:500;font-size:15px}
+.calc output.v{font-variant-numeric:tabular-nums;text-align:right;font-weight:500}
+.calc input[type=range]{width:100%;accent-color:var(--blue)}
+.calc .res{border-top:1px solid var(--border);padding-top:16px;margin-top:4px}
+.calc .big{font-family:Sora,system-ui,sans-serif;font-weight:600;font-size:26px;letter-spacing:-0.02em}
+.bar{position:relative;height:28px;border:1px solid var(--border);margin:14px 0 6px;background:var(--canvas)}
+.bar .ci{position:absolute;top:0;bottom:0;background:#d6e3ef;border-left:2px solid var(--blue);border-right:2px solid var(--blue)}
+.bar .pt{position:absolute;top:-4px;bottom:-4px;width:3px;background:var(--text)}
+.ticks{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.calc button{font:500 15px Inter,system-ui,sans-serif;background:var(--surface);color:var(--text);border:1px solid var(--text);padding:6px 14px;cursor:pointer;margin-top:12px}
+.calc button:hover{border-color:var(--red);color:var(--red)}
+.note{font-size:15px;color:var(--muted)}
+ol.steps{padding-left:22px}
+ol.steps li{margin-bottom:10px}
+@media (max-width:720px){
+  main{padding:36px 20px 72px}
+  h1{font-size:31px}
+  h2{font-size:22px}
+  .tiles{grid-template-columns:1fr}
+  figure.wide{margin-left:0;margin-right:0}
+  .calc{padding:18px}
+  th,td{padding:6px 8px}
+  .calc .row{grid-template-columns:1fr 64px}
+  .calc .row input{grid-column:1 / -1;grid-row:2}
+  .scroll img.big{width:760px;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+<h1>AI application evals, from first principles<span class="dot">.</span></h1>
+
+<section class="sources" aria-labelledby="src-h">
+<h2 id="src-h" style="margin-top:0">Sources</h2>
+<div class="src">
+<p class="t"><a href="https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents">Demystifying evals for AI agents</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="m">Mikaela Grace, Jeremy Hadfield, Rodrigo Olivares, and Jiri De Jonghe · Engineering blog post, Anthropic · January 2026</p>
+<p>Written by the engineering team at a model developer that builds evals for its own agent products and with customers, so it reports what has worked in practice and supplies the vocabulary used below. It is practitioner guidance from a company that sells models, not a controlled study, and its examples are labeled as illustrative.</p>
+</div>
+<div class="src">
+<p class="t"><a href="https://hamel.dev/blog/posts/evals-faq/">AI Evals: Everything You Need to Know</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="m">Hamel Husain and Shreya Shankar · Practitioner FAQ, hamel.dev · September 2026</p>
+<p>Two practitioners who teach AI evaluation to engineers and product managers describe a step-by-step process for starting from real data, which is the clearest path for a beginner. They call their advice "sharp opinions," their example counts are rules of thumb, and they sell a course on the subject.</p>
+</div>
+<div class="src">
+<p class="t"><a href="https://arxiv.org/abs/2406.12045">τ-bench: A Benchmark for Tool-Agent-User Interaction in Real-World Domains</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="m">Shunyu Yao, Noah Shinn, Pedram Razavi, and Karthik Narasimhan · Research preprint, arXiv (Sierra) · June 2024</p>
+<p>Researchers at a customer-service-agent company built simulated retail and airline support tasks and graded them by checking the final database, then published the method, code, and failure analysis. The models tested are from 2024 and the maintainers have since corrected the original tasks, so use it for how to evaluate and the shape of the results, not for current scores.</p>
+</div>
+<div class="src">
+<p class="t"><a href="https://arxiv.org/abs/2306.05685">Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="m">Lianmin Zheng, Wei-Lin Chiang, and colleagues · Conference paper, NeurIPS 2023 Datasets and Benchmarks Track · June 2023</p>
+<p>The team behind Chatbot Arena collected about 3,000 expert votes and measured directly how often a model grader agreed with people and where it was biased. The graders and the chat questions are from 2023, so the numbers describe what can go wrong rather than how today's models behave.</p>
+</div>
+<div class="src">
+<p class="t"><a href="https://arxiv.org/abs/2411.00640">Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations</a><span class="ext" aria-hidden="true">↗</span></p>
+<p class="m">Evan Miller · Research preprint, arXiv (Anthropic) · November 2024</p>
+<p>Applies standard sampling statistics to eval scores, which is what tells you whether a change in score is real. It is written for large benchmarks; for the small test sets a beginner starts with, the calculator below uses a small-sample interval instead of the paper's formula.</p>
+</div>
+</section>
+
+<h2>The short answer</h2>
+<p class="answer">An eval is an automated test for behavior you cannot check with a normal unit test: you run your assistant on a fixed set of realistic inputs, score each result with a grader, and count how often it passes. You need evals because a model's output varies from run to run and a small prompt or model change can break things you were not looking at. To start on a customer-support assistant, read a hundred or so real or simulated conversations, write down what went wrong, group those notes into failure types, and turn the most important types into pass/fail checks that you re-run on every change.</p>
+
+<h2>Why normal testing is not enough</h2>
+<p>A normal test assumes the same input always gives the same output, so you can assert on it. A model API breaks that assumption twice. First, the same prompt can produce different answers on different runs, so one passing run tells you little. Second, the "correct" answer to a customer's message is usually not one exact string; many phrasings are fine and some subtly wrong ones look fine.</p>
+<p>Without a way to measure, teams fall into what Anthropic's engineers describe as reactive loops: wait for complaints, reproduce by hand, fix, and hope nothing else broke. Their article says teams without evals "can't distinguish real regressions from noise" and cannot test a change against hundreds of scenarios before shipping. The same problem appears when a new model is released: Anthropic reports that teams with evals can assess and adopt a new model in days, while teams without them face weeks of manual testing.</p>
+<p>Public leaderboards do not fill this gap. Husain and Shankar separate <em>model benchmarks</em>, which compare general models on shared tasks, from <em>product evals</em>, which check whether your system, including your prompts, tools, and code, does what your users need. A benchmark score says nothing about whether your assistant picked the right order before cancelling it.</p>
+
+<h2>What an eval is made of</h2>
+<p>Anthropic's article defines a small set of parts. A <strong>task</strong> (also called a test case) is one input plus the criteria for success. A <strong>trial</strong> is one run of your system on that task; because outputs vary, you often run several. A <strong>grader</strong> is the logic that scores a trial. The <strong>transcript</strong> (or trace) is the full record of the trial: every message, tool call, and intermediate result. The <strong>outcome</strong> is the final state of the world afterward, such as whether a refund record exists in your database. A collection of tasks is a <strong>suite</strong>.</p>
+<figure class="wide">
+<div class="scroll" tabindex="0" role="region" aria-label="Single-turn versus agent evaluation diagram, scrollable">
+<img class="big" src="assets/anthropic-single-turn-vs-agent.png" width="4584" height="2834" alt="Diagram comparing a single-turn evaluation (prompt and data go to an LLM, the response is checked with grading logic response == 18) with an agent evaluation (tools, environment, and task go to an agent that calls tools in a loop and says 'I did it!', and grading logic runs tests to confirm the result actually works).">
+</div>
+<figcaption>Anthropic, "Demystifying evals for AI agents," first figure. The top row is a whole eval in miniature: an input, a response, and a check. In the bottom row, notice that the agent's own claim ("I did it!") is not what gets graded; the grader checks the result. Rights unstated; reproduced with attribution. <a href="assets/anthropic-single-turn-vs-agent.png">Open full size</a>.</figcaption>
+</figure>
+<p>That distinction matters for support. A support assistant that says "Your refund has been processed" may not have processed anything. Anthropic's example is a flight-booking agent: the outcome is not the sentence "Your flight has been booked" but whether the reservation exists in the database.</p>
+<p>In code, the smallest possible eval is a loop you could write today. Suppose your assistant is a function <code>reply(conversation)</code> that calls a model API:</p>
+<pre><code>cases = [
+    {"input": "I was charged twice for order 1042", "must_mention": "refund"},
+    {"input": "Where is my package?", "must_call_tool": "lookup_order"},
+    # ... 20 to 50 more, taken from real conversations
+]
+
+passed = 0
+for case in cases:
+    result = reply(case["input"])        # one trial
+    ok = grade(case, result)             # True or False
+    passed += ok
+    log(case, result, ok)                # keep the transcript to read later
+
+print(f"{passed}/{len(cases)} passed")</code></pre>
+<p>Everything else in this report is about filling in that loop well: which cases go in <code>cases</code>, what <code>grade</code> should check, and how to read the number at the end.</p>
+
+<h2>Three kinds of graders</h2>
+<p>The grader is where most of the judgment lives. Anthropic groups graders into three kinds, and Husain and Shankar draw the same line between checks a rule can decide and checks that need judgment.</p>
+<div class="tiles">
+<div class="tile"><h3>Code</h3><p>A rule your program checks: an exact or regex match, valid JSON, the right tool called with the right arguments, the expected row in the database.</p><p>Fast, cheap, and repeatable, but brittle to correct answers phrased differently.</p></div>
+<div class="tile"><h3>Model</h3><p>A second model call (an "LLM judge") asked a narrow question about the output, such as "Did the reply follow the refund policy?"</p><p>Handles open-ended text, but is itself variable and must be checked against people.</p></div>
+<div class="tile"><h3>Human</h3><p>A person who knows the domain reads and labels outputs.</p><p>The reference standard, but slow and expensive, so mostly used to build and calibrate the other two.</p></div>
+</div>
+<p>Anthropic's advice is to use code graders where possible, model graders where necessary, and humans to validate. A single support task often mixes them. Their illustrative refund task for a frustrated customer combines:</p>
+<pre><code>graders:
+  - type: llm_rubric
+    assertions:
+      - "Agent showed empathy for customer's frustration"
+      - "Resolution was clearly explained"
+      - "Agent's response grounded in fetch_policy tool results"
+  - type: state_check
+    expect:
+      tickets: {status: resolved}
+      refunds: {status: processed}
+  - type: tool_calls
+    required:
+      - {tool: verify_identity}
+      - {tool: process_refund, params: {amount: "&lt;=100"}}
+      - {tool: send_confirmation}
+  - type: transcript
+    max_turns: 10</code></pre>
+<p class="note">Excerpt from Anthropic, "Demystifying evals for AI agents," section "Example: Theoretical evaluation for a conversational agent."</p>
+<p>Notice the division of labor: whether the refund happened is a database check, whether the tone was right needs a judge. The same article cautions against requiring an exact sequence of tool calls, because a capable assistant may find a valid route the test writer did not anticipate; grade what was produced, not the path, where you can.</p>
+
+<h2>Start by reading conversations, not writing tests</h2>
+<p>The hardest part is not the loop but knowing what to check. Husain and Shankar put it bluntly:</p>
+<blockquote><p>"Error analysis is the most important activity in evals."</p><cite>Husain and Shankar, AI Evals FAQ</cite></blockquote>
+<p>Error analysis means reading traces and writing down what goes wrong before deciding what to measure. Their process has four steps. Gather a set of representative conversations; if you have no users yet, write or generate realistic customer messages. Read each one and write a free-form note about the first thing that looks wrong, which qualitative researchers call open coding. Group the notes into categories, called axial coding, and count how many fall in each. Keep reading until new conversations stop revealing new kinds of failure. They suggest a pool of about 100 diverse traces, with at least the first 30 annotated by hand before letting any tool suggest failures.</p>
+<p>Two of their points matter for a support assistant. Write down anything that makes the product worse, even if the model is not at fault: their example is an assistant that says an order has shipped without giving a tracking link because it has no tool to fetch one. And do not write a rubric before you read; what you consider "good" shifts once you see real conversations, a change they call criteria drift. You might only discover by reading that your policy of escalating refunds to a human is frustrating customers.</p>
+<p>The τ-bench authors did exactly this kind of analysis on failed support conversations. They ran a gpt-4o assistant on 115 simulated retail tasks, read the 40 failures, found 4 caused by mistakes in the test itself, and sorted the remaining 36:</p>
+<figure class="narrow">
+<img src="assets/taubench-fig5-failures.png" width="1800" height="1348" alt="Donut chart of 36 failed agent conversations: wrong argument 33.3 percent, wrong decision 25.0 percent, wrong info 22.2 percent, partially resolve 19.4 percent.">
+<figcaption>Yao et al., τ-bench, Figure 5: breakdown of 36 failed gpt-4o conversations in the retail domain. Each slice suggests a different check: wrong arguments (right tool, wrong order or item ID) can be caught by code; a wrong decision (breaking the store's policy) needs the policy in the grader; partial resolution means the customer asked for two things and got one. One model, one simulated store, 36 cases. The paper's text gives "~55%" for wrong info, which conflicts with this figure; the figure is used here. CC BY 4.0. <a href="assets/taubench-fig5-failures.png">Open full size</a>.</figcaption>
+</figure>
+<p>That chart is what your own error analysis should produce: a short list of named failure types with counts, so you know which to fix first and which deserve an automated check.</p>
+
+<h2>Turn each failure type into a pass/fail check</h2>
+<p>Once you have failure types, write one evaluator per important type. Husain and Shankar recommend that each return pass or fail rather than a 1–5 score. Their reasoning is that the difference between a 3 and a 4 is inconsistent between reviewers, reviewers drift to the middle to avoid hard calls, and scales need more examples to show a real difference. If you want partial credit, split the score into several binary checks, such as "4 of 5 required facts present."</p>
+<p>Many failures will turn out to be plain bugs you fix once without any evaluator. For the rest, choose the cheapest grader that works. "Did it call <code>lookup_order</code> with the order number the customer gave?" is a code check. "Did it refuse a refund the policy allows?" probably needs a judge. To report one number, they suggest a pass-all rate, the share of cases that pass every check, with the ability to drill down to each check.</p>
+
+<h2>An LLM judge is a model you must test too</h2>
+<p>A judge is attractive because it scales, and it can be accurate. In the MT-Bench study, GPT-4's verdicts on which of two chat answers was better agreed with expert human labelers 85% of the time (ties excluded), slightly more than the 81% at which two humans agreed with each other. That was general chat in 2023, not support policy, but it shows a judge can approach human consistency.</p>
+<p>The same study shows how a judge can fail. The authors gave judges two similar answers, then swapped the order and asked again:</p>
+<div class="scroll tablewrap" tabindex="0" role="region" aria-label="Position bias table">
+<table>
+<caption style="caption-side:bottom;text-align:left;font-size:15px;color:var(--muted);padding-top:10px">Rebuilt from Zheng et al., Table 2 (default and "rename" prompts). Consistency is the share of cases where the verdict survived swapping the two answers. Values copied exactly; rights unstated.</caption>
+<thead><tr><th>Judge</th><th>Prompt</th><th>Consistency</th><th>Favored first</th><th>Favored second</th><th>Format error</th></tr></thead>
+<tbody>
+<tr><td>Claude-v1</td><td>default</td><td class="n">23.8%</td><td class="n">75.0%</td><td class="n">0.0%</td><td class="n">1.2%</td></tr>
+<tr><td>Claude-v1</td><td>rename</td><td class="n">56.2%</td><td class="n">11.2%</td><td class="n">28.7%</td><td class="n">3.8%</td></tr>
+<tr><td>GPT-3.5</td><td>default</td><td class="n">46.2%</td><td class="n">50.0%</td><td class="n">1.2%</td><td class="n">2.5%</td></tr>
+<tr><td>GPT-3.5</td><td>rename</td><td class="n">51.2%</td><td class="n">38.8%</td><td class="n">6.2%</td><td class="n">3.8%</td></tr>
+<tr><td>GPT-4</td><td>default</td><td class="n">65.0%</td><td class="n">30.0%</td><td class="n">5.0%</td><td class="n">0.0%</td></tr>
+<tr><td>GPT-4</td><td>rename</td><td class="n">66.2%</td><td class="n">28.7%</td><td class="n">5.0%</td><td class="n">0.0%</td></tr>
+</tbody>
+</table>
+</div>
+<p>Even the best judge kept its verdict only about two-thirds of the time when nothing changed but the order, and most leaned toward whichever answer came first. The answer pairs were deliberately close, and consistency is not the same as accuracy, but the lesson carries over: a judge has its own habits. The paper also found judges preferred answers padded with a rephrased repeat of the same list.</p>
+<p>So treat a judge like any classifier and measure it. Husain and Shankar's method is to have a domain expert label examples pass or fail (they suggest 100 to 200 per failure type), tune the judge's prompt on part of them, and test it once on a held-out part. Report two numbers. The true positive rate is how many real failures the judge catches: if people found 10 failures and the judge flagged 8, that is 80%. The true negative rate is how many good replies it correctly passes: 95 of 100 is 95%. Anthropic adds practical guards: ask the judge one narrow question per call, and give it a way to answer "unknown" instead of guessing.</p>
+
+<h2>For a support assistant, check the outcome and check it repeatedly</h2>
+<p>Support conversations have two features that shape their evals. The assistant takes actions, such as refunds and cancellations, so the most reliable grade is the end state of your system. And customers are many and varied, so the assistant must succeed reliably, not occasionally.</p>
+<p>τ-bench handles both. A second model plays the customer from a hidden script ("You want to return the water bottle and exchange the pet bed…"), and the assistant uses real-looking order tools and a written store policy. Each task is written so that only one final database state is correct under the policy, so grading is a comparison of the database against that state plus a check that the reply contained required facts. The conversation can wander; the outcome cannot. The authors note this check is necessary but not sufficient, since it would miss, for example, a refund issued without the customer's confirmation.</p>
+<p>To measure reliability, they introduced <strong>pass^k</strong>: the chance that all k independent tries at the same task succeed. It contrasts with pass@k, the chance that at least one of k tries succeeds, which suits tasks where you can pick the best of several attempts. A customer gets one attempt.</p>
+<figure>
+<img src="assets/taubench-fig4-passk.png" width="1800" height="900" alt="Line chart with k (number of trials) on the x-axis from 1 to 32 and percent of tasks on the y-axis. Dotted pass@k lines rise toward 90 to 95 percent; solid pass^k lines fall. gpt-4o starts near 61 percent and falls to about 25 percent at k equals 8; gpt-4-turbo falls to about 5 percent by k equals 32.">
+<figcaption>Yao et al., τ-bench, Figure 4: pass^k (solid) and pass@k (dotted) in the retail domain. Follow the orange gpt-4o line: about 61% of tasks succeed on a single try, but fewer than 25% succeed on all 8 tries. Its dotted line climbs because some try usually works. The models are from 2024, so read the gap between the lines, not the levels. CC BY 4.0.</figcaption>
+</figure>
+<p>For your own assistant, this means running each test case several times and reporting how many cases passed every time, not just the average. If an assistant passes a refund case 75% of the time, the chance it passes three runs in a row is about 0.75³, or 42%, the arithmetic Anthropic uses to make the same point.</p>
+<p>You do not need a full simulated store to begin. Your first support suite can be single customer messages from real tickets, each with a code check on the tool call or a judge check on the reply. Add a simulated customer later for multi-turn flows such as "change my address on all my orders," where τ-bench found assistants often stopped after the first order.</p>
+
+<h2>How many cases, and how much to trust the score</h2>
+<p>Anthropic's article says teams wait too long because they think they need hundreds of tasks, when "20-50 simple tasks drawn from real failures is a great start." Early changes tend to have large effects, which a small set can detect. The catch is that a score from a small set is itself uncertain: the cases you happened to pick are a sample of all the messages customers could send.</p>
+<p>Miller's paper makes this explicit. Treat each case as a draw from a larger population of possible questions, and the pass rate has a standard error of roughly √(p(1−p)/n), where p is the pass rate and n the number of cases. The error shrinks only with the square root of n, so quadrupling your cases halves the uncertainty. The calculator below shows the 95% range for the true pass rate given your numbers.</p>
+<div class="calc" id="calc">
+<div class="row"><label for="n">Test cases (n)</label><input id="n" type="range" min="10" max="500" step="10" value="40" aria-describedby="nv"><output class="v" id="nv" for="n">40</output></div>
+<div class="row"><label for="p">Observed pass rate</label><input id="p" type="range" min="0" max="100" step="1" value="80" aria-describedby="pv"><output class="v" id="pv" for="p">80%</output></div>
+<div class="res" aria-live="polite">
+<div class="big" id="range">65% to 90%</div>
+<div class="bar" aria-hidden="true"><div class="ci" id="ci" style="left:65%;width:25%"></div><div class="pt" id="pt" style="left:80%"></div></div>
+<div class="ticks" aria-hidden="true"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div>
+<p id="msg" style="margin:12px 0 0">With 40 cases, a true pass rate anywhere in this range could plausibly produce an observed 80%.</p>
+</div>
+<button type="button" id="reset">Reset</button>
+<p class="note" style="margin:14px 0 0">Uses the Wilson score interval, a standard 95% interval for a proportion that stays sensible for small n and rates near 0% or 100%. Assumes cases are independent and graded correctly; a biased grader shifts the whole range.</p>
+</div>
+<p>At the defaults, an 80% score on 40 cases is compatible with anything from the low 60s to about 90%. A change from 80% to 85% on that set is not evidence of improvement by itself. Miller's recommendation for comparing two versions is to run both on the same cases and look at the case-by-case differences, which removes much of the noise from case difficulty. In practice, at small n, read the cases that flipped from fail to pass or back rather than trusting the headline number.</p>
+
+<h2>Keep the suite alive</h2>
+<p>Anthropic distinguishes two uses of the same machinery. <strong>Capability evals</strong> target things the assistant does poorly and should start with a low pass rate, giving you something to improve. <strong>Regression evals</strong> cover what already works and should pass nearly 100%; a drop means something broke. Cases graduate from the first to the second as you fix them. Every new failure found in production becomes a new case, so the suite grows from real problems rather than imagined ones.</p>
+<p>Read transcripts regularly, including for passing cases. Anthropic reports scores that were wrong because of the grader, not the model: one benchmark marked "96.12" wrong because it expected "96.124991…", and fixing grading bugs like that, along with loosening the test setup, moved one model from 42% to 95%. A failing case should fail for a reason you can see.</p>
+<p>Finally, automated evals are one layer. Anthropic lists production monitoring, user feedback such as thumbs-down, A/B tests on real traffic, and human review as complements: evals catch problems before users do, while monitoring and feedback catch the problems your test cases never imagined.</p>
+
+<h2>What this means for your first week</h2>
+<p>The practical consequence is that your first eval work is reading, not infrastructure. Collect 50 to 100 support conversations, real or written by you, run your assistant on them, and annotate what went wrong. The failure types you find decide which checks to write, starting with code checks on tool calls and database outcomes, adding a judge only where a rule cannot decide, and validating that judge against your own labels. Run each case more than once, and treat small score changes on a small suite as a prompt to read transcripts, not as proof.</p>
+<p>Two limits remain. The specific numbers here come from 2023–2024 models and simulated stores; today's models will score differently, though the variability and judge biases they illustrate are why the methods exist. And the starting sizes and the preference for pass/fail checks are experienced practitioners' advice rather than results of controlled studies; treat them as defaults to adjust once your own data says otherwise.</p>
+</main>
+<script>
+(function(){
+  var n=document.getElementById('n'),p=document.getElementById('p');
+  var nv=document.getElementById('nv'),pv=document.getElementById('pv');
+  var range=document.getElementById('range'),ci=document.getElementById('ci'),pt=document.getElementById('pt'),msg=document.getElementById('msg');
+  function wilson(ph,N){var z=1.96,z2=z*z,d=1+z2/N,c=(ph+z2/(2*N))/d,h=z*Math.sqrt(ph*(1-ph)/N+z2/(4*N*N))/d;return[Math.max(0,c-h),Math.min(1,c+h)];}
+  function upd(){
+    var N=+n.value,P=+p.value/100,w=wilson(P,N),lo=Math.round(w[0]*100),hi=Math.round(w[1]*100);
+    nv.textContent=N;pv.textContent=p.value+'%';
+    range.textContent=lo+'% to '+hi+'%';
+    ci.style.left=(w[0]*100)+'%';ci.style.width=((w[1]-w[0])*100)+'%';pt.style.left='calc('+(P*100)+'% - 1.5px)';
+    msg.textContent='With '+N+' cases, a true pass rate anywhere from '+lo+'% to '+hi+'% could plausibly produce an observed '+p.value+'%. The range is about '+(hi-lo)+' points wide.';
+  }
+  n.addEventListener('input',upd);p.addEventListener('input',upd);
+  document.getElementById('reset').addEventListener('click',function(){n.value=40;p.value=80;upd();});
+  upd();
+})();
+</script>
+</body>
+</html>

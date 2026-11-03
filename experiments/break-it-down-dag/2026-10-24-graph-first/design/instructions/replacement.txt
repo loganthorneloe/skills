@@ -1,0 +1,5 @@
+Before prerequisite research, save `dag.json`: reader assumptions, target ID, nodes (`id`, atomic `question`, `answer`, `status`: assumed/supported/partial/gap, evidence URL/locator/exact claim), edges (`from`, `to`, `why`), revisions. Work backward to assumed knowledge. A→B requires A to explain B: record what fails without A; remove edges if B remains explainable. Keep scope, optional material, examples and motivation separate from prerequisites. Split questions with different prerequisites or evidence; merge duplicates.
+
+Research partial/gap nodes; mark supported only if located passages explain all answer claims; record uncovered claims as partial/gap. Save initial state before research; append each actual round's gaps, searches, evidence and reconstructable changes immediately, including no-change rounds; never backfill. Stop at support or disclosed search limits.
+
+Reconcile answers/edges with source passages and prose; repair missing foundations in both. Save final JSON and readable SVG/HTML beside the report. Check unique IDs, endpoints, acyclicity and required paths to target; valid structure cannot prove good prerequisites.

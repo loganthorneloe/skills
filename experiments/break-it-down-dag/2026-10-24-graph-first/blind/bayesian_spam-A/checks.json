@@ -1,0 +1,51 @@
+{
+  "result": "PASS",
+  "nodes": 16,
+  "edges": 26,
+  "unique_ids": true,
+  "valid_endpoints": true,
+  "acyclic": true,
+  "all_nodes_reach_target": true,
+  "supported_nodes_have_evidence": true,
+  "topological_order": [
+    "percentages",
+    "partition",
+    "conditional",
+    "prior",
+    "flag_rates",
+    "independence",
+    "training",
+    "joint_counts",
+    "all_flags",
+    "posterior",
+    "update_rule",
+    "base_rate_change",
+    "word_clue",
+    "word_scores",
+    "probability_limit",
+    "target"
+  ],
+  "counts": {
+    "population": 10000,
+    "spam": 100,
+    "legitimate": 9900,
+    "true_flags": 90,
+    "false_flags": 990,
+    "all_flags": 1080,
+    "spam_fraction_among_flags": "1/12"
+  },
+  "exact_posterior_by_spam_fraction": {
+    "0": "0",
+    "1/1000": "1/112",
+    "1/100": "1/12",
+    "1/10": "1/2",
+    "1/2": "9/10",
+    "1": "1"
+  },
+  "word_clue_direction_cases": "equal rates unchanged; greater spam rate increases posterior; lower spam rate decreases posterior",
+  "semantic_review": "Reviewed edge necessity; removed example-comparison dependency from word-clue reasoning. Structural checks do not prove semantic correctness.",
+  "unperformed": [
+    "HTML rendering (shared renderer assigned)",
+    "Empirical classifier calibration or training"
+  ]
+}

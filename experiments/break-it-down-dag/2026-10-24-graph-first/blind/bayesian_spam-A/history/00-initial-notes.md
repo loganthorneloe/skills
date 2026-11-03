@@ -1,0 +1,1 @@
+Initial state saved before supplemental browsing. Source basis: supplied packet only. Partial/gap labels retain unverified derived arithmetic, base-rate variation, word analogy, and evaluation limits. No searches yet.

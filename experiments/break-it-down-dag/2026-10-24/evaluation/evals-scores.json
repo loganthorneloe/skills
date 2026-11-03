@@ -1,0 +1,32 @@
+{
+  "topic": "evals",
+  "A": {
+    "scores": {
+      "prerequisites": 5,
+      "continuity": 5,
+      "mechanism": 5,
+      "foundation_evidence": 5,
+      "accuracy": 5,
+      "transfer": 5,
+      "exhibits": 5,
+      "readability": 4,
+      "presentation": 5
+    }
+  },
+  "B": {
+    "scores": {
+      "prerequisites": 5,
+      "continuity": 5,
+      "mechanism": 5,
+      "foundation_evidence": 5,
+      "accuracy": 5,
+      "transfer": 5,
+      "exhibits": 5,
+      "readability": 4,
+      "presentation": 5
+    }
+  },
+  "winner": "tie",
+  "rationale": "Both cover the necessary foundations and support transfer. A is particularly clear on sampling uncertainty and process checks; B on grader error and dialogue coverage. Their complementary strengths do not justify a rubric-level overall preference.",
+  "major_issues": []
+}

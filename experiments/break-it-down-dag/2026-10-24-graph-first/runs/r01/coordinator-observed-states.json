@@ -1,0 +1,50 @@
+[
+  {
+    "time": "2026-10-24T20:42:43.422350+00:00",
+    "file": "runs/r01/dag.initial.json",
+    "sha256": "e154864c06fb314598acf455542cc1d83c85fea86a3d103b24f34d314293c501",
+    "snapshot": "observed/r01/dag.initial-e154864c06fb.json",
+    "nodes": 16,
+    "edges": 29
+  },
+  {
+    "time": "2026-10-24T20:42:43.422761+00:00",
+    "file": "runs/r01/dag.json",
+    "sha256": "e154864c06fb314598acf455542cc1d83c85fea86a3d103b24f34d314293c501",
+    "snapshot": "observed/r01/dag-e154864c06fb.json",
+    "nodes": 16,
+    "edges": 29
+  },
+  {
+    "time": "2026-10-24T20:44:05.791993+00:00",
+    "file": "runs/r01/dag.json",
+    "sha256": "376cb739d2612011656a9a48f1974c29d37e8813780e6c91d2def6fac20e475d",
+    "snapshot": "observed/r01/dag-376cb739d261.json",
+    "nodes": 21,
+    "edges": 38
+  },
+  {
+    "time": "2026-10-24T20:44:05.792625+00:00",
+    "file": "runs/r01/dag.round1.json",
+    "sha256": "376cb739d2612011656a9a48f1974c29d37e8813780e6c91d2def6fac20e475d",
+    "snapshot": "observed/r01/dag.round1-376cb739d261.json",
+    "nodes": 21,
+    "edges": 38
+  },
+  {
+    "time": "2026-10-24T20:44:54.051219+00:00",
+    "file": "runs/r01/dag.json",
+    "sha256": "dc33783b25a39d07b99a199b4338ef7c0dc5199ea572ad303ac7085402052547",
+    "snapshot": "observed/r01/dag-dc33783b25a3.json",
+    "nodes": 22,
+    "edges": 39
+  },
+  {
+    "time": "2026-10-24T20:44:54.052287+00:00",
+    "file": "runs/r01/dag.round2.json",
+    "sha256": "dc33783b25a39d07b99a199b4338ef7c0dc5199ea572ad303ac7085402052547",
+    "snapshot": "observed/r01/dag.round2-dc33783b25a3.json",
+    "nodes": 22,
+    "edges": 39
+  }
+]

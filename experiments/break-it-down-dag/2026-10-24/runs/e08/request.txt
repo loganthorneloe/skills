@@ -1,0 +1,1 @@
+Break down database transaction isolation from first principles. I can read basic SQL SELECT and UPDATE statements but have never studied database internals. Why can two individually correct operations produce a wrong result when they run at the same time, and how do isolation levels help?

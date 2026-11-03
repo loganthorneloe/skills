@@ -1,0 +1,3 @@
+Break down backpropagation from first principles. I am comfortable with arithmetic and basic Python, but I have never studied calculus. How does a small neural network figure out how each weight contributed to its prediction error, and how does that help it learn? Please make the arithmetic traceable in a tiny example.
+
+For this task, produce only the prerequisite research graph and its evidence/history, not the full explanation report.

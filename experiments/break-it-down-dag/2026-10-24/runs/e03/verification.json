@@ -1,0 +1,84 @@
+{
+  "errors": [],
+  "desktop": {
+    "width": 1280,
+    "scroll": 1280,
+    "fonts": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "status": "loaded"
+      },
+      {
+        "family": "Inter",
+        "weight": "500",
+        "status": "loaded"
+      },
+      {
+        "family": "Sora",
+        "weight": "600",
+        "status": "loaded"
+      }
+    ],
+    "images": [
+      {
+        "complete": true,
+        "w": 426,
+        "h": 308
+      }
+    ]
+  },
+  "states": [
+    {
+      "mix": 80,
+      "effect": 0,
+      "observed": "+12 points",
+      "truth": "0 points"
+    },
+    {
+      "mix": 50,
+      "effect": 0,
+      "observed": "0 points",
+      "truth": "0 points"
+    },
+    {
+      "mix": 20,
+      "effect": 0,
+      "observed": "-12 points",
+      "truth": "0 points"
+    },
+    {
+      "mix": 20,
+      "effect": 10,
+      "observed": "-2 points",
+      "truth": "10 points"
+    },
+    {
+      "mix": 80,
+      "effect": 10,
+      "observed": "+22 points",
+      "truth": "10 points"
+    },
+    {
+      "mix": 50,
+      "effect": 5,
+      "observed": "+5 points",
+      "truth": "5 points"
+    }
+  ],
+  "reset": "+12 points",
+  "keyboard": {
+    "mix": "70",
+    "gap": "+8 points",
+    "focus": "solid"
+  },
+  "mobile": {
+    "width": 390,
+    "scroll": 390,
+    "overflows": []
+  },
+  "static": {
+    "gap": "12 points",
+    "body": 14187
+  }
+}

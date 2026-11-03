@@ -1,0 +1,142 @@
+{
+  "round": 1,
+  "kind": "supplemental_research",
+  "gaps_before": [
+    "Support-specific success criteria and conversation context",
+    "Score aggregation and grouped failures",
+    "Controlled comparisons and small-difference uncertainty",
+    "Evidence for proposed startup synthesis"
+  ],
+  "searches": [],
+  "opened": [
+    "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+    "https://developers.openai.com/api/docs/guides/graders"
+  ],
+  "navigation": [
+    "find customer / Design / variable / Overview",
+    "read best-practices lines 1000\u20131213 and graders lines 957\u20131086"
+  ],
+  "findings": [
+    "Order-support examples separate response completeness from correct facts.",
+    "Conversation history and fetched data belong in relevant support cases.",
+    "Grader documentation is explicitly deprecated; conceptual usage only."
+  ],
+  "changes": [
+    {
+      "id": "objective",
+      "before": {
+        "id": "objective",
+        "question": "How do you decide what counts as a successful support answer?",
+        "answer": "Specify the support task and observable success criteria using domain expertise. For a support assistant, plausible criteria include correct use of supplied policy, appropriate escalation, and useful communication; the exact criteria depend on the service.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process",
+            "exact_claim": "Start with the objective and measurements of success.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+            "locator": "Incorporate expert annotations",
+            "exact_claim": "Domain expertise determines correct or useful behavior.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          }
+        ]
+      },
+      "after": {
+        "id": "objective",
+        "question": "How do you decide what counts as a successful support answer?",
+        "answer": "Specify the support task and observable success criteria using domain expertise. For order support, criteria can distinguish providing the required order details from providing correct details. Exact criteria depend on the service.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process",
+            "exact_claim": "Start with the objective and measurements of success.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+            "locator": "Incorporate expert annotations",
+            "exact_claim": "Domain expertise determines correct or useful behavior.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Workflow architectures, lines 1093\u20131101",
+            "exact_claim": "Support evaluation distinguishes required response fields from correct field values.",
+            "basis": "Directly read relevant official HTML sections; paraphrase, not quotation"
+          }
+        ]
+      }
+    },
+    {
+      "id": "case",
+      "before": {
+        "id": "case",
+        "question": "What is a test case?",
+        "answer": "It is a recorded input together with the information needed to judge its output. For support, that may include the user\u2019s request, relevant policy and conversation context, and expected behavior.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evals",
+            "locator": "Create an eval for a task; Uploading test data",
+            "exact_claim": "Each support-ticket classification item contains the ticket text and correct label.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          }
+        ]
+      },
+      "after": {
+        "id": "case",
+        "question": "What is a test case?",
+        "answer": "A test case records an input and the information needed to judge its output. Support cases may need conversation history and external information, such as order details, as well as the request and expected behavior.",
+        "status": "supported",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evals",
+            "locator": "Create an eval for a task; Uploading test data",
+            "exact_claim": "Each support-ticket classification item contains the ticket text and correct label.",
+            "basis": "supplied verified packet paraphrase; not a quotation"
+          },
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Workflow architectures, lines 1087\u20131101; Contextual complexity, lines 1202\u20131213",
+            "exact_claim": "Order support depends on fetched order details; context and conversation history affect responses.",
+            "basis": "Directly read relevant official HTML sections; paraphrase, not quotation"
+          }
+        ]
+      }
+    },
+    {
+      "id": "target",
+      "before": {
+        "id": "target",
+        "question": "Why use evals, and how should a Python programmer start evaluating a customer-support assistant?",
+        "answer": "Evals turn selected examples and explicit success criteria into repeatable evidence about an application. Start with a narrow support task, record realistic and difficult cases with the context and expected behavior, choose and human-check graders, run a baseline, inspect scores and failures, and compare revisions on the same cases. Grow the suite from real failures. Treat the result as evidence with limits, not a guarantee.",
+        "status": "partial",
+        "evidence": []
+      },
+      "after": {
+        "id": "target",
+        "question": "Why use evals, and how should a Python programmer start evaluating a customer-support assistant?",
+        "answer": "Evals turn selected examples and explicit success criteria into repeatable evidence about an application. Start with a narrow support task, record realistic and difficult cases with the context and expected behavior, choose and human-check graders, run a baseline, inspect scores and failures, and compare revisions on the same cases. Grow the suite from real failures. Treat the result as evidence with limits, not a guarantee.",
+        "status": "partial",
+        "evidence": [
+          {
+            "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+            "locator": "Design your eval process, lines 1012\u20131019",
+            "exact_claim": "Define the objective, collect data, define measurements, run comparisons, and continuously evaluate.",
+            "basis": "Directly read relevant official HTML sections; paraphrase, not quotation"
+          }
+        ],
+        "synthesis_note": "Workflow is an application of the cited process to the reader\u2019s support task, not a measured result or a universal deployment standard."
+      }
+    }
+  ],
+  "gaps_remaining": [
+    "Aggregation calculation and grouped failure interpretation",
+    "Controlled comparisons and small-difference uncertainty",
+    "Final target synthesis reconciliation"
+  ]
+}

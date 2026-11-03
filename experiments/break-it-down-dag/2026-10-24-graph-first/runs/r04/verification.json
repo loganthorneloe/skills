@@ -1,0 +1,49 @@
+{
+  "graph_checks": {
+    "unique_ids": true,
+    "valid_endpoints": true,
+    "acyclic": true,
+    "all_nodes_reach_target": true,
+    "nodes": 17,
+    "edges": 29,
+    "topological_order": [
+      "baseline",
+      "entry",
+      "array",
+      "hash",
+      "index",
+      "keycost",
+      "collision",
+      "reindex",
+      "placement",
+      "chain",
+      "find",
+      "load",
+      "worst",
+      "expected",
+      "growth",
+      "amortized",
+      "target"
+    ]
+  },
+  "tiny_trace": "PASS: computed lookup comparisons, relocation and remaining collision match saved trace.",
+  "unfamiliar_case": {
+    "inputs": "h(k)=3k+1, m=5, entries (2,U),(7,V),(4,W)",
+    "observations": "Codes 7,22,13 select buckets 2,2,3. Lookup 7 checks 2 then 7; missing 12 checks 2 then 7. At m=10 indices become 7,2,3 and lookup 7 checks only 7.",
+    "result": "PASS; supplied hash function is sufficient, no missing input."
+  },
+  "counterexample": {
+    "inputs": "h(k)=7 for every key, entries 1,5,2,3; grow 8 to 16",
+    "observations": "All four entries remain bucket 7. Missing query 99 performs four comparisons before and after growth.",
+    "result": "PASS; confirms growth cannot guarantee separation or worst-case constant lookup."
+  },
+  "broken_resize": "PASS: appending empty buckets without redistribution loses key 5 under new lookup index.",
+  "inconsistent_key_hash": "PASS: changing the hash used for an existing key makes a one-bucket lookup miss its entry.",
+  "amortized_arithmetic": "PASS: geometric copied-entry totals are below 2N for N=1,2,3,5,8,17,100. This is arithmetic verification, not a proof by testing.",
+  "manual_edge_audit": "Every final edge checked against destination claim. Added chain\u2192load and hash\u2192keycost to resolve vocabulary prerequisites. Example steps kept outside edges.",
+  "limits": [
+    "No measured timings or CPython implementation claims.",
+    "No visual QA; common renderer handles graph output.",
+    "Expected guarantee remains conditional on suitable hash distribution."
+  ]
+}

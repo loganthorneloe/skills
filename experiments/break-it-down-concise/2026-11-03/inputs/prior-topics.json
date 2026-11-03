@@ -1,0 +1,6 @@
+{
+  "evals": "Break down AI application evals from first principles. I can write a small Python program and call a model API, but I have no machine-learning or AI-engineering background. Why do I need evals, how do they work, and how would I start evaluating a customer-support assistant?",
+  "causal": "Break down causal inference from first principles. I understand averages and percentages but have never studied statistics. If people who use a learning app score higher on an exam, why does that not prove the app helped, and how could we find out whether it did?",
+  "encryption": "Break down public-key encryption from first principles. I understand files and sending messages over the internet but have no cryptography background. How can someone publish a key so strangers can send private messages without also letting everyone read those messages?",
+  "isolation": "Break down database transaction isolation from first principles. I can read basic SQL SELECT and UPDATE statements but have never studied database internals. Why can two individually correct operations produce a wrong result when they run at the same time, and how do isolation levels help?"
+}

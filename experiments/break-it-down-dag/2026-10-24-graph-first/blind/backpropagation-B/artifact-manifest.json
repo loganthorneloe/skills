@@ -1,0 +1,62 @@
+[
+  {
+    "file": "dag.html",
+    "original_sha256": "6a10c1e16f33209687e855f6e6e360a3fbbb6d55a7e87bb5f5d20b23db548b5d",
+    "blind_sha256": "6a10c1e16f33209687e855f6e6e360a3fbbb6d55a7e87bb5f5d20b23db548b5d"
+  },
+  {
+    "file": "dag.svg",
+    "original_sha256": "f20457b87712e035bb96d724bc0a22548d896c583da9b94c6b69f19707cd1bf1",
+    "blind_sha256": "f20457b87712e035bb96d724bc0a22548d896c583da9b94c6b69f19707cd1bf1"
+  },
+  {
+    "file": "run-notes.md",
+    "original_sha256": "b014faf9e1b0cf9e4cd5f0ffa283b90c00f259c4dd64a7727e9db0605bb0a52d",
+    "blind_sha256": "f74e844d8fe62b3d4f255210e8d6cc0c83d05e13b39a1957771b31c52d84de47"
+  },
+  {
+    "file": "numerical-checks.json",
+    "original_sha256": "fddfa1f3750ac2fbaa4119cda149fbbf5369c0bb1f1b7f04750930a837e77c2b",
+    "blind_sha256": "fddfa1f3750ac2fbaa4119cda149fbbf5369c0bb1f1b7f04750930a837e77c2b"
+  },
+  {
+    "file": "request.txt",
+    "original_sha256": "ac700d273e02975ce0f5d8cb7d9645da42c9e1600fa4e51d546bf17169efcd7c",
+    "blind_sha256": "ac700d273e02975ce0f5d8cb7d9645da42c9e1600fa4e51d546bf17169efcd7c"
+  },
+  {
+    "file": "dag.json",
+    "original_sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818",
+    "blind_sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818"
+  },
+  {
+    "file": "graph-checks.json",
+    "original_sha256": "28913609ef6a475e438a30e633d287dee007c73b3e4fc91a382e17f98a16abb0",
+    "blind_sha256": "28913609ef6a475e438a30e633d287dee007c73b3e4fc91a382e17f98a16abb0"
+  },
+  {
+    "file": "history/03-navigation-no-change.json",
+    "original_sha256": "d9fd84e2b80821ece2e5b11d03aef0a62fde2dd4fadaaec824b5ba515ee85296",
+    "blind_sha256": "d9fd84e2b80821ece2e5b11d03aef0a62fde2dd4fadaaec824b5ba515ee85296"
+  },
+  {
+    "file": "history/04-final-reconciled.json",
+    "original_sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818",
+    "blind_sha256": "f869d004106d0aa0bcec19e67e373b64732ea376014dec2389cb16b569e9f818"
+  },
+  {
+    "file": "history/02-relu-and-reverse.json",
+    "original_sha256": "0c22384f6ae76b8a71219b13005144abb3f17cdd8e989f7077cd95f989e09b4d",
+    "blind_sha256": "0c22384f6ae76b8a71219b13005144abb3f17cdd8e989f7077cd95f989e09b4d"
+  },
+  {
+    "file": "history/01-passages.json",
+    "original_sha256": "adbe28cb9ec1288ec701839147d133a63740d94179f6814dbaeda98700a03914",
+    "blind_sha256": "adbe28cb9ec1288ec701839147d133a63740d94179f6814dbaeda98700a03914"
+  },
+  {
+    "file": "history/00-initial.json",
+    "original_sha256": "36d8b2738eda7c3dea5b1590dfff7cc7473d22f5dd44e0dc424b52eac16e68af",
+    "blind_sha256": "36d8b2738eda7c3dea5b1590dfff7cc7473d22f5dd44e0dc424b52eac16e68af"
+  }
+]

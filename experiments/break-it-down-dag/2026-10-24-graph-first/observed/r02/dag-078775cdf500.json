@@ -1,0 +1,708 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-24T20:42:50.115882+00:00",
+  "reader_assumptions": [
+    "Can read basic SQL SELECT, UPDATE, and WHERE.",
+    "No prior knowledge of transactions, commits, row versions, locks, or concurrency.",
+    "Can reason about a stated rule and sequential steps; the on-call rule is explicitly supplied as an example input."
+  ],
+  "scope": "Prerequisite research graph only. Ordinary transactional table data on separate connections; SQL examples and engine differences retained. No claim of distributed external-side-effect atomicity, durability tuning, or universal performance ranking. No full report or renderer.",
+  "target": "target",
+  "nodes": [
+    {
+      "id": "rule",
+      "question": "What makes a result correct?",
+      "answer": "For the examples, correctness means preserving a stated application rule over the stored rows. This is an input from the application, not a rule the isolation setting invents.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "transaction",
+      "question": "What is a transaction?",
+      "answer": "A transaction groups SQL statements into one unit: BEGIN starts an explicit block, COMMIT keeps its changes, and ROLLBACK discards them. A single statement can also be a transaction.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+          "locator": "3.4 BEGIN/COMMIT/ROLLBACK",
+          "claim": "A transaction groups SQL statements into one unit: BEGIN starts an explicit block, COMMIT keeps its changes, and ROLLBACK discards them. A single statement can also be a transaction.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "atomicity",
+      "question": "What does all-or-nothing execution guarantee?",
+      "answer": "Atomicity means all of a transaction\u2019s stored changes survive together or none do. It does not determine whether a later statement sees a newer committed transaction.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+          "locator": "3.4, paragraphs following transfer example",
+          "claim": "A failed transaction leaves none of its grouped changes.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.1, opening two paragraphs",
+          "claim": "Statements within one transaction may see different committed data.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "concurrency",
+      "question": "How can transactions overlap?",
+      "answer": "Separate connections\u2014separate conversations between application and database\u2014can each have an unfinished transaction. One can read, another update and commit, and the first then read or update. Overlap needs no simultaneous CPU execution.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation And Concurrency, X/Y example",
+          "claim": "X can keep a read transaction open while Y updates and commits.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3, two concurrent sum transactions",
+          "claim": "Reads and dependent writes can interleave across transactions.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "read_decision",
+      "question": "How does a read affect a later update?",
+      "answer": "The application can choose later SQL and its values using earlier query results. A concurrent transaction can change relevant data between that read and the later write; the application\u2019s decision may then describe an earlier state.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/mvcc-serialization-failure-handling.html",
+          "locator": "13.5, complete-transaction retry paragraph",
+          "claim": "Transaction logic includes deciding which SQL and values to use.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3, sum example",
+          "claim": "Concurrent transactions each insert values chosen from earlier sums.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "serial",
+      "question": "What is a serial execution?",
+      "answer": "Complete one transaction before starting the next. Different orders can yield different results, but each later transaction operates after the earlier one.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2 serialization anomaly definition",
+          "claim": "Complete one transaction before starting the next. Different orders can yield different results, but each later transaction operates after the earlier one.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "serializable",
+      "question": "What does serializable guarantee?",
+      "answer": "The committed outcome must be consistent with some serial order of whole transactions. Transactions may still overlap in real execution.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3 Serializable",
+          "claim": "The committed outcome must be consistent with some serial order of whole transactions. Transactions may still overlap in real execution.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "wrong_result",
+      "question": "How can two individually correct transactions produce a wrong result?",
+      "answer": "Two transactions can each read that a shared rule permits their change, then write different rows. Each choice is correct against what it read; together the committed writes can break the rule. No dirty read or partially committed transaction is necessary.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3, concurrent sums and serial comparison",
+          "claim": "Independent read-dependent writes can both commit at Repeatable Read with no equivalent serial ordering.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3, paragraph beginning \u201cThe guarantee that any set\u201d",
+          "claim": "Serial execution of individually correct transactions explains preservation of correctness.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ],
+      "examples": [
+        {
+          "type": "constructed reasoning example, not a measured database run",
+          "given_inputs": [
+            "Rows A and B initially both have on_call=true.",
+            "Rule: at least one row remains on call.",
+            "Each transaction reads both rows; only if the other row is true does it set its own row false.",
+            "Ordinary reads; separate connections; no extra locks, constraint, or third writer."
+          ],
+          "overlap": [
+            "A reads both true.",
+            "B reads both true.",
+            "A sets only A false.",
+            "B sets only B false.",
+            "Both commit under a policy allowing these read/write dependencies."
+          ],
+          "result": "Both false violates the rule; each transaction alone from the initial state would preserve it.",
+          "serial_comparison": "A then B leaves B true, because B observes A false and does not leave. B then A leaves A true. Neither serial order produces both false.",
+          "qualification": "Illustrates PostgreSQL Repeatable Read\u2019s possible cross-row serialization anomaly by applying documented snapshot and update rules. Not a guarantee that every engine called Repeatable Read permits this schedule."
+        }
+      ]
+    },
+    {
+      "id": "dirty",
+      "question": "What is a dirty read?",
+      "answer": "A transaction reads another transaction\u2019s changes before that other transaction commits; those changes could later be rolled back.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2 anomaly definitions",
+          "claim": "A transaction reads another transaction\u2019s changes before that other transaction commits; those changes could later be rolled back.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "nonrepeatable",
+      "question": "What is a nonrepeatable read?",
+      "answer": "A later read of a previously read row sees a changed value after another transaction committed.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2 anomaly definitions",
+          "claim": "A later read of a previously read row sees a changed value after another transaction committed.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "phantom",
+      "question": "What is a phantom read?",
+      "answer": "Repeating a condition-based query yields a changed matching set because another transaction committed changes.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2 anomaly definitions",
+          "claim": "Repeating a condition-based query yields a changed matching set because another transaction committed changes.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "snapshot",
+      "question": "What is a read snapshot?",
+      "answer": "A read snapshot selects which stored row versions a statement may observe. A version is the row\u2019s values from a particular update; retaining earlier versions allows a read to use earlier committed data even after newer updates exist. A transaction also sees its own prior changes. The isolation policy chooses the snapshot\u2019s reference point.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/mvcc-intro.html",
+          "locator": "13.1, opening paragraph",
+          "claim": "MVCC exposes a database version from an earlier point.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.1\u201313.2.2, opening paragraphs",
+          "claim": "Statement-level versus transaction-level snapshots and own-write visibility.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "read_committed",
+      "question": "What does PostgreSQL Read Committed give an ordinary SELECT?",
+      "answer": "Each ordinary SELECT gets a snapshot at the statement\u2019s start, so successive statements may observe different committed states; uncommitted changes from other transactions are excluded.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.1 Read Committed",
+          "claim": "Each ordinary SELECT gets a snapshot at the statement\u2019s start, so successive statements may observe different committed states; uncommitted changes from other transactions are excluded.",
+          "access": "Relevant HTML passage directly read in this run"
+        }
+      ]
+    },
+    {
+      "id": "repeatable_read",
+      "question": "What does PostgreSQL Repeatable Read give ordinary reads?",
+      "answer": "In PostgreSQL Repeatable Read, ordinary reads retain the snapshot established by the first non-control statement, while seeing their own prior updates. Later commits by other transactions do not change that view; this also prevents phantom reads.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.2, opening three paragraphs",
+          "claim": "Fixed first-statement snapshot, own updates, and stronger-than-minimum phantom protection.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "levels",
+      "question": "What do isolation levels specify?",
+      "answer": "Minimum protections: Read Uncommitted may permit dirty reads; Read Committed forbids those but may permit nonrepeatable and phantom reads; Repeatable Read additionally forbids nonrepeatable reads, but may permit phantoms; Serializable also forbids phantoms and all serialization anomalies. Engines may provide stronger protection than these minimums.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2, Table 13.1 and following implementation paragraphs",
+          "claim": "Four named levels specify forbidden phenomena, with stronger PostgreSQL behavior at two levels.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "locks",
+      "question": "How can a lock coordinate conflicting operations?",
+      "answer": "A lock records a transaction\u2019s protected access to data. An incompatible request\u2014such as a second writer requesting an already write-locked row\u2014must wait until the holder commits or rolls back. Some locks protect a range against inserts. A plain snapshot read need not request such conflicting access.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1, REPEATABLE READ and READ COMMITTED examples",
+          "claim": "Record/range locks can block writes; retained write locks make the second updater wait.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/mvcc-intro.html",
+          "locator": "13.1, MVCC reading/writing and explicit locking paragraphs",
+          "claim": "Version-based reads and explicit locking have different blocking behavior.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "mechanisms",
+      "question": "Why is an isolation guarantee different from its implementation?",
+      "answer": "An isolation guarantee describes allowed observations and outcomes. Implementations can select old versions, delay incompatible access with locks, or detect unsafe read/write combinations and abort an attempt. PostgreSQL Serializable adds dependency monitoring to snapshots; its monitoring locks record dependencies without blocking.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3, opening and predicate-locking paragraphs",
+          "claim": "Serializable monitoring can trigger failure; predicate tracking does not itself block.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1, SERIALIZABLE",
+          "claim": "InnoDB can convert ordinary SELECT into shared locking reads.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation Between Database Connections; Isolation And Concurrency",
+          "claim": "SQLite permits one writer and rejects stale snapshot-to-write upgrades.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "statement_kind",
+      "question": "Why must a plain SELECT be distinguished from a locking read or UPDATE?",
+      "answer": "Snapshot rules for plain SELECT do not fully describe UPDATE or a read requesting a lock. In PostgreSQL Read Committed, an updater can wait for a competing writer, then apply its operation to the newer row after rechecking WHERE. InnoDB likewise distinguishes nonlocking reads from locking statements.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.1, UPDATE/DELETE/SELECT FOR UPDATE behavior",
+          "claim": "An updater waits and rechecks the updated row against its condition.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1, REPEATABLE READ",
+          "claim": "Consistent SELECT and locking statements use different rules.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "engine",
+      "question": "Why is the isolation name alone insufficient?",
+      "answer": "The engine, isolation level, and statement kind together determine behavior. PostgreSQL treats Read Uncommitted as Read Committed and prevents Repeatable Read phantoms. InnoDB SERIALIZABLE converts ordinary SELECT to shared locking reads when autocommit is disabled. SQLite ordinarily permits one writer; its WAL snapshots can reject a stale reader\u2019s attempted write with SQLITE_BUSY_SNAPSHOT.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2 Table 13.1 and following paragraphs",
+          "claim": "PostgreSQL supplies stronger protections than level minimums.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://dev.mysql.com/doc/refman/8.4/en/innodb-transaction-isolation-levels.html",
+          "locator": "17.7.2.1 SERIALIZABLE",
+          "claim": "Autocommit condition controls shared locking conversion.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.sqlite.org/isolation.html",
+          "locator": "Isolation Between Database Connections; Isolation And Concurrency, X/Y write-upgrade example",
+          "claim": "Single writer and stale-snapshot rejection; shared-cache/read_uncommitted exception exists.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ],
+      "limits": [
+        "SQLite uncommitted cross-connection reads require shared cache plus enabled read_uncommitted; default behavior excludes them.",
+        "WAL means write-ahead log: changes are appended separately so earlier readers retain their prior view.",
+        "These engine examples explain why guarantees differ; they are not a universal configuration recommendation."
+      ]
+    },
+    {
+      "id": "retry",
+      "question": "What must the application do when concurrency control rejects a transaction?",
+      "answer": "Waiting lets an existing attempt continue after another transaction finishes. A serialization failure instead rejects the attempt. PostgreSQL requires retrying the complete transaction, including reads and logic choosing SQL and values. Retrying only the final UPDATE can reuse the invalid decision. A retry may fail again.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/mvcc-serialization-failure-handling.html",
+          "locator": "13.5, complete transaction and completion paragraphs",
+          "claim": "Retry all decision logic; multiple attempts may be necessary.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.1 updater waiting; 13.2.2 concurrent update failure",
+          "claim": "Waiting and aborting are distinct outcomes.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "target",
+      "question": "Why can individually correct operations fail together, and how do isolation levels help?",
+      "answer": "Individually valid read-dependent changes can combine into a result that violates an application rule when transactions overlap. Atomicity groups writes; isolation constrains observations and committed outcomes. Stronger levels prevent more anomalies, but stable snapshots alone are not serializability. With correct transaction boundaries and individually correct logic, consistent use of Serializable protects the serial-equivalent result; engines enforce guarantees using versions, locks, and possible abort/retry work. Level names also require engine and statement qualifications: PostgreSQL Repeatable Read prevents phantoms beyond the standard minimum, while InnoDB distinguishes plain and locking reads.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2 table; 13.2.2\u201313.2.3",
+          "claim": "Synthesis of allowed anomalies, stable snapshot limits, and serializable composition.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+          "locator": "3.4",
+          "claim": "Grouped updates supply atomicity.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/mvcc-serialization-failure-handling.html",
+          "locator": "13.5",
+          "claim": "Applications must repeat complete failed attempts.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "stable_not_serial",
+      "question": "Why can a stable snapshot still allow a serialization anomaly?",
+      "answer": "A stable snapshot fixes each transaction\u2019s view; it does not force other transactions\u2019 decisions to agree with a single serial order. Transactions can read overlapping data, change different rows, and both commit. PostgreSQL Repeatable Read allows such outcomes; Serializable additionally checks the conflicting read/write dependencies.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.2 final explanation; 13.2.3 concurrent sums example",
+          "claim": "A stable snapshot can admit results inconsistent with every serial ordering.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    },
+    {
+      "id": "correctness_limit",
+      "question": "When does serializable isolation preserve an application rule?",
+      "answer": "Start from a state satisfying the rule, include each complete read/decision/write operation in one transaction, and make every relevant transaction preserve the rule when executed serially under the same guarantee. A serial-equivalent committed outcome then preserves it. Isolation does not invent the rule or repair logic that is wrong even when run alone.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html",
+          "locator": "13.2.3, paragraph beginning \u201cThe guarantee that any set\u201d",
+          "claim": "Individually correct serializable transactions compose into a correct serial-equivalent committed result.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "reasoned consequence"
+        },
+        {
+          "url": "https://www.postgresql.org/docs/current/tutorial-transactions.html",
+          "locator": "3.4, transfer example",
+          "claim": "Related operations must be grouped into the intended complete transaction.",
+          "access": "Relevant HTML passage directly read in this run",
+          "kind": "direct"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "to": "atomicity",
+      "why": "The all-or-nothing unit is the transaction and its grouped writes.",
+      "from": "transaction"
+    },
+    {
+      "to": "concurrency",
+      "why": "Overlap refers to whole transactions that have begun and not yet ended.",
+      "from": "transaction"
+    },
+    {
+      "to": "read_decision",
+      "why": "A decision can become outdated because another unfinished transaction can act between the read and update.",
+      "from": "concurrency"
+    },
+    {
+      "to": "serial",
+      "why": "Serial order orders complete transactions rather than individual SQL statements.",
+      "from": "transaction"
+    },
+    {
+      "to": "serializable",
+      "why": "The guarantee is defined by comparison to an allowed serial execution.",
+      "from": "serial"
+    },
+    {
+      "to": "wrong_result",
+      "why": "Wrong means breaking the explicitly supplied at-least-one-on-call rule.",
+      "from": "rule"
+    },
+    {
+      "to": "wrong_result",
+      "why": "Both updates are based on earlier observations that the other staff member remains on call.",
+      "from": "read_decision"
+    },
+    {
+      "to": "dirty",
+      "why": "Uncommitted means the other transaction has not successfully ended with COMMIT.",
+      "from": "transaction"
+    },
+    {
+      "to": "nonrepeatable",
+      "why": "The value can change because another transaction commits between reads.",
+      "from": "concurrency"
+    },
+    {
+      "to": "phantom",
+      "why": "Matching membership can change because another transaction commits between queries.",
+      "from": "concurrency"
+    },
+    {
+      "to": "snapshot",
+      "why": "Visibility includes the transaction\u2019s own changes and excludes changes based on transaction completion.",
+      "from": "transaction"
+    },
+    {
+      "to": "read_committed",
+      "why": "Statement-start reference points determine what each read can see.",
+      "from": "snapshot"
+    },
+    {
+      "to": "repeatable_read",
+      "why": "A fixed transaction reference point explains why later reads retain earlier row versions.",
+      "from": "snapshot"
+    },
+    {
+      "to": "levels",
+      "why": "The first minimum protection boundary forbids reading uncommitted work.",
+      "from": "dirty"
+    },
+    {
+      "to": "levels",
+      "why": "The next minimum protection forbids changed values in repeated reads.",
+      "from": "nonrepeatable"
+    },
+    {
+      "to": "levels",
+      "why": "Phantom protection differs across minimum rules and engine implementations.",
+      "from": "phantom"
+    },
+    {
+      "to": "levels",
+      "why": "The strongest listed guarantee requires a serial-equivalent committed result.",
+      "from": "serializable"
+    },
+    {
+      "to": "locks",
+      "why": "Incompatible access arises when overlapping transactions request conflicting use of protected data.",
+      "from": "concurrency"
+    },
+    {
+      "to": "mechanisms",
+      "why": "Snapshots demonstrate how version selection implements read visibility.",
+      "from": "snapshot"
+    },
+    {
+      "to": "mechanisms",
+      "why": "Locks demonstrate how waiting implements access coordination.",
+      "from": "locks"
+    },
+    {
+      "to": "mechanisms",
+      "why": "Serializable is an outcome constraint whose implementations can differ.",
+      "from": "serializable"
+    },
+    {
+      "to": "statement_kind",
+      "why": "Plain reads can return data selected by a past visibility point.",
+      "from": "snapshot"
+    },
+    {
+      "to": "statement_kind",
+      "why": "Locking statements coordinate access beyond merely selecting a visible version.",
+      "from": "locks"
+    },
+    {
+      "to": "engine",
+      "why": "Names have minimum protections rather than one universal implementation.",
+      "from": "levels"
+    },
+    {
+      "to": "engine",
+      "why": "An engine\u2019s guarantees must be qualified by the operation being executed.",
+      "from": "statement_kind"
+    },
+    {
+      "to": "retry",
+      "why": "Retrying whole work requires restoring the complete transaction, including reads and decisions.",
+      "from": "transaction"
+    },
+    {
+      "to": "retry",
+      "why": "Rejecting an attempt can be necessary to preserve a serial-equivalent committed outcome.",
+      "from": "serializable"
+    },
+    {
+      "to": "target",
+      "why": "Grouping changes atomically does not alone settle which concurrent observations are allowed.",
+      "from": "atomicity"
+    },
+    {
+      "to": "target",
+      "why": "The question asks how two individually correct operations can collectively break an application rule.",
+      "from": "wrong_result"
+    },
+    {
+      "to": "target",
+      "why": "The answer must explain how named guarantee strengths constrain anomalies.",
+      "from": "levels"
+    },
+    {
+      "to": "target",
+      "why": "The answer must distinguish outcome promises from how the database enforces them.",
+      "from": "mechanisms"
+    },
+    {
+      "to": "target",
+      "why": "Practical interpretation requires engine and statement qualifications.",
+      "from": "engine"
+    },
+    {
+      "to": "target",
+      "why": "Preventing an unsafe commit can require application retry behavior rather than automatic success.",
+      "from": "retry"
+    },
+    {
+      "to": "stable_not_serial",
+      "why": "The distinction concerns the stable per-transaction view this level supplies.",
+      "from": "repeatable_read"
+    },
+    {
+      "to": "stable_not_serial",
+      "why": "A serialization anomaly means failure of the serial-order outcome criterion.",
+      "from": "serializable"
+    },
+    {
+      "to": "stable_not_serial",
+      "why": "Read-dependent writes can encode incompatible decisions despite each fixed view.",
+      "from": "read_decision"
+    },
+    {
+      "to": "target",
+      "why": "The answer must explain why stable reads do not yet provide the strongest outcome guarantee.",
+      "from": "stable_not_serial"
+    },
+    {
+      "to": "correctness_limit",
+      "why": "Preservation is proved using an equivalent serial ordering of committed transactions.",
+      "from": "serializable"
+    },
+    {
+      "to": "correctness_limit",
+      "why": "The invariant to preserve must be supplied independently of isolation.",
+      "from": "rule"
+    },
+    {
+      "to": "correctness_limit",
+      "why": "The full decision and its writes must be inside the unit ordered by serializability.",
+      "from": "transaction"
+    },
+    {
+      "to": "target",
+      "why": "The stated protection depends on valid transaction boundaries and correct serial logic.",
+      "from": "correctness_limit"
+    },
+    {
+      "to": "retry",
+      "why": "Whole-transaction retries must recompute the decisions that chose the writes.",
+      "from": "read_decision"
+    },
+    {
+      "from": "read_committed",
+      "to": "statement_kind",
+      "why": "The comparison starts from PostgreSQL Read Committed\u2019s plain-SELECT snapshot rule before showing how UPDATE can use a newer row."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "timestamp": "2026-10-24T20:42:50.115882+00:00",
+      "action": "Initial graph from assigned request and supplied packet only; no supplemental research yet."
+    },
+    {
+      "round": 2,
+      "timestamp": "2026-10-24T20:44:49.595637+00:00",
+      "action": "Direct source reading filled research gaps; split stable snapshot from serializability and added correctness conditions; removed two explanatory-order edges."
+    },
+    {
+      "round": 3,
+      "timestamp": "2026-10-24T20:45:46.231454+00:00",
+      "action": "Structural and semantic audit repair: connected Read Committed to its actual dependent claim; made target engine qualification explicit."
+    }
+  ]
+}

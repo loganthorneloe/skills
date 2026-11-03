@@ -1,0 +1,85 @@
+[
+  {
+    "file": "runs/e02/dag.json",
+    "status": "PASS",
+    "nodes": 11,
+    "edges": 13,
+    "topological_order": [
+      "bits",
+      "hard",
+      "secrecy",
+      "mod",
+      "pair",
+      "construction",
+      "identity",
+      "randomness",
+      "hybrid",
+      "limits",
+      "target"
+    ],
+    "errors": [],
+    "limit": "Structure only. Evidence entailment and prerequisite validity require independent review."
+  },
+  {
+    "file": "runs/e04/dag.json",
+    "status": "PASS",
+    "nodes": 13,
+    "edges": 19,
+    "topological_order": [
+      "sql",
+      "transaction",
+      "snapshot",
+      "rule",
+      "locks",
+      "interleave",
+      "skew",
+      "anomalies",
+      "levels",
+      "serial",
+      "retry",
+      "practice",
+      "target"
+    ],
+    "errors": [],
+    "limit": "Structure only. Evidence entailment and prerequisite validity require independent review."
+  },
+  {
+    "file": "runs/e05/dag.json",
+    "status": "PASS",
+    "nodes": 10,
+    "edges": 11,
+    "topological_order": [
+      "program",
+      "goal",
+      "population",
+      "variation",
+      "case",
+      "outcome",
+      "grader",
+      "sample",
+      "compare",
+      "workflow"
+    ],
+    "errors": [],
+    "limit": "Structure only. Evidence entailment and prerequisite validity require independent review."
+  },
+  {
+    "file": "runs/e07/dag.json",
+    "status": "PASS",
+    "nodes": 9,
+    "edges": 12,
+    "topological_order": [
+      "compare",
+      "counterfactual",
+      "confounding",
+      "random",
+      "observational",
+      "assignment",
+      "missing",
+      "uncertainty",
+      "target"
+    ],
+    "errors": [],
+    "limit": "Structure only. Evidence entailment and prerequisite validity require independent review."
+  }
+]

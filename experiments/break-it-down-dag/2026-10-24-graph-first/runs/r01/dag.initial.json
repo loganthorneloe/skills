@@ -1,0 +1,383 @@
+{
+  "topic": "Evaluating an AI customer-support application",
+  "target": "target",
+  "reader_assumptions": [
+    "Basic Python, function inputs and outputs, model API calls.",
+    "No machine-learning or AI-engineering knowledge."
+  ],
+  "scope": {
+    "included": [
+      "Need for application evals",
+      "Cases, references, grading, runs, interpretation, comparison and improvement",
+      "Practical first support-assistant evaluation including tool action outcomes"
+    ],
+    "excluded": [
+      "Full report or visuals",
+      "Provider-specific platform setup",
+      "Formal inference for close score comparisons",
+      "General intelligence benchmarks"
+    ],
+    "given_inputs": [
+      "An application callable already exists.",
+      "Applicable support policies and authorized actions must be supplied by the application owner; no real policy is assumed."
+    ],
+    "edge_semantics": "from is a prerequisite for the exact claim named in why; ordering and motivation alone are not dependencies."
+  },
+  "nodes": [
+    {
+      "id": "baseline",
+      "question": "What can the reader already do?",
+      "answer": "Write Python that supplies inputs to a function or API, receives outputs, and compares values.",
+      "status": "assumed",
+      "evidence": []
+    },
+    {
+      "id": "application",
+      "question": "What exactly is the system being tested?",
+      "answer": "The application is the complete configured path from a user input and available context to a response or action. A support assistant may include a model, instructions, retrieved policy text, and tool calls; changing these can change its behavior.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process",
+          "claim": "Evals concern application behavior and changes to application components.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "variability",
+      "question": "Why are a few successful conversations insufficient?",
+      "answer": "Generative outputs can vary for the same input, and different customer situations can expose different failures. A handful of attractive answers cannot establish reliability across those situations.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "What are evals?",
+          "claim": "Generative models vary and use-case evidence is needed.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "objective",
+      "question": "What would good support behavior mean?",
+      "answer": "Write explicit application-specific requirements: answer according to the applicable policy and facts, perform only authorized actions, and seek clarification or escalate when required facts or authority are missing. These are proposed requirements to confirm with a support expert.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process",
+          "claim": "Define the objective before choosing measurements.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "case",
+      "question": "What information belongs in a test case?",
+      "answer": "A reusable case contains the customer input and the context that the application would receive, plus separate grading information describing acceptable behavior. The grading information is not automatically part of the application input.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evals",
+          "locator": "Create an eval for a task; Uploading test data",
+          "claim": "Ticket text and a correct label are separate fields used for generation and grading.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "question": "Which cases should be collected?",
+      "answer": "Use realistic common requests, unusual requests, and observed failures. Historical examples, expert-created examples, and synthetic cases are possible sources. Record case types so results can be inspected separately. Coverage limits what a score can establish.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Design your eval process; Evals tips",
+          "claim": "Representative cases, failures and unusual inputs matter; generic metrics and unrepresentative datasets mislead.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "reference",
+      "question": "How are acceptable outcomes determined?",
+      "answer": "A knowledgeable human checks the applicable source information and records the expected decision, required facts, or acceptable response properties. An exact reference answer is useful only when the task has a sufficiently definite target; open-ended responses may have multiple acceptable phrasings.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-getting-started",
+          "locator": "What annotation does; Incorporate expert annotations",
+          "claim": "Expert annotations supply expected behavior and context.",
+          "access": "supplied verified source packet"
+        },
+        {
+          "url": "https://developers.openai.com/api/docs/guides/graders",
+          "locator": "String check graders",
+          "claim": "Exact identity differs from semantic or qualitative adequacy.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "grader",
+      "question": "How does an output become a measurable result?",
+      "answer": "A grader applies an explicit rule to an actual output and its case-specific reference or criteria. Use code for precise properties such as valid structure or a required category; use a written human rubric, optionally automated by another model, for qualitative properties. Each score means only that its chosen rule was satisfied to that degree.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/graders",
+          "locator": "Overview; String check graders; Score model graders; Python graders",
+          "claim": "Graders convert outputs and case information into judgments, and types measure different properties.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "calibration",
+      "question": "How do we know the grading rule measures what we intended?",
+      "answer": "Have informed humans judge outputs, including failures and borderline cases, and compare those judgments with automated grades. Investigate disagreements and refine the rule; automated grading can be consistently wrong.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Evals tips; How to read evals",
+          "claim": "Automated assessments should be checked against human judgment.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "question": "What happens in one evaluation run?",
+      "answer": "For each case, give the application its input and allowed context, save the generated response or action, and apply the grader with its reference information. Save the application configuration, case version, outputs, and grading results so the result can be inspected and rerun.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evals",
+          "locator": "Creating an eval run; Analyze the results",
+          "claim": "A run supplies data and configuration, producing outputs and grading results.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "aggregate",
+      "question": "What does a dataset score say?",
+      "answer": "For a binary criterion, divide the number of passing cases by the number graded and state both counts. Inspect separate criteria and case groups as well as the overall score. This describes performance on the cases and runs tested; it does not prove performance on all future customer conversations.",
+      "status": "partial",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "How to read evals",
+          "claim": "Scores measure chosen behavior and require human interpretation.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "comparison",
+      "question": "How can an evaluation compare application changes?",
+      "answer": "Evaluate both configurations with the same case set and grading rules. Inspect which cases improve or regress, along with aggregate scores. Variation between generated responses and the finite selection of cases can make a small difference inconclusive; repeat where needed and preserve a separate final test set from tuning.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "improvement",
+      "question": "How do results lead to improvement?",
+      "answer": "Inspect failed outputs and their relevant context to identify what went wrong, change a component aimed at that failure, and rerun the evaluation. Keep observed failures as future test cases. A change can fix one behavior while worsening another.",
+      "status": "supported",
+      "evidence": [
+        {
+          "url": "https://developers.openai.com/api/docs/guides/evaluation-best-practices",
+          "locator": "Evals tips; Design your eval process",
+          "claim": "Real failures become cases; repeated evaluation reveals improvements and regressions.",
+          "access": "supplied verified source packet"
+        }
+      ]
+    },
+    {
+      "id": "action_outcome",
+      "question": "How is a tool-using assistant evaluated beyond its words?",
+      "answer": "Check the actual requested action and resulting state against authorized expected outcomes. A plausible response that claims a refund occurred does not establish that a permitted refund was actually performed.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "start",
+      "question": "How would I start evaluating a customer-support assistant?",
+      "answer": "Choose a narrow support workflow and explicit requirements; assemble realistic cases with expert-checked expectations; run the complete application; grade each requirement and inspect failures; compare revisions using fixed cases and rules. Keep action outcomes separate from response quality and do not treat a high average as a deployment guarantee.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "target",
+      "question": "Why do AI applications need evals, how do they work, and how can this reader start?",
+      "answer": "Evals turn desired application behavior into repeatable evidence: cases specify situations, grading rules define what is measured, runs produce observations, and comparisons guide improvements. They are needed because variable answers and diverse situations make informal spot checks unreliable. Start with a narrowly defined support workflow and inspect both outputs and consequential actions.",
+      "status": "partial",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "baseline",
+      "to": "application",
+      "why": "The application is defined as a configured input-to-output program, using the reader\u2019s known API model."
+    },
+    {
+      "from": "application",
+      "to": "variability",
+      "why": "The claim about insufficient conversations concerns outputs of the configured application, rather than a model ranking."
+    },
+    {
+      "from": "application",
+      "to": "objective",
+      "why": "Requirements specify behavior of this whole application."
+    },
+    {
+      "from": "application",
+      "to": "case",
+      "why": "A case must distinguish inputs and context supplied to the application from grading information."
+    },
+    {
+      "from": "objective",
+      "to": "reference",
+      "why": "Expected outcomes implement the stated support requirements."
+    },
+    {
+      "from": "case",
+      "to": "coverage",
+      "why": "Representativeness concerns which reusable input situations are included."
+    },
+    {
+      "from": "case",
+      "to": "reference",
+      "why": "Each expected outcome belongs to a particular input and context."
+    },
+    {
+      "from": "reference",
+      "to": "grader",
+      "why": "The grader must compare actual behavior with an acceptable outcome or criterion."
+    },
+    {
+      "from": "grader",
+      "to": "calibration",
+      "why": "Agreement checks assess whether the grading rule captures informed human judgments."
+    },
+    {
+      "from": "application",
+      "to": "run",
+      "why": "The run executes one identified application configuration."
+    },
+    {
+      "from": "case",
+      "to": "run",
+      "why": "The run supplies case inputs and preserves separate grading information."
+    },
+    {
+      "from": "grader",
+      "to": "run",
+      "why": "The run applies explicit assessment rules to its saved outputs."
+    },
+    {
+      "from": "run",
+      "to": "aggregate",
+      "why": "Pass counts and denominators come from recorded per-case run results."
+    },
+    {
+      "from": "coverage",
+      "to": "aggregate",
+      "why": "The limit on generalization depends on which situations the cases cover."
+    },
+    {
+      "from": "calibration",
+      "to": "aggregate",
+      "why": "Interpreting a pass rate as quality evidence requires a grader checked against intended quality."
+    },
+    {
+      "from": "aggregate",
+      "to": "comparison",
+      "why": "Comparing scores requires knowing what each score summarizes and its scope."
+    },
+    {
+      "from": "variability",
+      "to": "comparison",
+      "why": "Small score differences may reflect variable generation, not a reliable benefit."
+    },
+    {
+      "from": "comparison",
+      "to": "improvement",
+      "why": "A claimed improvement needs evidence of gains and regressions under comparable conditions."
+    },
+    {
+      "from": "objective",
+      "to": "action_outcome",
+      "why": "Correct action outcomes depend on the defined authorization and task requirements."
+    },
+    {
+      "from": "run",
+      "to": "action_outcome",
+      "why": "Checking actual actions needs observations beyond the final response from execution."
+    },
+    {
+      "from": "objective",
+      "to": "start",
+      "why": "The initial support workflow needs concrete success requirements."
+    },
+    {
+      "from": "coverage",
+      "to": "start",
+      "why": "Starting cases must include realistic and unusual situations."
+    },
+    {
+      "from": "reference",
+      "to": "start",
+      "why": "Starter cases need expert-checked expectations."
+    },
+    {
+      "from": "improvement",
+      "to": "start",
+      "why": "The starter workflow uses measured failures to revise and rerun."
+    },
+    {
+      "from": "action_outcome",
+      "to": "start",
+      "why": "A support workflow with actions must inspect their consequences separately from wording."
+    },
+    {
+      "from": "variability",
+      "to": "target",
+      "why": "The answer\u2019s need for evals rests on unreliable inference from a few variable answers."
+    },
+    {
+      "from": "start",
+      "to": "target",
+      "why": "The answer\u2019s concrete starting method requires the evaluated support workflow."
+    },
+    {
+      "from": "run",
+      "to": "target",
+      "why": "The answer\u2019s mechanism is repeated generation and explicit grading."
+    },
+    {
+      "from": "aggregate",
+      "to": "target",
+      "why": "The answer calls evals evidence, which requires knowing the score\u2019s limited meaning."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "stage": "initial before supplemental research",
+      "timestamp": "2026-10-24T20:42:43.124856+00:00",
+      "basis": "Read only assigned worker instructions, skill, request, supplied source packet.",
+      "open_gaps": [
+        "Application boundary and action outcomes",
+        "Reliable comparison with held-out cases",
+        "Run records and per-case interpretation"
+      ]
+    }
+  ]
+}

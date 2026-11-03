@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "target": "target",
+  "reader_assumptions": [
+    "Can read basic SELECT, UPDATE, WHERE.",
+    "Can add balances and compare amounts.",
+    "No transaction, concurrency-control, or database-internals knowledge assumed."
+  ],
+  "scope": {
+    "required": "Explain concurrent visibility, atomicity versus isolation, read-dependent anomalies, guarantees versus mechanisms, and practical retries.",
+    "optional": "Detailed storage layouts, indexes, WAL internals, full engine configuration, performance recommendations.",
+    "examples": "A constructed two-account withdrawal example will be checked against the researched semantics; not a measured database execution."
+  },
+  "nodes": [
+    {
+      "id": "sql",
+      "question": "What SQL knowledge can this explanation assume?",
+      "answer": "The reader can read SELECT, UPDATE, and WHERE, but has not studied transactions or concurrency control.",
+      "status": "assumed",
+      "evidence": [
+        {
+          "url": null,
+          "locator": "Assigned user request; basic numerical reasoning stated as assumption",
+          "exact_claim": "The reader can read SELECT, UPDATE, and WHERE, but has not studied transactions or concurrency control."
+        }
+      ]
+    },
+    {
+      "id": "arithmetic",
+      "question": "What numerical reasoning can this explanation assume?",
+      "answer": "The reader can add balances and compare a total against a withdrawal amount.",
+      "status": "assumed",
+      "evidence": [
+        {
+          "url": null,
+          "locator": "Assigned user request; basic numerical reasoning stated as assumption",
+          "exact_claim": "The reader can add balances and compare a total against a withdrawal amount."
+        }
+      ]
+    },
+    {
+      "id": "invariant",
+      "question": "What makes a database result correct?",
+      "answer": "A rule chosen by the application identifies valid states, such as preserving the total balance during a transfer. SQL statements can execute successfully while their combined result violates that rule.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "transaction",
+      "question": "What does a transaction group?",
+      "answer": "A transaction groups statements into one unit whose updates are all retained by COMMIT or abandoned by ROLLBACK.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "atomicity",
+      "question": "What failure does all-or-nothing execution prevent?",
+      "answer": "Atomicity prevents a failed transfer from keeping its debit while losing its credit. It groups the success of related changes.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "concurrency",
+      "question": "What does concurrent execution mean?",
+      "answer": "Different database connections can have transactions in progress at overlapping times, with reads and writes from different transactions occurring between one another.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "serial",
+      "question": "What is a serial execution?",
+      "answer": "In a serial execution, one entire transaction finishes before another begins. The order can differ, but their steps do not interleave.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "dependency",
+      "question": "Why can a read affect the correctness of a later write?",
+      "answer": "An application can read a total, decide whether a change is allowed, then write. The decision depends on the values read, even if the later write changes a different row.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "snapshot",
+      "question": "What does reading a snapshot mean?",
+      "answer": "A snapshot determines which committed versions a read can see; a later commit need not appear in an already established snapshot. A transaction can also see its own earlier writes.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "anomaly",
+      "question": "How can two individually valid transactions produce an invalid combined result?",
+      "answer": "If each decision relies on data the other transaction changes, both can pass a check based on older values and then commit changes to different rows. The combined result can violate a rule that either serial ordering would preserve.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "atomicity_limit",
+      "question": "Why do transaction boundaries alone fail to prevent this?",
+      "answer": "Both transactions can commit all their own work, so atomicity is satisfied, while their interleaved read-dependent decisions still produce a result impossible in serial execution.",
+      "status": "gap",
+      "evidence": []
+    },
+    {
+      "id": "serializable",
+      "question": "What extra promise does serializable isolation make?",
+      "answer": "The effects of committed concurrent transactions must match some execution of those transactions one at a time. It does not require physically sequential execution.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "dirty",
+      "question": "What is a dirty read?",
+      "answer": "It reads data written by another transaction that has not yet committed.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "nonrepeatable",
+      "question": "What is a nonrepeatable read?",
+      "answer": "A transaction rereads data and finds that another committed transaction changed it.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "phantom",
+      "question": "What is a phantom read?",
+      "answer": "A transaction repeats a query condition and finds a different set of matching rows because another transaction committed changes.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "levels",
+      "question": "What do named isolation levels promise?",
+      "answer": "Isolation levels constrain which observations and anomalies concurrent transactions may have. The standard names express minimum protections; implementations can provide stronger protections.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "read_committed",
+      "question": "What does PostgreSQL Read Committed guarantee for ordinary SELECT?",
+      "answer": "Each ordinary SELECT reads a snapshot taken at that statement\u2019s start. It avoids dirty reads, but consecutive SELECT statements can see different committed data.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "repeatable_read",
+      "question": "What does PostgreSQL Repeatable Read add?",
+      "answer": "Ordinary reads use the snapshot established by the first non-control statement, plus the transaction\u2019s own writes. PostgreSQL prevents phantoms here, but serialization anomalies remain possible.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "mechanisms",
+      "question": "How can databases enforce isolation guarantees?",
+      "answer": "Implementations can retain versions for snapshot reads, block conflicting operations with locks, or detect unsafe read/write dependencies and reject a transaction. A guarantee and the mechanism enforcing it are different concepts.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "retry",
+      "question": "What must an application do when serialization checking rejects a transaction?",
+      "answer": "Abort and retry the entire transaction, including its read-dependent decisions, rather than repeating only its last SQL statement.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "choice",
+      "question": "Why is choosing an isolation level an application decision?",
+      "answer": "The needed guarantees depend on the rules an application must preserve. Stronger isolation may require waiting or retrying, and statement behavior varies by database engine. A level name alone is not a complete implementation description.",
+      "status": "partial",
+      "evidence": []
+    },
+    {
+      "id": "target",
+      "question": "Why can individually correct concurrent operations go wrong, and how do isolation levels help?",
+      "answer": "Concurrent transactions can make individually valid decisions from values that become inconsistent when their writes are combined. Atomicity preserves transaction units; isolation constrains their interaction. Serializable requires a result equivalent to a serial order, while weaker levels permit specific anomalies and need application-appropriate reasoning.",
+      "status": "partial",
+      "evidence": []
+    }
+  ],
+  "edges": [
+    {
+      "from": "arithmetic",
+      "to": "invariant",
+      "why": "Without adding balances, the motivating correctness rule is not interpretable."
+    },
+    {
+      "from": "sql",
+      "to": "transaction",
+      "why": "The reader must recognize statements before understanding how several statements form one unit."
+    },
+    {
+      "from": "transaction",
+      "to": "atomicity",
+      "why": "Without transaction boundaries, there is no defined group whose success must be all or nothing."
+    },
+    {
+      "from": "invariant",
+      "to": "atomicity",
+      "why": "Without the transfer rule, retaining only one update has no explained correctness consequence."
+    },
+    {
+      "from": "transaction",
+      "to": "concurrency",
+      "why": "Overlapping units must be identified before describing their interleaved execution."
+    },
+    {
+      "from": "concurrency",
+      "to": "serial",
+      "why": "Serial execution is the reference ordering of the same units whose overlapping execution is at issue."
+    },
+    {
+      "from": "sql",
+      "to": "dependency",
+      "why": "A SELECT result and a subsequent write must be understood to explain a read-dependent decision."
+    },
+    {
+      "from": "transaction",
+      "to": "snapshot",
+      "why": "Committed versions and own writes require distinguishing transaction boundaries and completion."
+    },
+    {
+      "from": "dependency",
+      "to": "anomaly",
+      "why": "Without the read-to-decision dependency, the reason independently valid writes become jointly invalid is missing."
+    },
+    {
+      "from": "snapshot",
+      "to": "anomaly",
+      "why": "The constructed anomaly depends on both transactions deciding from the same earlier committed state."
+    },
+    {
+      "from": "invariant",
+      "to": "anomaly",
+      "why": "An invalid combined result requires an explicit application rule."
+    },
+    {
+      "from": "serial",
+      "to": "anomaly",
+      "why": "The example compares concurrent outcomes with both possible complete transaction orderings."
+    },
+    {
+      "from": "atomicity",
+      "to": "atomicity_limit",
+      "why": "The distinction requires specifying exactly what all-or-nothing success already promises."
+    },
+    {
+      "from": "anomaly",
+      "to": "atomicity_limit",
+      "why": "The counterexample shows a bad concurrent outcome despite both complete units committing."
+    },
+    {
+      "from": "serial",
+      "to": "serializable",
+      "why": "Without serial execution there is no reference behavior for the equivalence guarantee."
+    },
+    {
+      "from": "transaction",
+      "to": "dirty",
+      "why": "Uncommitted data is meaningful only after commit boundaries are defined."
+    },
+    {
+      "from": "concurrency",
+      "to": "nonrepeatable",
+      "why": "The changed value comes from another overlapping transaction committing between reads."
+    },
+    {
+      "from": "sql",
+      "to": "phantom",
+      "why": "The distinction concerns the set of rows matching a WHERE condition."
+    },
+    {
+      "from": "concurrency",
+      "to": "phantom",
+      "why": "A second transaction changes the matching set between the first transaction\u2019s queries."
+    },
+    {
+      "from": "dirty",
+      "to": "levels",
+      "why": "Avoiding uncommitted observations is one protection used to compare named levels."
+    },
+    {
+      "from": "nonrepeatable",
+      "to": "levels",
+      "why": "Reread stability is a different protection and cannot be inferred just from preventing dirty reads."
+    },
+    {
+      "from": "phantom",
+      "to": "levels",
+      "why": "Row-set stability must be distinguished from rereading one unchanged row."
+    },
+    {
+      "from": "serializable",
+      "to": "levels",
+      "why": "The strongest comparison requires serial equivalence, beyond the three read phenomena."
+    },
+    {
+      "from": "snapshot",
+      "to": "read_committed",
+      "why": "The scope of a snapshot explains why statements can disagree despite each avoiding dirty data."
+    },
+    {
+      "from": "levels",
+      "to": "read_committed",
+      "why": "The implementation example interprets the named level against its required protections."
+    },
+    {
+      "from": "snapshot",
+      "to": "repeatable_read",
+      "why": "A snapshot spanning statements explains stable reads without assuming sequential execution."
+    },
+    {
+      "from": "levels",
+      "to": "repeatable_read",
+      "why": "The standard minimum and PostgreSQL\u2019s stronger phantom protection must be distinguished."
+    },
+    {
+      "from": "anomaly",
+      "to": "repeatable_read",
+      "why": "Stable snapshots alone do not establish serial equivalence; the anomaly demonstrates that gap."
+    },
+    {
+      "from": "serializable",
+      "to": "mechanisms",
+      "why": "The enforcement strategies must be assessed against a defined guarantee."
+    },
+    {
+      "from": "snapshot",
+      "to": "mechanisms",
+      "why": "Version-based reads are one concrete mechanism and must be understood before comparison with blocking and detection."
+    },
+    {
+      "from": "mechanisms",
+      "to": "retry",
+      "why": "Rejection is an enforcement outcome; without it, retrying appears unrelated to isolation."
+    },
+    {
+      "from": "dependency",
+      "to": "retry",
+      "why": "Rerunning reads and decisions is necessary because retrying only the write preserves the original stale decision."
+    },
+    {
+      "from": "read_committed",
+      "to": "choice",
+      "why": "The weaker concrete guarantee must be known to judge whether it preserves an application rule."
+    },
+    {
+      "from": "repeatable_read",
+      "to": "choice",
+      "why": "The stable-read example shows why a stronger-sounding name alone does not settle correctness."
+    },
+    {
+      "from": "retry",
+      "to": "choice",
+      "why": "The application must account for the handling required by rejection-based enforcement."
+    },
+    {
+      "from": "atomicity_limit",
+      "to": "target",
+      "why": "This supplies the causal answer to why wrapping operations in transactions is insufficient."
+    },
+    {
+      "from": "levels",
+      "to": "target",
+      "why": "This explains how available guarantees constrain different failures."
+    },
+    {
+      "from": "choice",
+      "to": "target",
+      "why": "This connects guarantee differences to the user\u2019s need to preserve the relevant application rules."
+    }
+  ],
+  "revisions": [
+    {
+      "round": 0,
+      "action": "Saved initial graph before supplemental source reading. Partial nodes use the supplied packet as leads; gap nodes require mechanism evidence and worked reasoning.",
+      "source_material": "inputs/sources/transaction-isolation.json",
+      "changes": "Initial full graph in history/initial.json."
+    }
+  ]
+}
